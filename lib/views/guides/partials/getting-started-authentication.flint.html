@@ -1,0 +1,202 @@
+<section id="authentication" class="section">
+    <h2>Authentication (TOTP)</h2>
+    <p>
+        Flint’s Auth helpers cover the common flows: register, login, password reset, and email verification.
+        You can use these in your controllers or route handlers.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">// Register (with additionalData)
+app.post('/auth/register', (req, res) async {
+  final data = await req.json();
+  final user = await Auth.register(
+    email: data['email'],
+    password: data['password'],
+    name: data['name'],
+    additionalData: {
+      'role': data['role'],
+      'country': data['country'],
+    },
+  );
+  return res.json({'user': user});
+});
+
+// Login
+app.post('/auth/login', (req, res) async {
+  final data = await req.json();
+  final result = await Auth.login(data['email'], data['password']);
+  return res.json(result); // { user, token }
+});</code></pre>
+    </div>
+    <div class="code-block">
+        <pre><code class="language-dart">// Password reset flow
+app.post('/auth/password/forgot', (req, res) async {
+  final data = await req.json();
+  final token = await Auth.generatePasswordResetToken(data['email']);
+  return res.json({'token': token});
+});
+
+app.post('/auth/password/reset', (req, res) async {
+  final data = await req.json();
+  final ok = await Auth.resetPassword(
+    token: data['token'],
+    newPassword: data['password'],
+  );
+  return res.json({'reset': ok});
+});</code></pre>
+    </div>
+    <div class="code-block">
+        <pre><code class="language-dart">// Email verification
+app.post('/auth/email/verify', (req, res) async {
+  final data = await req.json();
+  final ok = await Auth.verifyEmail(token: data['token']);
+  return res.json({'verified': ok});
+});</code></pre>
+    </div>
+
+    <h3>OAuth Providers (Google, GitHub, Facebook, Apple)</h3>
+    <p class="text-sm text-slate-400">
+        Use <code>Auth.providerRedirectUrl</code> to build the OAuth URL, then exchange the callback code
+        or token using the provider helpers.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">// 1) Redirect user to provider
+app.get('/auth/google', (req, res) async {
+  final url = Auth.providerRedirectUrl(
+    provider: 'google',
+    redirectPath: '/auth/google/callback',
+  );
+  return res.redirect(url);
+});
+
+// 2) Handle callback
+app.get('/auth/google/callback', (req, res) async {
+  final code = req.queryParam('code');
+  if (code == null) return res.status(400).json({'error': 'Missing code'});
+
+  final profile = await Auth.loginWithGoogle(
+    code: code,
+    callbackPath: '/auth/google/callback',
+  );
+  final user = await Auth.saveProviderUser(providerUserData: profile);
+  final token = Auth.generateToken(user);
+  return res.json({'user': user, 'token': token});
+});</code></pre>
+    </div>
+    <div class="code-block">
+        <pre><code class="language-dart">// GitHub (similar flow)
+app.get('/auth/github', (req, res) async {
+  final url = Auth.providerRedirectUrl(
+    provider: 'github',
+    redirectPath: '/auth/github/callback',
+  );
+  return res.redirect(url);
+});
+
+app.get('/auth/github/callback', (req, res) async {
+  final code = req.queryParam('code');
+  if (code == null) return res.status(400).json({'error': 'Missing code'});
+
+  final profile = await Auth.loginWithGitHub(
+    code: code,
+    callbackPath: '/auth/github/callback',
+  );
+  final user = await Auth.saveProviderUser(providerUserData: profile);
+  final token = Auth.generateToken(user);
+  return res.json({'user': user, 'token': token});
+});</code></pre>
+    </div>
+    <div class="code-block">
+        <pre><code class="language-dart">// Facebook (access token or code)
+app.post('/auth/facebook', (req, res) async {
+  final data = await req.json();
+  final profile = await Auth.loginWithFacebook(
+    accessToken: data['access_token'],
+    code: data['code'],
+    callbackPath: '/auth/facebook/callback',
+  );
+  final user = await Auth.saveProviderUser(providerUserData: profile);
+  final token = Auth.generateToken(user);
+  return res.json({'user': user, 'token': token});
+});</code></pre>
+    </div>
+    <div class="code-block">
+        <pre><code class="language-dart">// Apple Sign In
+app.post('/auth/apple', (req, res) async {
+  final data = await req.json();
+  final profile = await Auth.loginWithApple(
+    identityToken: data['identity_token'],
+    authorizationCode: data['authorization_code'],
+    userData: data['user'],
+  );
+  final user = await Auth.saveProviderUser(providerUserData: profile);
+  final token = Auth.generateToken(user);
+  return res.json({'user': user, 'token': token});
+});</code></pre>
+    </div>
+    <p>
+        You can add Time‑based One‑Time Password (TOTP) for 2‑factor authentication. The service below
+        generates a secret, builds a QR/OTPAuth URL, and verifies codes.
+    </p>
+    <p class="text-sm text-slate-400">
+        TOTP is built into the framework. You can call <code>TotpService.generateSecret()</code>,
+        <code>TotpService.buildOtpAuthUrl()</code>, and <code>TotpService.verifyCode()</code> directly.
+    </p>
+    <p class="text-sm text-slate-400">
+        Flow: generate a secret per user, show the OTPAuth URL as a QR code, then verify the 6‑digit code
+        on login.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">// Controller-style example
+
+// 1) Enable 2FA for a user
+app.post('/auth/2fa/setup', (req, res) async {
+  final user = await User().find(1);
+  if (user == null) return res.status(404).json({'error': 'User not found'});
+
+  final secret = TotpService.generateSecret();
+  final otpUrl = TotpService.buildOtpAuthUrl(
+    secret: secret,
+    email: user.getAttribute('email'),
+  );
+
+  // Save secret to user (store securely)
+  await User().where('id', 1).update(data: {'totp_secret': secret});
+
+  return res.json({'otp_url': otpUrl});
+});
+
+// 2) Verify code during login
+app.post('/auth/2fa/verify', (req, res) async {
+  final data = await req.json();
+  final user = await User().find(data['user_id']);
+  if (user == null) return res.status(404).json({'error': 'User not found'});
+
+  final secret = user.getAttribute('totp_secret');
+  final ok = TotpService.verifyCode(secret: secret, code: data['code']);
+
+  return res.json({'verified': ok});
+});</code></pre>
+    </div>
+
+    <h3>Auth Environment Variables</h3>
+    <p class="text-sm text-slate-400">
+        These values live in your <code>.env</code> file and control the Auth system defaults.
+    </p>
+    <ul>
+        <li><code>AUTH_TABLE</code> — users table name (default: <code>users</code>).</li>
+        <li><code>AUTH_EMAIL_COLUMN</code> — email column (default: <code>email</code>).</li>
+        <li><code>AUTH_PASSWORD_COLUMN</code> — password column (default: <code>password</code>).</li>
+        <li><code>AUTH_NAME_COLUMN</code> — name column (default: <code>name</code>).</li>
+        <li><code>AUTH_PROVIDER_COLUMN</code> — provider column (default: <code>provider</code>).</li>
+        <li><code>AUTH_PROVIDER_ID_COLUMN</code> — provider ID column (default: <code>provider_id</code>).</li>
+        <li><code>REQUIRE_EMAIL_VERIFICATION</code> — <code>true</code>/<code>false</code>.</li>
+        <li><code>PASSWORD_MIN_LENGTH</code> — minimum password length.</li>
+        <li><code>JWT_SECRET</code> — secret used to sign tokens.</li>
+        <li><code>JWT_EXPIRY_HOURS</code> — token lifetime in hours.</li>
+        <li><code>REDIRECT_BASE</code> — base URL for OAuth redirects.</li>
+        <li><code>GOOGLE_CLIENT_ID</code> / <code>GOOGLE_CLIENT_SECRET</code></li>
+        <li><code>GITHUB_CLIENT_ID</code> / <code>GITHUB_CLIENT_SECRET</code></li>
+        <li><code>FACEBOOK_CLIENT_ID</code> / <code>FACEBOOK_CLIENT_SECRET</code></li>
+        <li><code>APPLE_CLIENT_ID</code> / <code>APPLE_TEAM_ID</code> / <code>APPLE_KEY_ID</code> / <code>APPLE_PRIVATE_KEY</code></li>
+    </ul>
+</section>

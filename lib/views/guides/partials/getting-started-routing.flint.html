@@ -1,0 +1,157 @@
+<section id="routing" class="section">
+    <h2>Routing</h2>
+    <p>Define routes in <code>lib/main.dart</code> or a route group.</p>
+    <div class="code-block">
+        <pre><code class="language-dart">import 'package:flint_dart/flint_dart.dart';
+
+void main() {
+  final app = Flint(
+    withDefaultMiddleware: true,
+    enableSwaggerDocs: true,
+    autoConnectDb: false,
+  );
+
+  app.get('/', (req, res) async {
+    return res.json({'status': 'ok'});
+  });
+
+  app.get('/users/:id', (req, res) async {
+    final id = req.params['id'];
+    return res.json({'id': id});
+  });
+
+  app.post('/users', (req, res) async {
+    final data = await req.json();
+    return res.json({'created': true, 'data': data});
+  });
+
+  app.listen(port: 3000);
+}</code></pre>
+    </div>
+
+    <p>Attach middleware per route:</p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.post('/profile', handler)
+  .use(AuthMiddleware());</code></pre>
+    </div>
+
+    <h3 id="route-params">Route Params</h3>
+    <p>Use <code>:param</code> segments. Read them with <code>req.param()</code>. The raw map is <code>req.params</code>.</p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.get('/users/:id', (req, res) async {
+  final id = req.param('id');
+  return res.json({'id': id});
+});</code></pre>
+    </div>
+
+    <h3 id="query-params">Query Params</h3>
+    <p>Read query string values from <code>req.queryParam()</code> or <code>req.query</code> (e.g. <code>?page=2&limit=10</code>).</p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.get('/users', (req, res) async {
+  final page = req.queryParam('page') ?? '1';
+  final limit = req.queryParam('limit') ?? '10';
+  return res.json({'page': page, 'limit': limit});
+});</code></pre>
+    </div>
+
+    <h3 id="request-response">Request & Response</h3>
+    <p>Common helpers you’ll use in most handlers.</p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.post('/users', (req, res) async {
+  final body = await req.json(); // parse JSON body
+  final token = req.bearerToken; // read Authorization token
+  final ip = req.ipAddress; // client IP
+
+  return res
+      .status(201)
+      .json({'created': true, 'data': body, 'ip': ip, 'token': token});
+});</code></pre>
+    </div>
+
+    <h3 id="response-methods">Response Methods</h3>
+    <p>Use the right response method based on what you’re returning.</p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.get('/text', (req, res) async {
+  return res.send('Plain text');
+});
+
+app.get('/json', (req, res) async {
+  return res.json({'status': 'ok'});
+});
+
+app.get('/auto', (req, res) async {
+  return res.respond({'auto': 'json'}); // infers JSON/HTML/text
+});
+
+app.get('/page', (req, res) async {
+  return res.view('home', data: {'title': 'Flint Docs'});
+});</code></pre>
+    </div>
+    <p>
+        <code>send()</code> is for plain text or custom content types. <code>json()</code> sets JSON headers and
+        encodes safely. <code>respond()</code> auto-detects the best type. <code>view()</code> renders a template.
+    </p>
+
+    <h3 id="request-body">Request Body</h3>
+    <p>Choose the right body reader based on the incoming content type.</p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.post('/raw', (req, res) async {
+  final text = await req.body(); // raw string body
+  return res.send(text);
+});
+
+app.post('/json', (req, res) async {
+  final data = await req.json(); // Map&lt;String, dynamic&gt;
+  return res.json({'received': data});
+});
+
+app.post('/form', (req, res) async {
+  final fields = await req.form(); // Map&lt;String, String&gt;
+  return res.json({'fields': fields});
+});</code></pre>
+    </div>
+    <p>
+        <code>body()</code> returns a raw string. <code>json()</code> parses JSON into a map.
+        <code>form()</code> reads <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code>.
+    </p>
+
+    <h3 id="file-uploads">File Uploads & Storage</h3>
+    <p>Uploads come from <code>multipart/form-data</code>. You can read files, check if they exist, or store them on disk.</p>
+    <ul>
+        <li><code>req.file('avatar')</code> — get a single uploaded file.</li>
+        <li><code>req.files('photos')</code> — get multiple files for the same field.</li>
+        <li><code>req.hasFile('avatar')</code> / <code>req.hasFiles('photos')</code> — check if files were sent.</li>
+        <li><code>req.storeFile(...)</code> / <code>req.storeFiles(...)</code> — save to disk and return path(s).</li>
+    </ul>
+    <div class="code-block">
+        <pre><code class="language-dart">app.post('/avatar', (req, res) async {
+  // Access the uploaded file
+  final upload = await req.file('avatar');
+  if (upload == null) {
+    return res.status(400).json({'error': 'No file uploaded'});
+  }
+
+  // Save with a custom name
+  final path = await req.storeFile(
+    'avatar',
+    directory: 'public/uploads',
+    filename: 'user-1.png',
+  );
+
+  return res.json({'saved_to': path});
+});</code></pre>
+    </div>
+    <div class="code-block">
+        <pre><code class="language-dart">app.post('/gallery', (req, res) async {
+  if (!await req.hasFiles('photos')) {
+    return res.status(400).json({'error': 'No photos uploaded'});
+  }
+
+  final paths = await req.storeFiles('photos', directory: 'public/uploads');
+  return res.json({'saved_to': paths});
+});</code></pre>
+    </div>
+    <p class="text-sm text-slate-400">
+        Tip: you can also save manually using <code>upload.saveTo(path)</code> if you want full control.
+    </p>
+</section>

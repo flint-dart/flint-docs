@@ -1,0 +1,28 @@
+<section id="table-sync" class="section">
+    <h2>Table Sync</h2>
+    <p>
+        To apply model table definitions to your database, register them in
+        <code>lib/config/table_registry.dart</code> and run the CLI sync command.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">import 'dart:isolate';
+import 'package:flint_dart/schema.dart';
+import '../src/models/user_model.dart';
+import '../src/models/post_model.dart';
+
+void main(List&lt;String&gt; args, SendPort sendPort) {
+  runTableRegistry([
+    User().table,
+    PostModel().table,
+  ], null, sendPort);
+}</code></pre>
+    </div>
+
+    <div class="code-block">
+        <pre><code class="language-bash">flint migrate</code></pre>
+    </div>
+
+    <p>
+        Use <code>flint migrate --drop</code> to drop and recreate tables when needed.
+    </p>
+</section>

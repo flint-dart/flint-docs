@@ -1,0 +1,50 @@
+<!-- Middleware -->
+<section id="middleware" class="class-reference">
+    <div class="class-header">
+        <h2 class="class-name">Middleware</h2>
+        <p class="class-description">Wrap handlers to add auth, logging, validation, or transforms.</p>
+    </div>
+
+    <p class="text-sm text-slate-400">
+        A middleware implements <code>Middleware.handle</code> and returns a new handler that can short-circuit
+        or augment the request/response pipeline.
+    </p>
+
+    <div class="method-list">
+        <div class="method-item">
+            <div class="method-signature">abstract class Middleware { Handler handle(Handler next); }</div>
+            <div class="method-description">Implement this contract to create custom middleware.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">void use(Middleware middleware)</div>
+            <div class="method-description">Register a global middleware on the app.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">RouteBuilder.useMiddleware(Middleware middleware)</div>
+            <div class="method-description">Attach middleware to a specific route.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Built-ins: ExceptionMiddleware, CorsMiddleware, LoggerMiddleware, StaticFileMiddleware, CookieSessionMiddleware</div>
+            <div class="method-description">Drop-in middleware shipped with Flint.</div>
+        </div>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Example</h3>
+        <pre class="mt-3"><code class="language-dart">class AuthGuard extends Middleware {
+  @override
+  Handler handle(Handler next) {
+    return (req, res) async {
+      final user = await req.user;
+      if (user == null) {
+        return res.status(401).json({'error': 'Unauthorized'});
+      }
+      return next(req, res);
+    };
+  }
+}
+
+app.get('/private', (req, res) async => res.send('ok'))
+  .useMiddleware(AuthGuard());</code></pre>
+    </div>
+</section>

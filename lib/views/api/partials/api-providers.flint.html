@@ -1,0 +1,40 @@
+<!-- Auth Providers -->
+<section id="providers" class="class-reference">
+    <div class="class-header">
+        <h2 class="class-name">Auth Providers</h2>
+        <p class="class-description">OAuth URL generation and provider metadata.</p>
+    </div>
+
+    <div class="method-list">
+        <div class="method-item">
+            <div class="method-signature">String AuthService.getGoogleAuthUrl({required String callbackUrl})</div>
+            <div class="method-description">Build a Google OAuth URL with PKCE support.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">String AuthService.getGitHubAuthUrl({required String callbackUrl})</div>
+            <div class="method-description">Build a GitHub OAuth authorization URL.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">String AuthService.getFacebookAuthUrl({required String callbackUrl})</div>
+            <div class="method-description">Build a Facebook OAuth authorization URL.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">String AuthService.getAppleAuthUrl({required String callbackUrl})</div>
+            <div class="method-description">Build an Apple Sign In URL.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Map&lt;String, dynamic&gt; AuthService.getAvailableProviders()</div>
+            <div class="method-description">Return configured providers and redirect base info.</div>
+        </div>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Example</h3>
+        <pre class="mt-3"><code class="language-dart">app.get('/auth/google', (req, res) async {
+  final url = AuthService.getGoogleAuthUrl(
+    callbackUrl: 'http://localhost:3030/auth/google/callback',
+  );
+  return res.redirect(url);
+});</code></pre>
+    </div>
+</section>

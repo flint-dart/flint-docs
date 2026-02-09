@@ -1,0 +1,120 @@
+<section id="views" class="section">
+    <h2>Views</h2>
+    <p>
+        Views are stored in <code>lib/views</code>. Render them using <code>res.view()</code>:
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.get('/', (req, res) async {
+  return res.view('home', data: {
+    'title': 'Flint Docs'
+  });
+});</code></pre>
+    </div>
+
+    <p>
+        A view file named <code>lib/views/home.flint.html</code> can extend a layout:
+    </p>
+    <div class="code-block">
+        <pre><code class="language-html">&#123;&#123; extends('layouts.app') &#125;&#125;
+
+&#123;&#123; section('content') &#125;&#125;
+  &lt;h1&gt;&#123;&#123; title &#125;&#125;&lt;/h1&gt;
+&#123;&#123; endsection &#125;&#125;</code></pre>
+    </div>
+
+    <p>
+        Layouts live under <code>lib/views/layouts</code> and use <code>&#123;&#123; yield('content') &#125;&#125;</code>.
+    </p>
+
+    <h3>Template Processors</h3>
+    <p>Flint’s view engine supports these built‑in template features:</p>
+    <ul>
+        <li><code>extends</code> — layout inheritance</li>
+        <li><code>section</code> / <code>yield</code> — slot content into layouts</li>
+        <li><code>include</code> — partials</li>
+        <li><code>variables</code> — <code>&#123;&#123; ... &#125;&#125;</code> interpolation</li>
+        <li><code>if_statement</code> — <code>if/endif</code></li>
+        <li><code>for_loop</code> — <code>for/endfor</code></li>
+        <li><code>switch_cases</code> — <code>switch/case/default</code></li>
+        <li><code>comment</code> — template comments</li>
+        <li><code>assets</code> — asset helper tags</li>
+        <li><code>session</code> — session/error helpers in templates</li>
+    </ul>
+
+    <h3>Quick Examples</h3>
+    <div class="code-block">
+        <pre><code class="language-html">&#123;&#123; if user &#125;&#125;
+  &lt;p&gt;Welcome, &#123;&#123; user.name &#125;&#125;&lt;/p&gt;
+&#123;&#123; endif &#125;&#125;
+
+&lt;ul&gt;
+  &#123;&#123; for item in items &#125;&#125;
+    &lt;li&gt;&#123;&#123; item &#125;&#125;&lt;/li&gt;
+  &#123;&#123; endfor &#125;&#125;
+&lt;/ul&gt;
+
+&#123;&#123; include('partials.nav') &#125;&#125;</code></pre>
+    </div>
+
+    <h3>Layouts: extends + section + yield</h3>
+    <div class="code-block">
+        <pre><code class="language-html">&#123;&#123; extends('layouts.app') &#125;&#125;
+
+&#123;&#123; section('title', 'Home') &#125;&#125;
+
+&#123;&#123; section('content') &#125;&#125;
+  &lt;h1&gt;Hello, &#123;&#123; user.name &#125;&#125;&lt;/h1&gt;
+&#123;&#123; endsection &#125;&#125;</code></pre>
+    </div>
+    <p class="text-sm text-slate-400">
+        In your layout, render sections with <code>&#123;&#123; yield('content') &#125;&#125;</code>.
+        You can also use <code>&#123;&#123; section('sidebar') &#125;&#125;...&#123;&#123; show &#125;&#125;</code> for defaults.
+    </p>
+
+    <h3>Includes With Data</h3>
+    <div class="code-block">
+        <pre><code class="language-html">&#123;&#123; include('partials.card', { "title": "Hello", "body": "..." }) &#125;&#125;</code></pre>
+    </div>
+
+    <h3>Conditionals</h3>
+    <div class="code-block">
+        <pre><code class="language-html">&#123;&#123; if isAdmin &#125;&#125;
+  &lt;span&gt;Admin&lt;/span&gt;
+&#123;&#123; elseif user &#125;&#125;
+  &lt;span&gt;User&lt;/span&gt;
+&#123;&#123; else &#125;&#125;
+  &lt;span&gt;Guest&lt;/span&gt;
+&#123;&#123; endif &#125;&#125;</code></pre>
+    </div>
+
+    <h3>Loops</h3>
+    <div class="code-block">
+        <pre><code class="language-html">&#123;&#123; for item in items &#125;&#125;
+  &lt;li&gt;&#123;&#123; item.name &#125;&#125;&lt;/li&gt;
+&#123;&#123; endfor &#125;&#125;
+
+&#123;&#123; for i=0; i<3; i++ &#125;&#125;
+  &lt;span&gt;Index: &#123;&#123; i &#125;&#125;&lt;/span&gt;
+&#123;&#123; endfor &#125;&#125;</code></pre>
+    </div>
+
+    <h3>Switch/Case</h3>
+    <div class="code-block">
+        <pre><code class="language-html">&#123;&#123; switch status &#125;&#125;
+  &#123;&#123; case active &#125;&#125;Active&#123;&#123; endcase &#125;&#125;
+  &#123;&#123; case pending, paused &#125;&#125;Waiting&#123;&#123; endcase &#125;&#125;
+  &#123;&#123; default &#125;&#125;Unknown&#123;&#123; enddefault &#125;&#125;
+&#123;&#123; endswitch &#125;&#125;</code></pre>
+    </div>
+
+    <h3>Variables, Comments, Assets, Sessions</h3>
+    <div class="code-block">
+        <pre><code class="language-html">Hello &#123;&#123; user.email &#125;&#125;
+&#123;&#123;! this is a comment &#125;&#125;
+
+&lt;img src="&#123;&#123; assets('images/logo.png') &#125;&#125;" /&gt;
+
+&lt;p&gt;Flash: &#123;&#123; session('message') &#125;&#125;&lt;/p&gt;
+&#123;&#123; if hasSession('message') &#125;&#125;...&#123;&#123; endif &#125;&#125;</code></pre>
+    </div>
+</section>

@@ -1,0 +1,51 @@
+<section id="architecture" class="section">
+    <h2>Controllers, Services & Routes</h2>
+    <p>
+        A clean structure separates HTTP routing (controllers) from business logic (services). This keeps
+        routes small, testable, and scalable.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">// lib/src/services/user_service.dart
+class UserService {
+  Future<Map<String, dynamic>> listUsers() async {
+    final users = await User().orderBy('created_at', desc: true).get();
+    return {'data': users};
+  }
+
+  Future<Map<String, dynamic>> createUser(Map<String, dynamic> data) async {
+    final user = await User().create(data);
+    return {'user': user};
+  }
+}
+
+// lib/src/controllers/user_controller.dart
+class UserController {
+  final UserService service;
+  UserController(this.service);
+
+  Future<Response> index(Request req, Response res) async {
+    final result = await service.listUsers();
+    return res.json(result);
+  }
+
+  Future<Response> store(Request req, Response res) async {
+    final data = await req.json();
+    final result = await service.createUser(data);
+    return res.json(result);
+  }
+}
+
+// lib/routes/user_routes.dart
+class UserRoutes extends RouteGroup {
+  @override
+  String get prefix => '/users';
+
+  @override
+  void register(Flint app) {
+    final controller = UserController(UserService());
+    app.get('/', controller.index);
+    app.post('/', controller.store);
+  }
+}</code></pre>
+    </div>
+</section>

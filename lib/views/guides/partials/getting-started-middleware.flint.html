@@ -1,0 +1,73 @@
+<section id="middleware" class="section">
+    <h2>Middleware</h2>
+    <p>Middleware runs before your handler. You can register it globally, per route, or per route group.</p>
+    <p class="mt-2 text-sm text-slate-400">
+        Default stack: <code>ExceptionMiddleware</code> is enabled when
+        <code>withDefaultMiddleware: true</code> (default). <code>CookieSessionMiddleware</code> is always
+        registered to enable cookies and sessions.
+    </p>
+
+    <h3>Global middleware</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">import 'package:flint_dart/flint_dart.dart';
+import 'middlewares/auth_middleware.dart';
+
+void main() {
+  final app = Flint();
+  app.use(AuthMiddleware());
+
+  app.get('/profile', (req, res) async {
+    return res.json({'ok': true});
+  });
+
+  app.listen(port: 3000);
+}</code></pre>
+    </div>
+
+    <h3>Route middleware</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">app.get('/admin', (req, res) async {
+  return res.send('Admin');
+}).use(AuthMiddleware());</code></pre>
+    </div>
+
+    <h3>Route group middleware</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">class AdminRoutes extends RouteGroup {
+  @override
+  String get prefix => '/admin';
+
+  @override
+  List<Middleware> get middlewares => [AuthMiddleware()];
+
+  @override
+  void register(Flint app) {
+    app.get('/users', (req, res) async => res.json([]));
+  }
+}</code></pre>
+    </div>
+
+    <h3>Built-in middleware</h3>
+    <ul>
+        <li><code>ExceptionMiddleware</code> — catches errors and returns JSON error responses.</li>
+        <li><code>CookieSessionMiddleware</code> — initializes cookies and sessions.</li>
+        <li><code>CorsMiddleware</code> — adds CORS headers and handles OPTIONS.</li>
+        <li><code>LoggerMiddleware</code> — logs request method, path, IP, and auth status.</li>
+        <li><code>StaticFileMiddleware</code> — serves files from <code>public/</code> with caching and range support.</li>
+    </ul>
+
+    <h3>Create your own middleware</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">class AuthMiddleware extends Middleware {
+  @override
+  Handler handle(Handler next) {
+    return (req, res) async {
+      if (!req.isAuthenticated) {
+        return res.status(401).json({'error': 'Unauthorized'});
+      }
+      return next(req, res);
+    };
+  }
+}</code></pre>
+    </div>
+</section>
