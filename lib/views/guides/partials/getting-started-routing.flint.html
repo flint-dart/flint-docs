@@ -11,18 +11,18 @@ void main() {
     autoConnectDb: false,
   );
 
-  app.get('/', (req, res) async {
-    return res.json({'status': 'ok'});
+  app.get('/', (Context ctx) async {
+    return ctx.res?.json({'status': 'ok'});
   });
 
-  app.get('/users/:id', (req, res) async {
-    final id = req.params['id'];
-    return res.json({'id': id});
+  app.get('/users/:id', (Context ctx) async {
+    final id = ctx.req.params['id'];
+    return ctx.res?.json({'id': id});
   });
 
-  app.post('/users', (req, res) async {
-    final data = await req.json();
-    return res.json({'created': true, 'data': data});
+  app.post('/users', (Context ctx) async {
+    final data = await ctx.req.json();
+    return ctx.res?.json({'created': true, 'data': data});
   });
 
   app.listen(port: 3000);
@@ -36,33 +36,39 @@ void main() {
     </div>
 
     <h3 id="route-params">Route Params</h3>
-    <p>Use <code>:param</code> segments. Read them with <code>req.param()</code>. The raw map is <code>req.params</code>.</p>
+    <p>Use <code>:param</code> segments. Read them with <code>ctx.req.param()</code>. The raw map is <code>ctx.req.params</code>.</p>
     <div class="code-block">
-        <pre><code class="language-dart">app.get('/users/:id', (req, res) async {
-  final id = req.param('id');
-  return res.json({'id': id});
+        <pre><code class="language-dart">app.get('/users/:id', (Context ctx) async {
+  final id = ctx.req.param('id');
+  return ctx.res?.json({'id': id});
 });</code></pre>
     </div>
 
     <h3 id="query-params">Query Params</h3>
-    <p>Read query string values from <code>req.queryParam()</code> or <code>req.query</code> (e.g. <code>?page=2&limit=10</code>).</p>
+    <p>Read query string values from <code>ctx.req.queryParam()</code> or <code>ctx.req.query</code> (e.g. <code>?page=2&limit=10</code>).</p>
     <div class="code-block">
-        <pre><code class="language-dart">app.get('/users', (req, res) async {
-  final page = req.queryParam('page') ?? '1';
-  final limit = req.queryParam('limit') ?? '10';
-  return res.json({'page': page, 'limit': limit});
+        <pre><code class="language-dart">app.get('/users', (Context ctx) async {
+  final page = ctx.req.queryParam('page') ?? '1';
+  final limit = ctx.req.queryParam('limit') ?? '10';
+  return ctx.res?.json({'page': page, 'limit': limit});
 });</code></pre>
     </div>
+
+    <h3>Unified Context</h3>
+    <p>
+        Route handlers receive a single <code>Context</code> object:
+        <code>ctx.req</code> (always), <code>ctx.res</code> (HTTP), and <code>ctx.socket</code> (WebSocket).
+    </p>
 
     <h3 id="request-response">Request & Response</h3>
     <p>Common helpers you’ll use in most handlers.</p>
     <div class="code-block">
-        <pre><code class="language-dart">app.post('/users', (req, res) async {
-  final body = await req.json(); // parse JSON body
-  final token = req.bearerToken; // read Authorization token
-  final ip = req.ipAddress; // client IP
+        <pre><code class="language-dart">app.post('/users', (Context ctx) async {
+  final body = await ctx.req.json(); // parse JSON body
+  final token = ctx.req.bearerToken; // read Authorization token
+  final ip = ctx.req.ipAddress; // client IP
 
-  return res
+  return ctx.res
       .status(201)
       .json({'created': true, 'data': body, 'ip': ip, 'token': token});
 });</code></pre>
@@ -71,43 +77,61 @@ void main() {
     <h3 id="response-methods">Response Methods</h3>
     <p>Use the right response method based on what you’re returning.</p>
     <div class="code-block">
-        <pre><code class="language-dart">app.get('/text', (req, res) async {
-  return res.send('Plain text');
+        <pre><code class="language-dart">app.get('/text', (Context ctx) async {
+  return ctx.res?.send('Plain text');
 });
 
-app.get('/json', (req, res) async {
-  return res.json({'status': 'ok'});
+app.get('/json', (Context ctx) async {
+  return ctx.res?.json({'status': 'ok'});
 });
 
-app.get('/auto', (req, res) async {
-  return res.respond({'auto': 'json'}); // infers JSON/HTML/text
+app.get('/auto', (Context ctx) async {
+  return ctx.res?.respond({'auto': 'json'}); // infers JSON/HTML/text
 });
 
-app.get('/page', (req, res) async {
-  return res.view('home', data: {'title': 'Flint Docs'});
+app.get('/page', (Context ctx) async {
+  return ctx.res?.view('home', data: {'title': 'Flint Docs'});
 });</code></pre>
     </div>
     <p>
         <code>send()</code> is for plain text or custom content types. <code>json()</code> sets JSON headers and
         encodes safely. <code>respond()</code> auto-detects the best type. <code>view()</code> renders a template.
     </p>
+    <p>
+        You can also return values directly from the route handler. Flint will serialize
+        <code>Map</code>/<code>List</code> as JSON and custom classes that implement
+        <code>toMap()</code> or <code>toJson()</code>.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">class UserDto {
+  final int id;
+  final String email;
+  UserDto(this.id, this.email);
+
+  Map&lt;String, dynamic&gt; toMap() => {'id': id, 'email': email};
+}
+
+app.get('/me', (Context ctx) async {
+  return UserDto(1, 'ada@example.com'); // auto JSON
+});</code></pre>
+    </div>
 
     <h3 id="request-body">Request Body</h3>
     <p>Choose the right body reader based on the incoming content type.</p>
     <div class="code-block">
-        <pre><code class="language-dart">app.post('/raw', (req, res) async {
-  final text = await req.body(); // raw string body
-  return res.send(text);
+        <pre><code class="language-dart">app.post('/raw', (Context ctx) async {
+  final text = await ctx.req.body(); // raw string body
+  return ctx.res?.send(text);
 });
 
-app.post('/json', (req, res) async {
-  final data = await req.json(); // Map&lt;String, dynamic&gt;
-  return res.json({'received': data});
+app.post('/json', (Context ctx) async {
+  final data = await ctx.req.json(); // Map&lt;String, dynamic&gt;
+  return ctx.res?.json({'received': data});
 });
 
-app.post('/form', (req, res) async {
-  final fields = await req.form(); // Map&lt;String, String&gt;
-  return res.json({'fields': fields});
+app.post('/form', (Context ctx) async {
+  final fields = await ctx.req.form(); // Map&lt;String, String&gt;
+  return ctx.res?.json({'fields': fields});
 });</code></pre>
     </div>
     <p>
@@ -118,37 +142,37 @@ app.post('/form', (req, res) async {
     <h3 id="file-uploads">File Uploads & Storage</h3>
     <p>Uploads come from <code>multipart/form-data</code>. You can read files, check if they exist, or store them on disk.</p>
     <ul>
-        <li><code>req.file('avatar')</code> — get a single uploaded file.</li>
-        <li><code>req.files('photos')</code> — get multiple files for the same field.</li>
-        <li><code>req.hasFile('avatar')</code> / <code>req.hasFiles('photos')</code> — check if files were sent.</li>
-        <li><code>req.storeFile(...)</code> / <code>req.storeFiles(...)</code> — save to disk and return path(s).</li>
+        <li><code>ctx.req.file('avatar')</code> — get a single uploaded file.</li>
+        <li><code>ctx.req.files('photos')</code> — get multiple files for the same field.</li>
+        <li><code>ctx.req.hasFile('avatar')</code> / <code>ctx.req.hasFiles('photos')</code> — check if files were sent.</li>
+        <li><code>ctx.req.storeFile(...)</code> / <code>ctx.req.storeFiles(...)</code> — save to disk and return path(s).</li>
     </ul>
     <div class="code-block">
-        <pre><code class="language-dart">app.post('/avatar', (req, res) async {
+        <pre><code class="language-dart">app.post('/avatar', (Context ctx) async {
   // Access the uploaded file
-  final upload = await req.file('avatar');
+  final upload = await ctx.req.file('avatar');
   if (upload == null) {
-    return res.status(400).json({'error': 'No file uploaded'});
+    return ctx.res?.status(400).json({'error': 'No file uploaded'});
   }
 
   // Save with a custom name
-  final path = await req.storeFile(
+  final path = await ctx.req.storeFile(
     'avatar',
     directory: 'public/uploads',
     filename: 'user-1.png',
   );
 
-  return res.json({'saved_to': path});
+  return ctx.res?.json({'saved_to': path});
 });</code></pre>
     </div>
     <div class="code-block">
-        <pre><code class="language-dart">app.post('/gallery', (req, res) async {
-  if (!await req.hasFiles('photos')) {
-    return res.status(400).json({'error': 'No photos uploaded'});
+        <pre><code class="language-dart">app.post('/gallery', (Context ctx) async {
+  if (!await ctx.req.hasFiles('photos')) {
+    return ctx.res?.status(400).json({'error': 'No photos uploaded'});
   }
 
-  final paths = await req.storeFiles('photos', directory: 'public/uploads');
-  return res.json({'saved_to': paths});
+  final paths = await ctx.req.storeFiles('photos', directory: 'public/uploads');
+  return ctx.res?.json({'saved_to': paths});
 });</code></pre>
     </div>
     <p class="text-sm text-slate-400">

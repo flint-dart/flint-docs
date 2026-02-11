@@ -42,14 +42,14 @@
 
     <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
         <h3 class="text-sm font-semibold text-white">Example</h3>
-        <pre class="mt-3"><code class="language-dart">app.post('/login', (req, res) async {
-  final data = await req.validate({
+        <pre class="mt-3"><code class="language-dart">app.post('/login', (Context ctx) async {
+  final data = await ctx.req.validate({
     'email': 'required|email',
     'password': 'required|string',
   });
 
   final result = await Auth.login(data['email'], data['password']);
-  return res.json(result);
+  return ctx.res.json(result);
 });</code></pre>
     </div>
 </section>

@@ -86,12 +86,27 @@
 
     <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
         <h3 class="text-sm font-semibold text-white">Example</h3>
-        <pre class="mt-3"><code class="language-dart">app.get('/profile', (req, res) async {
-  final user = await req.user;
+        <pre class="mt-3"><code class="language-dart">app.get('/profile', (Context ctx) async {
+  final user = await ctx.req.user;
   if (user == null) {
-    return res.status(401).json({'error': 'Unauthorized'});
+    return ctx.res.status(401).json({'error': 'Unauthorized'});
   }
-  return res.view('profile.show', data: {'user': user});
+  return ctx.res.view('profile.show', data: {'user': user});
+});</code></pre>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Direct Return Serialization</h3>
+        <pre class="mt-3"><code class="language-dart">class UserDto {
+  final int id;
+  final String email;
+  UserDto(this.id, this.email);
+
+  Map&lt;String, dynamic&gt; toJson() => {'id': id, 'email': email};
+}
+
+app.get('/me', (Context ctx) async {
+  return UserDto(1, 'ada@example.com'); // serialized automatically
 });</code></pre>
     </div>
 </section>

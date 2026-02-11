@@ -48,8 +48,8 @@
 void main() {
   final app = Flint();
 
-  app.get('/', (req, res) async {
-    return res.send('Welcome to Flint Dart!');
+  app.get('/', (Context ctx) async {
+    return ctx.res.send('Welcome to Flint Dart!');
   });
 
   app.listen(port: 3000);

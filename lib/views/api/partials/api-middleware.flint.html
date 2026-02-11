@@ -24,27 +24,52 @@
             <div class="method-description">Attach middleware to a specific route.</div>
         </div>
         <div class="method-item">
+            <div class="method-signature">void websocket(String path, Object handler, {List&lt;Middleware&gt; middlewares = const []})</div>
+            <div class="method-description">Attach middleware directly to a WebSocket route via the <code>middlewares</code> argument.</div>
+        </div>
+        <div class="method-item">
             <div class="method-signature">Built-ins: ExceptionMiddleware, CorsMiddleware, LoggerMiddleware, StaticFileMiddleware, CookieSessionMiddleware</div>
             <div class="method-description">Drop-in middleware shipped with Flint.</div>
         </div>
     </div>
 
     <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
-        <h3 class="text-sm font-semibold text-white">Example</h3>
+        <h3 class="text-sm font-semibold text-white">Declare Middleware</h3>
         <pre class="mt-3"><code class="language-dart">class AuthGuard extends Middleware {
   @override
   Handler handle(Handler next) {
-    return (req, res) async {
-      final user = await req.user;
-      if (user == null) {
-        return res.status(401).json({'error': 'Unauthorized'});
+    return (Context ctx) async {
+      final token = ctx.req.headers['authorization'];
+      if (token == null || token.isEmpty) {
+        if (ctx.res != null) {
+          return ctx.res!.status(401).json({'error': 'Unauthorized'});
+        }
+        return null;
       }
-      return next(req, res);
+      return await next(ctx);
     };
   }
-}
+}</code></pre>
+    </div>
 
-app.get('/private', (req, res) async => res.send('ok'))
-  .useMiddleware(AuthGuard());</code></pre>
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Use on HTTP</h3>
+        <pre class="mt-3"><code class="language-dart">app.get('/private', (Context ctx) async => ctx.res?.send('ok'))
+  .useMiddleware(AuthGuard());
+
+app.use(AuthGuard()); // global</code></pre>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Use on WebSocket</h3>
+        <pre class="mt-3"><code class="language-dart">app.websocket(
+  '/chat',
+  (Context ctx) {
+    final socket = ctx.socket;
+    if (socket == null) return;
+    socket.on('ping', (_) => socket.emit('pong', {'ok': true}));
+  },
+  middlewares: [AuthGuard()],
+);</code></pre>
     </div>
 </section>

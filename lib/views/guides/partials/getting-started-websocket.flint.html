@@ -6,11 +6,14 @@
         Once connected, you can emit or broadcast from anywhere using the global <code>wsManager</code>.
     </p>
 
-    <h3>Server</h3>
+    <h3>Server (Context style)</h3>
     <div class="code-block">
-        <pre><code class="language-dart">app.websocket('/chat', (FlintWebSocket client, Request req, params) {
+        <pre><code class="language-dart">app.websocket('/chat', (Context ctx) {
+  final client = ctx.socket;
+  if (client == null) return;
+
   client.on('message', (data) {
-    client.broadcastToRoom('chat', data);
+    client.broadcastToRoom('chat', data.toString());
   });
 
   client.on('join', (data) {
@@ -31,6 +34,27 @@ ws.emit('join', {'room': 'chat'});
 ws.emit('message', {'text': 'Hello world'});</code></pre>
     </div>
 
+    <h3>Middleware</h3>
+    <p>
+        WebSocket routes support route middleware via the <code>middlewares</code> argument.
+        Use middleware to apply auth, logging, or validation logic around the connected socket handler.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.websocket(
+  '/chat',
+  (Context ctx) {
+    // Connected clients only
+    final client = ctx.socket;
+    if (client == null) return;
+  },
+  middlewares: [AuthMiddleware()],
+);</code></pre>
+    </div>
+    <p class="text-sm text-slate-400">
+        Tip: HTTP middleware does not run for WebSockets. Reuse shared logic by placing it in a middleware
+        class used by both your HTTP routes and WebSocket routes.
+    </p>
+
     <h3>Emit Without Touching a Route</h3>
     <p>
         You still need a route to accept the connection, but you do <em>not</em> need to be inside
@@ -43,6 +67,6 @@ wsManager.emitToClient('clientId123', 'private', {'ok': true});</code></pre>
     </div>
 
     <p class="text-sm text-slate-400">
-        You can use auth middleware to protect WebSocket routes the same way you protect HTTP routes.
+        You can protect WebSocket routes the same way you protect HTTP routes by using middleware.
     </p>
 </section>

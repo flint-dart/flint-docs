@@ -21,7 +21,7 @@ class UserRoutes extends RouteGroup {
     /// @response 200 User registered successfully
     /// @body {"email": "string", "password": "string"}
     /// @auth basicAuth
-    app.post('/', AuthMiddleware().handle(controller.create));
+    app.post('/', controller.create).useMiddleware(AuthMiddleware());
 
     /// @summary Get all users
     /// @server http://localhost:3000
@@ -48,7 +48,7 @@ class UserRoutes extends RouteGroup {
     /// @response 400 Bad request
     /// @response 401 Unauthorized
     /// @response 500 Internal server error
-    app.put('/:id', AuthMiddleware().handle(controller.update));
+    app.put('/:id', controller.update).useMiddleware(AuthMiddleware());
 
     /// @summary Delete a user by ID
     /// @param id path string required id parameter
@@ -57,6 +57,6 @@ class UserRoutes extends RouteGroup {
     /// @response 400 Bad request
     /// @response 401 Unauthorized
     /// @response 500 Internal server error
-    app.delete('/:id', AuthMiddleware().handle(controller.delete));
+    app.delete('/:id', controller.delete).useMiddleware(AuthMiddleware());
   }
 }

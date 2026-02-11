@@ -8,6 +8,9 @@ void main() {
     enableSwaggerDocs: true,
   );
 
+  // Serve static assets (css/js/images)
+  app.static('/assets', 'assets');
+
   // Mount the main AppRoutes
   app.routes(AppRoutes());
   // Start the server

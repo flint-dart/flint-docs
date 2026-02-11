@@ -137,16 +137,16 @@ class Post extends Model<Post> {
 
   @override
   Handler handle(Handler next) {
-    return (req, res) async {
-      final user = await req.user;
+    return (Context ctx) async {
+      final user = await ctx.req.user;
       if (user == null) {
-        return res.status(401).json({'error': 'Unauthorized'});
+        return ctx.res.status(401).json({'error': 'Unauthorized'});
       }
       final role = user['role'];
       if (!allowedRoles.contains(role)) {
-        return res.status(403).json({'error': 'Forbidden'});
+        return ctx.res.status(403).json({'error': 'Forbidden'});
       }
-      return next(req, res);
+      return next(ctx);
     };
   }
 }</code></pre>
@@ -155,13 +155,13 @@ class Post extends Model<Post> {
             <li>
                 <h4>Create Controllers</h4>
                 <p>Publish posts with role checks and comment support:</p>
-                <pre><code class="language-dart">app.post('/posts', (req, res) async {
-  final data = await req.validate({
+                <pre><code class="language-dart">app.post('/posts', (Context ctx) async {
+  final data = await ctx.req.validate({
     'title': 'required|string',
     'content': 'required|string',
   });
 
-  final user = await req.user;
+  final user = await ctx.req.user;
   final post = await Post().create({
     'title': data['title'],
     'content': data['content'],
@@ -169,20 +169,20 @@ class Post extends Model<Post> {
     'user_id': user?['id'],
   });
 
-  return res.json({'success': true, 'post': post}, status: 201);
+  return ctx.res.json({'success': true, 'post': post}, status: 201);
 }).useMiddleware(RoleGuard(['admin', 'contributor']));
 
-app.post('/posts/:id/comments', (req, res) async {
-  final data = await req.validate({'content': 'required|string'});
-  final user = await req.user;
+app.post('/posts/:id/comments', (Context ctx) async {
+  final data = await ctx.req.validate({'content': 'required|string'});
+  final user = await ctx.req.user;
 
   final comment = await Comment().create({
     'content': data['content'],
-    'post_id': req.param('id'),
+    'post_id': ctx.req.param('id'),
     'user_id': user?['id'],
   });
 
-  return res.json({'success': true, 'comment': comment});
+  return ctx.res.json({'success': true, 'comment': comment});
 }).useMiddleware(RoleGuard(['admin', 'contributor', 'dev']));</code></pre>
             </li>
         </ol>
@@ -241,13 +241,13 @@ class Answer extends Model<Answer> {
             <li>
                 <h4>Routes & Role Guard</h4>
                 <p>Allow devs to post questions and answers:</p>
-                <pre><code class="language-dart">app.post('/questions', (req, res) async {
-  final data = await req.validate({
+                <pre><code class="language-dart">app.post('/questions', (Context ctx) async {
+  final data = await ctx.req.validate({
     'title': 'required|string',
     'body': 'required|string',
   });
 
-  final user = await req.user;
+  final user = await ctx.req.user;
   final question = await Question().create({
     'title': data['title'],
     'body': data['body'],
@@ -255,37 +255,37 @@ class Answer extends Model<Answer> {
     'user_id': user?['id'],
   });
 
-  return res.json({'success': true, 'question': question}, status: 201);
+  return ctx.res.json({'success': true, 'question': question}, status: 201);
 }).useMiddleware(RoleGuard(['dev', 'admin', 'contributor']));
 
-app.post('/questions/:id/answers', (req, res) async {
-  final data = await req.validate({'body': 'required|string'});
-  final user = await req.user;
+app.post('/questions/:id/answers', (Context ctx) async {
+  final data = await ctx.req.validate({'body': 'required|string'});
+  final user = await ctx.req.user;
 
   final answer = await Answer().create({
     'body': data['body'],
-    'question_id': req.param('id'),
+    'question_id': ctx.req.param('id'),
     'user_id': user?['id'],
   });
 
-  return res.json({'success': true, 'answer': answer}, status: 201);
+  return ctx.res.json({'success': true, 'answer': answer}, status: 201);
 }).useMiddleware(RoleGuard(['dev', 'admin', 'contributor']));</code></pre>
             </li>
 
             <li>
                 <h4>Comments</h4>
                 <p>Reuse the comment model to attach comments to questions or answers:</p>
-                <pre><code class="language-dart">app.post('/questions/:id/comments', (req, res) async {
-  final data = await req.validate({'content': 'required|string'});
-  final user = await req.user;
+                <pre><code class="language-dart">app.post('/questions/:id/comments', (Context ctx) async {
+  final data = await ctx.req.validate({'content': 'required|string'});
+  final user = await ctx.req.user;
 
   final comment = await Comment().create({
     'content': data['content'],
-    'question_id': req.param('id'),
+    'question_id': ctx.req.param('id'),
     'user_id': user?['id'],
   });
 
-  return res.json({'success': true, 'comment': comment});
+  return ctx.res.json({'success': true, 'comment': comment});
 }).useMiddleware(RoleGuard(['dev', 'admin', 'contributor']));</code></pre>
             </li>
         </ol>

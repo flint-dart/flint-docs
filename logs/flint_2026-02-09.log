@@ -440,3 +440,125 @@
 {"timestamp":"2026-02-09T11:45:18.129016","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/questions/show.flint.html","error":null,"stack":null}
 {"timestamp":"2026-02-09T11:45:31.673960","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
 {"timestamp":"2026-02-09T11:45:31.674256","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T11:50:34.413641","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T11:50:34.413940","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T11:50:49.037641","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T11:50:49.038109","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T11:52:20.095558","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: questions.show","error":null,"stack":null}
+{"timestamp":"2026-02-09T11:52:20.095906","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/questions/show.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T11:52:34.535539","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T11:52:34.535931","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T11:53:09.232466","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T11:53:09.232796","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:03:43.907144","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:03:43.907384","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:06:57.156906","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Restarting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:06:57.157166","level":"DEBUG","tag":"","message":"♻️ Stopping old server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:06:57.203150","level":"DEBUG","tag":"","message":"🚀 Starting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:06:59.213984","level":"DEBUG","tag":"","message":"✅ Server started","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:07:06.445746","level":"DEBUG","tag":"","message":"[FLINT] ⚠️ Hot reload is ENABLED.","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:07:06.452912","level":"DEBUG","tag":"","message":"FLINT_HOT=1","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:07:06.480797","level":"DEBUG","tag":"","message":"[FLINT] Server Worker running on http://localhost:3030 (PID: 45870)","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:07:06.486033","level":"DEBUG","tag":"","message":"[FLINT] Database auto-connected via .env","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:07:06.488151","level":"DEBUG","tag":"","message":"📧 Mail server configured for Eucloudhost <noreply@eulogia.net>@smtp.gmail.com","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:07:06.488532","level":"INFO","tag":"","message":"📧 Mail configured using provider: gmail","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:07:06.753486","level":"DEBUG","tag":"","message":"[DEBUG] Swagger UI directory: /home/aim/Projects/eulogia/flint/flint_dart/lib/swagger/swagger-ui","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:07:06.869916","level":"DEBUG","tag":"","message":"✅ MySQL connected to flint_docs@localhost:3306","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:19:33.191845","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:19:33.193391","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:19:43.749230","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:19:43.749642","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:22.610055","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Restarting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:22.611218","level":"DEBUG","tag":"","message":"♻️ Stopping old server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:22.716603","level":"DEBUG","tag":"","message":"🚀 Starting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:24.729018","level":"DEBUG","tag":"","message":"✅ Server started","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:30.326897","level":"DEBUG","tag":"","message":"[FLINT] ⚠️ Hot reload is ENABLED.","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:30.334749","level":"DEBUG","tag":"","message":"FLINT_HOT=1","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:30.364677","level":"DEBUG","tag":"","message":"[FLINT] Server Worker running on http://localhost:3030 (PID: 49514)","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:30.368720","level":"DEBUG","tag":"","message":"[FLINT] Database auto-connected via .env","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:30.370181","level":"DEBUG","tag":"","message":"📧 Mail server configured for Eucloudhost <noreply@eulogia.net>@smtp.gmail.com","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:30.370426","level":"INFO","tag":"","message":"📧 Mail configured using provider: gmail","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:30.575748","level":"DEBUG","tag":"","message":"[DEBUG] Swagger UI directory: /home/aim/Projects/eulogia/flint/flint_dart/lib/swagger/swagger-ui","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:23:30.705844","level":"DEBUG","tag":"","message":"✅ MySQL connected to flint_docs@localhost:3306","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:00.284628","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: questions.show","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:00.285266","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/questions/show.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:05.680935","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:05.682259","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:30.613129","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Restarting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:30.613985","level":"DEBUG","tag":"","message":"♻️ Stopping old server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:30.738934","level":"DEBUG","tag":"","message":"🚀 Starting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:32.765001","level":"DEBUG","tag":"","message":"✅ Server started","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:39.493513","level":"DEBUG","tag":"","message":"[FLINT] ⚠️ Hot reload is ENABLED.","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:39.504134","level":"DEBUG","tag":"","message":"FLINT_HOT=1","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:39.539304","level":"DEBUG","tag":"","message":"[FLINT] Server Worker running on http://localhost:3030 (PID: 50132)","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:39.544921","level":"DEBUG","tag":"","message":"[FLINT] Database auto-connected via .env","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:39.548515","level":"DEBUG","tag":"","message":"📧 Mail server configured for Eucloudhost <noreply@eulogia.net>@smtp.gmail.com","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:39.549270","level":"INFO","tag":"","message":"📧 Mail configured using provider: gmail","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:39.756448","level":"DEBUG","tag":"","message":"[DEBUG] Swagger UI directory: /home/aim/Projects/eulogia/flint/flint_dart/lib/swagger/swagger-ui","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:25:39.879762","level":"DEBUG","tag":"","message":"✅ MySQL connected to flint_docs@localhost:3306","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:26:20.085592","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:26:20.086434","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:26:51.987067","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Restarting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:26:51.987653","level":"DEBUG","tag":"","message":"♻️ Stopping old server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:26:52.111641","level":"DEBUG","tag":"","message":"🚀 Starting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:26:54.134164","level":"DEBUG","tag":"","message":"✅ Server started","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:27:00.096016","level":"DEBUG","tag":"","message":"[FLINT] ⚠️ Hot reload is ENABLED.","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:27:00.111787","level":"DEBUG","tag":"","message":"FLINT_HOT=1","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:27:00.160161","level":"DEBUG","tag":"","message":"[FLINT] Server Worker running on http://localhost:3030 (PID: 50626)","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:27:00.165600","level":"DEBUG","tag":"","message":"[FLINT] Database auto-connected via .env","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:27:00.167756","level":"DEBUG","tag":"","message":"📧 Mail server configured for Eucloudhost <noreply@eulogia.net>@smtp.gmail.com","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:27:00.168093","level":"INFO","tag":"","message":"📧 Mail configured using provider: gmail","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:27:00.345556","level":"DEBUG","tag":"","message":"[DEBUG] Swagger UI directory: /home/aim/Projects/eulogia/flint/flint_dart/lib/swagger/swagger-ui","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:27:00.474062","level":"DEBUG","tag":"","message":"✅ MySQL connected to flint_docs@localhost:3306","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:33:36.498154","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:33:36.498489","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:33:47.784421","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Template changed: layouts.app","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:33:47.785054","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 📁 File: lib/views/layouts/app.flint.html","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:01.429902","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Restarting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:01.430187","level":"DEBUG","tag":"","message":"♻️ Stopping old server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:01.491594","level":"DEBUG","tag":"","message":"🚀 Starting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:03.501991","level":"DEBUG","tag":"","message":"✅ Server started","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:14.746477","level":"DEBUG","tag":"","message":"[FLINT] ⚠️ Hot reload is ENABLED.","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:14.766880","level":"DEBUG","tag":"","message":"FLINT_HOT=1","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:14.806585","level":"DEBUG","tag":"","message":"[FLINT] Server Worker running on http://localhost:3030 (PID: 52893)","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:14.812215","level":"DEBUG","tag":"","message":"[FLINT] Database auto-connected via .env","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:14.814477","level":"DEBUG","tag":"","message":"📧 Mail server configured for Eucloudhost <noreply@eulogia.net>@smtp.gmail.com","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:14.815190","level":"INFO","tag":"","message":"📧 Mail configured using provider: gmail","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:15.023074","level":"DEBUG","tag":"","message":"[DEBUG] Swagger UI directory: /home/aim/Projects/eulogia/flint/flint_dart/lib/swagger/swagger-ui","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:39:15.136099","level":"DEBUG","tag":"","message":"✅ MySQL connected to flint_docs@localhost:3306","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:00.078059","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Restarting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:00.078976","level":"DEBUG","tag":"","message":"♻️ Stopping old server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:00.206820","level":"DEBUG","tag":"","message":"🚀 Starting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:01.695978","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Restarting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:01.696463","level":"DEBUG","tag":"","message":"♻️ Stopping old server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:01.729936","level":"DEBUG","tag":"","message":"⚠️ Server failed to start: -2","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:01.730425","level":"DEBUG","tag":"","message":"🚀 Starting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:03.809263","level":"DEBUG","tag":"","message":"✅ Server started","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:06.265913","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Restarting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:06.266258","level":"DEBUG","tag":"","message":"♻️ Stopping old server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:06.314056","level":"DEBUG","tag":"","message":"🚀 Starting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:07.457948","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Restarting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:07.458356","level":"DEBUG","tag":"","message":"♻️ Stopping old server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:07.482734","level":"DEBUG","tag":"","message":"⚠️ Server failed to start: -2","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:07.483208","level":"DEBUG","tag":"","message":"🚀 Starting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:09.499956","level":"DEBUG","tag":"","message":"✅ Server started","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:15.193419","level":"DEBUG","tag":"","message":"[FLINT] ⚠️ Hot reload is ENABLED.","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:15.201926","level":"DEBUG","tag":"","message":"FLINT_HOT=1","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:15.233753","level":"DEBUG","tag":"","message":"[FLINT] Server Worker running on http://localhost:3030 (PID: 53932)","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:15.239154","level":"DEBUG","tag":"","message":"[FLINT] Database auto-connected via .env","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:15.241222","level":"DEBUG","tag":"","message":"📧 Mail server configured for Eucloudhost <noreply@eulogia.net>@smtp.gmail.com","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:15.241929","level":"INFO","tag":"","message":"📧 Mail configured using provider: gmail","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:15.452411","level":"DEBUG","tag":"","message":"[DEBUG] Swagger UI directory: /home/aim/Projects/eulogia/flint/flint_dart/lib/swagger/swagger-ui","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:44:15.575039","level":"DEBUG","tag":"","message":"✅ MySQL connected to flint_docs@localhost:3306","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:20.005100","level":"DEBUG","tag":"","message":"[HOT-RELOAD] 🔄 Restarting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:20.005814","level":"DEBUG","tag":"","message":"♻️ Stopping old server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:20.131208","level":"DEBUG","tag":"","message":"🚀 Starting server...","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:22.151109","level":"DEBUG","tag":"","message":"✅ Server started","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:29.677096","level":"DEBUG","tag":"","message":"[FLINT] ⚠️ Hot reload is ENABLED.","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:29.689071","level":"DEBUG","tag":"","message":"FLINT_HOT=1","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:29.738617","level":"DEBUG","tag":"","message":"[FLINT] Server Worker running on http://localhost:3030 (PID: 54595)","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:29.752383","level":"DEBUG","tag":"","message":"[FLINT] Database auto-connected via .env","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:29.757678","level":"DEBUG","tag":"","message":"📧 Mail server configured for Eucloudhost <noreply@eulogia.net>@smtp.gmail.com","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:29.759547","level":"INFO","tag":"","message":"📧 Mail configured using provider: gmail","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:30.037942","level":"DEBUG","tag":"","message":"[DEBUG] Swagger UI directory: /home/aim/Projects/eulogia/flint/flint_dart/lib/swagger/swagger-ui","error":null,"stack":null}
+{"timestamp":"2026-02-09T12:46:30.148821","level":"DEBUG","tag":"","message":"✅ MySQL connected to flint_docs@localhost:3306","error":null,"stack":null}

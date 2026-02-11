@@ -11,24 +11,24 @@
             <div class="method-description">Singleton session manager configured via <code>SESSION_DRIVER</code>.</div>
         </div>
         <div class="method-item">
-            <div class="method-signature">Future&lt;String&gt; req.startSession(Map&lt;String, dynamic&gt; data, {Duration? ttl})</div>
+            <div class="method-signature">Future&lt;String&gt; ctx.req.startSession(Map&lt;String, dynamic&gt; data, {Duration? ttl})</div>
             <div class="method-description">Create a session and set the <code>FLINTSESSID</code> cookie.</div>
         </div>
         <div class="method-item">
-            <div class="method-signature">Future&lt;Map&lt;String, dynamic&gt;?&gt; req.session</div>
+            <div class="method-signature">Future&lt;Map&lt;String, dynamic&gt;?&gt; ctx.req.session</div>
             <div class="method-description">Read session data for the current request.</div>
         </div>
         <div class="method-item">
-            <div class="method-signature">Future&lt;void&gt; req.destroySession()</div>
+            <div class="method-signature">Future&lt;void&gt; ctx.req.destroySession()</div>
             <div class="method-description">Destroy the current session and clear the cookie.</div>
         </div>
     </div>
 
     <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
         <h3 class="text-sm font-semibold text-white">Example</h3>
-        <pre class="mt-3"><code class="language-dart">app.post('/session', (req, res) async {
-  await req.startSession({'id': 'user-1', 'role': 'admin'});
-  return res.json({'ok': true});
+        <pre class="mt-3"><code class="language-dart">app.post('/session', (Context ctx) async {
+  await ctx.req.startSession({'id': 'user-1', 'role': 'admin'});
+  return ctx.res.json({'ok': true});
 });</code></pre>
     </div>
 </section>

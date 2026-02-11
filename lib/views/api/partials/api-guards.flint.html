@@ -6,7 +6,7 @@
     </div>
 
     <p class="text-sm text-slate-400">
-        Flint does not require a separate guard system. Use middleware and <code>req.user</code> to enforce access.
+        Flint does not require a separate guard system. Use middleware and <code>ctx.req.user</code> to enforce access.
     </p>
 
     <div class="mt-4 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
@@ -14,17 +14,17 @@
         <pre class="mt-3"><code class="language-dart">class AuthGuard extends Middleware {
   @override
   Handler handle(Handler next) {
-    return (req, res) async {
-      final user = await req.user;
+    return (Context ctx) async {
+      final user = await ctx.req.user;
       if (user == null) {
-        return res.status(401).json({'error': 'Unauthorized'});
+        return ctx.res.status(401).json({'error': 'Unauthorized'});
       }
-      return next(req, res);
+      return next(ctx);
     };
   }
 }
 
-app.get('/dashboard', (req, res) async => res.send('ok'))
+app.get('/dashboard', (Context ctx) async => ctx.res.send('ok'))
   .useMiddleware(AuthGuard());</code></pre>
     </div>
 </section>

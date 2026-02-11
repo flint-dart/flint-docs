@@ -10,12 +10,12 @@
         Validation failures throw <code>ValidationException</code>, which is handled for you:
     </p>
     <div class="code-block">
-        <pre><code class="language-dart">app.post('/users', (req, res) async {
-  final body = await req.validate({
+        <pre><code class="language-dart">app.post('/users', (Context ctx) async {
+  final body = await ctx.req.validate({
     'email': 'required|email',
     'password': 'required|string|min:8',
   });
-  return res.json({'ok': true, 'data': body});
+  return ctx.res.json({'ok': true, 'data': body});
 });</code></pre>
     </div>
 
@@ -29,6 +29,6 @@
         For custom error responses, return directly from your handler:
     </p>
     <div class="code-block">
-        <pre><code class="language-dart">return res.status(403).json({'error': 'Forbidden'});</code></pre>
+        <pre><code class="language-dart">return ctx.res.status(403).json({'error': 'Forbidden'});</code></pre>
     </div>
 </section>

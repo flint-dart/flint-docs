@@ -13,7 +13,7 @@ final token = Auth.generateToken({'id': userId, 'email': userEmail});
 // Verify an incoming token
 final payload = Auth.verifyToken(token);
 if (payload == null) {
-  return res.status(401).json({'error': 'Invalid token'});
+  return ctx.res?.status(401).json({'error': 'Invalid token'});
 }</code></pre>
     </div>
 

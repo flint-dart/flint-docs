@@ -23,15 +23,15 @@ class UserController {
   final UserService service;
   UserController(this.service);
 
-  Future<Response> index(Request req, Response res) async {
+  Future<Object?> index(Context ctx) async {
     final result = await service.listUsers();
-    return res.json(result);
+    return ctx.res?.json(result);
   }
 
-  Future<Response> store(Request req, Response res) async {
-    final data = await req.json();
+  Future<Object?> store(Context ctx) async {
+    final data = await ctx.req.json();
     final result = await service.createUser(data);
-    return res.json(result);
+    return ctx.res?.json(result);
   }
 }
 

@@ -1,11 +1,11 @@
 <section id="views" class="section">
     <h2>Views</h2>
     <p>
-        Views are stored in <code>lib/views</code>. Render them using <code>res.view()</code>:
+        Views are stored in <code>lib/views</code>. Render them using <code>ctx.res.view()</code>:
     </p>
     <div class="code-block">
-        <pre><code class="language-dart">app.get('/', (req, res) async {
-  return res.view('home', data: {
+        <pre><code class="language-dart">app.get('/', (Context ctx) async {
+  return ctx.res.view('home', data: {
     'title': 'Flint Docs'
   });
 });</code></pre>

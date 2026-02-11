@@ -4,6 +4,7 @@ import 'package:flint_docs/models/answer_model.dart';
 import 'package:flint_docs/models/blog_post_model.dart';
 import 'package:flint_docs/models/comment_model.dart';
 import 'package:flint_docs/models/question_model.dart';
+import 'dart:io';
 
 /// Routes that render Flint templates from lib/views
 class WebRoutes extends RouteGroup {
@@ -45,6 +46,31 @@ class WebRoutes extends RouteGroup {
     // Examples
     app.get('/examples', (req, res) async {
       return res.view('examples.index', data: await _baseData(req));
+    });
+
+    // Changelog
+    app.get('/changelog', (req, res) async {
+      final changelogMarkdown = await _loadFrameworkChangelog();
+      final changelogEntries = _parseChangelogEntries(changelogMarkdown);
+      return res.view('changelog', data: {
+        ...await _baseData(req),
+        'title': 'Changelog - Flint Dart',
+        'description':
+            'Track framework releases, fixes, and breaking changes in Flint Dart.',
+        'url': '/changelog',
+        'changelogEntries': changelogEntries,
+      });
+    });
+
+    // What's New
+    app.get('/whats-new', (req, res) async {
+      return res.view('whats-new', data: {
+        ...await _baseData(req),
+        'title': "What's New - Flint Dart",
+        'description':
+            'See the latest improvements and newly added capabilities in Flint Dart.',
+        'url': '/whats-new',
+      });
     });
 
     // Blog list
@@ -245,6 +271,7 @@ class WebRoutes extends RouteGroup {
     // Question detail
     app.get('/questions/:slug', (req, res) async {
       final user = await req.user;
+      print(user);
       final slug = req.param('slug');
       if (slug == null) {
         return res.status(404).send('Not found');
@@ -257,15 +284,15 @@ class WebRoutes extends RouteGroup {
 
       final viewModel = _toQuestionViewModel(question.toMap());
       final currentUserId = user?['id']?.toString();
-      final currentUserName =
-          user?['name']?.toString() ?? user?['email']?.toString();
+      final currentUserName = user?['name']?.toString();
+      final currentUserEmail = user?['email']?.toString();
       final answers = await _fetchAnswersForQuestion(
         question.toMap(),
         currentUserId,
         currentUserName,
+        currentUserEmail,
       );
 
-      print(answers);
       return res.view('questions.show', data: {
         ...await _baseData(req),
         'question': viewModel,
@@ -356,14 +383,18 @@ class WebRoutes extends RouteGroup {
             .json({'status': false, 'message': 'Answer not found'});
       }
 
-      final ownerId = answerMap['user_id']?.toString();
-      final userId = user['id']?.toString();
-      if (ownerId == null || userId == null || ownerId != userId) {
+      final canEdit = _canEditAnswer(
+        answerMap,
+        user['id']?.toString(),
+        user['name']?.toString(),
+        user['email']?.toString(),
+      );
+      if (!canEdit) {
         return res.status(403).json({'status': false, 'message': 'Forbidden'});
       }
 
       await answer.delete();
-      return res.redirect('/questions/$slug#answers');
+      return res.json({'status': true});
     });
 
     // Update answer (owner only)
@@ -402,9 +433,13 @@ class WebRoutes extends RouteGroup {
             .json({'status': false, 'message': 'Answer not found'});
       }
 
-      final ownerId = answerMap['user_id']?.toString();
-      final userId = user['id']?.toString();
-      if (ownerId == null || userId == null || ownerId != userId) {
+      final canEdit = _canEditAnswer(
+        answerMap,
+        user['id']?.toString(),
+        user['name']?.toString(),
+        user['email']?.toString(),
+      );
+      if (!canEdit) {
         return res.status(403).json({'status': false, 'message': 'Forbidden'});
       }
 
@@ -424,6 +459,100 @@ class WebRoutes extends RouteGroup {
         return res.status(500).json({'status': false, 'message': e.toString()});
       }
     });
+  }
+
+  Future<String> _loadFrameworkChangelog() async {
+    final candidates = <String>[
+      '../flint_dart/CHANGELOG.md',
+      'flint_dart/CHANGELOG.md',
+      'CHANGELOG.md',
+    ];
+
+    for (final filePath in candidates) {
+      final file = File(filePath);
+      if (await file.exists()) {
+        return await file.readAsString();
+      }
+    }
+
+    return '# Changelog not found\n\nUnable to locate `flint_dart/CHANGELOG.md`.';
+  }
+
+  List<Map<String, String>> _parseChangelogEntries(String markdown) {
+    final lines = markdown.replaceAll('\r\n', '\n').split('\n');
+    final entries = <Map<String, String>>[];
+    final buffer = <String>[];
+    String? currentVersion;
+
+    void flush() {
+      final version = currentVersion;
+      if (version == null) return;
+      final content = buffer.join('\n').trim();
+      entries.add({
+        'version': version,
+        'content': content.isEmpty ? 'No details provided.' : content,
+      });
+      buffer.clear();
+    }
+
+    for (final rawLine in lines) {
+      final line = rawLine.trimRight();
+      final version = _extractVersion(line);
+      if (version != null) {
+        flush();
+        currentVersion = version;
+
+        final headerDetails = _extractHeaderDetails(line, version);
+        if (headerDetails.isNotEmpty) {
+          buffer.add(headerDetails);
+        }
+        continue;
+      }
+
+      if (currentVersion == null) continue;
+      final cleaned = _cleanChangelogLine(line);
+      if (cleaned.isEmpty && buffer.isNotEmpty && buffer.last.isEmpty) continue;
+      buffer.add(cleaned);
+    }
+
+    flush();
+    return entries;
+  }
+
+  String? _extractVersion(String line) {
+    final bracketMatch =
+        RegExp(r'\[(\d+\.\d+\.\d+(?:\+\d+)?)\]').firstMatch(line);
+    if (bracketMatch != null) return bracketMatch.group(1);
+
+    final versionTextMatch =
+        RegExp(r'Version\s+(\d+\.\d+\.\d+(?:\+\d+)?)', caseSensitive: false)
+            .firstMatch(line);
+    if (versionTextMatch != null) return versionTextMatch.group(1);
+
+    return null;
+  }
+
+  String _extractHeaderDetails(String line, String version) {
+    String cleaned = line;
+    final escapedVersion = RegExp.escape(version);
+    final bracketMatch = RegExp('\\[$escapedVersion\\]').firstMatch(cleaned);
+    if (bracketMatch != null) {
+      cleaned = cleaned.substring(bracketMatch.end);
+    } else {
+      cleaned = cleaned.replaceAll(
+        RegExp('Version\\s+$escapedVersion', caseSensitive: false),
+        '',
+      );
+    }
+    cleaned = cleaned.replaceAll(RegExp(r'^[\s#\-\–—:]+'), '').trim();
+    return cleaned;
+  }
+
+  String _cleanChangelogLine(String line) {
+    return line
+        .replaceAll(RegExp(r'^\s*---+\s*'), '')
+        .replaceAll(RegExp(r'^```+\s*$'), '')
+        .trimRight();
   }
 
   Future<List<Map<String, dynamic>>> _fetchBlogPosts() async {
@@ -454,7 +583,8 @@ class WebRoutes extends RouteGroup {
   Future<List<Map<String, dynamic>>> _fetchAnswersForQuestion(
       Map<String, dynamic> question,
       String? currentUserId,
-      String? currentUserName) async {
+      String? currentUserName,
+      String? currentUserEmail) async {
     final questionId = question['id']?.toString();
     if (questionId == null) return [];
     final qb = QueryBuilder(table: 'answers')
@@ -463,14 +593,14 @@ class WebRoutes extends RouteGroup {
     final rows = await qb.get();
     return rows.map((row) {
       final viewModel = _toAnswerViewModel(row);
-      final ownerId = row['user_id']?.toString();
-      final authorName = row['author']?.toString();
-      final canEditByName =
-          currentUserName != null && authorName == currentUserName;
       final data = {
         ...viewModel,
-        'can_edit': (currentUserId != null && ownerId == currentUserId) ||
-            canEditByName,
+        'can_edit': _canEditAnswer(
+          row,
+          currentUserId,
+          currentUserName,
+          currentUserEmail,
+        ),
       };
 
       return data;
@@ -553,6 +683,39 @@ class WebRoutes extends RouteGroup {
     ];
     final month = months[date.month - 1];
     return '$month ${date.day}, ${date.year}';
+  }
+
+  bool _canEditAnswer(
+    Map<String, dynamic> answer,
+    String? userId,
+    String? userName,
+    String? userEmail,
+  ) {
+    final ownerId =
+        answer['user_id']?.toString() ?? answer['userId']?.toString();
+    if (ownerId != null && userId != null) {
+      final normalizedOwner = ownerId.trim().toLowerCase();
+      final normalizedUser = userId.trim().toLowerCase();
+      if (normalizedOwner == normalizedUser) {
+        return true;
+      }
+    }
+    final author = answer['author']?.toString();
+    if (author == null) return false;
+    final normalizedAuthor = author.trim().toLowerCase();
+    final normalizedName = userName?.trim().toLowerCase();
+    final normalizedEmail = userEmail?.trim().toLowerCase();
+    if (normalizedName != null &&
+        (normalizedAuthor == normalizedName ||
+            normalizedAuthor.contains(normalizedName))) {
+      return true;
+    }
+    if (normalizedEmail != null &&
+        (normalizedAuthor == normalizedEmail ||
+            normalizedAuthor.contains(normalizedEmail))) {
+      return true;
+    }
+    return false;
   }
 
   String _escapeHtml(String input) {

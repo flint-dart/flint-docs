@@ -16,8 +16,8 @@
             <div class="method-description">Create a new app instance with optional defaults for middleware, DB, mail, and Swagger docs.</div>
         </div>
         <div class="method-item">
-            <div class="method-signature">RouteBuilder get/post/put/delete/patch(String path, Handler handler)</div>
-            <div class="method-description">Register HTTP routes with optional route-level middleware via <code>RouteBuilder.useMiddleware</code>.</div>
+            <div class="method-signature">RouteBuilder get/post/put/delete/patch(String path, Object handler)</div>
+            <div class="method-description">Register HTTP routes using Context handlers (or legacy handlers) with optional route-level middleware via <code>RouteBuilder.useMiddleware</code>.</div>
         </div>
         <div class="method-item">
             <div class="method-signature">RouteBuilder route(String method, String path, Handler handler)</div>
@@ -36,8 +36,8 @@
             <div class="method-description">Register a route group and optional nested groups with composed prefixes and middleware.</div>
         </div>
         <div class="method-item">
-            <div class="method-signature">void websocket(String path, WsHandler handler, {WsAuthMiddleware? auth})</div>
-            <div class="method-description">Register a WebSocket endpoint with optional auth middleware.</div>
+            <div class="method-signature">void websocket(String path, Object handler, {List&lt;Middleware&gt; middlewares = const []})</div>
+            <div class="method-description">Register a WebSocket endpoint with Context handler support and optional route middleware.</div>
         </div>
         <div class="method-item">
             <div class="method-signature">void static(String urlPrefix, String directoryPath)</div>
@@ -56,9 +56,9 @@
 void main() {
   final app = Flint(enableSwaggerDocs: true);
 
-  app.get('/health', (req, res) async {
-    return res.json({'status': 'ok'});
-  });
+	  app.get('/health', (Context ctx) async {
+	    return ctx.res?.json({'status': 'ok'});
+	  });
 
   app.listen(port: 3030, hotReload: true);
 }</code></pre>
