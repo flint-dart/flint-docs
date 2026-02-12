@@ -104,6 +104,16 @@ app.put('/:id', AuthMiddleware().handle(controller.update));'''
           'code': '''final token = JwtUtil.generateToken({'userId': 123});
 final payload = JwtUtil.verifyToken(token);'''
         },
+        {
+          'title': 'Flash + Back Redirect',
+          'code': '''app.post('/settings', (Context ctx) async {
+  final data = await ctx.req.validate({'name': 'required|string'});
+  // ... persist settings
+  return ctx.res
+      ?.withSuccess('Settings updated successfully.')
+      .back(fallback: '/settings');
+});'''
+        },
       ];
 
       return res.view('home', data: {

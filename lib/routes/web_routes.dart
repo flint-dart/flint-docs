@@ -86,14 +86,11 @@ class WebRoutes extends RouteGroup {
       });
     });
 
-    // Write blog post
-    app.get('/blog/write', (req, res) async {
+    // Write/create blog post
+    Future<Response> showBlogCreate(Request req, Response res) async {
       final user = await req.user;
       final role = user?['role'];
-      if (user == null ||
-          (role != 'admin' &&
-              role != 'contributor' &&
-              role != 'collaborator')) {
+      if (user == null || !_canWriteBlogRole(role?.toString())) {
         return res.status(403).send('Forbidden');
       }
 
@@ -101,18 +98,18 @@ class WebRoutes extends RouteGroup {
         ...await _baseData(req),
         'title': 'Write a Blog Post',
         'description': 'Draft a new Flint blog post.',
-        'url': '/blog/write',
+        'url': '/blog/create',
       });
-    });
+    }
 
-    app.post('/blog/write', (req, res) async {
+    Future<Response> submitBlogCreate(Request req, Response res) async {
       final user = await req.user;
       if (user == null) {
         return res.status(401).json({'error': 'Unauthorized'});
       }
 
-      final role = user['role'];
-      if (role != 'admin' && role != 'contributor' && role != 'collaborator') {
+      final role = user['role']?.toString();
+      if (!_canWriteBlogRole(role)) {
         return res.status(403).json({'error': 'Forbidden'});
       }
 
@@ -142,7 +139,13 @@ class WebRoutes extends RouteGroup {
       }
 
       return res.redirect('/blog/${created['slug']}');
-    });
+    }
+
+    app.get('/blog/create', showBlogCreate);
+    app.get('/blog/write', (req, res) => res.redirect('/blog/create', status: 301));
+
+    app.post('/blog/create', submitBlogCreate);
+    app.post('/blog/write', submitBlogCreate);
 
     // Blog detail
     app.get('/blog/:slug', (req, res) async {
@@ -157,7 +160,13 @@ class WebRoutes extends RouteGroup {
       }
 
       final viewModel = _toBlogViewModel(post.toMap());
-      final comments = await _fetchCommentsForPost(post.toMap());
+      final user = await req.user;
+      final comments = await _fetchCommentsForPost(
+        post.toMap(),
+        user?['id']?.toString(),
+        user?['name']?.toString(),
+        user?['email']?.toString(),
+      );
       return res.view('blog.show', data: {
         ...await _baseData(req),
         'post': viewModel,
@@ -200,6 +209,86 @@ class WebRoutes extends RouteGroup {
         });
 
         return res.redirect('/blog/$slug#comments');
+      } on ValidationException catch (e) {
+        return res.status(422).json({'status': false, 'errors': e.errors});
+      } catch (e) {
+        return res.status(500).json({'status': false, 'message': e.toString()});
+      }
+    });
+
+    // Update blog comment (owner only)
+    app.post('/blog/:slug/comments/:id/update', (req, res) async {
+      final slug = req.param('slug');
+      final commentId = req.param('id');
+      if (slug == null || commentId == null) {
+        return res.status(404).send('Not found');
+      }
+
+      final user = await req.user;
+      if (user == null) {
+        return res
+            .status(401)
+            .json({'status': false, 'message': 'Unauthorized'});
+      }
+
+      final post = await BlogPost().firstWhere('slug', slug);
+      if (post == null) {
+        return res.status(404).send('Post not found');
+      }
+
+      final comment = await Comment().find(commentId);
+      if (comment == null) {
+        return res
+            .status(404)
+            .json({'status': false, 'message': 'Comment not found'});
+      }
+
+      final commentMap = comment.toMap();
+      final commentPostId = commentMap['post_id']?.toString();
+      final postId = post.getAttribute('id')?.toString();
+      if (commentPostId != postId) {
+        return res
+            .status(404)
+            .json({'status': false, 'message': 'Comment not found'});
+      }
+
+      final canEdit = _canEditComment(
+        commentMap,
+        user['id']?.toString(),
+        user['name']?.toString(),
+        user['email']?.toString(),
+      );
+      if (!canEdit) {
+        return res.status(403).json({'status': false, 'message': 'Forbidden'});
+      }
+
+      try {
+        final data = await req.validate({
+          'body': 'required|string|min:3',
+        });
+
+        await comment.update(data: {
+          'body': data['body'],
+        });
+
+        final refreshed = await Comment().find(commentId);
+        final updatedMap = refreshed?.toMap();
+        final persistedBody = updatedMap?['body']?.toString().trim();
+        final requestedBody = data['body']?.toString().trim();
+        if (updatedMap == null ||
+            persistedBody == null ||
+            requestedBody == null ||
+            persistedBody != requestedBody) {
+          return res.status(500).json({
+            'status': false,
+            'message': 'Failed to update comment.',
+          });
+        }
+
+        return res.json({
+          'status': true,
+          'comment': _toCommentViewModel(updatedMap),
+        });
       } on ValidationException catch (e) {
         return res.status(422).json({'status': false, 'errors': e.errors});
       } catch (e) {
@@ -448,11 +537,28 @@ class WebRoutes extends RouteGroup {
           'body': 'required|string|min:10',
         });
 
-        await answer.update(id: answerId, data: {
+        await answer.update(data: {
           'body': data['body'],
         });
 
-        return res.json({'status': true});
+        final refreshed = await Answer().find(answerId);
+        final updatedMap = refreshed?.toMap();
+        final persistedBody = updatedMap?['body']?.toString().trim();
+        final requestedBody = data['body']?.toString().trim();
+        if (updatedMap == null ||
+            persistedBody == null ||
+            requestedBody == null ||
+            persistedBody != requestedBody) {
+          return res.status(500).json({
+            'status': false,
+            'message': 'Failed to update answer.',
+          });
+        }
+
+        return res.json({
+          'status': true,
+          'answer': _toAnswerViewModel(updatedMap),
+        });
       } on ValidationException catch (e) {
         return res.status(422).json({'status': false, 'errors': e.errors});
       } catch (e) {
@@ -570,14 +676,27 @@ class WebRoutes extends RouteGroup {
   }
 
   Future<List<Map<String, dynamic>>> _fetchCommentsForPost(
-      Map<String, dynamic> post) async {
+      Map<String, dynamic> post,
+      String? currentUserId,
+      String? currentUserName,
+      String? currentUserEmail) async {
     final postId = post['id']?.toString();
     if (postId == null) return [];
     final qb = QueryBuilder(table: 'comments')
       ..where('post_id', "=", postId)
       ..orderBy('published_at', 'ASC');
     final rows = await qb.get();
-    return rows.map(_toCommentViewModel).toList();
+    return rows.map((row) {
+      return {
+        ..._toCommentViewModel(row),
+        'can_edit': _canEditComment(
+          row,
+          currentUserId,
+          currentUserName,
+          currentUserEmail,
+        ),
+      };
+    }).toList();
   }
 
   Future<List<Map<String, dynamic>>> _fetchAnswersForQuestion(
@@ -644,8 +763,11 @@ class WebRoutes extends RouteGroup {
 
   Map<String, dynamic> _toCommentViewModel(Map<String, dynamic> row) {
     final publishedAt = row['published_at']?.toString() ?? '';
+    final body = row['body']?.toString() ?? '';
     return {
       ...row,
+      'body': _escapeHtml(body),
+      'user_id': row['user_id']?.toString(),
       'date': _formatDate(publishedAt),
     };
   }
@@ -718,6 +840,15 @@ class WebRoutes extends RouteGroup {
     return false;
   }
 
+  bool _canEditComment(
+    Map<String, dynamic> comment,
+    String? userId,
+    String? userName,
+    String? userEmail,
+  ) {
+    return _canEditAnswer(comment, userId, userName, userEmail);
+  }
+
   String _escapeHtml(String input) {
     return input
         .replaceAll('&', '&amp;')
@@ -730,10 +861,11 @@ class WebRoutes extends RouteGroup {
   Future<Map<String, dynamic>> _baseData(Request req) async {
     final user = await req.user;
     final role = user?['role'];
-    final canWriteBlog =
-        role == 'admin' || role == 'contributor' || role == 'collaborator';
+    final canWriteBlog = _canWriteBlogRole(role?.toString());
     final canAnswer = role == 'admin' || role == 'contributor' || role == 'dev';
     final canComment = user != null;
+    final currentUserLabel =
+        user?['name']?.toString() ?? user?['email']?.toString() ?? 'Signed in';
     return {
       'user': user,
       'isAuthenticated': user != null,
@@ -741,6 +873,16 @@ class WebRoutes extends RouteGroup {
       'canAnswer': canAnswer,
       'canComment': canComment,
       'currentUserId': user?['id']?.toString(),
+      'currentUserLabel': currentUserLabel,
     };
+  }
+
+  bool _canWriteBlogRole(String? role) {
+    if (role == null) return false;
+    return role == 'admin' ||
+        role == 'contributor' ||
+        role == 'collaborator' ||
+        role == 'dev' ||
+        role == 'developer';
   }
 }

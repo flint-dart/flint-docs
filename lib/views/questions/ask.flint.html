@@ -239,13 +239,75 @@
         const askForm = document.getElementById('ask-form');
         const askError = document.getElementById('ask-error');
         if (askForm) {
-          askForm.addEventListener('submit', (event) => {
+          askForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            askError?.classList.add('hidden');
+
             if (!askForm.checkValidity()) {
-              event.preventDefault();
               if (askError) {
                 askError.textContent = 'Please complete all fields before submitting.';
                 askError.classList.remove('hidden');
               }
+              return;
+            }
+
+            const submitButton = askForm.querySelector('button[type="submit"]');
+            if (submitButton) submitButton.disabled = true;
+
+            try {
+              const formData = new FormData(askForm);
+              const payload = {};
+              formData.forEach((value, key) => {
+                payload[key] = value;
+              });
+
+              const response = await fetch(askForm.getAttribute('action') || '/questions/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+              });
+
+              if (response.redirected) {
+                window.location.href = response.url;
+                return;
+              }
+
+              const data = await response.json().catch(() => ({}));
+              if (!response.ok || data.status === false || data.status === 'error' || data.status === 'errors') {
+                const errors = data?.errors;
+                const messages = [];
+
+                if (errors && typeof errors === 'object') {
+                  Object.values(errors).forEach((value) => {
+                    if (Array.isArray(value)) {
+                      value.forEach((item) => messages.push(String(item)));
+                    } else if (value != null) {
+                      messages.push(String(value));
+                    }
+                  });
+                } else if (typeof errors === 'string') {
+                  messages.push(errors);
+                }
+
+                const message = messages.length > 0
+                  ? messages.join(' ')
+                  : (data.message || 'Failed to submit question.');
+
+                if (askError) {
+                  askError.textContent = message;
+                  askError.classList.remove('hidden');
+                }
+                return;
+              }
+
+              window.location.reload();
+            } catch (error) {
+              if (askError) {
+                askError.textContent = 'Network error. Please try again.';
+                askError.classList.remove('hidden');
+              }
+            } finally {
+              if (submitButton) submitButton.disabled = false;
             }
           });
         }

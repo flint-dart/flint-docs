@@ -41,6 +41,21 @@
                 <td>Redirect the client to a new location.</td>
             </tr>
             <tr>
+                <td><code>back({String fallback = '/', int status = 302})</code></td>
+                <td><span class="type">Response</span></td>
+                <td>Redirect to the <code>Referer</code> header, or to <code>fallback</code> when missing.</td>
+            </tr>
+            <tr>
+                <td><code>withFlash(String key, String message)</code></td>
+                <td><span class="type">Response</span></td>
+                <td>Set a one-request flash message for templates.</td>
+            </tr>
+            <tr>
+                <td><code>withSuccess(String message)</code> / <code>withError(String message)</code></td>
+                <td><span class="type">Response</span></td>
+                <td>Convenience wrappers for success/error flash messages.</td>
+            </tr>
+            <tr>
                 <td><code>sendStatus(int code)</code></td>
                 <td><span class="type">Response</span></td>
                 <td>Send a standard status message for a status code.</td>
@@ -107,6 +122,17 @@
 
 app.get('/me', (Context ctx) async {
   return UserDto(1, 'ada@example.com'); // serialized automatically
+});</code></pre>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Flash + Back Redirect</h3>
+        <pre class="mt-3"><code class="language-dart">app.post('/profile', (Context ctx) async {
+  final data = await ctx.req.validate({'name': 'required|string|min:2'});
+  // ... save data
+  return ctx.res
+      ?.withSuccess('Profile updated successfully.')
+      .back(fallback: '/profile');
 });</code></pre>
     </div>
 </section>

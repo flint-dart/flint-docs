@@ -88,4 +88,14 @@ class ExampleController {
       'note': 'Use .useMiddleware(AuthMiddleware()) on your routes'
     });
   }
+
+  /// Example: Flash success + redirect back
+  Future<Response> saveWithFlash(Request req, Response res) async {
+    return res.withSuccess('Saved successfully.').back(fallback: '/examples');
+  }
+
+  /// Example: Flash error + redirect back
+  Future<Response> failWithFlash(Request req, Response res) async {
+    return res.withError('Unable to save your changes.').back(fallback: '/examples');
+  }
 }

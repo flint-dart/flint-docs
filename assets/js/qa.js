@@ -97,6 +97,57 @@
     },
   });
 
+  window.commentForm = (actionUrl, minLength = 3) => ({
+    body: '',
+    error: '',
+    async submit() {
+      this.error = '';
+      const trimmed = (this.body || '').trim();
+      if (!trimmed) {
+        this.error = 'Please write a comment before submitting.';
+        return;
+      }
+      if (trimmed.length < minLength) {
+        this.error = `The body must be at least ${minLength} characters.`;
+        return;
+      }
+
+      try {
+        const response = await fetch(actionUrl, {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({ body: trimmed }),
+        });
+
+        if (response.redirected) {
+          window.location.href = response.url;
+          return;
+        }
+
+        const data = await response.json().catch(() => null);
+        if (!response.ok || !data || data.status === false || data.status === 'error' || data.status === 'errors') {
+          const bodyErrors = data?.errors?.body;
+          const message =
+            (Array.isArray(bodyErrors) && bodyErrors[0]) ||
+            data?.message ||
+            'Failed to submit comment.';
+          this.error = message;
+          window.blogShowToast?.(message);
+          return;
+        }
+
+        window.location.reload();
+      } catch (err) {
+        this.error = 'Network error. Please try again.';
+        window.blogShowToast?.(this.error);
+      }
+    },
+  });
+
   const renderMarkdownBlocks = () => {
     document.querySelectorAll('[data-markdown]').forEach((el) => {
       const source = el.textContent || '';
@@ -144,6 +195,7 @@
   const editModal = (() => {
     const modal = document.getElementById('edit-modal');
     if (!modal) return null;
+    const title = modal.querySelector('#edit-modal-title');
     const textarea = modal.querySelector('#edit-body');
     const preview = modal.querySelector('#edit-preview');
     const error = modal.querySelector('#edit-error');
@@ -171,59 +223,82 @@
 
     saveBtn?.addEventListener('click', async () => {
       if (!current || !textarea) return;
-      if (current.can_edit) return;
+      const minLength = Number(current.minLength || 10);
+      const emptyMessage = current.emptyMessage || 'Answer cannot be empty.';
+      const minLengthMessage = current.minLengthMessage || `The body must be at least ${minLength} characters.`;
+      const failedMessage = current.failedMessage || 'Failed to update answer.';
+      const networkMessage = current.networkMessage || 'Network error. Please try again.';
+      const showErrorToast = current.toastType === 'blog'
+        ? window.blogShowToast
+        : window.qaShowToast;
       const trimmed = textarea.value.trim();
       if (!trimmed) {
         if (error) {
-          error.textContent = 'Answer cannot be empty.';
+          error.textContent = emptyMessage;
           error.classList.remove('hidden');
         }
         return;
       }
-      if (trimmed.length < 10) {
+      if (trimmed.length < minLength) {
         if (error) {
-          error.textContent = 'The body must be at least 10 characters.';
+          error.textContent = minLengthMessage;
           error.classList.remove('hidden');
         }
         return;
+      }
+      const originalLabel = saveBtn?.textContent || 'Save Changes';
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Saving...';
       }
       try {
         const response = await fetch(current.url, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
           body: JSON.stringify({ body: trimmed }),
         });
-        const data = await response.json().catch(() => ({}));
-        if (!response.ok || data.status === false || data.status === 'error' || data.status === 'errors') {
+
+        if (response.redirected) {
+          window.location.href = response.url;
+          return;
+        }
+
+        const data = await response.json().catch(() => null);
+        if (!response.ok || !data || data.status !== true) {
           const bodyErrors = data?.errors?.body;
           const message =
             (Array.isArray(bodyErrors) && bodyErrors[0]) ||
-            data.message ||
-            'Failed to update answer.';
+            data?.message ||
+            failedMessage;
           if (error) {
             error.textContent = message;
             error.classList.remove('hidden');
           }
-          window.qaShowToast?.(message);
+          showErrorToast?.(message);
           return;
         }
-        if (current.markdownEl) {
-          current.markdownEl.textContent = trimmed;
-          current.markdownEl.innerHTML = window.renderMarkdown(trimmed);
-        }
-        if (current.articleEl) {
-          current.articleEl.dataset.answerRaw = trimmed;
-        }
-        window.qaShowToastSuccess?.('Answer updated.');
-        close();
+        window.location.reload();
+        return;
       } catch (err) {
-        window.qaShowToast?.('Network error. Please try again.');
+        showErrorToast?.(networkMessage);
+      } finally {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = originalLabel;
+        }
       }
     });
 
     return (opts = {}) => {
       if (!textarea || !preview) return;
       current = opts;
+      if (title) {
+        title.textContent = opts.modalTitle || 'Edit Answer';
+      }
       textarea.value = opts.body || '';
       preview.innerHTML = window.renderMarkdown(textarea.value);
       if (error) {
@@ -231,11 +306,11 @@
         error.classList.add('hidden');
       }
       if (saveBtn) {
-        saveBtn.disabled = !!opts.can_edit;
+        saveBtn.disabled = false;
         // saveBtn.classList.toggle('opacity-50', !!opts.can_edit);
         // saveBtn.classList.toggle('cursor-not-allowed', !!opts.can_edit);
       }
-      if (opts.can_edit && error) {
+      if (opts.readOnly && error) {
         // error.textContent = 'You can only edit your own answers.';
         // error.classList.remove('hidden');
       }
@@ -252,7 +327,11 @@
   const openEditFromButton = (btn) => {
     const article = btn.closest('article');
     if (!article) return;
-    const canEdit = article.dataset.canEdit === 'true';
+    const canEditRaw = (article.dataset.canEdit || '').trim().toLowerCase();
+    const canEdit =
+      canEditRaw.length === 0 ||
+      canEditRaw === 'true' ||
+      canEditRaw === '1';
     const id = article.dataset.answerId;
     const slug = article.dataset.answerSlug;
     const raw = decodeHtml(article.dataset.answerRaw || '');
@@ -263,11 +342,44 @@
       body: raw,
       markdownEl,
       articleEl: article,
-      can_edit: !canEdit,
+      modalTitle: 'Edit Answer',
+      minLength: 10,
+      emptyMessage: 'Answer cannot be empty.',
+      minLengthMessage: 'The body must be at least 10 characters.',
+      failedMessage: 'Failed to update answer.',
+      networkMessage: 'Network error. Please try again.',
+      toastType: 'qa',
+      readOnly: !canEdit,
     });
   };
 
   window.openEditModalFromButton = openEditFromButton;
+
+  const openBlogCommentEditFromButton = (btn) => {
+    const article = btn.closest('article');
+    if (!article) return;
+    const canEditRaw = (article.dataset.canEdit || '').trim().toLowerCase();
+    const canEdit =
+      canEditRaw.length === 0 ||
+      canEditRaw === 'true' ||
+      canEditRaw === '1';
+    const id = article.dataset.commentId;
+    const slug = article.dataset.commentSlug;
+    const raw = decodeHtml(article.dataset.commentRaw || '');
+    if (!id || !slug || !editModal) return;
+    editModal({
+      url: `/blog/${slug}/comments/${id}/update`,
+      body: raw,
+      modalTitle: 'Edit Comment',
+      minLength: 3,
+      emptyMessage: 'Comment cannot be empty.',
+      minLengthMessage: 'The body must be at least 3 characters.',
+      failedMessage: 'Failed to update comment.',
+      networkMessage: 'Network error. Please try again.',
+      toastType: 'blog',
+      readOnly: !canEdit,
+    });
+  };
 
   const bindAnswerDeleteButtons = () => {
     document.querySelectorAll('.answer-delete-btn').forEach((btn) => {
@@ -303,17 +415,6 @@
     });
   };
 
-  const bindAnswerEditButtons = () => {
-    document.querySelectorAll('.answer-edit-btn').forEach((btn) => {
-      if (btn.dataset.bound) return;
-      btn.dataset.bound = 'true';
-      btn.addEventListener('click', (event) => {
-        event.preventDefault();
-        openEditFromButton(btn);
-      });
-    });
-  };
-
   document.addEventListener('click', (event) => {
     const target = event.target.closest('.answer-edit-btn');
     if (!target) return;
@@ -321,10 +422,16 @@
     openEditFromButton(target);
   });
 
+  document.addEventListener('click', (event) => {
+    const target = event.target.closest('.blog-comment-edit-btn');
+    if (!target) return;
+    event.preventDefault();
+    openBlogCommentEditFromButton(target);
+  });
+
   const init = () => {
     renderMarkdownBlocks();
     bindAnswerDeleteButtons();
-    bindAnswerEditButtons();
   };
 
   if (document.readyState === 'loading') {

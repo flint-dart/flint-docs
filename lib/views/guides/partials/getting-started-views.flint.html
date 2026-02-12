@@ -117,4 +117,29 @@
 &lt;p&gt;Flash: &#123;&#123; session('message') &#125;&#125;&lt;/p&gt;
 &#123;&#123; if hasSession('message') &#125;&#125;...&#123;&#123; endif &#125;&#125;</code></pre>
     </div>
+
+    <h3>Flash Sessions in Views</h3>
+    <p>
+        Use response flash helpers to pass one-time messages to the next rendered view.
+        In the route/controller, call <code>withSuccess()</code> or <code>withError()</code> and redirect:
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.post('/settings', (Context ctx) async {
+  final data = await ctx.req.validate({'name': 'required|string|min:2'});
+  // ... save settings
+  return ctx.res
+      ?.withSuccess('Settings updated successfully.')
+      .back(fallback: '/settings');
+});</code></pre>
+    </div>
+    <p>Then in your template, read them with <code>session()</code> and guard with <code>hasSession()</code>:</p>
+    <div class="code-block">
+        <pre><code class="language-html">&#123;&#123; if hasSession('success') &#125;&#125;
+  &lt;div class="alert alert-success"&gt;&#123;&#123; session('success') &#125;&#125;&lt;/div&gt;
+&#123;&#123; endif &#125;&#125;
+
+&#123;&#123; if hasSession('error') &#125;&#125;
+  &lt;div class="alert alert-error"&gt;&#123;&#123; session('error') &#125;&#125;&lt;/div&gt;
+&#123;&#123; endif &#125;&#125;</code></pre>
+    </div>
 </section>

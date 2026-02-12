@@ -98,6 +98,19 @@ app.get('/page', (Context ctx) async {
         encodes safely. <code>respond()</code> auto-detects the best type. <code>view()</code> renders a template.
     </p>
     <p>
+        For form workflows, you can combine flash messages with redirect-back:
+        <code>withSuccess()</code>, <code>withError()</code>, and <code>back()</code>.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.post('/settings', (Context ctx) async {
+  final data = await ctx.req.validate({'name': 'required|string|min:2'});
+  // ... save settings
+  return ctx.res
+      ?.withSuccess('Settings updated.')
+      .back(fallback: '/settings');
+});</code></pre>
+    </div>
+    <p>
         You can also return values directly from the route handler. Flint will serialize
         <code>Map</code>/<code>List</code> as JSON and custom classes that implement
         <code>toMap()</code> or <code>toJson()</code>.
