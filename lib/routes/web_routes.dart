@@ -20,6 +20,9 @@ class WebRoutes extends RouteGroup {
     app.get('/', (req, res) async {
       return res.view('home', data: {
         ...await _baseData(req),
+        'features': _homeFeatures(),
+        'gettingStartedSteps': _homeGettingStartedSteps(),
+        'codeExamples': _homeCodeExamples(),
         'title': 'Flint Dart - Modern Dart Backend Framework',
         'description':
             'Hot reload for views and routes, Flint templates, first-class CLI, built-in Swagger docs, unified data layer, and batteries included.',
@@ -884,5 +887,161 @@ class WebRoutes extends RouteGroup {
         role == 'collaborator' ||
         role == 'dev' ||
         role == 'developer';
+  }
+
+  List<Map<String, String>> _homeFeatures() {
+    return [
+      {
+        'icon': '🧱',
+        'title': 'Simple Routing',
+        'description': 'Intuitive routing APIs for clean, expressive endpoints',
+      },
+      {
+        'icon': '🛡️',
+        'title': 'Middleware Stack',
+        'description': 'Protect and transform requests with composable middleware',
+      },
+      {
+        'icon': '🔐',
+        'title': 'JWT Authentication',
+        'description': 'Built-in JWT auth utilities and guard support',
+      },
+      {
+        'icon': '🔒',
+        'title': 'Password Hashing',
+        'description': 'Secure hashing helpers for user credentials',
+      },
+      {
+        'icon': '♻️',
+        'title': 'Hot Reload',
+        'description': 'Instant feedback while developing',
+      },
+      {
+        'icon': '🧪',
+        'title': 'Modular Structure',
+        'description': 'Organize large apps with a scalable layout',
+      },
+      {
+        'icon': '🗄️',
+        'title': 'ORM for MySQL/Postgres',
+        'description': 'Active Record ORM with migrations and models',
+      },
+      {
+        'icon': '🛠️',
+        'title': 'CLI Tooling',
+        'description': 'Scaffold migrations, models, and more',
+      },
+      {
+        'icon': '📚',
+        'title': 'Swagger Docs',
+        'description': 'Generate API docs with Swagger/OpenAPI',
+      },
+    ];
+  }
+
+  List<Map<String, String>> _homeGettingStartedSteps() {
+    return [
+      {'title': 'Install the CLI', 'command': 'dart pub global activate flint_dart'},
+      {'title': 'Create Your App', 'command': 'flint create new_app'},
+      {'title': 'Run the Server', 'command': 'flint run'},
+      {
+        'title': 'Open Your App',
+        'command': 'Visit your app URL (local or deployed) in your browser',
+      },
+    ];
+  }
+
+  List<Map<String, String>> _homeCodeExamples() {
+    return [
+      {
+        'title': 'Quick Start',
+        'code': '''import 'dart:io';
+import 'package:flint_dart/flint_dart.dart';
+
+void main() {
+  final app = Flint();
+
+  app.get('/', (Context ctx) async {
+    return ctx.res?.send('Welcome to Flint Dart!');
+  });
+
+  final port = int.tryParse(Platform.environment['PORT'] ?? '') ?? 3000;
+  app.listen(port: port, hotReload: false);
+}''',
+      },
+      {
+        'title': 'Middleware',
+        'code': '''class AuthMiddleware extends Middleware {
+  @override
+  Handler handle(Handler next) {
+    return (Context ctx) async {
+      final token = ctx.req.bearerToken;
+      if (token == null || token != "expected_token") {
+        return ctx.res?.status(401).send("Unauthorized");
+      }
+      return await next(ctx);
+    };
+  }
+}
+
+app.put('/:id', AuthMiddleware().handle(controller.update));''',
+      },
+      {
+        'title': 'JWT Auth',
+        'code': '''final token = JwtUtil.generateToken({'userId': 123});
+final payload = JwtUtil.verifyToken(token);''',
+      },
+      {
+        'title': 'Model',
+        'code': '''class User extends Model<User> {
+  User() : super(() => User());
+
+  @override
+  Table get table => Table(
+    name: 'users',
+    columns: [
+      Column(name: 'name', type: ColumnType.string, length: 255),
+      Column(name: 'email', type: ColumnType.string, length: 255),
+    ],
+  );
+}
+
+final users = await User().where('name', 'Ada').get();
+final user = await User().create({
+  'name': 'Ada',
+  'email': 'ada@example.com',
+});''',
+      },
+      {
+        'title': 'Controller',
+        'code': '''class UserController {
+  Future<Response> index(Request req, Response res) async {
+    final users = await User().get();
+    return res.json({'users': users.map((u) => u.toMap()).toList()});
+  }
+}
+
+final controller = UserController();
+app.get('/users', controller.index);''',
+      },
+      {
+        'title': 'WebSocket',
+        'code': '''app.websocket('/chat', (Context ctx) {
+  ctx.socket?.on('ping', (_) {
+    ctx.socket?.emit('pong', {'ok': true});
+  });
+});''',
+      },
+      {
+        'title': 'Flash + Back Redirect',
+        'code': '''app.post('/settings', (Context ctx) async {
+  final data = await ctx.req.validate({'name': 'required|string'});
+  // ... persist settings
+  return ctx.res
+      ?.withSuccess('Settings updated successfully.')
+      .back(fallback: '/settings');
+});''',
+      },
+    ];
   }
 }

@@ -14,5 +14,5 @@ void main() {
   // Mount the main AppRoutes
   app.routes(AppRoutes());
   // Start the server
-  app.listen(hotReload: true);
+  app.listen(hotReload: false);
 }

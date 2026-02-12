@@ -10,6 +10,8 @@
     <meta property="og:description" content="{{ description ?? 'Flint Dart documentation, guides, and API reference.' }}">
     <meta property="og:url" content="{{ url ?? '' }}">
     <meta property="og:type" content="website">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo-icon.png?v=20260212">
+    <link rel="apple-touch-icon" href="/assets/images/logo-icon.png?v=20260212">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="//unpkg.com/alpinejs" defer></script>
@@ -112,7 +114,9 @@
     <nav class="sticky top-0 z-40 border-b border-slate-800/50 bg-slate-950/70 backdrop-blur">
         <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4">
             <a href="/" class="flex items-center gap-3 text-lg font-semibold tracking-wide">
-                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-300/30 via-emerald-400/30 to-emerald-500/10 text-emerald-200 ring-1 ring-emerald-400/30">F</span>
+                <span class="inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-slate-900/70 ring-1 ring-emerald-400/30">
+                    <img src="/assets/images/logo-icon.png" alt="Flint Dart logo" class="h-8 w-8 object-contain">
+                </span>
                 <span class="text-white">Flint Dart</span>
             </a>
             <div class="hidden items-center gap-6 text-sm font-medium md:flex">
@@ -184,7 +188,9 @@
         <aside class="fixed right-0 top-0 z-50 h-full w-[88%] max-w-sm border-l border-slate-800 bg-slate-950/95 p-5 shadow-2xl">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2 text-sm font-semibold text-white">
-                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-400/15 text-emerald-300 ring-1 ring-emerald-400/30">F</span>
+                    <span class="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-slate-900/70 ring-1 ring-emerald-400/30">
+                        <img src="/assets/images/logo-icon.png" alt="Flint Dart logo" class="h-7 w-7 object-contain">
+                    </span>
                     Navigation
                 </div>
                 <button id="global-mobile-close"
@@ -222,7 +228,9 @@
             <div class="grid gap-8 md:grid-cols-3">
                 <div>
                     <div class="flex items-center gap-3 text-base font-semibold text-white">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-400/15 text-emerald-300 ring-1 ring-emerald-400/30">F</span>
+                        <span class="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-slate-900/70 ring-1 ring-emerald-400/30">
+                            <img src="/assets/images/logo-icon.png" alt="Flint Dart logo" class="h-7 w-7 object-contain">
+                        </span>
                         Flint Dart
                     </div>
                     <p class="mt-3">High-performance server-side framework for Dart.</p>

@@ -1,4 +1,4 @@
-// src/routes/app_routes.dart
+// lib/routes/app_routes.dart
 import 'package:flint_dart/flint_dart.dart';
 import 'auth_routes.dart';
 import 'user_routes.dart';

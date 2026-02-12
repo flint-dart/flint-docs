@@ -13,4 +13,4 @@ RUN dart pub get
 ENV PORT=3000
 EXPOSE 3000
 
-CMD ["dart", "run", "bin/server.dart"]
+CMD ["dart", "run", "lib/main.dart"]
