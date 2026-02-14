@@ -1,0 +1,63 @@
+<div id="api-mobile-drawer" class="lg:hidden hidden" x-show="mobileNavOpen" x-cloak>
+    <div class="fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-sm" @click="mobileNavOpen = false"></div>
+    <aside class="fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] overflow-y-auto border-r border-slate-800 bg-slate-950/95 p-4 text-sm">
+        <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-widest text-slate-400">API</span>
+            <button type="button"
+                    class="inline-flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-1 text-xs text-slate-200"
+                    @click="mobileNavOpen = false">
+                <svg aria-hidden="true" class="h-3.5 w-3.5 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6l-12 12"/>
+                </svg>
+                Close
+            </button>
+        </div>
+        <nav class="mt-4 max-h-[calc(100vh-160px)] overflow-y-auto hide-scrollbar [&_a]:block [&_a]:rounded-lg [&_a]:px-3 [&_a]:py-2 [&_a]:text-slate-300 [&_a:hover]:bg-slate-800/60 [&_a:hover]:text-white">
+            <div class="api-section">
+                <h3>Core Framework</h3>
+                <ul class="api-nav">
+                    <li><a href="#flint-class" @click="mobileNavOpen = false">Flint Class</a></li>
+                    <li><a href="#request" @click="mobileNavOpen = false">Request</a></li>
+                    <li><a href="#response" @click="mobileNavOpen = false">Response</a></li>
+                    <li><a href="#router" @click="mobileNavOpen = false">Router</a></li>
+                    <li><a href="#middleware" @click="mobileNavOpen = false">Middleware</a></li>
+                </ul>
+            </div>
+            <div class="api-section">
+                <h3>Database</h3>
+                <ul class="api-nav">
+                    <li><a href="#model" @click="mobileNavOpen = false">Model</a></li>
+                    <li><a href="#query-builder" @click="mobileNavOpen = false">Query Builder</a></li>
+                    <li><a href="#migration" @click="mobileNavOpen = false">Migration</a></li>
+                    <li><a href="#schema" @click="mobileNavOpen = false">Schema</a></li>
+                </ul>
+            </div>
+            <div class="api-section">
+                <h3>Authentication</h3>
+                <ul class="api-nav">
+                    <li><a href="#auth" @click="mobileNavOpen = false">Auth Manager</a></li>
+                    <li><a href="#guards" @click="mobileNavOpen = false">Auth Guards</a></li>
+                    <li><a href="#providers" @click="mobileNavOpen = false">Auth Providers</a></li>
+                </ul>
+            </div>
+            <div class="api-section">
+                <h3>FlintUI</h3>
+                <ul class="api-nav">
+                    <li><a href="#components" @click="mobileNavOpen = false">Components</a></li>
+                    <li><a href="#layout" @click="mobileNavOpen = false">Layout</a></li>
+                    <li><a href="#forms" @click="mobileNavOpen = false">Forms</a></li>
+                </ul>
+            </div>
+            <div class="api-section">
+                <h3>Utilities</h3>
+                <ul class="api-nav">
+                    <li><a href="#cache" @click="mobileNavOpen = false">Cache</a></li>
+                    <li><a href="#session" @click="mobileNavOpen = false">Session</a></li>
+                    <li><a href="#storage" @click="mobileNavOpen = false">Storage</a></li>
+                    <li><a href="#mail" @click="mobileNavOpen = false">Mail</a></li>
+                    <li><a href="#validation" @click="mobileNavOpen = false">Validation</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+</div>

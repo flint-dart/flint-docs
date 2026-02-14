@@ -1,0 +1,24 @@
+<section id="cache" class="section">
+    <h2>Caching</h2>
+    <p>
+        Flint ships with a simple cache manager and built-in stores for memory and file caching.
+    </p>
+
+    <h3>Memory Cache</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">final cache = MemoryCacheStore();
+cache.set('users.count', 42, ttl: Duration(minutes: 10));
+
+final value = cache.get('users.count'); // 42
+cache.delete('users.count');</code></pre>
+    </div>
+
+    <h3>File Cache</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">final cache = FileCacheStore(directory: 'storage/cache');
+cache.set('report', {'ok': true}, ttl: Duration(hours: 1));
+
+final report = cache.get('report');
+cache.clear();</code></pre>
+    </div>
+</section>

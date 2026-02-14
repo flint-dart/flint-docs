@@ -12,7 +12,7 @@
         closeMobileNav() {
           if (this.mobileNavOpen !== undefined) this.mobileNavOpen = false;
         },
-        sectionIds: ['introduction','installation','create-run','cli','routing','route-params','query-params','request-response','request-body','file-uploads','middleware','validation','authentication','security','sessions','cache','storage','logging','errors','helpers','architecture','mail','isolate','swagger-docs','database','websockets','route-groups','views','models','orm','orm-query','orm-relations','table-sync'],
+        sectionIds: ['introduction','installation','create-run','cli','routing','route-params','query-params','request-response','request-body','file-uploads','middleware','validation','authentication','security','sessions','cache','storage','logging','errors','helpers','architecture','mail','isolate','swagger-docs','database','websockets','route-groups','views','models','orm','orm-query','orm-relations','table-sync','deployment'],
         setActive() {
           let current = this.sectionIds[0];
           for (const id of this.sectionIds) {
@@ -82,6 +82,7 @@
         {{ include('guides.partials.getting-started-views') }}
         {{ include('guides.partials.getting-started-models') }}
         {{ include('guides.partials.getting-started-table-sync') }}
+        {{ include('guides.partials.getting-started-deployment') }}
     </main>
 
     <div id="docs-mobile-drawer" class="lg:hidden hidden">

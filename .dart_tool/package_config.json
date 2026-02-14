@@ -87,7 +87,7 @@
     },
     {
       "name": "flint_dart",
-      "rootUri": "file:///home/aim/.pub-cache/hosted/pub.dev/flint_dart-1.0.0+27",
+      "rootUri": "../../flint_dart",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },

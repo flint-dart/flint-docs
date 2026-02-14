@@ -1,0 +1,58 @@
+<section id="cli" class="section">
+    <h2>CLI</h2>
+    <p>
+        Flint ships with a CLI to scaffold files, manage the app, and generate docs. Use the commands below
+        directly from your project root.
+    </p>
+
+    <h3>Project & Dev</h3>
+    <div class="code-block">
+        <pre><code class="language-bash">flint create my_app      # create a new project (clones the starter)
+flint run               # run dev server (defaults to 8080)
+flint start             # alias for run
+flint build --linux     # build production executable
+flint build --windows   # build for Windows
+flint build --both      # build for Linux + Windows</code></pre>
+    </div>
+
+    <h3>Scaffolding</h3>
+    <div class="code-block">
+        <pre><code class="language-bash">flint make:model User
+flint make:controller UserController
+flint make:middleware AuthMiddleware
+flint make:route AuthRoutes
+flint make:resource UserResource
+flint make:mail WelcomeMail
+flint make:isolate ReportJob
+flint make:seeder UserSeeder
+flint make:docker</code></pre>
+    </div>
+
+    <h3>Database</h3>
+    <div class="code-block">
+        <pre><code class="language-bash">flint migrate            # run table sync/migrations
+flint db:seed            # run lib/seeders/seeder.dart</code></pre>
+    </div>
+
+    <h3>Seeders</h3>
+    <div class="code-block">
+        <pre><code class="language-bash">flint make:seeder BlogPostSeeder
+flint db:seed</code></pre>
+    </div>
+
+    <h3>Docs & Updates</h3>
+    <div class="code-block">
+        <pre><code class="language-bash">flint docs:generate      # generate Swagger docs from routes
+flint update             # update Flint dependencies
+flint upgrade            # upgrade CLI + project deps
+flint version            # show CLI version</code></pre>
+    </div>
+
+    <h3>Command Notes</h3>
+    <ul>
+        <li><code>flint make:docker</code> — generates Docker files for local and production deploys.</li>
+        <li><code>flint docs:generate</code> — parses routes and writes <code>docs/swagger.json</code>.</li>
+        <li><code>flint update</code> — updates project dependencies only.</li>
+        <li><code>flint upgrade</code> — updates the CLI and project dependencies together.</li>
+    </ul>
+</section>

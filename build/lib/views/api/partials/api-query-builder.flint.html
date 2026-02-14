@@ -1,0 +1,118 @@
+<!-- Query Builder -->
+<section id="query-builder" class="class-reference">
+    <div class="class-header">
+        <h2 class="class-name">Query Builder</h2>
+        <p class="class-description">Chainable SQL builder for filtering, sorting, aggregates, and pagination.</p>
+    </div>
+
+    <div class="overflow-x-auto -mx-2 mt-4 px-2">
+    <table class="property-table">
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>Returns</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>select([List&lt;String&gt;? fields])</code></td>
+                <td><span class="type">QueryBuilder</span></td>
+                <td>Select specific columns (defaults to <code>*</code>).</td>
+            </tr>
+            <tr>
+                <td><code>where(String field, String operator, dynamic value)</code></td>
+                <td><span class="type">QueryBuilder</span></td>
+                <td>Add a WHERE clause with an operator.</td>
+            </tr>
+            <tr>
+                <td><code>whereIn/whereNotIn(String field, List&lt;dynamic&gt; values)</code></td>
+                <td><span class="type">QueryBuilder</span></td>
+                <td>Filter against a list of values.</td>
+            </tr>
+            <tr>
+                <td><code>whereLike/whereContains/whereStartsWith/whereEndsWith(...)</code></td>
+                <td><span class="type">QueryBuilder</span></td>
+                <td>Filter using LIKE helpers.</td>
+            </tr>
+            <tr>
+                <td><code>orWhere(String field, String operator, dynamic value)</code></td>
+                <td><span class="type">QueryBuilder</span></td>
+                <td>Append an OR condition.</td>
+            </tr>
+            <tr>
+                <td><code>orderBy(String field, [String direction = 'ASC'])</code></td>
+                <td><span class="type">QueryBuilder</span></td>
+                <td>Sort results by a column.</td>
+            </tr>
+            <tr>
+                <td><code>groupBy(String field)</code></td>
+                <td><span class="type">QueryBuilder</span></td>
+                <td>Group results by a column.</td>
+            </tr>
+            <tr>
+                <td><code>limit(int value), offset(int value)</code></td>
+                <td><span class="type">QueryBuilder</span></td>
+                <td>Limit result size and offset.</td>
+            </tr>
+            <tr>
+                <td><code>get()</code></td>
+                <td><span class="type">Future&lt;List&lt;Map&lt;String, dynamic&gt;&gt;&gt;</span></td>
+                <td>Execute the query and return all rows.</td>
+            </tr>
+            <tr>
+                <td><code>first()</code></td>
+                <td><span class="type">Future&lt;Map&lt;String, dynamic&gt;?&gt;</span></td>
+                <td>Execute the query and return the first row.</td>
+            </tr>
+            <tr>
+                <td><code>paginate(int page, [int perPage = 15])</code></td>
+                <td><span class="type">Future&lt;Map&lt;String, dynamic&gt;&gt;</span></td>
+                <td>Paginate results with totals.</td>
+            </tr>
+            <tr>
+                <td><code>insert(Map&lt;String, dynamic&gt; data)</code></td>
+                <td><span class="type">Future&lt;void&gt;</span></td>
+                <td>Insert a new row (auto-generates UUIDs for string IDs).</td>
+            </tr>
+            <tr>
+                <td><code>update(Map&lt;String, dynamic&gt; data)</code></td>
+                <td><span class="type">Future&lt;void&gt;</span></td>
+                <td>Update rows matching the current WHERE clause.</td>
+            </tr>
+            <tr>
+                <td><code>delete()</code></td>
+                <td><span class="type">Future&lt;void&gt;</span></td>
+                <td>Delete rows matching the current WHERE clause.</td>
+            </tr>
+            <tr>
+                <td><code>count()</code></td>
+                <td><span class="type">Future&lt;int&gt;</span></td>
+                <td>Count rows matching the current query.</td>
+            </tr>
+            <tr>
+                <td><code>sum(String column), avg(String column)</code></td>
+                <td><span class="type">Future&lt;double?&gt;</span></td>
+                <td>Aggregate numeric columns.</td>
+            </tr>
+            <tr>
+                <td><code>min(String column), max(String column)</code></td>
+                <td><span class="type">Future&lt;dynamic&gt;</span></td>
+                <td>Return min/max values for a column.</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Example</h3>
+        <pre class="mt-3"><code class="language-dart">final qb = QueryBuilder(table: 'users');
+
+final page = await qb
+  .where('status', '=', 'active')
+  .orderBy('created_at', 'DESC')
+  .paginate(1, 20);
+
+return ctx.res?.json(page);</code></pre>
+    </div>
+</section>

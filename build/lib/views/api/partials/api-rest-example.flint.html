@@ -1,0 +1,103 @@
+<!-- REST API Endpoints Example -->
+<section class="api-endpoint">
+    <h3>REST API Example</h3>
+    <p>Example user endpoints using <code>QueryBuilder.paginate()</code> and validation helpers:</p>
+
+    <div class="endpoint-header">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/api/users</span>
+    </div>
+    <div class="endpoint-description">Get all users with pagination</div>
+
+    <table class="parameter-table">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>page</code></td>
+                <td><span class="type">int</span></td>
+                <td class="optional">No</td>
+                <td>Page number (default: 1)</td>
+            </tr>
+            <tr>
+                <td><code>per_page</code></td>
+                <td><span class="type">int</span></td>
+                <td class="optional">No</td>
+                <td>Items per page (default: 15)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="response-example">
+        <h4>Response:</h4>
+        <pre><code class="language-json">{
+  "data": [
+    {
+      "id": "3a4b8e1f",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "created_at": "2024-01-15T10:30:00.000Z"
+    }
+  ],
+  "current_page": 1,
+  "per_page": 15,
+  "total": 42,
+  "last_page": 3
+}</code></pre>
+    </div>
+</section>
+
+<section class="api-endpoint">
+    <div class="endpoint-header">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/api/users</span>
+    </div>
+    <div class="endpoint-description">Create a new user</div>
+
+    <table class="parameter-table">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>name</code></td>
+                <td><span class="type">string</span></td>
+                <td class="required">Yes</td>
+                <td>User's full name</td>
+            </tr>
+            <tr>
+                <td><code>email</code></td>
+                <td><span class="type">string</span></td>
+                <td class="required">Yes</td>
+                <td>User's email address (must be unique)</td>
+            </tr>
+            <tr>
+                <td><code>password</code></td>
+                <td><span class="type">string</span></td>
+                <td class="required">Yes</td>
+                <td>User's password (min length defined in config)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="response-example">
+        <h4>Response (201 Created):</h4>
+        <pre><code class="language-json">{
+  "id": "a1b2c3d4",
+  "name": "Jane Smith",
+  "email": "jane@example.com",
+  "created_at": "2024-01-15T11:00:00.000Z"
+}</code></pre>
+    </div>
+</section>

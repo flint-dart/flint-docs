@@ -1,0 +1,30 @@
+<!-- Auth Guards -->
+<section id="guards" class="class-reference">
+    <div class="class-header">
+        <h2 class="class-name">Auth Guards</h2>
+        <p class="class-description">Protect routes with middleware and request auth helpers.</p>
+    </div>
+
+    <p class="text-sm text-slate-400">
+        Flint does not require a separate guard system. Use middleware and <code>ctx.req.user</code> to enforce access.
+    </p>
+
+    <div class="mt-4 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Example</h3>
+        <pre class="mt-3"><code class="language-dart">class AuthGuard extends Middleware {
+  @override
+  Handler handle(Handler next) {
+    return (Context ctx) async {
+      final user = await ctx.req.user;
+      if (user == null) {
+        return ctx.res.status(401).json({'error': 'Unauthorized'});
+      }
+      return next(ctx);
+    };
+  }
+}
+
+app.get('/dashboard', (Context ctx) async => ctx.res.send('ok'))
+  .useMiddleware(AuthGuard());</code></pre>
+    </div>
+</section>

@@ -1,15 +1,16 @@
-FROM dart:stable AS runner
+FROM dart:stable
 
 WORKDIR /app
 
-# Copy repo folders needed for the local path dependency.
-COPY flint_dart ./flint_dart
-COPY flint_docs ./flint_docs
-
-WORKDIR /app/flint_docs
-
+# Install project dependencies (including flint_dart and other packages)
+COPY pubspec.* ./
 RUN dart pub get
 
+# Copy app source and refresh lock-resolved dependencies
+COPY . .
+RUN dart pub get --offline
+
+ENV FLINT_HOT=0
 ENV PORT=3000
 EXPOSE 3000
 
