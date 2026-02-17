@@ -23,8 +23,52 @@ app.post('/auth/register', (Context ctx) async {
 // Login
 app.post('/auth/login', (Context ctx) async {
   final data = await ctx.req.json();
-  final result = await Auth.login(data['email'], data['password']);
+  final result = await Auth.login(
+    data['email'],
+    data['password'],
+    throttleKey: ctx.req.ipAddress, // optional
+  );
   return ctx.res.json(result); // { user, token }
+});</code></pre>
+    </div>
+    <h3>Access + Refresh Tokens (Optional)</h3>
+    <p class="text-sm text-slate-400">
+        Refresh token support is opt-in. Keep it disabled unless your app needs long-lived sessions.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">// Login with access + refresh tokens
+app.post('/auth/login-with-refresh', (Context ctx) async {
+  final data = await ctx.req.json();
+  final tokens = await Auth.loginWithTokens(
+    data['email'],
+    data['password'],
+    throttleKey: ctx.req.ipAddress,
+    ipAddress: ctx.req.ipAddress,
+    userAgent: ctx.req.headers['user-agent'],
+    deviceName: 'web',
+  );
+  return ctx.res.json(tokens); // { user, accessToken, token, refreshToken? }
+});
+
+// Rotate refresh token and issue new access token
+app.post('/auth/refresh', (Context ctx) async {
+  final data = await ctx.req.json();
+  final refreshed = await Auth.refreshAccessToken(
+    data['refreshToken'],
+    rotateRefreshToken: true,
+    ipAddress: ctx.req.ipAddress,
+    userAgent: ctx.req.headers['user-agent'],
+  );
+  if (refreshed == null) {
+    return ctx.res.status(401).json({'error': 'Invalid refresh token'});
+  }
+  return ctx.res.json(refreshed);
+});
+
+app.post('/auth/logout', (Context ctx) async {
+  final data = await ctx.req.json();
+  await Auth.revokeRefreshToken(data['refreshToken']);
+  return ctx.res.json({'ok': true});
 });</code></pre>
     </div>
     <div class="code-block">
@@ -192,7 +236,13 @@ app.post('/auth/2fa/verify', (Context ctx) async {
         <li><code>REQUIRE_EMAIL_VERIFICATION</code> — <code>true</code>/<code>false</code>.</li>
         <li><code>PASSWORD_MIN_LENGTH</code> — minimum password length.</li>
         <li><code>JWT_SECRET</code> — secret used to sign tokens.</li>
-        <li><code>JWT_EXPIRY_HOURS</code> — token lifetime in hours.</li>
+        <li><code>JWT_EXPIRY_HOURS</code> - token lifetime in hours.</li>
+        <li><code>AUTH_ACCESS_TOKEN_MINUTES</code> - access token lifetime in minutes.</li>
+        <li><code>AUTH_ENABLE_REFRESH_TOKENS</code> - enable refresh token flow (default: <code>false</code>).</li>
+        <li><code>AUTH_REFRESH_TOKEN_DAYS</code> - refresh token lifetime in days.</li>
+        <li><code>AUTH_ENABLE_LOGIN_THROTTLE</code> - enable login lockout logic (default: <code>false</code>).</li>
+        <li><code>AUTH_LOGIN_MAX_ATTEMPTS</code> - failed attempts before temporary lock.</li>
+        <li><code>AUTH_LOGIN_LOCK_MINUTES</code> - lock duration in minutes.</li>
         <li><code>REDIRECT_BASE</code> — base URL for OAuth redirects.</li>
         <li><code>GOOGLE_CLIENT_ID</code> / <code>GOOGLE_CLIENT_SECRET</code></li>
         <li><code>GITHUB_CLIENT_ID</code> / <code>GITHUB_CLIENT_SECRET</code></li>
@@ -200,3 +250,4 @@ app.post('/auth/2fa/verify', (Context ctx) async {
         <li><code>APPLE_CLIENT_ID</code> / <code>APPLE_TEAM_ID</code> / <code>APPLE_KEY_ID</code> / <code>APPLE_PRIVATE_KEY</code></li>
     </ul>
 </section>
+

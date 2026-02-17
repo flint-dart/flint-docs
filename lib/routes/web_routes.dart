@@ -93,15 +93,18 @@ class WebRoutes extends RouteGroup {
     });
 
     // Guides
-    app.get('/guides/getting-started',
-        (req, res) async => _renderGettingStartedTopic(req, res, 'introduction'));
-    app.get('/guides/getting-started/:topic', (req, res) async {
+    app.get(
+        '/guides',
+        (req, res) async =>
+            _renderGettingStartedTopic(req, res, 'introduction'));
+    app.get('/guides/:topic', (req, res) async {
       final topic = req.param('topic') ?? 'introduction';
       return _renderGettingStartedTopic(req, res, topic);
     });
 
     // API
-    app.get('/api', (req, res) async => _renderApiTopic(req, res, 'flint-class'));
+    app.get(
+        '/api', (req, res) async => _renderApiTopic(req, res, 'flint-class'));
     app.get('/api/:topic', (req, res) async {
       final topic = req.param('topic') ?? 'flint-class';
       return _renderApiTopic(req, res, topic);
@@ -206,7 +209,8 @@ class WebRoutes extends RouteGroup {
     }
 
     app.get('/blog/create', showBlogCreate);
-    app.get('/blog/write', (req, res) => res.redirect('/blog/create', status: 301));
+    app.get(
+        '/blog/write', (req, res) => res.redirect('/blog/create', status: 301));
 
     app.post('/blog/create', submitBlogCreate);
     app.post('/blog/write', submitBlogCreate);
@@ -639,6 +643,13 @@ class WebRoutes extends RouteGroup {
     if (!_guideTopics.contains(topic)) {
       return res.status(404).send('Topic not found');
     }
+    final topicIndex = _guideTopics.indexOf(topic);
+    final previousTopicSlug =
+        topicIndex > 0 ? _guideTopics[topicIndex - 1] : null;
+    final nextTopicSlug =
+        topicIndex >= 0 && topicIndex < _guideTopics.length - 1
+            ? _guideTopics[topicIndex + 1]
+            : null;
     final heading = _topicHeading(topic);
     return res.view('guides.getting-started', data: {
       ...await _baseData(req),
@@ -647,7 +658,14 @@ class WebRoutes extends RouteGroup {
       'description':
           'Flint Dart getting started guide for $heading. Learn implementation details, examples, and best practices.',
       'keywords': 'Flint Dart, $heading, backend guide, Dart API, SEO docs',
-      'url': '/guides/getting-started/$topic',
+      'url': '/guides/$topic',
+      'previousGuideTitle':
+          previousTopicSlug != null ? _topicHeading(previousTopicSlug) : null,
+      'previousGuideUrl':
+          previousTopicSlug != null ? '/guides/$previousTopicSlug' : null,
+      'nextGuideTitle':
+          nextTopicSlug != null ? _topicHeading(nextTopicSlug) : null,
+      'nextGuideUrl': nextTopicSlug != null ? '/guides/$nextTopicSlug' : null,
     });
   }
 
@@ -1008,7 +1026,8 @@ class WebRoutes extends RouteGroup {
       {
         'icon': '🛡️',
         'title': 'Middleware Stack',
-        'description': 'Protect and transform requests with composable middleware',
+        'description':
+            'Protect and transform requests with composable middleware',
       },
       {
         'icon': '🔐',
@@ -1050,7 +1069,10 @@ class WebRoutes extends RouteGroup {
 
   List<Map<String, String>> _homeGettingStartedSteps() {
     return [
-      {'title': 'Install the CLI', 'command': 'dart pub global activate flint_dart'},
+      {
+        'title': 'Install the CLI',
+        'command': 'dart pub global activate flint_dart'
+      },
       {'title': 'Create Your App', 'command': 'flint create new_app'},
       {'title': 'Run the Server', 'command': 'flint run'},
       {

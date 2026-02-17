@@ -1,8 +1,8 @@
 <ul class="sidebar-nav">
-    <li><a href="/guides/getting-started/introduction" :class="{ 'active': activeSection === 'introduction' }">Introduction</a></li>
-    <li><a href="/guides/getting-started/installation" :class="{ 'active': activeSection === 'installation' }">Install</a></li>
-    <li><a href="/guides/getting-started/create-run" :class="{ 'active': activeSection === 'create-run' }">Create & Run</a></li>
-    <li><a href="/guides/getting-started/cli" :class="{ 'active': activeSection === 'cli' }">CLI</a></li>
+    <li><a href="/guides/introduction" :class="{ 'active': activeSection === 'introduction' }">Introduction</a></li>
+    <li><a href="/guides/installation" :class="{ 'active': activeSection === 'installation' }">Install</a></li>
+    <li><a href="/guides/create-run" :class="{ 'active': activeSection === 'create-run' }">Create & Run</a></li>
+    <li><a href="/guides/cli" :class="{ 'active': activeSection === 'cli' }">CLI</a></li>
     <li class="space-y-1">
         <button type="button"
                 class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-slate-300 hover:bg-slate-800/60 hover:text-white"
@@ -17,13 +17,13 @@
             </span>
         </button>
         <ul class="space-y-1" x-show="routingOpen" x-transition x-cloak>
-            <li><a href="/guides/getting-started/routing" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'routing' }">Overview</a></li>
-            <li><a href="/guides/getting-started/route-params" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'route-params' }">Route Params</a></li>
-            <li><a href="/guides/getting-started/query-params" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'query-params' }">Query Params</a></li>
-            <li><a href="/guides/getting-started/request-response" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'request-response' }">Request & Response</a></li>
-            <li><a href="/guides/getting-started/request-body" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'request-body' }">Request Body</a></li>
-            <li><a href="/guides/getting-started/file-uploads" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'file-uploads' }">File Uploads</a></li>
-            <li><a href="/guides/getting-started/route-groups" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'route-groups' }">Route Groups</a></li>
+            <li><a href="/guides/routing" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'routing' }">Overview</a></li>
+            <li><a href="/guides/route-params" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'route-params' }">Route Params</a></li>
+            <li><a href="/guides/query-params" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'query-params' }">Query Params</a></li>
+            <li><a href="/guides/request-response" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'request-response' }">Request & Response</a></li>
+            <li><a href="/guides/request-body" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'request-body' }">Request Body</a></li>
+            <li><a href="/guides/file-uploads" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'file-uploads' }">File Uploads</a></li>
+            <li><a href="/guides/route-groups" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'route-groups' }">Route Groups</a></li>
         </ul>
     </li>
     <li class="space-y-1">
@@ -40,8 +40,8 @@
             </span>
         </button>
         <ul class="space-y-1" x-show="middlewareOpen" x-transition x-cloak>
-            <li><a href="/guides/getting-started/middleware" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'middleware' }">Overview</a></li>
-            <li><a href="/guides/getting-started/validation" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'validation' }">Input Validation</a></li>
+            <li><a href="/guides/middleware" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'middleware' }">Overview</a></li>
+            <li><a href="/guides/validation" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'validation' }">Input Validation</a></li>
         </ul>
     </li>
     <li class="space-y-1">
@@ -58,23 +58,23 @@
             </span>
         </button>
         <ul class="space-y-1" x-show="authOpen" x-transition x-cloak>
-            <li><a href="/guides/getting-started/authentication" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'authentication' }">Overview</a></li>
-            <li><a href="/guides/getting-started/security" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'security' }">Security</a></li>
+            <li><a href="/guides/authentication" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'authentication' }">Overview</a></li>
+            <li><a href="/guides/security" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'security' }">Security</a></li>
         </ul>
     </li>
-    <li><a href="/guides/getting-started/sessions" :class="{ 'active': activeSection === 'sessions' }">Sessions & Cookies</a></li>
-    <li><a href="/guides/getting-started/cache" :class="{ 'active': activeSection === 'cache' }">Caching</a></li>
-    <li><a href="/guides/getting-started/storage" :class="{ 'active': activeSection === 'storage' }">Storage</a></li>
-    <li><a href="/guides/getting-started/logging" :class="{ 'active': activeSection === 'logging' }">Logging</a></li>
-    <li><a href="/guides/getting-started/errors" :class="{ 'active': activeSection === 'errors' }">Errors & Exceptions</a></li>
-    <li><a href="/guides/getting-started/helpers" :class="{ 'active': activeSection === 'helpers' }">Helpers & Utils</a></li>
-    <li><a href="/guides/getting-started/architecture" :class="{ 'active': activeSection === 'architecture' }">Controllers & Services</a></li>
-    <li><a href="/guides/getting-started/mail" :class="{ 'active': activeSection === 'mail' }">Mail</a></li>
-    <li><a href="/guides/getting-started/isolate" :class="{ 'active': activeSection === 'isolate' }">Isolate</a></li>
-    <li><a href="/guides/getting-started/swagger-docs" :class="{ 'active': activeSection === 'swagger-docs' }">Swagger Docs</a></li>
-    <li><a href="/guides/getting-started/database" :class="{ 'active': activeSection === 'database' }">Database</a></li>
-    <li><a href="/guides/getting-started/websockets" :class="{ 'active': activeSection === 'websockets' }">WebSockets</a></li>
-    <li><a href="/guides/getting-started/views" :class="{ 'active': activeSection === 'views' }">Views</a></li>
+    <li><a href="/guides/sessions" :class="{ 'active': activeSection === 'sessions' }">Sessions & Cookies</a></li>
+    <li><a href="/guides/cache" :class="{ 'active': activeSection === 'cache' }">Caching</a></li>
+    <li><a href="/guides/storage" :class="{ 'active': activeSection === 'storage' }">Storage</a></li>
+    <li><a href="/guides/logging" :class="{ 'active': activeSection === 'logging' }">Logging</a></li>
+    <li><a href="/guides/errors" :class="{ 'active': activeSection === 'errors' }">Errors & Exceptions</a></li>
+    <li><a href="/guides/helpers" :class="{ 'active': activeSection === 'helpers' }">Helpers & Utils</a></li>
+    <li><a href="/guides/architecture" :class="{ 'active': activeSection === 'architecture' }">Controllers & Services</a></li>
+    <li><a href="/guides/mail" :class="{ 'active': activeSection === 'mail' }">Mail</a></li>
+    <li><a href="/guides/isolate" :class="{ 'active': activeSection === 'isolate' }">Isolate</a></li>
+    <li><a href="/guides/swagger-docs" :class="{ 'active': activeSection === 'swagger-docs' }">Swagger Docs</a></li>
+    <li><a href="/guides/database" :class="{ 'active': activeSection === 'database' }">Database</a></li>
+    <li><a href="/guides/websockets" :class="{ 'active': activeSection === 'websockets' }">WebSockets</a></li>
+    <li><a href="/guides/views" :class="{ 'active': activeSection === 'views' }">Views</a></li>
     <li class="space-y-1">
         <button type="button"
                 class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-slate-300 hover:bg-slate-800/60 hover:text-white"
@@ -89,12 +89,13 @@
             </span>
         </button>
         <ul class="space-y-1" x-show="modelsOpen" x-transition x-cloak>
-            <li><a href="/guides/getting-started/models" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'models' }">Overview</a></li>
-            <li><a href="/guides/getting-started/orm" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'orm' }">ORM</a></li>
-            <li><a href="/guides/getting-started/orm-query" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'orm-query' }">Query</a></li>
-            <li><a href="/guides/getting-started/orm-relations" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'orm-relations' }">Relations</a></li>
+            <li><a href="/guides/models" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'models' }">Overview</a></li>
+            <li><a href="/guides/orm" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'orm' }">ORM</a></li>
+            <li><a href="/guides/orm-query" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'orm-query' }">Query</a></li>
+            <li><a href="/guides/orm-relations" class="pl-6 text-xs text-slate-400 hover:text-white" :class="{ 'active': activeSection === 'orm-relations' }">Relations</a></li>
         </ul>
     </li>
-    <li><a href="/guides/getting-started/table-sync" :class="{ 'active': activeSection === 'table-sync' }">Table Sync</a></li>
-    <li><a href="/guides/getting-started/deployment" :class="{ 'active': activeSection === 'deployment' }">Deployment</a></li>
+    <li><a href="/guides/table-sync" :class="{ 'active': activeSection === 'table-sync' }">Table Sync</a></li>
+    <li><a href="/guides/deployment" :class="{ 'active': activeSection === 'deployment' }">Deployment</a></li>
 </ul>
+

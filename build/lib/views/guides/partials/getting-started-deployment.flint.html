@@ -12,7 +12,7 @@ cd build
 ./start.sh</code></pre>
     <p>
         This generates a deployable folder with your executable, docs, and runtime assets.
-        It is great for simple server deployments where you control the host directly.
+        Build mode is typically faster at runtime and works well for production environments.
     </p>
 
     <h3>Option 2: Docker runtime</h3>
@@ -27,8 +27,10 @@ docker compose up -d --build</code></pre>
 
     <h3>Best approach</h3>
     <ul>
-        <li>Use Docker for teams and cloud hosting where reproducibility matters.</li>
-        <li>Use native build output for minimal-host deployments and simple VPS workflows.</li>
+        <li>Both build and Docker are production-ready. This is not a small-app vs large-app decision.</li>
+        <li>Choose based on your deployment preference: binary artifact workflow vs container workflow.</li>
+        <li>Use Docker when you want strong runtime consistency across environments.</li>
+        <li>Use build output when you prefer direct host deployment and minimal runtime dependencies.</li>
         <li>Keep secrets in environment variables, not in repository files.</li>
     </ul>
 

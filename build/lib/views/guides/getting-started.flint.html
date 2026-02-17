@@ -3,7 +3,7 @@
 {{ section('content') }}
 <div class="docs-layout mx-auto w-full max-w-6xl px-4 py-12 grid gap-10 lg:grid-cols-[240px_minmax(0,1fr)] text-slate-200"
      x-data="{
-        activeSection: 'introduction',
+        activeSection: `{{ initialSection ?? 'introduction' }}`,
         routingOpen: false,
         middlewareOpen: false,
         authOpen: false,
@@ -12,7 +12,7 @@
         closeMobileNav() {
           if (this.mobileNavOpen !== undefined) this.mobileNavOpen = false;
         },
-        sectionIds: ['introduction','installation','create-run','cli','deployment','routing','route-params','query-params','request-response','request-body','file-uploads','middleware','validation','authentication','security','sessions','cache','storage','logging','errors','helpers','architecture','mail','isolate','swagger-docs','database','websockets','route-groups','views','models','orm','orm-query','orm-relations','table-sync'],
+        sectionIds: ['introduction','installation','create-run','cli','routing','route-params','query-params','request-response','request-body','file-uploads','middleware','validation','authentication','security','sessions','cache','storage','logging','errors','helpers','architecture','mail','isolate','swagger-docs','database','websockets','route-groups','views','models','orm','orm-query','orm-relations','table-sync','deployment'],
         setActive() {
           let current = this.sectionIds[0];
           for (const id of this.sectionIds) {
@@ -24,7 +24,14 @@
           this.activeSection = current;
         }
      }"
-     x-init="setActive(); const self = $data; window.addEventListener('scroll', () => setActive(), { passive: true }); window.addEventListener('open-docs-nav', () => { self.mobileNavOpen = true; });">
+     x-init="setActive();
+            const self = $data;
+            const target = document.getElementById(self.activeSection);
+            if (target) {
+              requestAnimationFrame(() => target.scrollIntoView({ behavior: 'auto', block: 'start' }));
+            }
+            window.addEventListener('scroll', () => setActive(), { passive: true });
+            window.addEventListener('open-docs-nav', () => { self.mobileNavOpen = true; });">
     <aside class="sidebar min-w-0 hidden lg:block lg:sticky lg:top-24 max-h-[calc(100vh-140px)] overflow-y-auto hide-scrollbar rounded-xl border border-slate-800 bg-slate-900/60 p-4 text-sm [&_a]:block [&_a]:rounded-lg [&_a]:px-3 [&_a]:py-2 [&_a]:text-slate-300 [&_a:hover]:bg-slate-800/60 [&_a:hover]:text-white [&_.active]:bg-emerald-400/15 [&_.active]:text-emerald-200 [&_ul]:space-y-1">
         <nav>
             {{ include('guides.partials.getting-started-sidebar') }}
@@ -61,7 +68,6 @@
         {{ include('guides.partials.getting-started-installation') }}
         {{ include('guides.partials.getting-started-create-run') }}
         {{ include('guides.partials.getting-started-cli') }}
-        {{ include('guides.partials.getting-started-deployment') }}
         {{ include('guides.partials.getting-started-routing') }}
         {{ include('guides.partials.getting-started-middleware') }}
         {{ include('guides.partials.getting-started-validation') }}
@@ -83,6 +89,7 @@
         {{ include('guides.partials.getting-started-views') }}
         {{ include('guides.partials.getting-started-models') }}
         {{ include('guides.partials.getting-started-table-sync') }}
+        {{ include('guides.partials.getting-started-deployment') }}
     </main>
 
     <div id="docs-mobile-drawer" class="lg:hidden hidden">
