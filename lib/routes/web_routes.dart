@@ -8,6 +8,66 @@ import 'dart:io';
 
 /// Routes that render Flint templates from lib/views
 class WebRoutes extends RouteGroup {
+  static const List<String> _guideTopics = [
+    'introduction',
+    'installation',
+    'create-run',
+    'cli',
+    'routing',
+    'route-params',
+    'query-params',
+    'request-response',
+    'request-body',
+    'file-uploads',
+    'middleware',
+    'validation',
+    'authentication',
+    'security',
+    'sessions',
+    'cache',
+    'storage',
+    'logging',
+    'errors',
+    'helpers',
+    'architecture',
+    'mail',
+    'isolate',
+    'swagger-docs',
+    'database',
+    'websockets',
+    'route-groups',
+    'views',
+    'models',
+    'orm',
+    'orm-query',
+    'orm-relations',
+    'table-sync',
+    'deployment',
+  ];
+
+  static const List<String> _apiTopics = [
+    'flint-class',
+    'request',
+    'response',
+    'router',
+    'middleware',
+    'model',
+    'query-builder',
+    'migration',
+    'schema',
+    'auth',
+    'guards',
+    'providers',
+    'components',
+    'layout',
+    'forms',
+    'cache',
+    'session',
+    'storage',
+    'mail',
+    'validation',
+  ];
+
   @override
   String get prefix => ''; // root
 
@@ -33,17 +93,18 @@ class WebRoutes extends RouteGroup {
     });
 
     // Guides
-    app.get(
-      '/guides/getting-started',
-      (req, res) async => res.view(
-        'guides.getting-started',
-        data: await _baseData(req),
-      ),
-    );
+    app.get('/guides/getting-started',
+        (req, res) async => _renderGettingStartedTopic(req, res, 'introduction'));
+    app.get('/guides/getting-started/:topic', (req, res) async {
+      final topic = req.param('topic') ?? 'introduction';
+      return _renderGettingStartedTopic(req, res, topic);
+    });
 
     // API
-    app.get('/api', (req, res) async {
-      return res.view('api.index', data: await _baseData(req));
+    app.get('/api', (req, res) async => _renderApiTopic(req, res, 'flint-class'));
+    app.get('/api/:topic', (req, res) async {
+      final topic = req.param('topic') ?? 'flint-class';
+      return _renderApiTopic(req, res, topic);
     });
 
     // Examples
@@ -568,6 +629,54 @@ class WebRoutes extends RouteGroup {
         return res.status(500).json({'status': false, 'message': e.toString()});
       }
     });
+  }
+
+  Future<Response> _renderGettingStartedTopic(
+    Request req,
+    Response res,
+    String topic,
+  ) async {
+    if (!_guideTopics.contains(topic)) {
+      return res.status(404).send('Topic not found');
+    }
+    final heading = _topicHeading(topic);
+    return res.view('guides.getting-started', data: {
+      ...await _baseData(req),
+      'initialSection': topic,
+      'title': '$heading Guide - Flint Dart',
+      'description':
+          'Flint Dart getting started guide for $heading. Learn implementation details, examples, and best practices.',
+      'keywords': 'Flint Dart, $heading, backend guide, Dart API, SEO docs',
+      'url': '/guides/getting-started/$topic',
+    });
+  }
+
+  Future<Response> _renderApiTopic(
+    Request req,
+    Response res,
+    String topic,
+  ) async {
+    if (!_apiTopics.contains(topic)) {
+      return res.status(404).send('Topic not found');
+    }
+    final heading = _topicHeading(topic);
+    return res.view('api.index', data: {
+      ...await _baseData(req),
+      'initialSection': topic,
+      'title': '$heading API - Flint Dart',
+      'description':
+          'Flint Dart API reference for $heading with method details, examples, and usage notes.',
+      'keywords': 'Flint Dart API, $heading, Dart backend, reference, SEO docs',
+      'url': '/api/$topic',
+    });
+  }
+
+  String _topicHeading(String slug) {
+    return slug
+        .split('-')
+        .where((part) => part.isNotEmpty)
+        .map((part) => '${part[0].toUpperCase()}${part.substring(1)}')
+        .join(' ');
   }
 
   Future<String> _loadFrameworkChangelog() async {
