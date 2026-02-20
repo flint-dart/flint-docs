@@ -1,0 +1,39 @@
+<!-- Router -->
+<section id="router" class="class-reference">
+    <div class="class-header">
+        <h2 class="class-name">Router</h2>
+        <p class="class-description">Matches incoming requests to handlers and supports route params, regex, and wildcards.</p>
+    </div>
+
+    <p class="text-sm text-slate-400">
+        Flint routes are defined on the <code>Flint</code> app, which internally uses <code>Router</code> and
+        <code>RouteBuilder</code> for matching and middleware composition.
+    </p>
+
+    <div class="method-list">
+        <div class="method-item">
+            <div class="method-signature">void add(String method, String path, Handler handler, {List&lt;Middleware&gt; middlewares = const []})</div>
+            <div class="method-description">Low-level route registration used by the framework and builders.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">RouteBuilder get/post/put/delete/patch(...)</div>
+            <div class="method-description">Use the app-level helpers to register routes and attach middleware.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Path params: <code>/users/:id</code> or <code>/users/:id(\d+)</code></div>
+            <div class="method-description">Named params can include optional regex patterns for validation.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Wildcard: <code>/public/*</code></div>
+            <div class="method-description">Match all paths under a prefix (used by static file routing).</div>
+        </div>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Example</h3>
+        <pre class="mt-3"><code class="language-dart">app.get('/users/:id(\\d+)', (Context ctx) async {
+  final id = ctx.req.params['id'];
+  return ctx.res?.json({'id': id});
+});</code></pre>
+    </div>
+</section>

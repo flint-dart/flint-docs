@@ -1,0 +1,46 @@
+<section id="isolate" class="section">
+    <h2>Isolate</h2>
+    <p>
+        Use isolates to run heavy work off the main request thread. Flint provides
+        <code>IsolateTask</code> for single jobs and <code>IsolateTaskQueue</code> for batching.
+    </p>
+
+    <h3>Single Task</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">class ReportJob extends IsolateTask<String> {
+  @override
+  Future<String> performTask() async {
+    // heavy work here
+    return 'done';
+  }
+}
+
+await ReportJob().perform(
+  onDone: (result) => Log.debug('Result: $result'),
+  onError: (err) => Log.debug('Error: $err'),
+);</code></pre>
+    </div>
+
+    <h3>Queue Multiple Tasks</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">final tasks = [
+  ReportJob(),
+  ReportJob(),
+];
+
+await IsolateTaskQueue.scheduleTasks(
+  tasks,
+  onDone: (task, result) => Log.debug('Done: $result'),
+  onError: (task, err) => Log.debug('Error: $err'),
+);</code></pre>
+    </div>
+
+    <h3>CLI Scaffold</h3>
+    <p class="text-sm text-slate-400">
+        Generate a new isolate task with the CLI:
+    </p>
+    <div class="code-block">
+        <pre><code class="language-bash">flint --make-isolate ReportJob</code></pre>
+    </div>
+</section>
+

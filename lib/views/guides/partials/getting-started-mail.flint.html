@@ -1,0 +1,102 @@
+<section id="mail" class="section">
+    <h2>Mail</h2>
+    <p>
+        Flint ships with a standalone mail system for transactional emails. Use the low-level
+        <code>Mail</code> builder or the higher-level <code>ViewMailable</code> for HTML templates.
+    </p>
+
+    <h3>Auto Connect From .env</h3>
+    <p class="text-sm text-slate-400">
+        You can auto-configure mail from environment variables using <code>MailConfig.load()</code>.
+        The framework calls this once when the app starts (unless you disable it). If you send mail
+        from a custom isolate, you are responsible for calling <code>MailConfig.load()</code> inside
+        that isolate before sending.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">MailConfig.load();</code></pre>
+    </div>
+    <p class="text-sm text-slate-400">
+        When starting your app, you can also control automatic mail setup with the
+        <code>autoConnectMail</code> flag:
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">final app = Flint(
+  autoConnectMail: true, // default
+);</code></pre>
+    </div>
+
+    <h3>Manual Setup</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">Mail.setup(
+  provider: MailProvider.gmail,
+  host: 'smtp.gmail.com',
+  port: 587,
+  username: 'you@gmail.com',
+  password: 'app-password',
+  fromAddress: 'noreply@yourapp.com',
+  fromName: 'Your App',
+);</code></pre>
+    </div>
+
+    <h3>Send Immediately</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">await Mail()
+  .to('user@example.com')
+  .subject('Welcome')
+  .html('&lt;p&gt;Thanks for signing up.&lt;/p&gt;')
+  .sendMail();</code></pre>
+    </div>
+
+    <h3>Queue In Background (Isolate)</h3>
+    <p class="text-sm text-slate-400">
+        Use <code>queue()</code> to send mail in a background isolate so your request returns fast.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">await Mail()
+  .to('user@example.com')
+  .subject('Verify your email')
+  .html('&lt;p&gt;Click the link to verify your email.&lt;/p&gt;')
+  .queue();</code></pre>
+    </div>
+
+    <h3>ViewMailable (HTML Templates)</h3>
+    <p class="text-sm text-slate-400">
+        <code>ViewMailable</code> renders a <code>.flint.html</code> template with data, then sends or queues it.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">class WelcomeMail extends ViewMailable {
+  final String email;
+  final String name;
+
+  WelcomeMail({required this.email, required this.name});
+
+  @override
+  String get subject => 'Welcome';
+
+  @override
+  String get view => 'mail/views/welcome.flint.html';
+
+  @override
+  Map<String, dynamic> get data => {
+    'recipientName': name,
+    'recipientEmail': email,
+  };
+
+  @override
+  List<String> get to => [email];
+}
+
+// Send or queue
+await WelcomeMail(email: 'user@example.com', name: 'Ada').send();
+await WelcomeMail(email: 'user@example.com', name: 'Ada').queue();</code></pre>
+    </div>
+
+    <h3>CLI Scaffold</h3>
+    <p class="text-sm text-slate-400">
+        The CLI generates both the mail class and the HTML view template.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-bash">flint --make-mail Welcome</code></pre>
+    </div>
+</section>
+

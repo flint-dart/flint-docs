@@ -1,0 +1,66 @@
+<!-- Flint Class -->
+<section id="flint-class" class="class-reference rounded-xl border border-slate-800 bg-slate-900/40 p-6">
+    <div class="class-header space-y-1">
+        <h2 class="class-name">Flint</h2>
+        <p class="class-description text-slate-400">Application root that wires routes, middleware, static assets, WebSockets, and server lifecycle.</p>
+    </div>
+
+    <p class="mt-3 text-sm text-slate-400">
+        A <code>Flint</code> instance is the entry point for your server. It registers HTTP routes, WebSocket endpoints,
+        mounts route groups, and controls server startup with optional hot reload and auto-connect services.
+    </p>
+
+    <div class="method-list mt-4 space-y-3">
+        <div class="method-item">
+            <div class="method-signature">Flint({String rootPath = "lib", String? viewPath, bool autoConnectDb = true, bool autoConnectMail = true, bool withDefaultMiddleware = true, bool enableSwaggerDocs = false})</div>
+            <div class="method-description">Create a new app instance with optional defaults for middleware, DB, mail, and Swagger docs.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">RouteBuilder get/post/put/delete/patch(String path, Object handler)</div>
+            <div class="method-description">Register HTTP routes using Context handlers (or legacy handlers) with optional route-level middleware via <code>RouteBuilder.useMiddleware</code>.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">RouteBuilder route(String method, String path, Handler handler)</div>
+            <div class="method-description">Register a custom HTTP method (e.g. <code>OPTIONS</code>, <code>HEAD</code>).</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">void use(Middleware middleware)</div>
+            <div class="method-description">Register global middleware executed for every request.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">void mount(String prefix, void Function(Flint) callback, {List&lt;Middleware&gt; middlewares = const []})</div>
+            <div class="method-description">Mount a sub-app under a URL prefix with optional scoped middleware.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">void routes(RouteGroup group, {List&lt;RouteGroup&gt; children = const []})</div>
+            <div class="method-description">Register a route group and optional nested groups with composed prefixes and middleware.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">void websocket(String path, Object handler, {List&lt;Middleware&gt; middlewares = const []})</div>
+            <div class="method-description">Register a WebSocket endpoint with Context handler support and optional route middleware.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">void static(String urlPrefix, String directoryPath)</div>
+            <div class="method-description">Serve static files from a directory under a URL prefix.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;void&gt; listen({int? port, bool hotReload = true})</div>
+            <div class="method-description">Start the HTTP + WebSocket server, optionally with hot reload.</div>
+        </div>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Example</h3>
+        <pre class="mt-3"><code class="language-dart">import 'package:flint_dart/flint_dart.dart';
+
+void main() {
+  final app = Flint(enableSwaggerDocs: true);
+
+	  app.get('/health', (Context ctx) async {
+	    return ctx.res?.json({'status': 'ok'});
+	  });
+
+  app.listen(port: 3030, hotReload: true);
+}</code></pre>
+    </div>
+</section>

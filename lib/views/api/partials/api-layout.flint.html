@@ -1,0 +1,27 @@
+<!-- FlintUI Layout -->
+<section id="layout" class="class-reference">
+    <div class="class-header">
+        <h2 class="class-name">Layout</h2>
+        <p class="class-description">Row/column layout primitives and spacing utilities.</p>
+    </div>
+
+    <p class="text-sm text-slate-400">
+        Use <code>Row</code> and <code>Column</code> to compose layouts. Most widgets accept
+        padding/margin via <code>EdgeInsets</code> and borders via <code>BoxBorder</code>.
+    </p>
+
+    <div class="method-list">
+        <div class="method-item">
+            <div class="method-signature">Row({required List&lt;FlintWidget&gt; children, double gap = 16.0, List&lt;int&gt; columnWidths = const []})</div>
+            <div class="method-description">Horizontal layout optimized for consistent HTML/email rendering.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Column({required List&lt;FlintWidget&gt; children, double gap = 5.0})</div>
+            <div class="method-description">Vertical layout with adjustable spacing between children.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">EdgeInsets.all/only/symmetric(...)</div>
+            <div class="method-description">Apply consistent padding and margin.</div>
+        </div>
+    </div>
+</section>

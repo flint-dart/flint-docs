@@ -1,0 +1,61 @@
+<section id="sessions" class="section">
+    <h2>Sessions & Cookies</h2>
+    <p>
+        Flint includes session helpers built on cookies. Use <code>ctx.req.startSession()</code>,
+        <code>ctx.req.session</code>, and <code>ctx.req.destroySession()</code> to manage login state.
+    </p>
+
+    <h3>Start a Session</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">app.post('/login', (Context ctx) async {
+  final user = {'id': 1, 'email': 'user@example.com'};
+  await ctx.req.startSession(user, ttl: Duration(hours: 8));
+  return ctx.res.json({'ok': true});
+});</code></pre>
+    </div>
+
+    <h3>Cookies</h3>
+    <p class="text-sm text-slate-400">
+        Sessions are stored server-side and linked by a cookie named <code>FLINTSESSID</code>.
+        The cookie is set automatically when you call <code>ctx.req.startSession()</code>.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">final sessionId = ctx.req.cookies['FLINTSESSID'];
+final isAuthed = sessionId != null;</code></pre>
+    </div>
+    <p class="text-sm text-slate-400">
+        You can also set your own cookies directly on the response:
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">app.get('/set-cookie', (Context ctx) async {
+  res
+    .setCookie('theme', 'dark', maxAge: 3600, httpOnly: true, sameSite: 'Lax')
+    .setCookie('lang', 'en', path: '/');
+  return ctx.res.json({'ok': true});
+});
+
+app.get('/clear-cookie', (Context ctx) async {
+  ctx.res.clearCookie('theme');
+  return ctx.res.json({'ok': true});
+});</code></pre>
+    </div>
+
+    <h3>Read Session Data</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">app.get('/me', (Context ctx) async {
+  final session = await ctx.req.session;
+  if (session == null) return ctx.res.status(401).json({'error': 'Unauthorized'});
+  return ctx.res.json({'user': session});
+});</code></pre>
+    </div>
+
+    <h3>Update or Destroy</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">await ctx.req.updateSession({'role': 'admin'});
+await ctx.req.destroySession();</code></pre>
+    </div>
+
+    <p class="text-sm text-slate-400">
+        Sessions are powered by <code>CookieSessionMiddleware</code>, which is always registered by default.
+    </p>
+</section>

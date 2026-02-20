@@ -1,0 +1,57 @@
+<!-- Sidebar -->
+<aside class="api-sidebar hidden lg:block sticky top-24 max-h-[calc(100vh-140px)] overflow-y-auto overflow-x-hidden hide-scrollbar rounded-xl border border-slate-800 bg-slate-900/60 p-4 text-sm [&_h3]:text-xs [&_h3]:uppercase [&_h3]:tracking-widest [&_h3]:text-slate-500 [&_ul]:mt-2 [&_ul]:space-y-1 [&_a]:block [&_a]:rounded-lg [&_a]:px-3 [&_a]:py-2 [&_a]:text-slate-300 [&_a:hover]:bg-slate-800/60 [&_a:hover]:text-white [&_.active]:bg-emerald-400/15 [&_.active]:text-emerald-200">
+    <!-- Core Framework -->
+    <div class="api-section">
+        <h3>Core Framework</h3>
+        <ul class="api-nav">
+            <li><a href="/api/flint-class" :class="{ 'active': activeSection === 'flint-class' }">Flint Class</a></li>
+            <li><a href="/api/request" :class="{ 'active': activeSection === 'request' }">Request</a></li>
+            <li><a href="/api/response" :class="{ 'active': activeSection === 'response' }">Response</a></li>
+            <li><a href="/api/router" :class="{ 'active': activeSection === 'router' }">Router</a></li>
+            <li><a href="/api/middleware" :class="{ 'active': activeSection === 'middleware' }">Middleware</a></li>
+        </ul>
+    </div>
+
+    <!-- Database -->
+    <div class="api-section">
+        <h3>Database</h3>
+        <ul class="api-nav">
+            <li><a href="/api/model" :class="{ 'active': activeSection === 'model' }">Model</a></li>
+            <li><a href="/api/query-builder" :class="{ 'active': activeSection === 'query-builder' }">Query Builder</a></li>
+            <li><a href="/api/migration" :class="{ 'active': activeSection === 'migration' }">Migration</a></li>
+            <li><a href="/api/schema" :class="{ 'active': activeSection === 'schema' }">Schema</a></li>
+        </ul>
+    </div>
+
+    <!-- Authentication -->
+    <div class="api-section">
+        <h3>Authentication</h3>
+        <ul class="api-nav">
+            <li><a href="/api/auth" :class="{ 'active': activeSection === 'auth' }">Auth Manager</a></li>
+            <li><a href="/api/guards" :class="{ 'active': activeSection === 'guards' }">Auth Guards</a></li>
+            <li><a href="/api/providers" :class="{ 'active': activeSection === 'providers' }">Auth Providers</a></li>
+        </ul>
+    </div>
+
+    <!-- FlintUI -->
+    <div class="api-section">
+        <h3>FlintUI</h3>
+        <ul class="api-nav">
+            <li><a href="/api/components" :class="{ 'active': activeSection === 'components' }">Components</a></li>
+            <li><a href="/api/layout" :class="{ 'active': activeSection === 'layout' }">Layout</a></li>
+            <li><a href="/api/forms" :class="{ 'active': activeSection === 'forms' }">Forms</a></li>
+        </ul>
+    </div>
+
+    <!-- Utilities -->
+    <div class="api-section">
+        <h3>Utilities</h3>
+        <ul class="api-nav">
+            <li><a href="/api/cache" :class="{ 'active': activeSection === 'cache' }">Cache</a></li>
+            <li><a href="/api/session" :class="{ 'active': activeSection === 'session' }">Session</a></li>
+            <li><a href="/api/storage" :class="{ 'active': activeSection === 'storage' }">Storage</a></li>
+            <li><a href="/api/mail" :class="{ 'active': activeSection === 'mail' }">Mail</a></li>
+            <li><a href="/api/validation" :class="{ 'active': activeSection === 'validation' }">Validation</a></li>
+        </ul>
+    </div>
+</aside>

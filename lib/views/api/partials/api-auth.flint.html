@@ -1,0 +1,97 @@
+<!-- Auth Manager -->
+<section id="auth" class="class-reference">
+    <div class="class-header">
+        <h2 class="class-name">Auth</h2>
+        <p class="class-description">User registration, login, JWT verification, and OAuth helpers.</p>
+    </div>
+
+    <div class="method-list">
+        <div class="method-item">
+            <div class="method-signature">Future&lt;Map&lt;String, dynamic&gt;&gt; Auth.login(String email, String password, {String? throttleKey})</div>
+            <div class="method-description">Authenticate a user and return a JWT token plus user data. Supports optional throttle key when lockout is enabled.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;Map&lt;String, dynamic&gt;&gt; Auth.loginWithTokens(String email, String password, {String? throttleKey, String? ipAddress, String? userAgent, String? deviceName})</div>
+            <div class="method-description">Issue access token and optional refresh token (when <code>AUTH_ENABLE_REFRESH_TOKENS=true</code>).</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;Map&lt;String, dynamic&gt;?&gt; Auth.refreshAccessToken(String refreshToken, {bool rotateRefreshToken = true, String? ipAddress, String? userAgent, String? deviceName})</div>
+            <div class="method-description">Exchange a refresh token for a new access token and optional rotated refresh token.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;void&gt; Auth.revokeRefreshToken(String refreshToken)</div>
+            <div class="method-description">Revoke a single refresh token.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;void&gt; Auth.revokeAllRefreshTokensForUser(Object? userId)</div>
+            <div class="method-description">Revoke all refresh tokens for a specific user.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;Map&lt;String, dynamic&gt;&gt; Auth.register({required String email, required String password, String? name, Map&lt;String, dynamic&gt;? additionalData})</div>
+            <div class="method-description">Create a new user record and return the sanitized user data.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Map&lt;String, dynamic&gt;? Auth.verifyToken(String token)</div>
+            <div class="method-description">Verify a JWT and return the payload.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Auth.loginWithGoogle/GitHub/Facebook/Apple(...)</div>
+            <div class="method-description">Authenticate with OAuth providers and receive provider user data.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;Map&lt;String, dynamic&gt;&gt; Auth.saveProviderUser({required Map&lt;String, dynamic&gt; providerUserData, Map&lt;String, dynamic&gt;? additionalData})</div>
+            <div class="method-description">Persist a provider user profile into the auth table.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;String?&gt; Auth.generatePasswordResetToken(String email)</div>
+            <div class="method-description">Generate a password reset token and store it securely.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;bool&gt; Auth.resetPassword({required String token, required String newPassword})</div>
+            <div class="method-description">Reset a password using a reset token.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;String?&gt; Auth.generateEmailVerificationToken(String email)</div>
+            <div class="method-description">Create a verification token for email confirmation.</div>
+        </div>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Example</h3>
+        <pre class="mt-3"><code class="language-dart">app.post('/login', (Context ctx) async {
+  final data = await ctx.req.validate({
+    'email': 'required|email',
+    'password': 'required|string',
+  });
+
+  final result = await Auth.loginWithTokens(
+    data['email'],
+    data['password'],
+    throttleKey: ctx.req.ipAddress,
+    ipAddress: ctx.req.ipAddress,
+    userAgent: ctx.req.headers['user-agent'],
+    deviceName: 'web',
+  );
+  return ctx.res.json(result); // { user, accessToken, token, refreshToken? }
+});
+
+app.post('/refresh', (Context ctx) async {
+  final data = await ctx.req.validate({
+    'refreshToken': 'required|string',
+  });
+
+  final next = await Auth.refreshAccessToken(
+    data['refreshToken'],
+    rotateRefreshToken: true,
+    ipAddress: ctx.req.ipAddress,
+    userAgent: ctx.req.headers['user-agent'],
+  );
+
+  if (next == null) {
+    return ctx.res.status(401).json({'error': 'Invalid refresh token'});
+  }
+
+  return ctx.res.json(next);
+});</code></pre>
+    </div>
+</section>
