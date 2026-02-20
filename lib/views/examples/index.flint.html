@@ -69,9 +69,9 @@
                 <p>Create a new Flint project and generate models:</p>
                 <pre><code class="language-bash">flint create blog_platform
 cd blog_platform
-flint make:model User
-flint make:model Post
-flint make:model Comment
+flint --make-model User
+flint --make-model Post
+flint --make-model Comment
 flint migrate</code></pre>
             </li>
 
@@ -292,3 +292,4 @@ app.post('/questions/:id/answers', (Context ctx) async {
     </section>
 </div>
 {{ endsection }}
+
