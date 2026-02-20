@@ -1,3 +1,0 @@
-@echo off
-echo 🚀 Starting Flint Application...
-flint_docs.exe

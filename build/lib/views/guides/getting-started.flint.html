@@ -11,26 +11,13 @@
         mobileNavOpen: false,
         closeMobileNav() {
           if (this.mobileNavOpen !== undefined) this.mobileNavOpen = false;
-        },
-        sectionIds: ['introduction','installation','create-run','cli','routing','route-params','query-params','request-response','request-body','file-uploads','middleware','validation','authentication','security','sessions','cache','storage','logging','errors','helpers','architecture','mail','isolate','swagger-docs','database','websockets','route-groups','views','models','orm','orm-query','orm-relations','table-sync','deployment'],
-        setActive() {
-          let current = this.sectionIds[0];
-          for (const id of this.sectionIds) {
-            const el = document.getElementById(id);
-            if (!el) continue;
-            const top = el.getBoundingClientRect().top;
-            if (top <= 140) current = id;
-          }
-          this.activeSection = current;
         }
      }"
-     x-init="setActive();
-            const self = $data;
-            const target = document.getElementById(self.activeSection);
-            if (target) {
-              requestAnimationFrame(() => target.scrollIntoView({ behavior: 'auto', block: 'start' }));
-            }
-            window.addEventListener('scroll', () => setActive(), { passive: true });
+     x-init="const self = $data;
+            self.routingOpen = ['routing','route-params','query-params','request-response','request-body','file-uploads','route-groups'].includes(self.activeSection);
+            self.middlewareOpen = ['middleware','validation'].includes(self.activeSection);
+            self.authOpen = ['authentication','security'].includes(self.activeSection);
+            self.modelsOpen = ['models','orm','orm-query','orm-relations'].includes(self.activeSection);
             window.addEventListener('open-docs-nav', () => { self.mobileNavOpen = true; });">
     <aside class="sidebar min-w-0 hidden lg:block lg:sticky lg:top-24 max-h-[calc(100vh-140px)] overflow-y-auto hide-scrollbar rounded-xl border border-slate-800 bg-slate-900/60 p-4 text-sm [&_a]:block [&_a]:rounded-lg [&_a]:px-3 [&_a]:py-2 [&_a]:text-slate-300 [&_a:hover]:bg-slate-800/60 [&_a:hover]:text-white [&_.active]:bg-emerald-400/15 [&_.active]:text-emerald-200 [&_ul]:space-y-1">
         <nav>
@@ -64,32 +51,102 @@
             </div>
         </div>
 
-        {{ include('guides.partials.getting-started-introduction') }}
-        {{ include('guides.partials.getting-started-installation') }}
-        {{ include('guides.partials.getting-started-create-run') }}
-        {{ include('guides.partials.getting-started-cli') }}
-        {{ include('guides.partials.getting-started-routing') }}
-        {{ include('guides.partials.getting-started-middleware') }}
-        {{ include('guides.partials.getting-started-validation') }}
-        {{ include('guides.partials.getting-started-authentication') }}
-        {{ include('guides.partials.getting-started-security') }}
-        {{ include('guides.partials.getting-started-sessions') }}
-        {{ include('guides.partials.getting-started-cache') }}
-        {{ include('guides.partials.getting-started-storage') }}
-        {{ include('guides.partials.getting-started-logging') }}
-        {{ include('guides.partials.getting-started-errors') }}
-        {{ include('guides.partials.getting-started-helpers') }}
-        {{ include('guides.partials.getting-started-architecture') }}
-        {{ include('guides.partials.getting-started-mail') }}
-        {{ include('guides.partials.getting-started-isolate') }}
-        {{ include('guides.partials.getting-started-swagger') }}
-        {{ include('guides.partials.getting-started-database') }}
-        {{ include('guides.partials.getting-started-websocket') }}
-        {{ include('guides.partials.getting-started-route-groups') }}
-        {{ include('guides.partials.getting-started-views') }}
-        {{ include('guides.partials.getting-started-models') }}
-        {{ include('guides.partials.getting-started-table-sync') }}
-        {{ include('guides.partials.getting-started-deployment') }}
+        <div x-show="activeSection === 'introduction'" x-cloak>
+            {{ include('guides.partials.getting-started-introduction') }}
+        </div>
+        <div x-show="activeSection === 'installation'" x-cloak>
+            {{ include('guides.partials.getting-started-installation') }}
+        </div>
+        <div x-show="activeSection === 'create-run'" x-cloak>
+            {{ include('guides.partials.getting-started-create-run') }}
+        </div>
+        <div x-show="activeSection === 'cli'" x-cloak>
+            {{ include('guides.partials.getting-started-cli') }}
+        </div>
+        <div x-show="['routing','route-params','query-params','request-response','request-body','file-uploads'].includes(activeSection)" x-cloak>
+            {{ include('guides.partials.getting-started-routing') }}
+        </div>
+        <div x-show="activeSection === 'middleware'" x-cloak>
+            {{ include('guides.partials.getting-started-middleware') }}
+        </div>
+        <div x-show="activeSection === 'validation'" x-cloak>
+            {{ include('guides.partials.getting-started-validation') }}
+        </div>
+        <div x-show="activeSection === 'authentication'" x-cloak>
+            {{ include('guides.partials.getting-started-authentication') }}
+        </div>
+        <div x-show="activeSection === 'security'" x-cloak>
+            {{ include('guides.partials.getting-started-security') }}
+        </div>
+        <div x-show="activeSection === 'sessions'" x-cloak>
+            {{ include('guides.partials.getting-started-sessions') }}
+        </div>
+        <div x-show="activeSection === 'cache'" x-cloak>
+            {{ include('guides.partials.getting-started-cache') }}
+        </div>
+        <div x-show="activeSection === 'storage'" x-cloak>
+            {{ include('guides.partials.getting-started-storage') }}
+        </div>
+        <div x-show="activeSection === 'logging'" x-cloak>
+            {{ include('guides.partials.getting-started-logging') }}
+        </div>
+        <div x-show="activeSection === 'errors'" x-cloak>
+            {{ include('guides.partials.getting-started-errors') }}
+        </div>
+        <div x-show="activeSection === 'helpers'" x-cloak>
+            {{ include('guides.partials.getting-started-helpers') }}
+        </div>
+        <div x-show="activeSection === 'architecture'" x-cloak>
+            {{ include('guides.partials.getting-started-architecture') }}
+        </div>
+        <div x-show="activeSection === 'mail'" x-cloak>
+            {{ include('guides.partials.getting-started-mail') }}
+        </div>
+        <div x-show="activeSection === 'isolate'" x-cloak>
+            {{ include('guides.partials.getting-started-isolate') }}
+        </div>
+        <div x-show="activeSection === 'swagger-docs'" x-cloak>
+            {{ include('guides.partials.getting-started-swagger') }}
+        </div>
+        <div x-show="activeSection === 'database'" x-cloak>
+            {{ include('guides.partials.getting-started-database') }}
+        </div>
+        <div x-show="activeSection === 'websockets'" x-cloak>
+            {{ include('guides.partials.getting-started-websocket') }}
+        </div>
+        <div x-show="activeSection === 'route-groups'" x-cloak>
+            {{ include('guides.partials.getting-started-route-groups') }}
+        </div>
+        <div x-show="activeSection === 'views'" x-cloak>
+            {{ include('guides.partials.getting-started-views') }}
+        </div>
+        <div x-show="['models','orm','orm-query','orm-relations'].includes(activeSection)" x-cloak>
+            {{ include('guides.partials.getting-started-models') }}
+        </div>
+        <div x-show="activeSection === 'table-sync'" x-cloak>
+            {{ include('guides.partials.getting-started-table-sync') }}
+        </div>
+        <div x-show="activeSection === 'deployment'" x-cloak>
+            {{ include('guides.partials.getting-started-deployment') }}
+        </div>
+
+        <div class="grid gap-3 pt-2 md:grid-cols-2">
+            {{ if previousGuideUrl != null }}
+            <a href="{{ previousGuideUrl }}" class="group inline-flex min-h-[80px] flex-col justify-center rounded-xl border border-slate-800 bg-slate-900/50 p-4 hover:border-emerald-400/40 hover:bg-slate-900/80">
+                <p class="text-xs uppercase tracking-widest text-slate-500">Previous Topic</p>
+                <p class="mt-1 text-sm font-semibold text-slate-200 group-hover:text-emerald-200">{{ previousGuideTitle }}</p>
+            </a>
+            {{ else }}
+            <div class="hidden md:block"></div>
+            {{ endif }}
+
+            {{ if nextGuideUrl != null }}
+            <a href="{{ nextGuideUrl }}" class="group inline-flex min-h-[80px] flex-col justify-center rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-right hover:border-emerald-400/40 hover:bg-slate-900/80">
+                <p class="text-xs uppercase tracking-widest text-slate-500">Next Topic</p>
+                <p class="mt-1 text-sm font-semibold text-slate-200 group-hover:text-emerald-200">{{ nextGuideTitle }}</p>
+            </a>
+            {{ endif }}
+        </div>
     </main>
 
     <div id="docs-mobile-drawer" class="lg:hidden hidden">

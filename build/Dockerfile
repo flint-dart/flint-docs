@@ -9,7 +9,7 @@ RUN apt-get update \
 # Copy prebuilt app bundle from this build directory.
 COPY . /app
 
-RUN chmod +x /app/start.sh \
+RUN if [ -f /app/start.sh ]; then chmod +x /app/start.sh; fi \
     && find /app -maxdepth 1 -type f -perm -u=x -exec chmod +x {} +
 
 ENV FLINT_HOT=0
