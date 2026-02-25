@@ -119,7 +119,7 @@ packages:
       path: "../flint_dart"
       relative: true
     source: path
-    version: "1.0.0+27"
+    version: "1.0.0+28"
   intl:
     dependency: transitive
     description:

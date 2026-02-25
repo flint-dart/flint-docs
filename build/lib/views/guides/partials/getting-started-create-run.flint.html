@@ -1,0 +1,47 @@
+<section id="create-run" class="section">
+    <h2>Create & Run</h2>
+    <h3>Create a new project</h3>
+    <div class="code-block">
+        <pre><code class="language-bash">flint create my_app
+cd my_app</code></pre>
+    </div>
+
+    <h3>Run the server</h3>
+    <div class="code-block">
+        <pre><code class="language-bash">flint run</code></pre>
+    </div>
+
+    <p>
+        <code>flint run</code> runs <code>lib/main.dart</code>.
+    </p>
+    <p class="text-sm text-slate-400">
+        If you are using hot reload for Flint templates, set <code>PORT</code> in your <code>.env</code>.
+        The framework will use this when <code>app.listen()</code> is called without a port:
+    </p>
+    <div class="code-block">
+        <pre><code class="language-bash">PORT=3001</code></pre>
+    </div>
+
+    <div class="callout mt-6 rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-4">
+        <p class="callout-title text-sm font-semibold uppercase tracking-wide text-emerald-200">Dart-friendly workflow</p>
+        <p class="mt-2 text-sm text-slate-300">
+            Keep your project clean and fast with standard Dart tools. Run these anytime to format and
+            catch issues early:
+        </p>
+        <div class="code-block">
+            <pre><code class="language-bash">dart format .
+dart analyze</code></pre>
+        </div>
+    </div>
+
+    <h3>Env Helper</h3>
+    <p class="text-sm text-slate-400">
+        Use the top-level <code>env()</code> helper anywhere to read values from <code>.env</code>.
+        It will coerce types based on the default value you pass.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">final port = env('PORT', 3001);      // int
+final debug = env('DEBUG', false);   // bool
+final name = env('APP_NAME', 'Flint');</code></pre>
+    </div>
+</section>

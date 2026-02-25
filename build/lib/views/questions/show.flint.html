@@ -1,0 +1,396 @@
+{{ extends('layouts.app') }}
+
+{{ section('content') }}
+<section class="mx-auto w-full max-w-4xl px-4 py-12 sm:py-16">
+    <article class="rounded-2xl border border-slate-800/70 bg-slate-900/40 p-6 shadow-[0_0_0_1px_rgba(15,23,42,0.2)]">
+        <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-sky-300/80">
+            <span class="rounded-full border border-sky-400/30 bg-sky-400/10 px-2.5 py-1">{{ question.tag }}</span>
+            <span class="text-slate-500">{{ question.date }}</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold text-white">{{ question.title }}</h1>
+        <p class="mt-2 text-sm text-slate-400">Asked by {{ question.author }}</p>
+
+        <div class="mt-6 space-y-4 text-slate-300">
+            <div class="js-markdown leading-relaxed" data-markdown
+                 x-data
+                 x-init="$el.innerHTML = window.renderMarkdown($el.textContent)">{{ question.body }}</div>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#answer" class="inline-flex items-center gap-2 rounded-lg bg-sky-400 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-sky-300">
+                Answer This Question
+            </a>
+            <a href="/questions" class="text-sky-300 hover:text-sky-200">Back to questions</a>
+        </div>
+    </article>
+
+    <section id="answers" class="mt-8 rounded-2xl border border-slate-800/70 bg-slate-900/40 p-6 shadow-[0_0_0_1px_rgba(15,23,42,0.2)]">
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-semibold text-white">Answers</h2>
+            <span class="text-xs uppercase tracking-widest text-slate-500">{{ answersCount }} total</span>
+        </div>
+        <div class="mt-4 grid gap-4">
+            {{ if answersCount == 0 }}
+            <p class="text-sm text-slate-400">No answers yet. Be the first to help.</p>
+            {{ endif }}
+            {{ for answer in answers }}
+            <article class="rounded-xl border border-slate-800/80 bg-slate-950/40 p-4"
+                     data-answer-id="{{ answer.id }}"
+                     data-answer-slug="{{ question.slug }}"
+                     data-answer-raw="{{ answer.body }}"
+                     data-can-edit="{{ answer.can_edit ? 'true' : 'false' }}">
+                <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    <div class="flex items-center gap-2">
+                        <span class="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 text-emerald-200">
+                            {{ answer.author ?? 'Anonymous' }}
+                        </span>
+                        {{ if answer.can_edit }}
+                        <button type="button"
+                                class="inline-flex items-center text-emerald-300 hover:text-emerald-200 answer-edit-btn"
+                                title="Edit">
+                            <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 20h9"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+                            </svg>
+                        </button>
+                        <button type="button"
+                                class="inline-flex items-center text-red-300 hover:text-red-200 answer-delete-btn"
+                                data-delete-url="/questions/{{ question.slug }}/answers/{{ answer.id }}/delete"
+                                title="Delete">
+                            <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 6V4h8v2"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l1 14h10l1-14"/>
+                            </svg>
+                        </button>
+                        {{ endif }}
+                    </div>
+                    <span>{{ answer.date }}</span>
+                </div>
+                <div class="mt-3 text-sm text-slate-200">
+                    <div class="js-markdown" data-markdown>{{ answer.body }}</div>
+                </div>
+            </article>
+            {{ endfor }}
+        </div>
+    </section>
+
+    <section id="answer" class="mt-8 rounded-2xl border border-slate-800/70 bg-slate-900/40 p-6 shadow-[0_0_0_1px_rgba(15,23,42,0.2)]">
+        <h2 class="text-2xl font-semibold text-white">Your Answer</h2>
+        <p class="mt-2 text-sm text-slate-400">Signed-in users with contributor, admin, or dev roles can submit answers.</p>
+        {{ if canAnswer }}
+        <form id="answer-form" class="mt-4 grid gap-4" method="post" action="/questions/{{ question.slug }}/answers" novalidate>
+            <div id="answer-error" class="hidden rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-200"></div>
+            <div class="grid gap-4 md:grid-cols-2">
+                <div class="grid gap-2 min-w-0">
+                    <label class="text-xs uppercase tracking-widest text-slate-400">Markdown</label>
+                    <textarea id="answer-body" name="body" rows="10" required minlength="10" wrap="soft"
+                              class="w-full min-w-0 max-w-full rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-sm text-slate-100 focus:border-sky-400 focus:outline-none whitespace-pre-wrap break-words"
+                              style="overflow-wrap:anywhere; word-break:break-word;"
+                              placeholder="Write your answer using Markdown..."></textarea>
+                    <p class="text-xs text-slate-500">Tip: Use ``` for code blocks.</p>
+                </div>
+                <div class="grid gap-2 min-w-0">
+                    <label class="text-xs uppercase tracking-widest text-slate-400">Preview</label>
+                    <div id="answer-preview" class="min-h-[260px] min-w-0 rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-sm text-slate-100 break-words"></div>
+                </div>
+            </div>
+            <button type="submit" class="w-fit rounded-lg bg-sky-400 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-sky-300">
+                Submit Answer
+            </button>
+        </form>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const answerForm = document.getElementById('answer-form');
+            const answerBody = document.getElementById('answer-body');
+            const answerPreview = document.getElementById('answer-preview');
+            const answerError = document.getElementById('answer-error');
+            if (!answerForm || !answerBody || !answerPreview) return;
+
+            const updatePreview = () => {
+              answerPreview.innerHTML = window.renderMarkdown
+                ? window.renderMarkdown(answerBody.value || '')
+                : (answerBody.value || '');
+            };
+
+            const showError = (message) => {
+              if (!answerError) return;
+              answerError.textContent = message;
+              answerError.classList.remove('hidden');
+            };
+
+            const clearError = () => {
+              answerError?.classList.add('hidden');
+            };
+
+            updatePreview();
+            answerBody.addEventListener('input', updatePreview);
+
+            answerForm.addEventListener('submit', async (event) => {
+              event.preventDefault();
+              clearError();
+
+              const trimmed = (answerBody.value || '').trim();
+              if (!trimmed) {
+                showError('Please write an answer before submitting.');
+                return;
+              }
+              if (trimmed.length < 10) {
+                showError('The body must be at least 10 characters.');
+                return;
+              }
+
+              const submitButton = answerForm.querySelector('button[type="submit"]');
+              if (submitButton) submitButton.disabled = true;
+
+              try {
+                const response = await fetch(answerForm.getAttribute('action') || window.location.pathname, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ body: trimmed }),
+                });
+
+                if (response.redirected) {
+                  window.location.href = response.url;
+                  return;
+                }
+
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok || data.status === false || data.status === 'error' || data.status === 'errors') {
+                  const bodyErrors = data?.errors?.body;
+                  const message =
+                    (Array.isArray(bodyErrors) && bodyErrors[0]) ||
+                    data.message ||
+                    'Failed to submit answer.';
+                  showError(message);
+                  window.qaShowToast?.(message);
+                  return;
+                }
+
+                window.location.reload();
+              } catch (error) {
+                showError('Network error. Please try again.');
+                window.qaShowToast?.('Network error. Please try again.');
+              } finally {
+                if (submitButton) submitButton.disabled = false;
+              }
+            });
+          });
+        </script>
+        {{ else }}
+        {{ if isAuthenticated }}
+        <div class="mt-4 rounded-xl border border-slate-800/70 bg-slate-950/60 p-4 text-sm text-slate-400">
+            Sign in with a contributor, admin, or dev account to answer this question.
+        </div>
+        {{ else }}
+        <div class="mt-4 flex flex-col items-start gap-3">
+            <button type="button" id="qa-open-auth-dialog" class="rounded-lg bg-sky-400 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-sky-300">
+                Sign in to Answer
+            </button>
+            <p class="text-xs text-slate-500">You need to sign in to post an answer.</p>
+        </div>
+
+        <div id="qa-auth-dialog" class="fixed inset-0 z-50 hidden">
+            <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"></div>
+            <div class="relative mx-auto mt-24 w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-900/95 p-6 text-slate-200 shadow-xl">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold text-white">Sign in to continue</h2>
+                    <button type="button" id="qa-close-auth-dialog" class="text-slate-400 hover:text-white">Close</button>
+                </div>
+
+                <div class="mt-4 flex gap-2 text-sm">
+                    <button type="button" data-tab="signin" class="qa-auth-tab rounded-lg border border-slate-800 bg-slate-950/60 px-3 py-1.5 text-slate-200">Sign in</button>
+                    <button type="button" data-tab="signup" class="qa-auth-tab rounded-lg border border-slate-800 px-3 py-1.5 text-slate-400 hover:text-white">Sign up</button>
+                </div>
+
+                <div class="mt-4 grid gap-4" id="qa-tab-signin">
+                    <div id="qa-signin-error" class="hidden rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-200"></div>
+                    <form id="qa-signin-form" method="post" action="/auth/login" class="grid gap-4">
+                        <div class="grid gap-2">
+                            <label class="text-sm text-slate-300">Email or Username</label>
+                            <input name="email" type="text" class="w-full rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-sm text-slate-100 focus:border-sky-400 focus:outline-none" placeholder="you@company.com" />
+                        </div>
+                        <div class="grid gap-2">
+                            <label class="text-sm text-slate-300">Password</label>
+                            <div class="relative">
+                                <input name="password" type="password" class="w-full rounded-xl border border-slate-800 bg-slate-950/60 p-3 pr-10 text-sm text-slate-100 focus:border-sky-400 focus:outline-none" placeholder="••••••••" />
+                                <button type="button" class="qa-toggle-password absolute right-3 top-3 text-xs text-slate-400">Show</button>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-fit rounded-lg bg-sky-400 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-sky-300">
+                            Sign in
+                        </button>
+                        <a href="/auth/github" class="inline-flex items-center justify-center rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 hover:border-slate-500">
+                            Sign in with GitHub
+                        </a>
+                    </form>
+                </div>
+
+                <div class="mt-4 hidden grid gap-4" id="qa-tab-signup">
+                    <div id="qa-signup-error" class="hidden rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-200"></div>
+                    <div id="qa-signup-success" class="hidden rounded-lg border border-emerald-400/40 bg-emerald-400/10 px-3 py-2 text-xs text-emerald-200"></div>
+                    <form id="qa-signup-form" method="post" action="/auth/register" class="grid gap-4">
+                        <div class="grid gap-2">
+                            <label class="text-sm text-slate-300">Username</label>
+                            <input name="name" type="text" class="w-full rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-sm text-slate-100 focus:border-sky-400 focus:outline-none" placeholder="flintdev" />
+                        </div>
+                        <div class="grid gap-2">
+                            <label class="text-sm text-slate-300">Email</label>
+                            <input name="email" type="email" class="w-full rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-sm text-slate-100 focus:border-sky-400 focus:outline-none" placeholder="you@company.com" />
+                        </div>
+                        <div class="grid gap-2">
+                            <label class="text-sm text-slate-300">Password</label>
+                            <div class="relative">
+                                <input name="password" type="password" class="w-full rounded-xl border border-slate-800 bg-slate-950/60 p-3 pr-10 text-sm text-slate-100 focus:border-sky-400 focus:outline-none" placeholder="••••••••" />
+                                <button type="button" class="qa-toggle-password absolute right-3 top-3 text-xs text-slate-400">Show</button>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-fit rounded-lg bg-sky-400 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-sky-300">
+                            Sign up
+                        </button>
+                        <a href="/auth/github" class="inline-flex items-center justify-center rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 hover:border-slate-500">
+                            Sign up with GitHub
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const dialog = document.getElementById('qa-auth-dialog');
+            const openBtn = document.getElementById('qa-open-auth-dialog');
+            const closeBtn = document.getElementById('qa-close-auth-dialog');
+            const tabs = document.querySelectorAll('.qa-auth-tab');
+            const tabSignin = document.getElementById('qa-tab-signin');
+            const tabSignup = document.getElementById('qa-tab-signup');
+            const backdrop = dialog?.querySelector('div');
+            const signinForm = document.getElementById('qa-signin-form');
+            const signupForm = document.getElementById('qa-signup-form');
+            const signinError = document.getElementById('qa-signin-error');
+            const signupError = document.getElementById('qa-signup-error');
+            const signupSuccess = document.getElementById('qa-signup-success');
+
+            if (openBtn && dialog) {
+              openBtn.addEventListener('click', () => dialog.classList.remove('hidden'));
+            }
+            if (closeBtn && dialog) {
+              closeBtn.addEventListener('click', () => dialog.classList.add('hidden'));
+            }
+            if (backdrop && dialog) {
+              backdrop.addEventListener('click', () => dialog.classList.add('hidden'));
+            }
+
+            tabs.forEach((tab) => {
+              tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-tab');
+                if (target === 'signup') {
+                  tabSignin?.classList.add('hidden');
+                  tabSignup?.classList.remove('hidden');
+                } else {
+                  tabSignup?.classList.add('hidden');
+                  tabSignin?.classList.remove('hidden');
+                }
+                tabs.forEach((t) => t.classList.remove('text-slate-200', 'bg-slate-950/60'));
+                tab.classList.add('text-slate-200', 'bg-slate-950/60');
+              });
+            });
+
+            document.querySelectorAll('.qa-toggle-password').forEach((btn) => {
+              btn.addEventListener('click', () => {
+                const input = btn.parentElement?.querySelector('input');
+                if (!input) return;
+                const nextType = input.type === 'password' ? 'text' : 'password';
+                input.type = nextType;
+                btn.textContent = nextType === 'password' ? 'Show' : 'Hide';
+              });
+            });
+
+            async function submitJson(form, url, onSuccess, onError) {
+              const formData = new FormData(form);
+              const payload = {};
+              formData.forEach((value, key) => {
+                payload[key] = value;
+              });
+
+              const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+              });
+
+              const data = await response.json().catch(() => ({}));
+              if (!response.ok || data.status === 'errors' || data.status === 'error') {
+                const message = data.errors || data.message || 'Login failed';
+                onError(message);
+                return;
+              }
+              onSuccess(data);
+            }
+
+            if (signinForm) {
+              signinForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                signinError?.classList.add('hidden');
+                if (!signinForm.checkValidity()) {
+                  if (signinError) {
+                    signinError.textContent = 'Please enter email/username and password.';
+                    signinError.classList.remove('hidden');
+                  }
+                  return;
+                }
+                submitJson(
+                  signinForm,
+                  signinForm.getAttribute('action') || '/auth/login',
+                  () => {
+                    dialog?.classList.add('hidden');
+                    window.location.reload();
+                  },
+                  (message) => {
+                    if (!signinError) return;
+                    signinError.textContent = message;
+                    signinError.classList.remove('hidden');
+                  },
+                );
+              });
+            }
+
+            if (signupForm) {
+              signupForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                signupError?.classList.add('hidden');
+                signupSuccess?.classList.add('hidden');
+                if (!signupForm.checkValidity()) {
+                  if (signupError) {
+                    signupError.textContent = 'Please complete all fields.';
+                    signupError.classList.remove('hidden');
+                  }
+                  return;
+                }
+                submitJson(
+                  signupForm,
+                  signupForm.getAttribute('action') || '/auth/register',
+                  () => {
+                    if (signupSuccess) {
+                      signupSuccess.textContent = 'Account created. You are now signed in.';
+                      signupSuccess.classList.remove('hidden');
+                    }
+                    dialog?.classList.add('hidden');
+                    window.location.reload();
+                  },
+                  (message) => {
+                    if (!signupError) return;
+                    signupError.textContent = message;
+                    signupError.classList.remove('hidden');
+                  },
+                );
+              });
+            }
+
+          });
+        </script>
+        {{ endif }}
+        {{ endif }}
+    </section>
+</section>
+{{ endsection }}

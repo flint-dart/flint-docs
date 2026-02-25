@@ -47,6 +47,15 @@
   .sendMail();</code></pre>
     </div>
 
+    <h3>Send Text-Only Mail</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">await Mail()
+  .to('user@example.com')
+  .subject('Plain Text Message')
+  .text('Hello from Flint Mail')
+  .sendMail();</code></pre>
+    </div>
+
     <h3>Queue In Background (Isolate)</h3>
     <p class="text-sm text-slate-400">
         Use <code>queue()</code> to send mail in a background isolate so your request returns fast.
@@ -89,6 +98,33 @@
 // Send or queue
 await WelcomeMail(email: 'user@example.com', name: 'Ada').send();
 await WelcomeMail(email: 'user@example.com', name: 'Ada').queue();</code></pre>
+    </div>
+
+    <h3>Flint Template Example (<code>.flint.html</code>)</h3>
+    <p class="text-sm text-slate-400">
+        Store template files in <code>lib/mail/views</code>. This is the view referenced by
+        <code>String get view => 'mail/views/welcome.flint.html';</code>.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot; /&gt;
+  &lt;title&gt;Welcome&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style=&quot;font-family: Arial, sans-serif; color: #111827;&quot;&gt;
+  &lt;h2&gt;Hello, {{ recipientName }}!&lt;/h2&gt;
+  &lt;p&gt;Welcome to Flint Mail templates.&lt;/p&gt;
+
+  {{ if recipientEmail }}
+    &lt;p&gt;We sent this to: {{ recipientEmail }}&lt;/p&gt;
+  {{ endif }}
+
+  &lt;p style=&quot;margin-top: 24px; font-size: 12px; color: #6b7280;&quot;&gt;
+    &amp;copy; {{ currentYear }} Flint Dart
+  &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
     </div>
 
     <h3>CLI Scaffold</h3>

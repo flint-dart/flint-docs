@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlintDart - Modern Dart Web Framework</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="assets/images/logo.svg" alt="FlintDart" class="logo">
+                <span class="brand-text">FlintDart</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#getting-started" class="nav-link">Getting Started</a>
+                <a href="#api" class="nav-link">API</a>
+                <a href="#examples" class="nav-link">Examples</a>
+                <a href="https://github.com/flintdart/flint_dart" class="nav-link external">GitHub</a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-text">🚀 Modern Dart Web Framework</span>
+                </div>
+                <h1 class="hero-title">
+                    Build Beautiful<br>
+                    <span class="gradient-text">Web Applications</span><br>
+                    with Dart
+                </h1>
+                <p class="hero-description">
+                    FlintDart is a comprehensive, Laravel-inspired web framework for Dart. 
+                    Build full-stack applications with elegant syntax, powerful ORM, 
+                    real-time WebSockets, and modern UI components.
+                </p>
+                <div class="hero-actions">
+                    <a href="#getting-started" class="btn btn-primary">
+                        Get Started
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/flintdart/flint_dart" class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Dart Native</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Core Features</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">5★</span>
+                        <span class="stat-label">Developer Experience</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="code-window">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <span class="code-title">main.dart</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="language-dart">import 'package:flint_dart/flint_dart.dart';
+
+void main() async {
+  final app = Flint();
+  
+  // Database configuration
+  app.db.addConnection(DatabaseConfig(
+    driver: 'mysql',
+    host: 'localhost',
+    database: 'my_app',
+    username: 'user',
+    password: 'password',
+  ));
+  
+  // Authentication
+  app.auth.addProvider(GoogleAuthProvider());
+  
+  // Routes
+  app.get('/', (req, res) {
+    return res.json({'message': 'Hello FlintDart!'});
+  });
+  
+  // Start server
+  await app.serve(port: 3000);
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Everything You Need to Build Modern Apps</h2>
+                <p class="section-subtitle">FlintDart provides a complete toolkit for building scalable web applications</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Fast Performance</h3>
+                    <p>Built on Dart's native performance with async/await support and efficient memory management</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗄️</div>
+                    <h3>Powerful ORM</h3>
+                    <p>Active Record pattern with relationships, migrations, and query builder for MySQL & PostgreSQL</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Authentication</h3>
+                    <p>Multi-provider auth with Google, Facebook, GitHub, and Apple OAuth integration</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-time WebSockets</h3>
+                    <p>Built-in WebSocket support for live features like chat, notifications, and real-time updates</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>FlintUI Components</h3>
+                    <p>Beautiful, responsive UI components for emails and web rendering with consistent design</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📧</div>
+                    <h3>Mail System</h3>
+                    <p>Complete email templating and SMTP integration with marketing and transactional templates</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Hot Reload</h3>
+                    <p>Development server with instant hot reload for rapid development and testing</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Auto Documentation</h3>
+                    <p>Swagger/OpenAPI integration with automatically generated API documentation</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Security First</h3>
+                    <p>Built-in CSRF protection, input validation, encryption, and security middleware</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section id="getting-started" class="getting-started">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get Started in Minutes</h2>
+                <p class="section-subtitle">Installation and basic setup is quick and easy</p>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Install FlintDart</h3>
+                        <div class="code-block">
+                            <pre><code class="language-bash">dart pub add flint_dart</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Create Your App</h3>
+                        <div class="code-block">
+                            <pre><code class="language-bash">dart flint_dart create my_app
+cd my_app</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Run Development Server</h3>
+                        <div class="code-block">
+                            <pre><code class="language-bash">dart run bin/hot_reload.dart</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Visit Your App</h3>
+                        <p>Open your browser and navigate to <code>http://localhost:3000</code></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Examples Section -->
+    <section class="code-examples">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Clean, Expressive Code</h2>
+                <p class="section-subtitle">See how FlintDart makes development a pleasure</p>
+            </div>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h3>Routing</h3>
+                    <div class="code-block">
+                        <pre><code class="language-dart">// Define routes with ease
+app.get('/users/{id}', (req, res) async {
+  final user = await User.find(req.params['id']);
+  return res.json(user);
+});
+
+app.post('/users', (req, res) async {
+  final user = await User.create(req.body);
+  return res.json(user, status: 201);
+});</code></pre>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <h3>Database Models</h3>
+                    <div class="code-block">
+                        <pre><code class="language-dart">class User extends Model {
+  String name;
+  String email;
+  
+  // Relationships
+  BelongsTo&lt;Company&gt; company;
+  HasMany&lt;Post&gt; posts;
+  
+  // Scopes
+  static Query&lt;User&gt; active() {
+    return User.where('status', 'active');
+  }
+}</code></pre>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <h3>Authentication</h3>
+                    <div class="code-block">
+                        <pre><code class="language-dart">// Protect routes
+app.get('/dashboard', auth(), (req, res) {
+  return res.view('dashboard', {
+    'user': req.auth.user
+  });
+});
+
+// Social login
+app.get('/auth/google', 
+  auth().redirect('google'));</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/images/logo.svg" alt="FlintDart" class="logo">
+                    <p>Modern Dart web framework for building amazing applications.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#getting-started">Getting Started</a>
+                        <a href="pages/api/index.html">API Documentation</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="pages/guides/index.html">Guides</a>
+                        <a href="pages/examples/index.html">Examples</a>
+                        <a href="https://github.com/flintdart/flint_dart">GitHub</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Community</h4>
+                        <a href="https://github.com/flintdart/flint_dart/issues">Issues</a>
+                        <a href="https://github.com/flintdart/flint_dart/discussions">Discussions</a>
+                        <a href="https://github.com/flintdart/flint_dart/pulls">Pull Requests</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FlintDart. Built with ❤️ and Dart.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-dart.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -650,6 +650,15 @@ class WebRoutes extends RouteGroup {
         topicIndex >= 0 && topicIndex < _guideTopics.length - 1
             ? _guideTopics[topicIndex + 1]
             : null;
+    final previousGuideTitle = previousTopicSlug != null
+        ? _topicHeading(previousTopicSlug).trim()
+        : null;
+    final nextGuideTitle =
+        nextTopicSlug != null ? _topicHeading(nextTopicSlug).trim() : null;
+    final hasPreviousGuide =
+        previousTopicSlug != null && previousGuideTitle != null && previousGuideTitle.isNotEmpty;
+    final hasNextGuide =
+        nextTopicSlug != null && nextGuideTitle != null && nextGuideTitle.isNotEmpty;
     final heading = _topicHeading(topic);
     return res.view('guides.getting-started', data: {
       ...await _baseData(req),
@@ -659,13 +668,11 @@ class WebRoutes extends RouteGroup {
           'Flint Dart getting started guide for $heading. Learn implementation details, examples, and best practices.',
       'keywords': 'Flint Dart, $heading, backend guide, Dart API, SEO docs',
       'url': '/guides/$topic',
-      'previousGuideTitle':
-          previousTopicSlug != null ? _topicHeading(previousTopicSlug) : null,
+      'previousGuideTitle': hasPreviousGuide ? previousGuideTitle : null,
       'previousGuideUrl':
-          previousTopicSlug != null ? '/guides/$previousTopicSlug' : null,
-      'nextGuideTitle':
-          nextTopicSlug != null ? _topicHeading(nextTopicSlug) : null,
-      'nextGuideUrl': nextTopicSlug != null ? '/guides/$nextTopicSlug' : null,
+          hasPreviousGuide ? '/guides/$previousTopicSlug' : null,
+      'nextGuideTitle': hasNextGuide ? nextGuideTitle : null,
+      'nextGuideUrl': hasNextGuide ? '/guides/$nextTopicSlug' : null,
     });
   }
 

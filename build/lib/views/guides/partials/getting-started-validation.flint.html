@@ -1,0 +1,47 @@
+<section id="validation" class="section">
+    <h2>Input Validation</h2>
+    <p>Validate JSON or form data right from the request.</p>
+
+    <h3>Validate JSON body</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">app.post('/register', (Context ctx) async {
+  final data = await ctx.req.validate({
+    'name': 'required|string|min:3',
+    'email': 'required|email',
+    'password': 'required|string|min:8',
+  }, messages: {
+    'email.required': 'Email is required.',
+    'email.email': 'Enter a valid email address.',
+    'password.min': 'Password must be at least :min characters.',
+  });
+
+  return ctx.res.json({'ok': true, 'data': data});
+});</code></pre>
+    </div>
+
+    <h3>Validate form data</h3>
+    <div class="code-block">
+        <pre><code class="language-dart">app.post('/profile', (Context ctx) async {
+  final data = await ctx.req.validateForm({
+    'bio': 'string|max:160',
+    'website': 'string',
+  });
+
+  return ctx.res.json({'ok': true, 'data': data});
+});</code></pre>
+    </div>
+
+    <p>
+        Validation rules are pipe-separated (e.g. <code>required|string|min:3</code>). Supported rules include
+        <code>required</code>, <code>string</code>, <code>int</code>, <code>double</code>, <code>bool</code>,
+        <code>email</code>, <code>regex:pattern</code>, <code>list</code>, <code>list:type</code>,
+        <code>confirmed</code>, <code>date</code>, <code>in:a,b,c</code>, <code>not_in:a,b,c</code>,
+        <code>min:n</code>, and <code>max:n</code>.
+    </p>
+    <p>
+        By default, fields not present in your rules are treated as invalid. On failure, Flint throws a
+        <code>ValidationException</code> with field errors. Custom messages can target <code>field.rule</code>,
+        <code>field</code>, or <code>rule</code> keys and support <code>:field</code>, <code>:min</code>,
+        <code>:max</code>, and <code>:value</code> placeholders.
+    </p>
+</section>

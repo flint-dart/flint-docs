@@ -1,0 +1,30 @@
+<!-- Validation -->
+<section id="validation" class="class-reference">
+    <div class="class-header">
+        <h2 class="class-name">Validation</h2>
+        <p class="class-description">Rule-based input validation for JSON and form data.</p>
+    </div>
+
+    <div class="method-list">
+        <div class="method-item">
+            <div class="method-signature">Future&lt;void&gt; Validator.validate(Map&lt;String, dynamic&gt; data, Map&lt;String, String&gt; rules, {Map&lt;String, String&gt;? messages})</div>
+            <div class="method-description">Validate a data map and throw <code>ValidationException</code> on failure.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;Map&lt;String, dynamic&gt;&gt; ctx.req.validate(Map&lt;String, String&gt; rules)</div>
+            <div class="method-description">Validate JSON body and return the parsed map.</div>
+        </div>
+        <div class="method-item">
+            <div class="method-signature">Future&lt;Map&lt;String, String&gt;&gt; ctx.req.validateForm(Map&lt;String, String&gt; rules)</div>
+            <div class="method-description">Validate form data and return the parsed map.</div>
+        </div>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Example</h3>
+        <pre class="mt-3"><code class="language-dart">final data = await ctx.req.validate({
+  'email': 'required|email',
+  'password': 'required|string|min:8',
+});</code></pre>
+    </div>
+</section>
