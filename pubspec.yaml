@@ -12,8 +12,6 @@ dependencies:
 
 
 dependency_overrides:
-  flint_dart:
-    path: ../flint_dart
   mysql_dart:
     git:
       url: https://github.com/Hybiekay/mysql.dart
