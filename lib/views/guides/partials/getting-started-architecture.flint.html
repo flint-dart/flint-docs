@@ -1,8 +1,10 @@
 <section id="architecture" class="section">
     <h2>Controllers, Services & Routes</h2>
     <p>
-        A clean structure separates HTTP routing (controllers) from business logic (services). This keeps
-        routes small, testable, and scalable.
+        A clean structure separates HTTP routing (controllers) from business logic (services). Flint controllers
+        can now extend the request-scoped <code>Controller</code> base, which provides <code>req</code>,
+        <code>res</code>, <code>socket</code>, and transport checks like <code>isHttp</code> /
+        <code>isWebSocket</code>.
     </p>
     <div class="code-block">
         <pre><code class="language-dart">// lib/src/services/user_service.dart
@@ -19,19 +21,19 @@ class UserService {
 }
 
 // lib/src/controllers/user_controller.dart
-class UserController {
+class UserController extends Controller {
   final UserService service;
   UserController(this.service);
 
-  Future<Object?> index(Context ctx) async {
+  Future<Response> index() async {
     final result = await service.listUsers();
-    return ctx.res?.json(result);
+    return res.json(result);
   }
 
-  Future<Object?> store(Context ctx) async {
-    final data = await ctx.req.json();
+  Future<Response> store() async {
+    final data = await req.json();
     final result = await service.createUser(data);
-    return ctx.res?.json(result);
+    return res.json(result);
   }
 }
 
@@ -42,10 +44,26 @@ class UserRoutes extends RouteGroup {
 
   @override
   void register(Flint app) {
-    final controller = UserController(UserService());
-    app.get('/', controller.index);
-    app.post('/', controller.store);
+    app.get('/', useController(() => UserController(UserService()), (c) => c.index()));
+    app.post('/', useController(() => UserController(UserService()), (c) => c.store()));
   }
-}</code></pre>
+}
+
+// Alternative without RouteGroup helper
+app.get(
+  '/users/:id',
+  controllerAction(
+    () => UserController(UserService()),
+    (c) => c.index(),
+  ),
+);</code></pre>
     </div>
+    <p class="mt-4">
+        Use <code>useController(...)</code>, <code>useControllerVoid(...)</code> (for void/WebSocket actions),
+        or <code>controllerAction(...)</code> so each request gets a bound controller instance automatically.
+        The base controller also supports typed request-scoped extras via
+        <code>read&lt;T&gt;()</code> and <code>write&lt;T&gt;()</code> for future session/user injection patterns.
+        If you access <code>res</code> in a WebSocket action (or <code>socket</code> in HTTP), Flint throws a
+        clear controller context error to help catch route misuse early.
+    </p>
 </section>
