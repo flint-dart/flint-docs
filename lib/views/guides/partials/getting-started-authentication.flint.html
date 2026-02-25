@@ -102,6 +102,17 @@ app.post('/auth/email/verify', (Context ctx) async {
         Use <code>Auth.providerRedirectUrl</code> to build the OAuth URL, then exchange the callback code
         or token using the provider helpers.
     </p>
+    <p class="text-sm text-slate-400">
+        You can also register auth endpoints with controllers using <code>useController(...)</code> inside a
+        <code>RouteGroup</code>.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">// RouteGroup + controller helper (example)
+app.post(
+  '/login-with-google',
+  useController(AuthController.new, (c) => c.loginWithGoogle()),
+);</code></pre>
+    </div>
     <div class="code-block">
         <pre><code class="language-dart">// 1) Redirect user to provider
 app.get('/auth/google', (Context ctx) async {
