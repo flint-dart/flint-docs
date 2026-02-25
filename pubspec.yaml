@@ -10,7 +10,6 @@ dependencies:
   flint_dart: ^1.0.0+29
    
 
-
 dependency_overrides:
   mysql_dart:
     git:
