@@ -78,6 +78,29 @@ class WebRoutes extends RouteGroup {
 
   @override
   void register(Flint app) {
+    app.get('/robots.txt', (req, res) async {
+      return res.send(
+        _buildRobotsTxt(),
+        contentType: 'text/plain; charset=utf-8',
+      );
+    });
+
+    app.get('/sitemap.xml', (req, res) async {
+      final xml = await _buildSitemapXml();
+      return res.send(
+        xml,
+        contentType: 'application/xml; charset=utf-8',
+      );
+    });
+
+    app.get('/llms.txt', (req, res) async {
+      final txt = await _buildLlmsTxt();
+      return res.send(
+        txt,
+        contentType: 'text/plain; charset=utf-8',
+      );
+    });
+
     // Home
     app.get('/', (req, res) async {
       return res.view('home', data: {
@@ -1253,6 +1276,234 @@ class WebRoutes extends RouteGroup {
 
   String _escapeHtmlAttribute(String input) {
     return _escapeHtml(input).replaceAll('`', '&#96;');
+  }
+
+  String _xmlEscape(String input) {
+    return input
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&apos;');
+  }
+
+  String _buildRobotsTxt() {
+    final sitemapUrl = _absoluteUrl('/sitemap.xml');
+    return '''
+User-agent: *
+Allow: /
+
+# AI crawlers / search bots
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+Sitemap: $sitemapUrl
+'''.trim();
+  }
+
+  Future<String> _buildSitemapXml() async {
+    final urls = await _collectSitemapEntries();
+    final buffer = StringBuffer();
+    buffer.writeln('<?xml version="1.0" encoding="UTF-8"?>');
+    buffer.writeln(
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
+    for (final entry in urls) {
+      final loc = _xmlEscape(entry['loc']!);
+      final lastmod = entry['lastmod']?.trim() ?? '';
+      final changefreq = entry['changefreq']?.trim() ?? '';
+      final priority = entry['priority']?.trim() ?? '';
+      buffer.writeln('  <url>');
+      buffer.writeln('    <loc>$loc</loc>');
+      if (lastmod.isNotEmpty) {
+        buffer.writeln('    <lastmod>${_xmlEscape(lastmod)}</lastmod>');
+      }
+      if (changefreq.isNotEmpty) {
+        buffer.writeln('    <changefreq>${_xmlEscape(changefreq)}</changefreq>');
+      }
+      if (priority.isNotEmpty) {
+        buffer.writeln('    <priority>${_xmlEscape(priority)}</priority>');
+      }
+      buffer.writeln('  </url>');
+    }
+    buffer.writeln('</urlset>');
+    return buffer.toString();
+  }
+
+  Future<List<Map<String, String>>> _collectSitemapEntries() async {
+    final nowIso = DateTime.now().toUtc().toIso8601String();
+    final entries = <Map<String, String>>[
+      {
+        'loc': _absoluteUrl('/'),
+        'changefreq': 'daily',
+        'priority': '1.0',
+        'lastmod': nowIso,
+      },
+      {
+        'loc': _absoluteUrl('/guides'),
+        'changefreq': 'weekly',
+        'priority': '0.9',
+        'lastmod': nowIso,
+      },
+      {
+        'loc': _absoluteUrl('/api'),
+        'changefreq': 'weekly',
+        'priority': '0.9',
+        'lastmod': nowIso,
+      },
+      {
+        'loc': _absoluteUrl('/blog'),
+        'changefreq': 'daily',
+        'priority': '0.8',
+        'lastmod': nowIso,
+      },
+      {
+        'loc': _absoluteUrl('/questions'),
+        'changefreq': 'daily',
+        'priority': '0.8',
+        'lastmod': nowIso,
+      },
+      {
+        'loc': _absoluteUrl('/examples'),
+        'changefreq': 'weekly',
+        'priority': '0.7',
+        'lastmod': nowIso,
+      },
+      {
+        'loc': _absoluteUrl('/whats-new'),
+        'changefreq': 'weekly',
+        'priority': '0.7',
+        'lastmod': nowIso,
+      },
+      {
+        'loc': _absoluteUrl('/changelog'),
+        'changefreq': 'weekly',
+        'priority': '0.7',
+        'lastmod': nowIso,
+      },
+    ];
+
+    for (final topic in _guideTopics) {
+      entries.add({
+        'loc': _absoluteUrl('/guides/$topic'),
+        'changefreq': 'monthly',
+        'priority': '0.6',
+        'lastmod': nowIso,
+      });
+    }
+
+    for (final topic in _apiTopics) {
+      entries.add({
+        'loc': _absoluteUrl('/api/$topic'),
+        'changefreq': 'monthly',
+        'priority': '0.6',
+        'lastmod': nowIso,
+      });
+    }
+
+    try {
+      final posts = await _fetchBlogPosts();
+      for (final post in posts) {
+        final href = post['href']?.toString();
+        if (href == null || href.isEmpty) continue;
+        entries.add({
+          'loc': _absoluteUrl(href),
+          'changefreq': 'monthly',
+          'priority': '0.7',
+          'lastmod': _sitemapDate(post['published_at']?.toString()) ?? nowIso,
+        });
+      }
+    } catch (_) {}
+
+    try {
+      final questions = await _fetchQuestions();
+      for (final question in questions) {
+        final href = question['href']?.toString();
+        if (href == null || href.isEmpty) continue;
+        entries.add({
+          'loc': _absoluteUrl(href),
+          'changefreq': 'monthly',
+          'priority': '0.6',
+          'lastmod':
+              _sitemapDate(question['published_at']?.toString()) ?? nowIso,
+        });
+      }
+    } catch (_) {}
+
+    final seen = <String>{};
+    return entries.where((e) => seen.add(e['loc']!)).toList();
+  }
+
+  String? _sitemapDate(String? iso) {
+    if (iso == null || iso.trim().isEmpty) return null;
+    final parsed = DateTime.tryParse(iso);
+    return parsed?.toUtc().toIso8601String();
+  }
+
+  Future<String> _buildLlmsTxt() async {
+    final site = _absoluteUrl('/');
+    final sitemap = _absoluteUrl('/sitemap.xml');
+    final guides = _absoluteUrl('/guides');
+    final api = _absoluteUrl('/api');
+    final blog = _absoluteUrl('/blog');
+    final questions = _absoluteUrl('/questions');
+
+    final posts = <Map<String, dynamic>>[];
+    try {
+      posts.addAll((await _fetchBlogPosts()).take(12));
+    } catch (_) {}
+
+    final lines = <String>[
+      '# Flint Dart Docs',
+      '',
+      '> Official documentation, guides, API reference, blog posts, and Q&A content for Flint Dart.',
+      '',
+      '## Crawl & Index',
+      '',
+      '- Site: $site',
+      '- Sitemap: $sitemap',
+      '- Guides: $guides',
+      '- API Reference: $api',
+      '- Blog: $blog',
+      '- Questions: $questions',
+      '',
+      '## Recommended Sources',
+      '',
+      '- Start with the Getting Started guide and API reference for framework usage.',
+      '- Use blog posts for architecture decisions, patterns, and release notes.',
+      '- Use questions for community troubleshooting examples.',
+    ];
+
+    if (posts.isNotEmpty) {
+      lines.add('');
+      lines.add('## Recent Blog Posts');
+      lines.add('');
+      for (final post in posts) {
+        final title = post['title']?.toString() ?? 'Untitled';
+        final href = post['href']?.toString() ?? '/blog';
+        final excerpt = post['excerpt']?.toString() ?? '';
+        lines.add('- ${_absoluteUrl(href)} | $title');
+        if (excerpt.isNotEmpty) {
+          lines.add('  $excerpt');
+        }
+      }
+    }
+
+    lines.add('');
+    lines.add('## Notes');
+    lines.add('');
+    lines.add(
+        '- Content pages are intended for indexing by search engines and AI crawlers unless otherwise restricted.');
+
+    return lines.join('\n');
   }
 
   Future<Map<String, dynamic>> _baseData(Request req) async {
