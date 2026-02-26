@@ -1,9 +1,11 @@
 import 'package:flint_dart/db.dart';
 import 'package:flint_dart/flint_dart.dart';
+import 'package:flint_dart/helper.dart';
 import 'package:flint_docs/models/answer_model.dart';
 import 'package:flint_docs/models/blog_post_model.dart';
 import 'package:flint_docs/models/comment_model.dart';
 import 'package:flint_docs/models/question_model.dart';
+import 'dart:convert';
 import 'dart:io';
 
 /// Routes that render Flint templates from lib/views
@@ -143,6 +145,7 @@ class WebRoutes extends RouteGroup {
     // Blog list
     app.get('/blog', (req, res) async {
       final posts = await _fetchBlogPosts();
+      final blogCanonicalUrl = _absoluteUrl('/blog');
       return res.view('blog.index', data: {
         ...await _baseData(req),
         'posts': posts,
@@ -150,6 +153,9 @@ class WebRoutes extends RouteGroup {
         'description':
             'Updates, guides, and best practices from the Flint team.',
         'url': '/blog',
+        'canonicalUrl': blogCanonicalUrl,
+        'ogImageUrl': _defaultOgImageUrl(),
+        'twitterCard': 'summary_large_image',
       });
     });
 
@@ -186,9 +192,9 @@ class WebRoutes extends RouteGroup {
         'body': 'required|string|min:40',
       });
 
-      final slug = _slugify(data['title'].toString());
+      final slug = await _uniqueBlogSlug(data['title'].toString());
       final body = data['body'].toString();
-      final excerpt = body.length > 160 ? '${body.substring(0, 160)}...' : body;
+      final excerpt = _excerptFromMarkdown(body, maxLength: 160);
 
       final post = await BlogPost().create({
         'title': data['title'],
@@ -228,6 +234,12 @@ class WebRoutes extends RouteGroup {
       }
 
       final viewModel = _toBlogViewModel(post.toMap());
+      final postHref = viewModel['href']?.toString() ?? '/blog/$slug';
+      final canonicalUrl = _absoluteUrl(postHref);
+      final ogImageUrl = _defaultOgImageUrl();
+      final postBodyMarkdown = viewModel['body']?.toString() ?? '';
+      final postBodyHtml = _renderMarkdownToHtml(postBodyMarkdown);
+      final publishedAt = viewModel['published_at']?.toString() ?? '';
       final user = await req.user;
       final comments = await _fetchCommentsForPost(
         post.toMap(),
@@ -240,9 +252,32 @@ class WebRoutes extends RouteGroup {
         'post': viewModel,
         'comments': comments,
         'commentsCount': comments.length,
+        'postBodyHtml': postBodyHtml,
         'title': viewModel['title'],
         'description': viewModel['excerpt'],
-        'url': viewModel['href'],
+        'url': postHref,
+        'canonicalUrl': canonicalUrl,
+        'ogType': 'article',
+        'ogImageUrl': ogImageUrl,
+        'twitterCard': 'summary_large_image',
+        'articlePublishedTime': publishedAt,
+        'structuredDataJson': _jsonForHtmlScript({
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          'headline': viewModel['title'],
+          'description': viewModel['excerpt'],
+          'datePublished': publishedAt,
+          'dateModified': publishedAt,
+          'author': {
+            '@type': 'Person',
+            'name': viewModel['author']?.toString() ?? 'Flint Docs',
+          },
+          'mainEntityOfPage': {
+            '@type': 'WebPage',
+            '@id': canonicalUrl,
+          },
+          if (ogImageUrl.isNotEmpty) 'image': [ogImageUrl],
+        }),
       });
     });
 
@@ -865,10 +900,17 @@ class WebRoutes extends RouteGroup {
 
   Map<String, dynamic> _toBlogViewModel(Map<String, dynamic> row) {
     final publishedAt = row['published_at']?.toString() ?? '';
+    final rawExcerpt = row['excerpt']?.toString() ?? '';
+    final body = row['body']?.toString() ?? '';
+    final cleanedExcerpt = _excerptFromMarkdown(
+      rawExcerpt.isNotEmpty ? rawExcerpt : body,
+      maxLength: 160,
+    );
     return {
       ...row,
       'date': _formatDate(publishedAt),
       'href': '/blog/${row['slug']}',
+      'excerpt': cleanedExcerpt,
     };
   }
 
@@ -920,6 +962,220 @@ class WebRoutes extends RouteGroup {
       return 'question-${DateTime.now().millisecondsSinceEpoch}';
     }
     return normalized;
+  }
+
+  Future<String> _uniqueBlogSlug(String title) async {
+    final base = Str.slugify(title).trim();
+    final root = base.isNotEmpty
+        ? base
+        : 'blog-${DateTime.now().millisecondsSinceEpoch}';
+
+    var candidate = root;
+    var suffix = 2;
+    while (await BlogPost().firstWhere('slug', candidate) != null) {
+      candidate = '$root-$suffix';
+      suffix++;
+    }
+    return candidate;
+  }
+
+  String _excerptFromMarkdown(String source, {int maxLength = 160}) {
+    final plain = _stripMarkdown(source).replaceAll(RegExp(r'\s+'), ' ').trim();
+    if (plain.isEmpty) return '';
+    if (plain.length <= maxLength) return plain;
+    return '${plain.substring(0, maxLength).trimRight()}...';
+  }
+
+  String _stripMarkdown(String source) {
+    if (source.isEmpty) return '';
+    var text = source.replaceAll('\r\n', '\n');
+    text = text.replaceAll(RegExp(r'```[\s\S]*?```'), ' ');
+    text = text.replaceAll(RegExp(r'`([^`]*)`'), r'$1');
+    text = text.replaceAll(RegExp(r'!\[([^\]]*)\]\([^)]+\)'), r'$1');
+    text = text.replaceAll(RegExp(r'\[([^\]]+)\]\([^)]+\)'), r'$1');
+    text = text.replaceAll(RegExp(r'^\s{0,3}#{1,6}\s*', multiLine: true), '');
+    text = text.replaceAll(RegExp(r'^\s*>\s?', multiLine: true), '');
+    text = text.replaceAll(RegExp(r'^\s*[-*+]\s+', multiLine: true), '');
+    text = text.replaceAll(RegExp(r'^\s*\d+\.\s+', multiLine: true), '');
+    text = text.replaceAll(RegExp(r'(\*\*|__|\*|_)'), '');
+    text = text.replaceAll(RegExp(r'~~'), '');
+    return text;
+  }
+
+  String _absoluteUrl(String pathOrUrl) {
+    final trimmed = pathOrUrl.trim();
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+      return trimmed;
+    }
+
+    final base = FlintEnv.get('APP_URL', 'http://localhost:3030').trim();
+    final normalizedBase = base.endsWith('/')
+        ? base.substring(0, base.length - 1)
+        : base;
+    final normalizedPath = trimmed.startsWith('/') ? trimmed : '/$trimmed';
+    return '$normalizedBase$normalizedPath';
+  }
+
+  String _defaultOgImageUrl() {
+    return _absoluteUrl('/assets/images/logo-icon.png?v=20260212');
+  }
+
+  String _jsonForHtmlScript(Map<String, dynamic> value) {
+    return jsonEncode(value).replaceAll('</script>', r'<\/script>');
+  }
+
+  String _renderMarkdownToHtml(String source) {
+    if (source.trim().isEmpty) return '';
+
+    final lines = source.replaceAll('\r\n', '\n').split('\n');
+    final out = StringBuffer();
+    final paragraph = <String>[];
+    final listItems = <String>[];
+    String? listType; // 'ul' | 'ol'
+    var inCodeBlock = false;
+    var codeLang = '';
+    final codeLines = <String>[];
+
+    void flushParagraph() {
+      if (paragraph.isEmpty) return;
+      final text = paragraph.join(' ').trim();
+      if (text.isNotEmpty) {
+        out.writeln('<p>${_renderInlineMarkdown(text)}</p>');
+      }
+      paragraph.clear();
+    }
+
+    void flushList() {
+      if (listItems.isEmpty || listType == null) return;
+      out.writeln('<$listType>');
+      for (final item in listItems) {
+        out.writeln('<li>${_renderInlineMarkdown(item)}</li>');
+      }
+      out.writeln('</$listType>');
+      listItems.clear();
+      listType = null;
+    }
+
+    void flushCodeBlock() {
+      if (!inCodeBlock) return;
+      final langClass = codeLang.isEmpty
+          ? ''
+          : ' class="language-${_escapeHtmlAttribute(codeLang)}"';
+      final code = _escapeHtml(codeLines.join('\n'));
+      out.writeln('<pre><code$langClass>$code</code></pre>');
+      inCodeBlock = false;
+      codeLang = '';
+      codeLines.clear();
+    }
+
+    for (final rawLine in lines) {
+      final line = rawLine.replaceAll('\t', '  ');
+      final trimmed = line.trimRight();
+
+      if (trimmed.trimLeft().startsWith('```')) {
+        flushParagraph();
+        flushList();
+        if (inCodeBlock) {
+          flushCodeBlock();
+        } else {
+          inCodeBlock = true;
+          codeLang = trimmed.trim().substring(3).trim();
+          codeLines.clear();
+        }
+        continue;
+      }
+
+      if (inCodeBlock) {
+        codeLines.add(rawLine);
+        continue;
+      }
+
+      final pure = trimmed.trim();
+      if (pure.isEmpty) {
+        flushParagraph();
+        flushList();
+        continue;
+      }
+
+      final heading = RegExp(r'^(#{1,6})\s+(.+)$').firstMatch(pure);
+      if (heading != null) {
+        flushParagraph();
+        flushList();
+        final level = heading.group(1)!.length;
+        final text = heading.group(2)!.trim();
+        out.writeln('<h$level>${_renderInlineMarkdown(text)}</h$level>');
+        continue;
+      }
+
+      final ulMatch = RegExp(r'^[-*+]\s+(.+)$').firstMatch(pure);
+      final olMatch = RegExp(r'^(\d+)\.\s+(.+)$').firstMatch(pure);
+      if (ulMatch != null || olMatch != null) {
+        flushParagraph();
+        final nextType = ulMatch != null ? 'ul' : 'ol';
+        if (listType != null && listType != nextType) {
+          flushList();
+        }
+        listType = nextType;
+        listItems.add((ulMatch?.group(1) ?? olMatch!.group(2)!).trim());
+        continue;
+      }
+
+      if (listType != null) {
+        // Continuation line for previous list item.
+        listItems[listItems.length - 1] =
+            '${listItems.last} ${pure.trimLeft()}'.trim();
+        continue;
+      }
+
+      final blockquote = RegExp(r'^>\s?(.*)$').firstMatch(pure);
+      if (blockquote != null) {
+        flushParagraph();
+        flushList();
+        out.writeln(
+            '<blockquote><p>${_renderInlineMarkdown(blockquote.group(1)!.trim())}</p></blockquote>');
+        continue;
+      }
+
+      paragraph.add(pure);
+    }
+
+    flushParagraph();
+    flushList();
+    flushCodeBlock();
+
+    return out.toString();
+  }
+
+  String _renderInlineMarkdown(String text) {
+    var html = _escapeHtml(text);
+
+    html = html.replaceAllMapped(RegExp(r'`([^`]+)`'), (m) {
+      return '<code>${m.group(1)}</code>';
+    });
+
+    html = html.replaceAllMapped(
+      RegExp(r'\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)'),
+      (m) {
+        final label = m.group(1)!;
+        final href = _escapeHtmlAttribute(m.group(2)!);
+        return '<a href="$href" rel="noopener noreferrer">$label</a>';
+      },
+    );
+
+    html = html.replaceAllMapped(RegExp(r'\*\*([^*]+)\*\*'), (m) {
+      return '<strong>${m.group(1)}</strong>';
+    });
+    html = html.replaceAllMapped(RegExp(r'__([^_]+)__'), (m) {
+      return '<strong>${m.group(1)}</strong>';
+    });
+    html = html.replaceAllMapped(RegExp(r'\*([^*\n]+)\*'), (m) {
+      return '<em>${m.group(1)}</em>';
+    });
+    html = html.replaceAllMapped(RegExp(r'_([^_\n]+)_'), (m) {
+      return '<em>${m.group(1)}</em>';
+    });
+
+    return html;
   }
 
   String _formatDate(String iso) {
@@ -993,6 +1249,10 @@ class WebRoutes extends RouteGroup {
         .replaceAll('>', '&gt;')
         .replaceAll('"', '&quot;')
         .replaceAll("'", '&#39;');
+  }
+
+  String _escapeHtmlAttribute(String input) {
+    return _escapeHtml(input).replaceAll('`', '&#96;');
   }
 
   Future<Map<String, dynamic>> _baseData(Request req) async {

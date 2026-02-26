@@ -11,9 +11,7 @@
         <p class="mt-2 text-sm text-slate-400">By {{ post.author }}</p>
 
         <div class="mt-6 space-y-4 text-slate-300">
-            <div class="js-markdown leading-relaxed" data-markdown
-                 x-data
-                 x-init="$el.innerHTML = window.renderMarkdown($el.textContent)">{{ post.body }}</div>
+            <div class="js-markdown leading-relaxed" data-markdown-rendered="server">{{ postBodyHtml }}</div>
         </div>
 
         <div class="mt-8">

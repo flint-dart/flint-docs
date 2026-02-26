@@ -8,9 +8,26 @@
     <meta name="keywords" content="{{ keywords ?? '' }}">
     <meta property="og:title" content="{{ title ?? 'Flint Dart - Modern Dart Backend Framework' }}">
     <meta property="og:description" content="{{ description ?? 'Flint Dart documentation, guides, and API reference.' }}">
-    <meta property="og:url" content="{{ url ?? '' }}">
-    <meta property="og:type" content="website">
-    <link rel="canonical" href="{{ canonicalUrl ?? url ?? '' }}">
+    <meta property="og:url" content="{{ canonicalUrl ?? absoluteUrl ?? url ?? '' }}">
+    <meta property="og:type" content="{{ ogType ?? 'website' }}">
+    {{ if ogImageUrl != null && ogImageUrl != '' }}
+    <meta property="og:image" content="{{ ogImageUrl }}">
+    {{ endif }}
+    {{ if articlePublishedTime != null && articlePublishedTime != '' }}
+    <meta property="article:published_time" content="{{ articlePublishedTime }}">
+    {{ endif }}
+    {{ if twitterCard != null && twitterCard != '' }}
+    <meta name="twitter:card" content="{{ twitterCard }}">
+    {{ endif }}
+    <meta name="twitter:title" content="{{ title ?? 'Flint Dart - Modern Dart Backend Framework' }}">
+    <meta name="twitter:description" content="{{ description ?? 'Flint Dart documentation, guides, and API reference.' }}">
+    {{ if ogImageUrl != null && ogImageUrl != '' }}
+    <meta name="twitter:image" content="{{ ogImageUrl }}">
+    {{ endif }}
+    <link rel="canonical" href="{{ canonicalUrl ?? absoluteUrl ?? url ?? '' }}">
+    {{ if structuredDataJson != null && structuredDataJson != '' }}
+    <script type="application/ld+json">{{ structuredDataJson }}</script>
+    {{ endif }}
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo-icon.png?v=20260212">
     <link rel="apple-touch-icon" href="/assets/images/logo-icon.png?v=20260212">
     <link rel="preconnect" href="https://fonts.googleapis.com">
