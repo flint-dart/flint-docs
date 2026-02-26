@@ -381,6 +381,7 @@
 
             const ensureCopyButtons = () => {
                 document.querySelectorAll('pre').forEach((pre) => {
+                    if (pre.hasAttribute('data-no-copy')) return;
                     if (pre.querySelector('button[data-copy]')) return;
                     const code = pre.querySelector('code');
                     if (!code) return;
