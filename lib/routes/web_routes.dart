@@ -78,6 +78,13 @@ class WebRoutes extends RouteGroup {
 
   @override
   void register(Flint app) {
+    app.get('/favicon.ico', (req, res) async {
+      return res.redirect(
+        '/assets/images/logo-icon.png?v=20260212',
+        status: 302,
+      );
+    });
+
     app.get('/robots.txt', (req, res) async {
       return res.send(
         _buildRobotsTxt(),
@@ -125,6 +132,32 @@ class WebRoutes extends RouteGroup {
     app.get('/guides/:topic', (req, res) async {
       final topic = req.param('topic') ?? 'introduction';
       return _renderGettingStartedTopic(req, res, topic);
+    });
+
+    // Flint Client guide
+    app.get('/client', (req, res) async {
+      return res.view('client.index', data: {
+        ...await _baseData(req),
+        'title': 'FlintClient Guide - Flint Dart',
+        'description':
+            'Official FlintClient guide: setup, requests, retries, caching, cancellation, parse modes, and observability hooks.',
+        'keywords':
+            'FlintClient, Dart HTTP client, retries, caching, cancellation, request hooks, parse mode',
+        'url': '/client',
+      });
+    });
+
+    // Dart lessons/docs
+    app.get('/dart', (req, res) async {
+      return res.view('dart.index', data: {
+        ...await _baseData(req),
+        'title': 'Dart Lessons - Learn Dart Clearly',
+        'description':
+            'Learn Dart with simple, practical lessons: syntax, functions, classes, null safety, and async.',
+        'keywords':
+            'Dart tutorial, Dart lessons, learn Dart, Dart basics, null safety, async await',
+        'url': '/dart',
+      });
     });
 
     // API
@@ -1354,6 +1387,18 @@ Sitemap: $sitemapUrl
         'lastmod': nowIso,
       },
       {
+        'loc': _absoluteUrl('/client'),
+        'changefreq': 'weekly',
+        'priority': '0.9',
+        'lastmod': nowIso,
+      },
+      {
+        'loc': _absoluteUrl('/dart'),
+        'changefreq': 'weekly',
+        'priority': '0.9',
+        'lastmod': nowIso,
+      },
+      {
         'loc': _absoluteUrl('/api'),
         'changefreq': 'weekly',
         'priority': '0.9',
@@ -1452,6 +1497,8 @@ Sitemap: $sitemapUrl
     final site = _absoluteUrl('/');
     final sitemap = _absoluteUrl('/sitemap.xml');
     final guides = _absoluteUrl('/guides');
+    final client = _absoluteUrl('/client');
+    final dart = _absoluteUrl('/dart');
     final api = _absoluteUrl('/api');
     final blog = _absoluteUrl('/blog');
     final questions = _absoluteUrl('/questions');
@@ -1471,6 +1518,8 @@ Sitemap: $sitemapUrl
       '- Site: $site',
       '- Sitemap: $sitemap',
       '- Guides: $guides',
+      '- FlintClient Guide: $client',
+      '- Dart Lessons: $dart',
       '- API Reference: $api',
       '- Blog: $blog',
       '- Questions: $questions',
