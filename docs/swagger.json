@@ -357,7 +357,7 @@
         ]
       }
     },
-    "/favicon.ico": {
+    "/robots.txt": {
       "get": {
         "summary": "",
         "tags": [

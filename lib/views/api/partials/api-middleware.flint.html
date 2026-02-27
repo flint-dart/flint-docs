@@ -31,6 +31,10 @@
             <div class="method-signature">Built-ins: ExceptionMiddleware, CorsMiddleware, LoggerMiddleware, StaticFileMiddleware, CookieSessionMiddleware</div>
             <div class="method-description">Drop-in middleware shipped with Flint.</div>
         </div>
+        <div class="method-item">
+            <div class="method-signature">StaticFileMiddleware({String publicFolder = 'public', Duration cacheDuration = const Duration(days: 30), int maxFileSize = 104857600, bool enableCompression = true, bool enableRangeRequests = true})</div>
+            <div class="method-description">Optimized static file serving with cache headers, ETag, and byte-range support.</div>
+        </div>
     </div>
 
     <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
@@ -71,5 +75,11 @@ app.use(AuthGuard()); // global</code></pre>
   },
   middlewares: [AuthGuard()],
 );</code></pre>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Recommended Static Setup</h3>
+        <pre class="mt-3"><code class="language-dart">app.use(StaticFileMiddleware()); // serves files from public/
+app.static('/assets', 'assets'); // serves framework/site assets</code></pre>
     </div>
 </section>

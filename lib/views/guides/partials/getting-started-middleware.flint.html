@@ -99,4 +99,34 @@ void main() {
         <li><code>StaticFileMiddleware</code> — serves files from <code>public/</code> with caching and range support.</li>
     </ul>
 
+    <h3>StaticFileMiddleware vs app.static</h3>
+    <p>
+        Use <code>app.use(StaticFileMiddleware())</code> for public files (favicons, uploads, downloadable files)
+        when you want cache headers, conditional requests, and range support.
+    </p>
+    <p class="mt-2 text-sm text-slate-400">
+        Keep <code>app.static('/assets', 'assets')</code> for framework/site assets under a URL prefix.
+        This combination is common in production apps.
+    </p>
+    <div class="code-block">
+        <pre><code class="language-dart">void main() {
+  final app = Flint(
+    withDefaultMiddleware: true,
+    autoConnectDb: true,
+  );
+
+  // Optimized static serving for files inside public/
+  app.use(StaticFileMiddleware(
+    publicFolder: 'public',
+    cacheDuration: Duration(days: 30),
+    enableRangeRequests: true,
+  ));
+
+  // Versioned app assets under /assets
+  app.static('/assets', 'assets');
+
+  app.listen();
+}</code></pre>
+    </div>
+
 </section>

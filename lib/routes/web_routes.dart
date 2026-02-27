@@ -78,13 +78,6 @@ class WebRoutes extends RouteGroup {
 
   @override
   void register(Flint app) {
-    app.get('/favicon.ico', (req, res) async {
-      return res.redirect(
-        '/assets/images/logo-icon.png?v=20260212',
-        status: 302,
-      );
-    });
-
     app.get('/robots.txt', (req, res) async {
       return res.send(
         _buildRobotsTxt(),
