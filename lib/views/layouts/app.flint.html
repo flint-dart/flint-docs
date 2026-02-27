@@ -44,9 +44,17 @@
         }
         body {
             font-family: 'DM Sans', 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
         }
         h1, h2, h3, h4 {
             font-family: 'Space Grotesk', 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+        }
+        article {
+            min-width: 0;
+        }
+        article p,
+        article li {
+            overflow-wrap: anywhere;
         }
         [x-cloak] { display: none !important; }
         .hide-scrollbar {

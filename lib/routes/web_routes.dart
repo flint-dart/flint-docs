@@ -797,6 +797,7 @@ class WebRoutes extends RouteGroup {
 
   Future<String> _loadFrameworkChangelog() async {
     final candidates = <String>[
+      'docs/FLINT_DART_CHANGELOG.md',
       '../flint_dart/CHANGELOG.md',
       'flint_dart/CHANGELOG.md',
       'CHANGELOG.md',
