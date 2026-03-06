@@ -1,4 +1,5 @@
 import 'package:flint_dart/auth.dart';
+import 'package:flint_dart/exception.dart';
 import 'package:flint_dart/flint_dart.dart';
 import 'package:flint_docs/models/user_model.dart';
 
@@ -28,7 +29,8 @@ class AuthController {
         await req.startSession(user.toMap());
       }
 
-      return res.json({'status': 'success', 'data': user?.toMap()}, status: 201);
+      return res
+          .json({'status': 'success', 'data': user?.toMap()}, status: 201);
     } on ValidationException catch (e) {
       return res.status(422).json({'status': 'errors', 'errors': e.errors});
     } catch (e) {
@@ -48,9 +50,8 @@ class AuthController {
       if (!identifier.contains('@')) {
         final user = await User().firstWhere('name', identifier);
         if (user == null || user.email == null) {
-          return res
-              .status(401)
-              .json({'status': 'errors', 'errors': 'Invalid email or username'});
+          return res.status(401).json(
+              {'status': 'errors', 'errors': 'Invalid email or username'});
         }
         email = user.email!;
       }

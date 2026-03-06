@@ -28,6 +28,7 @@
                 <a href="#methods" class="whitespace-nowrap rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-xs text-slate-200 hover:border-slate-500">HTTP Methods</a>
                 <a href="#files" class="whitespace-nowrap rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-xs text-slate-200 hover:border-slate-500">Files</a>
                 <a href="#websocket" class="whitespace-nowrap rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-xs text-slate-200 hover:border-slate-500">WebSocket</a>
+                <a href="#error-handling" class="whitespace-nowrap rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-xs text-slate-200 hover:border-slate-500">Error Handling</a>
                 <a href="#parse-modes" class="whitespace-nowrap rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-xs text-slate-200 hover:border-slate-500">Parse Modes</a>
                 <a href="#observability" class="whitespace-nowrap rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-xs text-slate-200 hover:border-slate-500">Observability</a>
             </div>
@@ -143,6 +144,52 @@ final multiUpload = await client.uploadFiles&lt;Map&lt;String, dynamic&gt;&gt;(
   },
   body: {'ownerId': 42},
 );</code></pre>
+        </article>
+
+        <article id="error-handling" class="scroll-mt-28 rounded-2xl border border-slate-800 bg-slate-900/60 p-5 sm:p-7">
+            <h2 class="text-xl font-semibold text-white">Error Handling</h2>
+            <p class="mt-3 text-slate-300">
+                By default, FlintClient returns an error response object for failed requests (4xx/5xx).
+                This means your request resolves with <code>response.isError == true</code> and details in <code>response.error</code>.
+            </p>
+            <pre><code class="language-dart">final client = FlintClient(baseUrl: 'https://api.example.com');
+
+final response = await client.get&lt;Map&lt;String, dynamic&gt;&gt;('/users/42');
+if (response.isError) {
+  print(response.error?.message);
+  print(response.error?.statusCode);
+}</code></pre>
+
+            <div class="mt-3 rounded-xl border border-slate-800 bg-slate-950/60 p-4">
+                <h3 class="text-sm font-semibold uppercase tracking-widest text-slate-300">Access Raw Backend Error Payload</h3>
+                <p class="mt-2 text-slate-300">
+                    Use <code>FlintError.data</code> to read the exact backend payload.
+                    It can be a <code>Map</code>, <code>List</code>, <code>String</code>, or <code>null</code> (empty body).
+                </p>
+                <pre><code class="language-dart">if (response.isError) {
+  final raw = response.error?.data;
+  // raw can be Map/List/String/null based on backend response body
+  print(raw);
+}</code></pre>
+            </div>
+
+            <div class="mt-3 rounded-xl border border-slate-800 bg-slate-950/60 p-4">
+                <h3 class="text-sm font-semibold uppercase tracking-widest text-slate-300">Throw Instead of Returning Error Response</h3>
+                <p class="mt-2 text-slate-300">
+                    If you prefer exception flow, enable <code>throwIfError</code> on the client.
+                </p>
+                <pre><code class="language-dart">final client = FlintClient(
+  baseUrl: 'https://api.example.com',
+  throwIfError: true,
+);
+
+try {
+  await client.get&lt;Map&lt;String, dynamic&gt;&gt;('/users/42');
+} on FlintError catch (e) {
+  print(e.statusCode);
+  print(e.data); // exact backend payload
+}</code></pre>
+            </div>
         </article>
 
         <article id="observability" class="scroll-mt-28 rounded-2xl border border-slate-800 bg-slate-900/60 p-5 sm:p-7">

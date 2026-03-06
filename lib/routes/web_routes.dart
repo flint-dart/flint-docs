@@ -1,4 +1,5 @@
 import 'package:flint_dart/db.dart';
+import 'package:flint_dart/exception.dart';
 import 'package:flint_dart/flint_dart.dart';
 import 'package:flint_dart/helper.dart';
 import 'package:flint_docs/models/answer_model.dart';
@@ -739,10 +740,12 @@ class WebRoutes extends RouteGroup {
         : null;
     final nextGuideTitle =
         nextTopicSlug != null ? _topicHeading(nextTopicSlug).trim() : null;
-    final hasPreviousGuide =
-        previousTopicSlug != null && previousGuideTitle != null && previousGuideTitle.isNotEmpty;
-    final hasNextGuide =
-        nextTopicSlug != null && nextGuideTitle != null && nextGuideTitle.isNotEmpty;
+    final hasPreviousGuide = previousTopicSlug != null &&
+        previousGuideTitle != null &&
+        previousGuideTitle.isNotEmpty;
+    final hasNextGuide = nextTopicSlug != null &&
+        nextGuideTitle != null &&
+        nextGuideTitle.isNotEmpty;
     final heading = _topicHeading(topic);
     return res.view('guides.getting-started', data: {
       ...await _baseData(req),
@@ -1059,9 +1062,8 @@ class WebRoutes extends RouteGroup {
     }
 
     final base = FlintEnv.get('APP_URL', 'http://localhost:3030').trim();
-    final normalizedBase = base.endsWith('/')
-        ? base.substring(0, base.length - 1)
-        : base;
+    final normalizedBase =
+        base.endsWith('/') ? base.substring(0, base.length - 1) : base;
     final normalizedPath = trimmed.startsWith('/') ? trimmed : '/$trimmed';
     return '$normalizedBase$normalizedPath';
   }
@@ -1334,7 +1336,8 @@ User-agent: Googlebot
 Allow: /
 
 Sitemap: $sitemapUrl
-'''.trim();
+'''
+        .trim();
   }
 
   Future<String> _buildSitemapXml() async {
@@ -1354,7 +1357,8 @@ Sitemap: $sitemapUrl
         buffer.writeln('    <lastmod>${_xmlEscape(lastmod)}</lastmod>');
       }
       if (changefreq.isNotEmpty) {
-        buffer.writeln('    <changefreq>${_xmlEscape(changefreq)}</changefreq>');
+        buffer
+            .writeln('    <changefreq>${_xmlEscape(changefreq)}</changefreq>');
       }
       if (priority.isNotEmpty) {
         buffer.writeln('    <priority>${_xmlEscape(priority)}</priority>');
