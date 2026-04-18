@@ -38,7 +38,7 @@
             <tr>
                 <td><code>orWhere(String field, String operator, dynamic value)</code></td>
                 <td><span class="type">QueryBuilder</span></td>
-                <td>Append an OR condition.</td>
+                <td>Append an OR condition inside the grouped OR clause set. Example: <code>where('status', '=', 'active').orWhere('email', '=', 'ada@example.com').orWhere('name', '=', 'Ada')</code> compiles to <code>WHERE status = ? AND (email = ? OR name = ?)</code>.</td>
             </tr>
             <tr>
                 <td><code>orderBy(String field, [String direction = 'ASC'])</code></td>
@@ -110,6 +110,8 @@
 
 final page = await qb
   .where('status', '=', 'active')
+  .orWhere('email', '=', 'ada@example.com')
+  .orWhere('name', '=', 'Ada')
   .orderBy('created_at', 'DESC')
   .paginate(1, 20);
 

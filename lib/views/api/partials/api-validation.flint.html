@@ -2,7 +2,7 @@
 <section id="validation" class="class-reference">
     <div class="class-header">
         <h2 class="class-name">Validation</h2>
-        <p class="class-description">Rule-based input validation for JSON and form data.</p>
+        <p class="class-description">Rule-based validation over Flint's normalized request input map.</p>
     </div>
 
     <div class="method-list">
@@ -12,11 +12,11 @@
         </div>
         <div class="method-item">
             <div class="method-signature">Future&lt;Map&lt;String, dynamic&gt;&gt; ctx.req.validate(Map&lt;String, String&gt; rules)</div>
-            <div class="method-description">Validate JSON body and return the parsed map.</div>
+            <div class="method-description">Validate normalized input and return the parsed map. Works across JSON, URL-encoded forms, multipart fields, files, query params, and route params.</div>
         </div>
         <div class="method-item">
             <div class="method-signature">Future&lt;Map&lt;String, String&gt;&gt; ctx.req.validateForm(Map&lt;String, String&gt; rules)</div>
-            <div class="method-description">Validate form data and return the parsed map.</div>
+            <div class="method-description">Deprecated form-only helper kept for compatibility. Prefer <code>ctx.req.validate(...)</code>.</div>
         </div>
     </div>
 
@@ -25,6 +25,18 @@
         <pre class="mt-3"><code class="language-dart">final data = await ctx.req.validate({
   'email': 'required|email',
   'password': 'required|string|min:8',
-});</code></pre>
+  'avatar': 'required',
+});
+
+final avatar = await ctx.req.input('avatar');</code></pre>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Behavior</h3>
+        <p class="text-sm text-slate-300">
+            Use the same validation rules whether the client sends JSON, URL-encoded form data, or multipart form data.
+            <code>form()</code> still returns only text fields, while file uploads are available through
+            <code>file()</code>, <code>files()</code>, <code>allFiles()</code>, and <code>input()</code>.
+        </p>
     </div>
 </section>

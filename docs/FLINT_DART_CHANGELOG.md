@@ -2,6 +2,30 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.0.2] - 2026-04-18
+
+### Release Status
+- Public release build.
+
+### Added
+- Added `Request.rawBody()` for exact undecoded request payload access alongside higher-level request parsers.
+- Added normalized request helpers `Request.input(...)` and `Request.allInput()` for query, JSON, form, multipart, file, and route-param access through one API.
+- Added websocket payload normalization so `emit(...)` and `sendJson(...)` can safely serialize values like `DateTime`, nested collections, exceptions, and objects with `toMap()` or `toJson()`.
+- Added Swagger/OpenAPI websocket documentation support with `101 Switching Protocols`, `x-websocket`, `x-flint-transport`, and a top-level `x-websockets` extension block.
+- Added regression tests covering unified request input/validation, raw body access, websocket namespace behavior, websocket payload normalization, and websocket Swagger docs generation.
+
+### Changed
+- WebSocket rooms are now namespace-scoped by path by default, with explicit cross-namespace helpers `emitToRoomIn(...)` and `emitToNamespace(...)`.
+- Swagger docs generation now discovers `app.websocket(...)` routes and documents their handshake path in a Swagger-friendly way.
+- Updated docs and examples to emphasize `lib/config/seeder_registry.dart` as the entry point for `flint --db-seed`.
+- CLI version output now supports `flint -v` and `flint --version`, reading the active Flint CLI package version automatically.
+
+### Fixed
+- Fixed `orWhere` handling so grouped OR clauses are compiled consistently across select, update, delete, `first()`, and `all()` query paths.
+- Fixed model `all()` so it respects previously chained query filters instead of always fetching every row.
+- Fixed MySQL where-based update parameter ordering when `orWhere` filters are present.
+- Fixed websocket event encoding crashes when emitting non-primitive Dart objects such as `DateTime`.
+
 ## [1.0.0+33] - 2026-02-25
 
 ### Release Status

@@ -53,6 +53,10 @@
             <div class="method-description">Fetch all rows using the current query builder state.</div>
         </div>
         <div class="method-item">
+            <div class="method-signature">Future&lt;List&lt;T&gt;&gt; all()</div>
+            <div class="method-description">Alias of <code>get()</code>. If you already chained <code>where(...)</code>, <code>orWhere(...)</code>, or ordering methods, <code>all()</code> keeps those filters.</div>
+        </div>
+        <div class="method-item">
             <div class="method-signature">T withRelation(String name, {List&lt;String&gt;? columns})</div>
             <div class="method-description">Eager load a relation by name.</div>
         </div>
@@ -81,6 +85,10 @@
   );
 }
 
-final user = await User().find('uuid');</code></pre>
+final user = await User().find('uuid');
+final filtered = await User()
+  .where('status', 'active')
+  .orWhere('email', 'ada@example.com')
+  .all();</code></pre>
     </div>
 </section>

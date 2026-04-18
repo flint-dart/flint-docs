@@ -73,7 +73,7 @@ class User extends Model&lt;User&gt; {
     <h3 id="orm">ORM</h3>
     <p>
         The ORM is a friendly way to talk to your database without writing raw SQL. Think of a model
-        like a “row helper” for a table. You call simple methods, and Flint builds the SQL for you.
+        like a "row helper" for a table. You call simple methods, and Flint builds the SQL for you.
     </p>
     <p class="mt-2 text-sm text-slate-400">
         Each line below shows a real task: finding a user, getting a list, creating a record, updating,
@@ -106,20 +106,20 @@ await User()
 await User().delete(1);</code></pre>
     </div>
     <ul>
-        <li><code>find(id)</code> — fetch one record by primary key.</li>
-        <li><code>where(...).get()</code> — build a query and return a list of models.</li>
-        <li><code>create(data)</code> — insert a new record and return the created model.</li>
-        <li><code>update(data: ...)</code> — update matching records (use <code>where()</code> first).</li>
-        <li><code>delete(id)</code> — delete by primary key.</li>
+        <li><code>find(id)</code> - fetch one record by primary key.</li>
+        <li><code>where(...).get()</code> - build a query and return a list of models.</li>
+        <li><code>create(data)</code> - insert a new record and return the created model.</li>
+        <li><code>update(data: ...)</code> - update matching records (use <code>where()</code> first).</li>
+        <li><code>delete(id)</code> - delete by primary key.</li>
     </ul>
 
     <p class="mt-2 text-sm text-slate-400">
-        Tip: chain methods in the order you read them. “Where email is X, order by date, limit 10, get.”
+        Tip: chain methods in the order you read them. "Where email is X, order by date, limit 10, get."
         This makes the code easy to understand without knowing SQL.
     </p>
 
     <h3 id="orm-more">More ORM Methods</h3>
-    <p>These helpers cover common patterns like “find or create” and “upsert”.</p>
+    <p>These helpers cover common patterns like "find or create" and "upsert".</p>
     <div class="code-block">
         <pre><code class="language-dart">// Save current model (create or update based on id)
 final user = User()..setAttributes({'name': 'Ada', 'email': 'ada@example.com'});
@@ -144,18 +144,24 @@ final results = await User().upsertMany([
 ]);</code></pre>
     </div>
     <ul>
-        <li><code>refresh(id?)</code> — reload the model from the database.</li>
-        <li><code>save()</code> — create or update based on primary key.</li>
-        <li><code>firstOrCreate(where, data)</code> — get first match or create it.</li>
-        <li><code>upsert(where, data)</code> — update if found, else create.</li>
-        <li><code>upsertMany(list)</code> — batch upsert using <code>where</code> + <code>data</code>.</li>
-        <li><code>all()</code> — get all records.</li>
-        <li><code>whereSimple(field, value)</code> — simple where without chaining.</li>
-        <li><code>whereInSimple(field, values)</code> — where in without chaining.</li>
-        <li><code>countAll()</code> — total count.</li>
-        <li><code>countWhere(field, value)</code> — count with filter.</li>
-        <li><code>truncate()</code> — delete all records in the table.</li>
+        <li><code>refresh(id?)</code> - reload the model from the database.</li>
+        <li><code>save()</code> - create or update based on primary key.</li>
+        <li><code>firstOrCreate(where, data)</code> - get first match or create it.</li>
+        <li><code>upsert(where, data)</code> - update if found, else create.</li>
+        <li><code>upsertMany(list)</code> - batch upsert using <code>where</code> + <code>data</code>.</li>
+        <li><code>all()</code> - alias of <code>get()</code>. It returns all rows only when you have not already chained filters.</li>
+        <li><code>whereSimple(field, value)</code> - simple where without chaining.</li>
+        <li><code>whereInSimple(field, values)</code> - where in without chaining.</li>
+        <li><code>countAll()</code> - total count.</li>
+        <li><code>countWhere(field, value)</code> - count with filter.</li>
+        <li><code>truncate()</code> - delete all records in the table.</li>
     </ul>
+
+    <p class="mt-2 text-sm text-slate-400">
+        <code>orWhere(...)</code> now works consistently for model queries too. The grouped OR conditions are appended after the normal
+        <code>where(...)</code> chain, so <code>where('status', 'active').orWhere('email', 'ada@example.com').orWhere('name', 'Ada')</code>
+        behaves like <code>WHERE status = ? AND (email = ? OR name = ?)</code>.
+    </p>
 
     <h3 id="orm-query">ORM Query</h3>
     <p>Chain query helpers step by step to build readable queries.</p>
@@ -174,10 +180,10 @@ final users = await query.get();</code></pre>
     </div>
 
     <h3 id="orm-relations">ORM Relations</h3>
-    <p>Relations are how models “connect” to each other (like users and posts).</p>
+    <p>Relations are how models "connect" to each other (like users and posts).</p>
     <p class="mt-2 text-sm text-slate-400">
         Think of it like friends: a <strong>User</strong> can have many <strong>Posts</strong>, and a
-        <strong>Post</strong> belongs to one <strong>User</strong>. You declare that in the model’s
+        <strong>Post</strong> belongs to one <strong>User</strong>. You declare that in the model's
         <code>relations</code> getter.
     </p>
     <div class="code-block">
