@@ -17,6 +17,27 @@
 <section class="mx-auto w-full max-w-6xl px-4 pb-16">
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+      <h2 class="text-lg font-semibold text-white">Password Reset Code Checks</h2>
+      <p class="mt-2 text-sm text-slate-300">
+        <code>Auth.verifyPasswordResetCode(...)</code> lets apps validate reset codes before changing a password, and <code>resetPasswordWithCode(...)</code> now shares the same verification logic.
+      </p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+      <h2 class="text-lg font-semibold text-white">Auth Verification Wrapper</h2>
+      <p class="mt-2 text-sm text-slate-300">
+        <code>AuthVerification.verifyPasswordResetCode(...)</code> keeps extension-based auth flows aligned with the new core reset-code verifier.
+      </p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+      <h2 class="text-lg font-semibold text-white">Async Auth Errors Covered</h2>
+      <p class="mt-2 text-sm text-slate-300">
+        Exception middleware regression coverage now includes awaited async handlers that throw <code>AuthException</code>.
+      </p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
       <h2 class="text-lg font-semibold text-white">Unified Request Input</h2>
       <p class="mt-2 text-sm text-slate-300">
         <code>validate()</code>, <code>input()</code>, <code>allInput()</code>, and <code>rawBody()</code> now cover JSON, forms, multipart fields, files, query params, and route params through one request API.

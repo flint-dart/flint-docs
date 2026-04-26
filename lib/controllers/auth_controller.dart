@@ -1,5 +1,4 @@
 import 'package:flint_dart/auth.dart';
-import 'package:flint_dart/exception.dart';
 import 'package:flint_dart/flint_dart.dart';
 import 'package:flint_docs/models/user_model.dart';
 

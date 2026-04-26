@@ -1,14 +1,13 @@
 name: flint_docs
 description: A FlintDart application
-version: 1.0.0
+version: 1.0.3
 publish_to: none
 
 environment:
   sdk: ^3.0.0
 
 dependencies:
-  flint_dart: ^1.0.0+33
-   
+  flint_dart: ^1.0.3
 
 dependency_overrides:
   mysql_dart:
