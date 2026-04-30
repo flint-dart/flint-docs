@@ -30,17 +30,21 @@ void main() {
 <section id="route-groups-controller" class="section">
     <h2>Route Groups with Controllers</h2>
     <p>
-        For request-scoped controller actions, use <code>useController()</code> and
-        <code>useControllerVoid()</code> inside a <code>RouteGroup</code>. This keeps
+        For request-scoped controller actions, create a controller route builder with
+        <code>app.controller(...)</code> inside a <code>RouteGroup</code>. This keeps
         controller methods clean while still creating a fresh controller per request/socket.
     </p>
     <div class="code-block">
         <pre><code class="language-dart">import 'package:flint_dart/flint_dart.dart';
 
-class UserController extends Controller {
+class HttpUserController extends Controller {
   Future&lt;Response&gt; create() async {
     final body = await req.json();
     return res.json({'created': true, 'data': body});
+  }
+
+  Future&lt;Response&gt; showProfile() async {
+    return res.json({'id': req.params['id']});
   }
 }
 
@@ -56,7 +60,10 @@ class UserRoutes extends RouteGroup {
 
   @override
   void register(Flint app) {
-    app.post('/', useController(UserController.new, (c) => c.create()));
+    final users = app.controller(HttpUserController.new);
+
+    users.post('/', (c) => c.create());
+    users.get('/:id', (c) => c.showProfile());
   }
 }
 
@@ -66,9 +73,11 @@ class ChatRoutes extends RouteGroup {
 
   @override
   void register(Flint app) {
-    app.websocket('/chat', useControllerVoid(ChatController.new, (c) {
+    final chat = app.controller(ChatController.new);
+
+    chat.websocket('/chat', (c) {
       c.connect();
-    }));
+    });
   }
 }</code></pre>
     </div>

@@ -103,15 +103,23 @@ app.post('/auth/email/verify', (Context ctx) async {
         or token using the provider helpers.
     </p>
     <p class="text-sm text-slate-400">
-        You can also register auth endpoints with controllers using <code>useController(...)</code> inside a
+        You can also register auth endpoints with controllers using <code>app.controller(...)</code> inside a
         <code>RouteGroup</code>.
     </p>
     <div class="code-block">
         <pre><code class="language-dart">// RouteGroup + controller helper (example)
-app.post(
-  '/login-with-google',
-  useController(AuthController.new, (c) => c.loginWithGoogle()),
-);</code></pre>
+class AuthRoutes extends RouteGroup {
+  @override
+  String get prefix => '/auth';
+
+  @override
+  void register(Flint app) {
+    final auth = app.controller(AuthController.new);
+
+    auth.get('/github', (c) => c.loginWithGithub());
+    auth.get('/google', (c) => c.loginWithGoogle());
+  }
+}</code></pre>
     </div>
     <div class="code-block">
         <pre><code class="language-dart">// 1) Redirect user to provider

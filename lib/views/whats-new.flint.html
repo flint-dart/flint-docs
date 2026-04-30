@@ -17,6 +17,27 @@
 <section class="mx-auto w-full max-w-6xl px-4 pb-16">
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+      <h2 class="text-lg font-semibold text-white">Safer Column Renames</h2>
+      <p class="mt-2 text-sm text-slate-300">
+        <code>Column(renamedFrom: ...)</code> lets migrations rename existing columns without dropping user data, with warnings for risky case-only renames.
+      </p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+      <h2 class="text-lg font-semibold text-white">Column Comments & Placement</h2>
+      <p class="mt-2 text-sm text-slate-300">
+        Schema columns now support <code>comment</code> metadata and MySQL-only <code>after</code> placement for cleaner migrated tables.
+      </p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+      <h2 class="text-lg font-semibold text-white">Cleaner Controller Routes</h2>
+      <p class="mt-2 text-sm text-slate-300">
+        <code>app.controller(...)</code> gives route groups a concise, request-scoped controller API while still creating a fresh controller for every request.
+      </p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
       <h2 class="text-lg font-semibold text-white">Password Reset Code Checks</h2>
       <p class="mt-2 text-sm text-slate-300">
         <code>Auth.verifyPasswordResetCode(...)</code> lets apps validate reset codes before changing a password, and <code>resetPasswordWithCode(...)</code> now shares the same verification logic.

@@ -44,23 +44,25 @@ class UserRoutes extends RouteGroup {
 
   @override
   void register(Flint app) {
-    app.get('/', useController(() => UserController(UserService()), (c) => c.index()));
-    app.post('/', useController(() => UserController(UserService()), (c) => c.store()));
+    final users = app.controller(() => UserController(UserService()));
+
+    users.get('/', (c) => c.index());
+    users.post('/', (c) => c.store());
   }
 }
 
 // Alternative without RouteGroup helper
 app.get(
   '/users/:id',
-  controllerAction(
+  controller(
     () => UserController(UserService()),
     (c) => c.index(),
   ),
 );</code></pre>
     </div>
     <p class="mt-4">
-        Use <code>useController(...)</code>, <code>useControllerVoid(...)</code> (for void/WebSocket actions),
-        or <code>controllerAction(...)</code> so each request gets a bound controller instance automatically.
+        Use <code>app.controller(...)</code> inside route groups, or the lower-level
+        <code>controller(...)</code> / <code>controllerVoid(...)</code> helpers, so each request gets a bound controller instance automatically.
         The base controller also supports typed request-scoped extras via
         <code>read&lt;T&gt;()</code> and <code>write&lt;T&gt;()</code> for future session/user injection patterns.
         If you access <code>res</code> in a WebSocket action (or <code>socket</code> in HTTP), Flint throws a

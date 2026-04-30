@@ -12,7 +12,7 @@
         </div>
         <div class="method-item">
             <div class="method-signature">Column({required String name, required ColumnType type, ...})</div>
-            <div class="method-description">Define a column, optionally setting primary key, uniqueness, defaults, or nullability.</div>
+            <div class="method-description">Define a column, optionally setting primary key, uniqueness, defaults, nullability, comments, placement hints, or rename metadata.</div>
         </div>
         <div class="method-item">
             <div class="method-signature">Index({required String name, required List&lt;String&gt; columns, bool isUnique = false})</div>
@@ -37,5 +37,19 @@
     Index(name: 'users_email_idx', columns: ['email'], isUnique: true),
   ],
 );</code></pre>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-slate-800/60 bg-slate-950/60 p-4">
+        <h3 class="text-sm font-semibold text-white">Column metadata</h3>
+        <p class="mt-2 text-sm text-slate-400">
+            Use <code>comment</code> for database column comments, <code>after</code> to place newly added MySQL columns after another column, and <code>renamedFrom</code> when an existing column is being renamed.
+        </p>
+        <pre class="mt-3"><code class="language-dart">Column(
+  name: 'developer',
+  type: ColumnType.string,
+  comment: 'Public developer name',
+  after: 'email', // MySQL only
+  renamedFrom: 'dev',
+)</code></pre>
     </div>
 </section>
