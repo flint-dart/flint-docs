@@ -2,6 +2,53 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.2] - 2026-05-26
+
+### Release Status
+- Public patch build.
+
+### Added
+- Added anti SQL injection middleware exports.
+- Added database administration CLI improvements.
+- Added request and response helpers for full-stack Flint UI apps.
+
+### Improved
+- Updated Flint UI build commands and generators for app-owned `lib/ui` entrypoints.
+- Improved static asset discovery for compiled Flint UI bundles.
+- Updated examples and README guidance for deploying FlintDart as a full-stack app host.
+
+### Tests
+- Expanded coverage for app middleware behavior, response page rendering, request helpers, UI generation, and web UI bundle building.
+
+## [1.1.1] - 2026-05-14
+
+### Release Status
+- Public patch build.
+
+### Fixed
+- Flint Web UI auto build now discovers app-owned `lib/ui/main.dart` entrypoints.
+- App-owned UI builds now default to `public/assets/js/flint-ui/main.dart.js` so deployed public assets stay organized.
+- `flintPage()` now loads app-owned Flint UI bundles from `/assets/js/flint-ui/main.dart.js` when present.
+- UI generators now prefer `lib/ui` for app-owned Flint UI source.
+- Flint's default middleware stack now serves `public` static assets automatically.
+- Development servers now bind exclusively to their port so stale workers cannot intercept hot-reload WebSocket traffic.
+- The browser hot-reload client now backs off and avoids repeated console errors while the dev server restarts.
+
+## [1.1.0] - 2026-05-14
+
+### Release Status
+- Public minor release.
+
+### Added
+- Added first-class Flint UI package support through the standalone `flint_ui` dependency.
+- Added public bridge exports for `package:flint_dart/flint_ui.dart` and the deprecated `package:flint_dart/flint_web_ui.dart` compatibility entrypoint.
+- Added Flint Web UI CLI workflows for creating and building browser UI entrypoints.
+- Added hot-reload rebuild support for Flint UI browser bundles.
+
+### Changed
+- Moved Flint UI usage onto the external `flint_ui: ^0.1.3` package instead of the old in-framework UI implementation.
+- Updated the example app to use the standalone Flint UI package during local development.
+
 ## [1.0.4] - 2026-04-30
 
 ### Release Status
@@ -41,7 +88,7 @@ All notable changes to this project are documented in this file.
 ## [1.0.2] - 2026-04-18
 
 ### Release Status
-- Public release build.
+- Public patch build.
 
 ### Added
 - Added `Request.rawBody()` for exact undecoded request payload access alongside higher-level request parsers.
@@ -51,18 +98,96 @@ All notable changes to this project are documented in this file.
 - Added regression tests covering unified request input/validation, raw body access, websocket namespace behavior, websocket payload normalization, and websocket Swagger docs generation.
 
 ### Changed
+- Unified `Request.validate(...)` so it auto-detects JSON, urlencoded form, and multipart request input instead of only validating JSON bodies.
+- `Request.form()` now remains focused on text form fields while files stay available through file helpers and normalized input access.
 - WebSocket rooms are now namespace-scoped by path by default, with explicit cross-namespace helpers `emitToRoomIn(...)` and `emitToNamespace(...)`.
 - Swagger docs generation now discovers `app.websocket(...)` routes and documents their handshake path in a Swagger-friendly way.
-- Updated docs and examples to emphasize `lib/config/seeder_registry.dart` as the entry point for `flint --db-seed`.
-- CLI version output now supports `flint -v` and `flint --version`, reading the active Flint CLI package version automatically.
 
 ### Fixed
 - Fixed `orWhere` handling so grouped OR clauses are compiled consistently across select, update, delete, `first()`, and `all()` query paths.
-- Fixed model `all()` so it respects previously chained query filters instead of always fetching every row.
+- Fixed `all()` on models so chained query builder filters are respected instead of returning every row.
 - Fixed MySQL where-based update parameter ordering when `orWhere` filters are present.
 - Fixed websocket event encoding crashes when emitting non-primitive Dart objects such as `DateTime`.
 
-## [1.0.0+33] - 2026-02-25
+## [1.0.1+1] - 2026-04-15
+
+### Release Status
+- Public patch build.
+
+### Added
+- Added focused `upsert` regression tests covering `excludeUpdatedData`, `createData`, and `updateData`.
+
+### Changed
+- Expanded `upsert` to support explicit `createData` and `updateData` payloads alongside the legacy shared `data` payload.
+- Restricted `excludeUpdatedData` to legacy `data` mode and improved `uniqueBy` resolution when explicit payloads are used.
+
+### Fixed
+- Prevented `upsert` from creating rows when only update payload data is available.
+- Ensured `DB.overrideConnection(...)` sets the active driver so database-backed tests can run against fake connections.
+
+## [1.0.1] - 2026-04-15
+
+### Release Status
+- Public stable patch release.
+
+### Fixed
+- Fixed `flint migrate` so migration failures propagate instead of returning a successful process exit.
+- Fixed MySQL schema comparison to decode metadata reliably and avoid false column updates on clean reruns.
+- Fixed migration type parsing so column types like `DOUBLE NOT NULL` and `BOOLEAN NOT NULL` are parsed correctly.
+- Fixed default comparison normalization for boolean, numeric, and timestamp defaults during schema sync.
+- Fixed MySQL `updated_at` handling by correctly recognizing `ON UPDATE CURRENT_TIMESTAMP`.
+
+### Added
+- Added migration support for syncing declared indexes from `Table.indexes`, including composite indexes.
+- Added regression tests for schema comparison, default normalization, inline unique columns, and desired index generation.
+
+### Changed
+- `runTableRegistry` now provides canonical table definitions to the migrator instead of precomputed diffs.
+- Restored `ai.dart` to the top-level `package:flint_dart/flint_dart.dart` export surface for backward compatibility.
+
+## [1.0.0+33] - 2026-03-16
+
+### Release Status
+- Public release build.
+
+### Changed
+- Bumped package version to `1.0.0+33`.
+
+## [1.0.0+32] - 2026-03-06
+
+### Release Status
+- Public release build.
+
+### Fixed
+- Fixed framework exception handling so `AuthException` and validation failures are caught reliably by `ExceptionMiddleware`.
+- Unified validation exception behavior and aligned validation responses with HTTP `422`.
+- Fixed validator edge cases for optional `email` fields and `list:<type>` rules.
+
+### Changed
+- Simplified the exported exception surface by removing unused exception wrappers and standardizing exception naming.
+
+## [1.0.0+31] - 2026-03-01
+
+### Release Status
+- Public release build.
+
+### Fixed
+- Fixed stale database connection failures after idle periods in long-running apps (for example, MySQL `Can not prepare stmt: connection closed`).
+- Added automatic reconnect for both MySQL and PostgreSQL when a closed/stale connection is detected.
+- Added one automatic retry for DB query/execute operations after reconnect on connection-loss errors.
+- Enabled default DB keepalive heartbeats to reduce idle disconnects without requiring extra framework configuration.
+
+## [1.0.0+30] - 2026-02-27
+
+### Release Status
+- Public release build.
+
+### Fixed
+- Fixed `Response.view(...)` to avoid wrapping full HTML documents in `#main-content`, preserving valid `<head>` metadata structure for SEO and favicon tags.
+- Improved full-document detection in `Response.view(...)` (`<!doctype html` and `<html>/<head>/<body>` checks) to prevent false wrapping.
+- Fixed dev hot-reload script to use the current browser host/protocol (`ws://` or `wss://`) instead of hardcoded `ws://localhost:3000/flint_reload`.
+
+## [1.0.0+29] - 2026-02-25
 
 ### Release Status
 - Public release build.
