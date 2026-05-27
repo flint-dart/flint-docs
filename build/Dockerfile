@@ -1,19 +1,17 @@
-FROM debian:bookworm-slim
+FROM dart:stable
 
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates bash \
-    && rm -rf /var/lib/apt/lists/*
+# Install project dependencies (including flint_dart and other packages)
+COPY pubspec.* ./
+RUN dart pub get
 
-# Copy prebuilt app bundle from this build directory.
-COPY . /app
-
-RUN if [ -f /app/start.sh ]; then chmod +x /app/start.sh; fi \
-    && if [ -f /app/flint_docs ]; then chmod +x /app/flint_docs; fi
+# Copy app source and refresh lock-resolved dependencies
+COPY . .
+RUN dart pub get --offline
 
 ENV FLINT_HOT=0
 ENV PORT=3000
 EXPOSE 3000
 
-CMD ["./start.sh"]
+CMD ["dart", "run", "lib/main.dart"]

@@ -11,4 +11,4 @@ assets:
   - assets/
   - public/
   - docs/
-  - lib/views/
+  - lib/content/

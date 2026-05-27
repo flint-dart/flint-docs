@@ -7,7 +7,8 @@
       "name": "flint_docs",
       "version": "1.0.4",
       "dependencies": [
-        "flint_dart"
+        "flint_dart",
+        "flint_ui"
       ],
       "devDependencies": []
     },
@@ -21,21 +22,29 @@
       ]
     },
     {
+      "name": "flint_ui",
+      "version": "0.1.5",
+      "dependencies": [
+        "flint_client",
+        "universal_web"
+      ]
+    },
+    {
       "name": "flint_dart",
-      "version": "1.0.4",
+      "version": "1.1.2",
       "dependencies": [
         "args",
         "bcrypt",
         "crypto",
         "dart_jsonwebtoken",
         "flint_client",
+        "flint_ui",
         "mailer",
         "mime",
         "mysql_dart",
         "package_config",
         "path",
         "postgres",
-        "universal_web",
         "uuid",
         "watcher",
         "worker_manager"
@@ -59,6 +68,22 @@
       "dependencies": []
     },
     {
+      "name": "universal_web",
+      "version": "1.1.1+1",
+      "dependencies": [
+        "web"
+      ]
+    },
+    {
+      "name": "flint_client",
+      "version": "0.0.4",
+      "dependencies": [
+        "clock",
+        "path",
+        "web"
+      ]
+    },
+    {
       "name": "watcher",
       "version": "1.2.1",
       "dependencies": [
@@ -78,21 +103,6 @@
         "async",
         "collection",
         "meta",
-        "web"
-      ]
-    },
-    {
-      "name": "flint_client",
-      "version": "0.0.2+1",
-      "dependencies": [
-        "clock",
-        "path"
-      ]
-    },
-    {
-      "name": "universal_web",
-      "version": "1.1.1+1",
-      "dependencies": [
         "web"
       ]
     },
@@ -175,17 +185,22 @@
       ]
     },
     {
+      "name": "web",
+      "version": "1.1.1",
+      "dependencies": []
+    },
+    {
+      "name": "clock",
+      "version": "1.1.2",
+      "dependencies": []
+    },
+    {
       "name": "async",
       "version": "2.13.0",
       "dependencies": [
         "collection",
         "meta"
       ]
-    },
-    {
-      "name": "web",
-      "version": "1.1.1",
-      "dependencies": []
     },
     {
       "name": "meta",
@@ -195,11 +210,6 @@
     {
       "name": "collection",
       "version": "1.19.1",
-      "dependencies": []
-    },
-    {
-      "name": "clock",
-      "version": "1.1.2",
       "dependencies": []
     },
     {

@@ -25,6 +25,20 @@ dart run lib/main.dart
 
 Open: `http://localhost:3000`
 
+## Hosted Install Scripts
+
+The docs app serves the one-command Flint installers from `public/`:
+
+```bash
+curl -fsSL https://flintdart.eulogia.net/install.sh | sh
+```
+
+```powershell
+iwr https://flintdart.eulogia.net/install.ps1 -UseB | iex
+```
+
+The installers also try to install missing required system packages where the OS has a standard package manager: `curl`, `unzip`, `git`, and Linux `ca-certificates`. Set `SKIP_PACKAGE_INSTALL=1` on macOS/Linux or pass `-SkipPackageInstall` on Windows to disable that behavior.
+
 ## Environment
 
 Do not commit real credentials.

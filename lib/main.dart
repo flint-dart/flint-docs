@@ -4,11 +4,9 @@ import 'package:flint_docs/routes/app_routes.dart';
 void main() {
   final app = Flint(
     withDefaultMiddleware: true,
-    autoConnectDb: true,
+    autoConnectDb: false,
     enableSwaggerDocs: true,
   );
-
-  app.use(StaticFileMiddleware());
 
   // Mount the main AppRoutes
   app.routes(AppRoutes());

@@ -24,12 +24,19 @@ class AuthController {
         'role': role,
       });
 
+      Map<String, dynamic>? authResult;
       if (user != null) {
         await req.startSession(user.toMap());
+        authResult = await Auth.login(body['email'], body['password']);
       }
 
-      return res
-          .json({'status': 'success', 'data': user?.toMap()}, status: 201);
+      return res.json(
+        {
+          'status': 'success',
+          'data': authResult ?? {'user': user?.toMap()}
+        },
+        status: 201,
+      );
     } on ValidationException catch (e) {
       return res.status(422).json({'status': 'errors', 'errors': e.errors});
     } catch (e) {
@@ -83,6 +90,10 @@ class AuthController {
         code: body['code'],
         callbackPath: body['callbackPath'],
       );
+      final user = authResult['user'];
+      if (user is Map) {
+        await req.startSession(Map<String, dynamic>.from(user));
+      }
 
       return res.json({
         'status': 'success',

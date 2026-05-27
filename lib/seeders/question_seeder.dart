@@ -3,7 +3,9 @@ import 'package:flint_dart/logs.dart';
 
 class QuestionSeeder {
   static Future<void> run() async {
-    await DB.autoConnect();
+    if (!DB.isConnected) {
+      await DB.autoConnect();
+    }
 
     final qb = QueryBuilder(table: 'questions');
     final count = await qb.count();
@@ -25,8 +27,7 @@ class QuestionSeeder {
     await qb.insert({
       'title': 'What is the best way to structure RouteGroups?',
       'slug': 'route-groups-structure',
-      'body':
-          'Should I nest RouteGroups or keep them flat for large apps?',
+      'body': 'Should I nest RouteGroups or keep them flat for large apps?',
       'author': 'Community',
       'tag': 'Architecture',
       'published_at': DateTime(2026, 2, 20).toIso8601String(),
