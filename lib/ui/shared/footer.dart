@@ -74,6 +74,8 @@ class Footer extends Component {
                         _linkColumn(
                           'Community',
                           [
+                            ('/showcase', 'Built with Flint'),
+                            ('/showcase/submit', 'Submit a build'),
                             (
                               'https://github.com/flint-dart/flint_dart/issues',
                               'Issues'

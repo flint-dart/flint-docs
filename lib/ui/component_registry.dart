@@ -15,6 +15,9 @@ import 'pages/blog_page.dart';
 import 'pages/blog_detail_page.dart';
 import 'pages/blog_write_page.dart';
 import 'pages/question_detail_page.dart';
+import 'pages/showcase_detail_page.dart';
+import 'pages/showcase_page.dart';
+import 'pages/submit_build_page.dart';
 
 final componentRegistry = FlintComponentRegistry({
   'Home': (props) => HomePage(props),
@@ -31,5 +34,8 @@ final componentRegistry = FlintComponentRegistry({
   'BlogDetail': (props) => BlogDetailPage(props),
   'BlogWrite': (props) => BlogWritePage(props),
   'QuestionDetail': (props) => QuestionDetailPage(props),
+  'Showcase': (props) => ShowcasePage(props),
+  'ShowcaseDetail': (props) => ShowcaseDetailPage(props),
+  'SubmitBuild': (props) => SubmitBuildPage(props),
   'Content': (props) => ContentPage(props),
 });

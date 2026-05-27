@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flint_dart/flint_dart.dart';
 import 'package:flint_dart/helper.dart';
 import 'package:flint_docs/models/blog_post_model.dart';
+import 'package:flint_docs/models/showcase_project_model.dart';
 
 class DocsSupport {
   static const String browserEntrypoint =
@@ -298,6 +299,13 @@ class DocsSupport {
     return rows.map(toQuestionViewModel).toList();
   }
 
+  Future<List<Map<String, dynamic>>> fetchShowcaseProjects() async {
+    final qb = QueryBuilder(table: 'showcase_projects')
+      ..orderBy('published_at', 'DESC');
+    final rows = await qb.get();
+    return rows.map(toShowcaseViewModel).toList();
+  }
+
   Future<List<Map<String, dynamic>>> fetchCommentsForPost(
       Map<String, dynamic> post,
       String? currentUserId,
@@ -391,6 +399,45 @@ class DocsSupport {
     };
   }
 
+  Map<String, dynamic> toShowcaseViewModel(Map<String, dynamic> row) {
+    final publishedAt = row['published_at']?.toString() ?? '';
+    final description = row['description']?.toString() ?? '';
+    final whatItDoes = row['what_it_does']?.toString() ?? '';
+    final images = [
+      row['image_1']?.toString() ?? '',
+      row['image_2']?.toString() ?? '',
+      row['image_3']?.toString() ?? '',
+    ].where((url) => url.trim().isNotEmpty).toList();
+    final links = <Map<String, String>>[];
+    for (final index in [1, 2]) {
+      final label = row['link_${index}_label']?.toString().trim() ?? '';
+      final url = row['link_${index}_url']?.toString().trim() ?? '';
+      if (url.isEmpty) continue;
+      links.add({
+        'label': label.isEmpty ? 'Open link' : label,
+        'url': url,
+      });
+    }
+    return {
+      'id': row['id']?.toString(),
+      'title': row['title']?.toString() ?? '',
+      'slug': row['slug']?.toString() ?? '',
+      'description': escapeHtml(description),
+      'what_it_does': escapeHtml(whatItDoes),
+      'built_with': row['built_with']?.toString() ?? '',
+      'images': images,
+      'links': links,
+      'author': row['author']?.toString() ?? 'Flint developer',
+      'published_at': publishedAt,
+      'date': formatDate(publishedAt),
+      'href': '/showcase/${row['slug']}',
+      'excerpt': excerptFromMarkdown(
+        '$description $whatItDoes',
+        maxLength: 180,
+      ),
+    };
+  }
+
   Map<String, dynamic> toAnswerViewModel(Map<String, dynamic> row) {
     final publishedAt = row['published_at']?.toString() ?? '';
     final body = row['body']?.toString() ?? '';
@@ -432,6 +479,80 @@ class DocsSupport {
       suffix++;
     }
     return candidate;
+  }
+
+  Future<String> uniqueShowcaseSlug(String title) async {
+    final base = Str.slugify(title).trim();
+    final root = base.isNotEmpty
+        ? base
+        : 'build-${DateTime.now().millisecondsSinceEpoch}';
+
+    var candidate = root;
+    var suffix = 2;
+    while (await ShowcaseProject().firstWhere('slug', candidate) != null) {
+      candidate = '$root-$suffix';
+      suffix++;
+    }
+    return candidate;
+  }
+
+  String showcaseImageUrl(Map<String, dynamic> project) {
+    final images = project['images'];
+    if (images is List && images.isNotEmpty) {
+      final first = images.first?.toString();
+      if (first != null && first.isNotEmpty) return first;
+    }
+    return defaultOgImageUrl();
+  }
+
+  Map<String, Object?> showcaseProjectStructuredData(
+      Map<String, dynamic> project) {
+    final links =
+        project['links'] is List ? project['links'] as List : const [];
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      'name': project['title']?.toString() ?? 'Flint build',
+      'description': project['excerpt']?.toString() ?? '',
+      'applicationCategory': 'DeveloperApplication',
+      'operatingSystem': 'Web',
+      'image': showcaseImageUrl(project),
+      'url': absoluteUrl(project['href']?.toString() ?? '/showcase'),
+      'author': {
+        '@type': 'Person',
+        'name': project['author']?.toString() ?? 'Flint developer',
+      },
+      if (links.isNotEmpty)
+        'sameAs': links
+            .whereType<Map>()
+            .map((link) => link['url']?.toString())
+            .where((url) => url != null && url.isNotEmpty)
+            .toList(),
+    };
+  }
+
+  Map<String, Object?> showcaseCollectionStructuredData(
+      List<Map<String, dynamic>> projects) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      'name': 'Built with Flint',
+      'description':
+          'Community apps and fullstack products built with Flint Dart and Flint UI.',
+      'url': absoluteUrl('/showcase'),
+      'mainEntity': {
+        '@type': 'ItemList',
+        'itemListElement': [
+          for (var i = 0; i < projects.length; i++)
+            {
+              '@type': 'ListItem',
+              'position': i + 1,
+              'url': absoluteUrl(projects[i]['href']?.toString() ?? ''),
+              'name': projects[i]['title']?.toString() ?? 'Flint build',
+            }
+        ],
+      },
+    };
   }
 
   String excerptFromMarkdown(String source, {int maxLength = 160}) {
@@ -1109,6 +1230,12 @@ Sitemap: $sitemapUrl
         'lastmod': nowIso,
       },
       {
+        'loc': absoluteUrl('/showcase'),
+        'changefreq': 'daily',
+        'priority': '0.8',
+        'lastmod': nowIso,
+      },
+      {
         'loc': absoluteUrl('/examples'),
         'changefreq': 'weekly',
         'priority': '0.7',
@@ -1175,6 +1302,20 @@ Sitemap: $sitemapUrl
       }
     } catch (_) {}
 
+    try {
+      final projects = await fetchShowcaseProjects();
+      for (final project in projects) {
+        final href = project['href']?.toString();
+        if (href == null || href.isEmpty) continue;
+        entries.add({
+          'loc': absoluteUrl(href),
+          'changefreq': 'monthly',
+          'priority': '0.7',
+          'lastmod': sitemapDate(project['published_at']?.toString()) ?? nowIso,
+        });
+      }
+    } catch (_) {}
+
     final seen = <String>{};
     return entries.where((e) => seen.add(e['loc']!)).toList();
   }
@@ -1195,10 +1336,15 @@ Sitemap: $sitemapUrl
     final api = absoluteUrl('/api');
     final blog = absoluteUrl('/blog');
     final questions = absoluteUrl('/questions');
+    final showcase = absoluteUrl('/showcase');
 
     final posts = <Map<String, dynamic>>[];
     try {
       posts.addAll((await fetchBlogPosts()).take(12));
+    } catch (_) {}
+    final projects = <Map<String, dynamic>>[];
+    try {
+      projects.addAll((await fetchShowcaseProjects()).take(12));
     } catch (_) {}
 
     final lines = <String>[
@@ -1217,12 +1363,14 @@ Sitemap: $sitemapUrl
       '- API Reference: $api',
       '- Blog: $blog',
       '- Questions: $questions',
+      '- Built with Flint: $showcase',
       '',
       '## Recommended Sources',
       '',
       '- Start with the Getting Started guide and API reference for framework usage.',
       '- Use blog posts for architecture decisions, patterns, and release notes.',
       '- Use questions for community troubleshooting examples.',
+      '- Use Built with Flint to discover real apps and products shipped with the framework.',
     ];
 
     if (posts.isNotEmpty) {
@@ -1233,6 +1381,21 @@ Sitemap: $sitemapUrl
         final title = post['title']?.toString() ?? 'Untitled';
         final href = post['href']?.toString() ?? '/blog';
         final excerpt = post['excerpt']?.toString() ?? '';
+        lines.add('- ${absoluteUrl(href)} | $title');
+        if (excerpt.isNotEmpty) {
+          lines.add('  $excerpt');
+        }
+      }
+    }
+
+    if (projects.isNotEmpty) {
+      lines.add('');
+      lines.add('## Built with Flint');
+      lines.add('');
+      for (final project in projects) {
+        final title = project['title']?.toString() ?? 'Untitled';
+        final href = project['href']?.toString() ?? '/showcase';
+        final excerpt = project['excerpt']?.toString() ?? '';
         lines.add('- ${absoluteUrl(href)} | $title');
         if (excerpt.isNotEmpty) {
           lines.add('  $excerpt');

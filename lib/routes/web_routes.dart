@@ -4,6 +4,7 @@ import 'docs_api_routes.dart';
 import 'docs_routes.dart';
 import 'meta_routes.dart';
 import 'questions_routes.dart';
+import 'showcase_routes.dart';
 
 /// Top-level docs route composer.
 class WebRoutes extends RouteGroup {
@@ -20,5 +21,6 @@ class WebRoutes extends RouteGroup {
     app.routes(DocsRoutes());
     app.routes(BlogRoutes());
     app.routes(QuestionsRoutes());
+    app.routes(ShowcaseRoutes());
   }
 }
