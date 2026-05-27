@@ -116,18 +116,20 @@ packages:
   flint_dart:
     dependency: "direct main"
     description:
-      name: flint_dart
-      sha256: "3694f02e742318fce3288e8872512373d5816b93b77e06e9530bb9232dc2b9c7"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "18c3da5ec1e5b8d63be9b9775f3292f9bbab6e4b"
+      url: "https://github.com/flint-dart/flint_dart"
+    source: git
     version: "1.1.2"
   flint_ui:
     dependency: "direct main"
     description:
-      name: flint_ui
-      sha256: c30a701b9a3ca51be85371ac69127d4a2d5fd12dda1f8ae313ffac8ea1accb2b
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: d30658a1cccf39c034e6e28d94b7039f066aea39
+      url: "https://github.com/flint-dart/flint-ui.git"
+    source: git
     version: "0.1.5"
   intl:
     dependency: transitive

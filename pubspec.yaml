@@ -11,6 +11,14 @@ dependencies:
   flint_ui: ^0.1.5
 
 dependency_overrides:
+  flint_dart:
+    git:
+      url: https://github.com/flint-dart/flint_dart
+      ref: main
+  flint_ui:
+    git:
+      url: https://github.com/flint-dart/flint-ui.git
+      ref: main
   mysql_dart:
     git:
       url: https://github.com/Hybiekay/mysql.dart
