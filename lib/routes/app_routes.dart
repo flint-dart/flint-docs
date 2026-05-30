@@ -1,6 +1,7 @@
 // lib/routes/app_routes.dart
 import 'package:flint_dart/flint_dart.dart';
 import 'auth_routes.dart';
+import 'ecosystem_routes.dart';
 import 'user_routes.dart';
 import 'web_routes.dart';
 
@@ -19,6 +20,7 @@ class AppRoutes extends RouteGroup {
 
     // Auth routes
     app.routes(AuthRoutes());
+    app.routes(EcosystemRoutes());
 
     // User routes with optional middleware
     app.routes(
