@@ -118,7 +118,7 @@ packages:
     description:
       path: "."
       ref: dev
-      resolved-ref: b0b400ff486c7caa802ac1698324749424489c89
+      resolved-ref: "1f8da358983639ad2347c6ee1fc55994ada2091d"
       url: "https://github.com/flint-dart/flint_dart"
     source: git
     version: "1.1.7"
