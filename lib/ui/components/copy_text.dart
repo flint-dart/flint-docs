@@ -1,15 +1,6 @@
-// ignore: deprecated_member_use
-import 'dart:html' as html;
+import 'copy_text_stub.dart' if (dart.library.html) 'copy_text_web.dart'
+    as impl;
 
 void copyText(String value) {
-  final textarea = html.TextAreaElement()
-    ..value = value
-    ..style.position = 'fixed'
-    ..style.top = '-1000px'
-    ..style.left = '-1000px';
-
-  html.document.body?.append(textarea);
-  textarea.select();
-  html.document.execCommand('copy');
-  textarea.remove();
+  impl.copyText(value);
 }

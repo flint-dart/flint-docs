@@ -1,0 +1,1 @@
+void copyText(String value) {}

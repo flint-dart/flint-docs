@@ -328,7 +328,7 @@
         ]
       }
     },
-    "/dart": {
+    "/client": {
       "get": {
         "summary": "",
         "tags": [
@@ -341,7 +341,7 @@
         }
       }
     },
-    "/api/{topic}": {
+    "/api": {
       "get": {
         "summary": "",
         "tags": [
@@ -351,21 +351,49 @@
           "200": {
             "description": "OK"
           }
-        },
-        "parameters": [
-          {
-            "name": "topic",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Path parameter: topic"
-          }
-        ]
+        }
       }
     },
-    "/changelog": {
+    "/examples": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/whats-new": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ecosystem/users": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ecosystem/summary": {
       "get": {
         "summary": "",
         "tags": [
@@ -454,7 +482,20 @@
         ]
       }
     },
-    "/questions/{slug}/answers/{id}/update": {
+    "/showcase": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/showcase/submit": {
       "post": {
         "summary": "",
         "tags": [
@@ -464,27 +505,7 @@
           "200": {
             "description": "OK"
           }
-        },
-        "parameters": [
-          {
-            "name": "slug",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Path parameter: slug"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Path parameter: id"
-          }
-        ]
+        }
       }
     },
     "/users": {
