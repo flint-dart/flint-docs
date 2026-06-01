@@ -5,7 +5,7 @@ FlintClient
 A production-ready Dart HTTP client with retries, caching, cancellation, structured errors, lifecycle hooks, and strict or lenient parsing.
 
             [pub.dev](https://pub.dev/packages/flint_client)
-            [GitHub](https://github.com/flintdart/flint-client)
+            [GitHub](https://github.com/flint-dart/flint-client)
             [Examples](/examples)
 
 ## On This Page

@@ -172,7 +172,7 @@ class QuickStart extends Component {
                 _step(
                   '01',
                   'Install CLI',
-                  'curl -fsSL https://flintdart.eulogia.net/install.sh | sh',
+                  'curl -fsSL https://flintdart.dev/install.sh | sh',
                 ),
                 _step('02', 'Create app', 'flint create new_app'),
                 _step('03', 'Run server', 'flint run'),

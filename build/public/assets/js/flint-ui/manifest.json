@@ -1,0 +1,24 @@
+{
+  "mode": "page-bundles",
+  "fallback": "/assets/js/flint-ui/main.dart.js",
+  "pages": {
+    "Home": "/assets/js/flint-ui/pages/home.dart.js",
+    "WhatsNew": "/assets/js/flint-ui/pages/whats_new.dart.js",
+    "Changelog": "/assets/js/flint-ui/pages/changelog.dart.js",
+    "Client": "/assets/js/flint-ui/pages/client.dart.js",
+    "UiDocs": "/assets/js/flint-ui/pages/ui_docs.dart.js",
+    "Examples": "/assets/js/flint-ui/pages/examples.dart.js",
+    "Guides": "/assets/js/flint-ui/pages/guides.dart.js",
+    "Api": "/assets/js/flint-ui/pages/api.dart.js",
+    "Questions": "/assets/js/flint-ui/pages/questions.dart.js",
+    "AskQuestion": "/assets/js/flint-ui/pages/ask_question.dart.js",
+    "Blog": "/assets/js/flint-ui/pages/blog.dart.js",
+    "BlogDetail": "/assets/js/flint-ui/pages/blog_detail.dart.js",
+    "BlogWrite": "/assets/js/flint-ui/pages/blog_write.dart.js",
+    "QuestionDetail": "/assets/js/flint-ui/pages/question_detail.dart.js",
+    "Showcase": "/assets/js/flint-ui/pages/showcase.dart.js",
+    "ShowcaseDetail": "/assets/js/flint-ui/pages/showcase_detail.dart.js",
+    "SubmitBuild": "/assets/js/flint-ui/pages/submit_build.dart.js",
+    "Content": "/assets/js/flint-ui/pages/content.dart.js"
+  }
+}

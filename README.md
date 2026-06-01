@@ -25,21 +25,21 @@ dart run lib/main.dart
 
 Open: `http://localhost:3000`
 
-## Use GitHub Flint Packages
+## Use Latest Flint Packages
 
-For docs deployments that should track the approved GitHub `main` branches,
-keep these overrides in `pubspec.yaml`:
+For docs deployments that should track the current Flint page-bundle work,
+keep these overrides in `pubspec.yaml` until the next pub.dev release is ready:
 
 ```yaml
 dependency_overrides:
   flint_dart:
     git:
       url: https://github.com/flint-dart/flint_dart
-      ref: main
+      ref: dev
   flint_ui:
     git:
       url: https://github.com/flint-dart/flint-ui.git
-      ref: main
+      ref: codex/fix-navigation-rerender
 ```
 
 ## Hosted Install Scripts
@@ -47,11 +47,11 @@ dependency_overrides:
 The docs app serves the one-command Flint installers from `public/`:
 
 ```bash
-curl -fsSL https://flintdart.eulogia.net/install.sh | sh
+curl -fsSL https://flintdart.dev/install.sh | sh
 ```
 
 ```powershell
-iwr https://flintdart.eulogia.net/install.ps1 -UseB | iex
+iwr https://flintdart.dev/install.ps1 -UseB | iex
 ```
 
 The installers also try to install missing required system packages where the OS has a standard package manager: `curl`, `unzip`, `git`, and Linux `ca-certificates`. Set `SKIP_PACKAGE_INSTALL=1` on macOS/Linux or pass `-SkipPackageInstall` on Windows to disable that behavior.
@@ -84,13 +84,22 @@ cd build
 ./start.sh
 ```
 
-## Docker (Binary Runtime)
+## Docker Deployment
 
-From `flint_docs/build`:
+The root Dockerfile runs `flint build --linux` inside the Docker builder stage.
+That command builds the Flint UI page bundles first, generates the service
+worker, copies public assets, and then compiles the server. The runtime image
+only contains the generated Flint build output.
 
 ```bash
-docker build -t flint-docs:build .
-docker run --rm -p 3030:3000 --env-file .env flint-docs:build
+docker compose up -d --build
+```
+
+Equivalent manual build:
+
+```bash
+docker build -t flint-docs .
+docker run --rm -p 3030:3000 --env-file .env flint-docs
 ```
 
 If you do not use `.env`, pass env vars with `-e`.

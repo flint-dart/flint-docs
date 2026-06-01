@@ -117,20 +117,20 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: main
-      resolved-ref: "18c3da5ec1e5b8d63be9b9775f3292f9bbab6e4b"
+      ref: dev
+      resolved-ref: "4c0d2dee1760951f1ab9d550926c7fb042386733"
       url: "https://github.com/flint-dart/flint_dart"
     source: git
-    version: "1.1.2"
+    version: "1.1.7"
   flint_ui:
     dependency: "direct main"
     description:
       path: "."
-      ref: main
-      resolved-ref: d30658a1cccf39c034e6e28d94b7039f066aea39
+      ref: "codex/fix-navigation-rerender"
+      resolved-ref: "14544c197b423536ed78f23fea80669c3eee1518"
       url: "https://github.com/flint-dart/flint-ui.git"
     source: git
-    version: "0.1.5"
+    version: "0.1.8"
   intl:
     dependency: transitive
     description:
@@ -172,13 +172,12 @@ packages:
     source: hosted
     version: "2.0.0"
   mysql_dart:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "."
-      ref: main
-      resolved-ref: "582f81d1cf65eebbb8430119f8a935916cae0a08"
-      url: "https://github.com/Hybiekay/mysql.dart"
-    source: git
+      name: mysql_dart
+      sha256: "6461cee301496809362a63b792124b107aceadf26df6cd4d35e7ce7ab5a9a9fb"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.2.1"
   package_config:
     dependency: transitive

@@ -2,6 +2,16 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.3] - 2026-05-31
+
+### Release Status
+- Public patch build.
+
+### Fixed
+- Flint page props are now sanitized before being embedded in the `data-flint-page` payload.
+- `DateTime`, `Uri`, enum values, models, maps, iterables, and objects with `toJson()` or `toMap()` are converted into JSON-safe values for Flint UI pages.
+- Non-serializable prop values now fall back to strings instead of breaking page rendering.
+
 ## [1.1.2] - 2026-05-26
 
 ### Release Status

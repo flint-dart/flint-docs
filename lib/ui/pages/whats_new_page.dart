@@ -4,6 +4,26 @@ import '../shared/page_shell.dart';
 
 const _features = [
   (
+    title: 'JSON-Safe Flint Page Props',
+    body:
+        'Flint Dart now sanitizes res.page() props before embedding them in the browser payload, including DateTime, Uri, enum values, models, maps, iterables, and objects with toJson() or toMap().',
+  ),
+  (
+    title: 'Fresh Child Component Values',
+    body:
+        'Flint UI now replaces child components by default during parent rebuilds, so constructor-provided values stay current without requiring updateFrom for ordinary display components.',
+  ),
+  (
+    title: 'Explicit Component Lifecycle Bases',
+    body:
+        'StatefulComponent and StatelessComponent make lifecycle intent clear. Component remains backwards-compatible, while components that must survive parent rebuilds can opt in with preserveState.',
+  ),
+  (
+    title: 'Hosted Package Deployment',
+    body:
+        'The docs app now targets hosted pub.dev versions of flint_dart and flint_ui, keeping deployment independent of GitHub package overrides.',
+  ),
+  (
     title: 'Flint UI Components',
     body:
         'Flint UI now lets docs pages and app screens be built with Dart components, state, events, and inline DartStyle without leaving the Dart ecosystem.',
@@ -118,7 +138,7 @@ class WhatsNewPage extends Component {
         ),
         Text.h1("What's New in Flint Dart", dartStyle: _h1),
         Text.p(
-          'Highlights of the newest improvements shipped in recent updates.',
+          'Highlights from the latest Flint Dart and Flint UI releases.',
           dartStyle: _subtitle,
         ),
       ],

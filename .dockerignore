@@ -8,5 +8,3 @@ docker-compose.yml
 build/
 .dart_tool/
 .packages
-pubspec.lock
-./
