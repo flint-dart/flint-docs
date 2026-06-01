@@ -9,13 +9,9 @@ COPY . ./
 RUN dart pub get --offline \
     && dart run flint_dart build --linux
 
-FROM debian:bookworm-slim AS runtime
+FROM dart:stable AS runtime
 
 WORKDIR /app
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates bash \
-    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/build/ ./
 
