@@ -7314,6 +7314,9 @@
     },
     _styleToCssImportant_closure0: function _styleToCssImportant_closure0() {
     },
+    FlintComponentRegistry: function FlintComponentRegistry(t0) {
+      this._pages = t0;
+    },
     BrowserNavigation: function BrowserNavigation() {
     },
     FlintNode: function FlintNode() {
@@ -7429,9 +7432,6 @@
       element.innerHTML = _this;
       t1 = A._asStringQ(element.textContent);
       return B.JSString_methods.trim$0(t1 == null ? _this : t1);
-    },
-    FlintComponentRegistry: function FlintComponentRegistry(t0) {
-      this._pages = t0;
     },
     FlintPage: function FlintPage(t0, t1) {
       this.component = t0;
@@ -21017,6 +21017,7 @@
     },
     $signature: 10
   };
+  A.FlintComponentRegistry.prototype = {};
   A.BrowserNavigation.prototype = {
     reload$0(_) {
       A._asJSObject(A._asJSObject(init.G.window).location).reload();
@@ -21151,7 +21152,6 @@
     },
     $signature: 0
   };
-  A.FlintComponentRegistry.prototype = {};
   A.FlintPage.prototype = {};
   A.FlintPageContext.prototype = {};
   A.MissingFlintPage.prototype = {
@@ -22351,7 +22351,7 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(A.Object, null);
-    _inheritMany(A.Object, [A.JS_CONST, J.Interceptor, A.SafeToStringHook, J.ArrayIterator, A.Iterable, A.CastIterator, A.MapBase, A.Closure, A.Error, A.ListBase, A.SentinelValue, A.ListIterator, A.MappedIterator, A.WhereIterator, A.TakeIterator, A.WhereTypeIterator, A.FixedLengthListMixin, A.UnmodifiableListMixin, A._Record, A.MapView, A.ConstantMap, A._KeysOrValuesOrElementsIterator, A.SetBase, A.TypeErrorDecoder, A.NullThrownFromJavaScriptException, A.ExceptionAndStackTrace, A._StackTrace, A.LinkedHashMapCell, A.LinkedHashMapKeyIterator, A.LinkedHashMapValueIterator, A.LinkedHashMapEntryIterator, A.JSSyntaxRegExp, A._MatchImplementation, A._AllMatchesIterator, A.StringMatch, A._StringAllMatchesIterator, A.Rti, A._FunctionParameters, A._Type, A._TimerImpl, A._AsyncAwaitCompleter, A._SyncStarIterator, A.AsyncError, A._Completer, A._FutureListener, A._Future, A._AsyncCallbackEntry, A.Stream, A._StreamIterator, A._Zone, A._HashMapKeyIterator, A._LinkedHashSetCell, A._LinkedHashSetIterator, A._MapBaseValueIterator, A._UnmodifiableMapMixin, A.Codec, A.Converter, A._JsonStringifier, A._Utf8Encoder, A._Utf8Decoder, A.DateTime, A.Duration, A._Enum, A.OutOfMemoryError, A.StackOverflowError, A._Exception, A.FormatException, A.MapEntry, A.Null, A._StringStackTrace, A.Stopwatch, A.StringBuffer, A._Uri, A.UriData, A._SimpleUri, A.CssStyleDeclarationBase, A.ImmutableListMixin, A.FixedSizeListIterator, A.NullRejectionException, A.StatusCodeConfig, A.FlintError, A.FlintResponse, A.FlintClient, A.FlintWebSocketClient, A._ParsedResponse, A.FlintNode, A.AuthSessionManager, A.FlintRoot, A._ComponentMount, A.ClientRouter, A.BrowserNavigation, A.ToastService, A.FlintComponentRegistry, A.FlintPage, A.FlintPageContext, A._FetchedFlintPage, A.StateSignal, A.BrowserStorage, A.Cookies, A.Color, A.DartStyle, A.Gradient, A.GradientDirection, A.Background, A.GradientPosition, A.Flex, A.GradientStop, A.ThemeTokens, A.TokenRef, A.FlintTheme, A.KeyframeStep, A.StyleKeyframes, A.RootDesign, A.EdgeInsets, A.SizeValue, A.GridTrack, A.GridTemplateColumns, A.Border, A.Shadow, A.StyleTransform, A.StyleFilter, A.FontFamily, A.BoxSizing, A.ScrollBehavior, A.Cursor0, A.Overflow, A.TextDecorationStyle, A.FlexWrap, A.Resize, A.TransitionTiming, A.StyleTransition, A.AnimationDirection, A.AnimationFillMode, A.AnimationPlayState, A.AnimationIteration, A.StyleAnimation, A.WillChange, A.TextEditingController, A.FormController, A.FormErrors, A.IconData, A.IconShape, A.EventStreamProvider, A._EventStreamSubscription]);
+    _inheritMany(A.Object, [A.JS_CONST, J.Interceptor, A.SafeToStringHook, J.ArrayIterator, A.Iterable, A.CastIterator, A.MapBase, A.Closure, A.Error, A.ListBase, A.SentinelValue, A.ListIterator, A.MappedIterator, A.WhereIterator, A.TakeIterator, A.WhereTypeIterator, A.FixedLengthListMixin, A.UnmodifiableListMixin, A._Record, A.MapView, A.ConstantMap, A._KeysOrValuesOrElementsIterator, A.SetBase, A.TypeErrorDecoder, A.NullThrownFromJavaScriptException, A.ExceptionAndStackTrace, A._StackTrace, A.LinkedHashMapCell, A.LinkedHashMapKeyIterator, A.LinkedHashMapValueIterator, A.LinkedHashMapEntryIterator, A.JSSyntaxRegExp, A._MatchImplementation, A._AllMatchesIterator, A.StringMatch, A._StringAllMatchesIterator, A.Rti, A._FunctionParameters, A._Type, A._TimerImpl, A._AsyncAwaitCompleter, A._SyncStarIterator, A.AsyncError, A._Completer, A._FutureListener, A._Future, A._AsyncCallbackEntry, A.Stream, A._StreamIterator, A._Zone, A._HashMapKeyIterator, A._LinkedHashSetCell, A._LinkedHashSetIterator, A._MapBaseValueIterator, A._UnmodifiableMapMixin, A.Codec, A.Converter, A._JsonStringifier, A._Utf8Encoder, A._Utf8Decoder, A.DateTime, A.Duration, A._Enum, A.OutOfMemoryError, A.StackOverflowError, A._Exception, A.FormatException, A.MapEntry, A.Null, A._StringStackTrace, A.Stopwatch, A.StringBuffer, A._Uri, A.UriData, A._SimpleUri, A.CssStyleDeclarationBase, A.ImmutableListMixin, A.FixedSizeListIterator, A.NullRejectionException, A.StatusCodeConfig, A.FlintError, A.FlintResponse, A.FlintClient, A.FlintWebSocketClient, A._ParsedResponse, A.FlintNode, A.AuthSessionManager, A.FlintRoot, A._ComponentMount, A.ClientRouter, A.FlintComponentRegistry, A.BrowserNavigation, A.ToastService, A.FlintPage, A.FlintPageContext, A._FetchedFlintPage, A.StateSignal, A.BrowserStorage, A.Cookies, A.Color, A.DartStyle, A.Gradient, A.GradientDirection, A.Background, A.GradientPosition, A.Flex, A.GradientStop, A.ThemeTokens, A.TokenRef, A.FlintTheme, A.KeyframeStep, A.StyleKeyframes, A.RootDesign, A.EdgeInsets, A.SizeValue, A.GridTrack, A.GridTemplateColumns, A.Border, A.Shadow, A.StyleTransform, A.StyleFilter, A.FontFamily, A.BoxSizing, A.ScrollBehavior, A.Cursor0, A.Overflow, A.TextDecorationStyle, A.FlexWrap, A.Resize, A.TransitionTiming, A.StyleTransition, A.AnimationDirection, A.AnimationFillMode, A.AnimationPlayState, A.AnimationIteration, A.StyleAnimation, A.WillChange, A.TextEditingController, A.FormController, A.FormErrors, A.IconData, A.IconShape, A.EventStreamProvider, A._EventStreamSubscription]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JavaScriptBigInt, J.JavaScriptSymbol, J.JSNumber, J.JSString]);
     _inheritMany(J.JavaScriptObject, [J.LegacyJavaScriptObject, J.JSArray, A.NativeByteBuffer, A.NativeTypedData, A.EventTarget, A.AccessibleNodeList, A.Blob, A.CssTransformComponent, A.CssRule, A._CssStyleDeclaration_JavaScriptObject_CssStyleDeclarationBase, A.CssStyleValue, A.DataTransferItemList, A.DomException, A._DomRectList_JavaScriptObject_ListMixin, A.DomRectReadOnly, A._DomStringList_JavaScriptObject_ListMixin, A.DomTokenList, A._FileList_JavaScriptObject_ListMixin, A.Gamepad, A.History, A._HtmlCollection_JavaScriptObject_ListMixin, A.Location, A.MediaList, A._MidiInputMap_JavaScriptObject_MapMixin, A._MidiOutputMap_JavaScriptObject_MapMixin, A.MimeType, A._MimeTypeArray_JavaScriptObject_ListMixin, A._NodeList_JavaScriptObject_ListMixin, A.Plugin, A._PluginArray_JavaScriptObject_ListMixin, A._RtcStatsReport_JavaScriptObject_MapMixin, A.SpeechGrammar, A._SpeechGrammarList_JavaScriptObject_ListMixin, A.SpeechRecognitionResult, A._Storage_JavaScriptObject_MapMixin, A.StyleSheet, A._TextTrackCueList_JavaScriptObject_ListMixin, A.TimeRanges, A.Touch, A._TouchList_JavaScriptObject_ListMixin, A.TrackDefaultList, A.Url, A.__CssRuleList_JavaScriptObject_ListMixin, A.__GamepadList_JavaScriptObject_ListMixin, A.__NamedNodeMap_JavaScriptObject_ListMixin, A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin, A.__StyleSheetList_JavaScriptObject_ListMixin, A.Length, A._LengthList_JavaScriptObject_ListMixin, A.Number, A._NumberList_JavaScriptObject_ListMixin, A.PointList, A._StringList_JavaScriptObject_ListMixin, A.Transform, A._TransformList_JavaScriptObject_ListMixin, A.AudioBuffer, A._AudioParamMap_JavaScriptObject_MapMixin]);
     _inheritMany(J.LegacyJavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction]);

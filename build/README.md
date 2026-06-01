@@ -88,8 +88,9 @@ cd build
 
 The root Dockerfile runs `flint build --linux` inside the Docker builder stage.
 That command builds the Flint UI page bundles first, generates the service
-worker, copies public assets, and then compiles the server. The runtime image
-only contains the generated Flint build output.
+worker, copies public assets, and then compiles the server. The runtime stage
+uses the same Dart base image so deployment only has to resolve one Docker Hub
+base image.
 
 ```bash
 docker compose up -d --build

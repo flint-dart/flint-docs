@@ -118,7 +118,7 @@ packages:
     description:
       path: "."
       ref: dev
-      resolved-ref: "4c0d2dee1760951f1ab9d550926c7fb042386733"
+      resolved-ref: b0b400ff486c7caa802ac1698324749424489c89
       url: "https://github.com/flint-dart/flint_dart"
     source: git
     version: "1.1.7"
@@ -127,7 +127,7 @@ packages:
     description:
       path: "."
       ref: "codex/fix-navigation-rerender"
-      resolved-ref: "14544c197b423536ed78f23fea80669c3eee1518"
+      resolved-ref: "5a633ccc7cb93536f6db4bfdc434ee7419e1c594"
       url: "https://github.com/flint-dart/flint-ui.git"
     source: git
     version: "0.1.8"
