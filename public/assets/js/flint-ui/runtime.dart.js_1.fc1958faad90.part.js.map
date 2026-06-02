@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "engine": "v2",
+  "file": "runtime.dart.js_1.part.js",
+  "sourceRoot": "",
+  "sources": ["../../../../lib/ui/components/api/sidebar.dart","org-dartlang-sdk:///lib/internal/iterable.dart","org-dartlang-sdk:///lib/_internal/js_runtime/lib/js_array.dart","../../../../lib/ui/pages/api_page.dart","org-dartlang-sdk:///lib/collection/iterable.dart","/C:/Users/Aim/AppData/Local/Pub/Cache/git/flint-ui-051e52d39852b2aeb5509491648c24266b1b2e8c/lib/src/widgets/primitives/container.dart","../../../../lib/ui/shared/page_shell.dart","org-dartlang-sdk:///lib/_internal/js_runtime/lib/js_string.dart"],
+  "names": ["apiTitleFor","JSArray.where","WhereIterable.map","ApiPage","IterableExtensions.firstOrNull","WhereIterable.iterator","ApiPage._active","ApiPage._contentHtml","ApiPage._previousTitle","ApiPage._previousUrl","ApiPage._nextTitle","ApiPage._nextUrl","ApiPage.build","ApiPage._header","ApiPage._content","ApiPage._prevNext","apiTitleFor.<anonymous function>","JSString.isNotEmpty","","_","_header","_titleFor","current","isEmpty","isNotEmpty","iterator","map","toUpperCase","where"],
+  "mappings": "A;;;;;;;eAkFOA;MACsDA,iDC+W3DC,qBD/WcD,WE6LkBA,8DF7LAA;MAChCA;QAAmBA,YAAaA,GAMlCA;MALEA,OCgTAE,qBA6DAD,oBD7WOD,wDE2LyBA,+BFzLrBA,4DCiXsBA,iCDhXxBA,mEACJA,cACPA;K;;MGlFEG;;;;;;;;IAAmBA,C;;;;;sCCgCZC;MH4ZgDA,gCAAVA;MAW7CC,iCAXiED,KAWjEC,uCGraeD;QAAYA,OHgbAA,kBG9a3BA;MADEA,WACFA;K;;;;;;;;;;;;;;;;;yBDlCWE;MAAWA;MAAKA;MAALA,sCAAoDA;K;oBAC/DC;MAAgBA;MAAKA;MAALA,2BAAsCA;K;sBACrDC;MAAkBA;iCAAKA,iBAAgCA;K;oBACvDC;MAAgBA;iCAAKA,iBAA8BA;K;kBACnDC;MAAcA;iCAAKA,iBAA4BA;K;gBAC/CC;MAAYA;iCAAKA,iBAA0BA;K;WAGlDC;MAuB0BA;;aAiCpBA,2BAEcA,iBE3DhBC;aFkEED,UA+IFC,cA9ISD,iCACOA;aAOdA,6GAEcA,iBE7EhBC;aADKA,uBACLA,qBFiDYD,iBEjDZC;MAKQA;MF+BDD;MACAA;MAzBRA,aHvBRA,6BKCAA,uBAScA,uBACLC,qBF0BsBD,iBE1BtBC,4BAKQD,4BAfjBC,6CFuB2BD;MAXzBA,OGVFA,sBHWWA,QEbXA,uBAScA,uBACLC,qBFKcD,iBELdC,4BAKQD,kCFwCjBA;K;cA4CKE;MACHA;MAAIA,2BImTcA;QJ3SPA,kDAEcA,iBEpGlBA;QF2FLA,OErGJA,uBAScA,uBACLA,oBF4FcA,iBE5FdA,4BAKQA,gCFoHjBA;;MAZSA;MAAPA,8CAEQA,wCAECA,iDACIA,oJAOfA;K;eAEKC;MACHA;MAAKA,0CAA0BA,0BAAcA;QACxCA,uCAAsBA,sBAAUA;;QADmBA;MAAxDA;QAEEA,OAAOA,gBAAiBA,0EAgF5BA;MAnEQA;MAHEA,0CACAA,0BAAcA,iBACdA;QAEMA;UAAYA;QAWXA,+BAEcA;QAOjBA;UAAcA;QArBpBA,4BAoBSA,cAEcA,iCApBJA;;QA8BnBA,wBAAiBA;MACfA,sCAAsBA,sBAAUA,iBAAgBA;QAE1CA;UAAQA;QAWPA,2BAhCcA;QAyCjBA;UAAUA;QArBhBA,4BAoBSA,cAhCcA,iCApBJA;;MAZzBA,OAAOA,YACYA,eA4ErBA;K;;;EH5I0CC;UAAVA;MAAUA,4DAAKA,YAAMA,KAAIA;K;;;EAIpCA;UAAVA;MAAUA,wBOuUDC,aPvUgBD;K;;;;UAC3BA;MAAaA;;+BAAIA;MAAPA,OOsFVA,IPtFaA,oBAAwBA,uCAAmBA;K",
+  "x_org_dartlang_dart2js": {
+    "minified_names": {
+      "global": "",
+      "instance": ""
+    },
+    "frames": "wXAmFgB4BAE6LLVqB,A;WF7LKU8D;2MAITFACiXDPqB,A;ADlXCSAE0LIVoB,A;wDF1LJU+B;4DACAFiC;whBI9CiBD8DH2ZMPiC,KAAAAuC,A;6BG1ZeIkB;26CDU3BF4CAaPF2B,UAmBDGc,6LAnBCHuE,iBAAAAuF,A;6EAxBGA6B;AACAA8C;AAUIEAAaPFqB,A;iBAbOEAAaPF4B,A;AAvBGA4B;AAUIEAAaPF6C,A;8BA9CAAsB;QAECA8C;AA+BMEAAaPFqB,A;iBAbOEAAaPF4B,A;AA5CCAkC;4EAsFSKyB;mEACRLsB;OAAAAkE;iBAAAA4D;gkEHrBeMAOyUFDa,A;6LPxUEII;"
+  }
+}

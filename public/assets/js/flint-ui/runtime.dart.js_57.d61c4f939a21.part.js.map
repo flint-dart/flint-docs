@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "engine": "v2",
+  "file": "runtime.dart.js_57.part.js",
+  "sourceRoot": "",
+  "sources": ["/C:/Users/Aim/AppData/Local/Pub/Cache/git/flint-ui-051e52d39852b2aeb5509491648c24266b1b2e8c/lib/src/style/gradient.dart"],
+  "names": ["Flex.toCss","Flex.toString"],
+  "mappings": "A;;;;;;;;;;;;;;EAiKWA;WADFA;MACLA,gCAAOA,iBACLA,qBACAA,qBACAA,uDAEJA;K;cAIOC;MAAcA,qBAAOA;K",
+  "x_org_dartlang_dart2js": {
+    "minified_names": {
+      "global": "",
+      "instance": ""
+    },
+    "frames": ""
+  }
+}

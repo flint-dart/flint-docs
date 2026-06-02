@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "engine": "v2",
+  "file": "runtime.dart.js_146.part.js",
+  "sourceRoot": "",
+  "sources": ["../../../../lib/ui/pages/whats_new_page.dart","/C:/Users/Aim/AppData/Local/Pub/Cache/git/flint-ui-051e52d39852b2aeb5509491648c24266b1b2e8c/lib/src/widgets/primitives/container.dart","../../../../lib/ui/shared/page_shell.dart","/C:/Users/Aim/AppData/Local/Pub/Cache/git/flint-ui-051e52d39852b2aeb5509491648c24266b1b2e8c/lib/src/widgets/primitives/text.dart","/C:/Users/Aim/AppData/Local/Pub/Cache/git/flint-ui-051e52d39852b2aeb5509491648c24266b1b2e8c/lib/src/node.dart"],
+  "names": ["WhatsNewPage","WhatsNewPage.build","WhatsNewPage._header","WhatsNewPage._cta","WhatsNewPage._grid","Text.h2","Text.p","_element","","_cta","_header","h2","p"],
+  "mappings": "A;;;;;EAwGEA;;;;IAAwBA,C;;;;;;;;;;;;;;;;;;;;;;;;;WAGnBC;MAuBuBA;6CAAmCA;aClHjDC,uBACLA,qBDgHcD,iBChHdC;MAKQA;MDgHWD,gCAA8BA;MATpDA,aCtHNC,qDAScA,uBACLA,qBDoHcD,kBCpHdC,4BAKQA,qCDwGED;MAYRA,4CAA0CA;MAC1CA,+EAEQA,iBC5HVC;MADKA,4BACLA,qBD0GMD,iBC1GNC;MAKQA;MD4FTD;MAqDGA,wBAAsBA;MACtBA,yFAEQA,iBCzJVC;MD2JHD,qBAGkBA,+BAAkCA,mBADvCA;MC9JLE,4BACLD,qBDoJMD,iBCpJNC;MAKQC;MDsFfF,OEnGFA,qBFoGWA,QCtGXA,sBAScA,uBACLC,qBD8FQD,iBC9FRC,4BAKQD,4BAfjBC,mCAAAC,iCDgHAF;K;WA4BKG;MACHA;MAGIA;aAAgBA,SAAhBA;QGpEGC,4BA1D8BD,qBHkICA,iBGlIDA;QAgE3BC,0BHkEUD,MGlEeC;QAN5BC,4BA1D8BF,qBHmIDA,iBGnICA;QAgE3BE,0BHmESF,MGnEgBC;QH+D7BD,QCjJRA,uBAScA,uBESyBA,qBHgIlBA,iBGhIkBA,4BFHtBA,4BG+BXG;;MJ+FJH,OC7IFA,uBAScA,uBESyBA,qBH4HxBA,iBG5HwBA,4BFHtBA,+BD2IjBA;K",
+  "x_org_dartlang_dart2js": {
+    "minified_names": {
+      "global": "",
+      "instance": ""
+    },
+    "frames": "y+BAiHUU+HAeEF4C,iBAAAA+E,oEAAAA+B,AAIAA6C,AAJAAqB,kBAAAA4B,AAIAAqC,0LAJAAoB,AANDA4B,AAMCAqB,iBAAAAkC,AANDAqD,A;2BAPDCyJ;AAFACAAeEFoB,A;AAbFCoIAiDCD4B,A;AAnDDEAAeEFqB,A;AAbFCiB;AAFACAAeEFkC,A;AAbFCAAiDCDqD,A;OAxDAAqB;QAECA6C;AAGFEAAeEFqB,A;iBAfFEAAeEF4B,A;AAlBAA4B;AAGFEAASCFmC,A;AAPDCAAiDCDiC,A;yJATQGAGlIXJ4B,qB;iBHkIWIoCGlIXJ0B,A;MHkIWIAGlIXJuB,A;AHmIWKAGjHXL4B,A;AHgHWIqB;iBAAAAoC;AACACAGjHXL0B,A;MHgHWIAGlIXJuB,A;QH+HEC8C;AAGSGqB;iBAAAA4B;AAHTH4B;AAGSGAGlIXJAAwDCCkC,A,A;AH2EUIAGjHXLAAsCCCmD,A,A;OHmEEA8C;AAOQGqB;iBAAAA4B;AAPRH+B;"
+  }
+}

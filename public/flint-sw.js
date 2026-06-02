@@ -1,4 +1,4 @@
-const FLINT_CACHE = 'flint-ui-1780378657301';
+const FLINT_CACHE = 'flint-ui-1780379842424';
 const FLINT_MANIFEST_URL = '/assets/js/flint-ui/manifest.json';
 
 async function flintCacheUrls(urls) {
@@ -21,10 +21,15 @@ async function flintManifestAssets({ includeFallback = false } = {}) {
     const pages = manifest && manifest.pages && typeof manifest.pages === 'object'
       ? Object.values(manifest.pages)
       : [];
+    const chunks = Array.isArray(manifest && manifest.chunks)
+      ? manifest.chunks
+      : [];
     return [
       FLINT_MANIFEST_URL,
+      manifest.runtime,
       ...(includeFallback || pages.length === 0 ? [manifest.fallback] : []),
-      ...pages
+      ...pages,
+      ...chunks
     ];
   } catch (_) {
     return [FLINT_MANIFEST_URL];
