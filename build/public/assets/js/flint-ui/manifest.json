@@ -1,6 +1,6 @@
 {
   "mode": "page-bundles",
-  "fallback": "/assets/js/flint-ui/main.2fb886a2388b.dart.js",
+  "fallback": "/assets/js/flint-ui/main.2fb886a2388b.dart.js.deps.gz",
   "pages": {
     "Home": "/assets/js/flint-ui/pages/home.7886f416220a.dart.js",
     "WhatsNew": "/assets/js/flint-ui/pages/whats_new.8639f04060ff.dart.js",
