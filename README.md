@@ -51,10 +51,12 @@ curl -fsSL https://flintdart.dev/install.sh | sh
 ```
 
 ```powershell
-iwr https://flintdart.dev/install.ps1 -UseB | iex
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://flintdart.dev/install.ps1 | iex"
 ```
 
 The installers also try to install missing required system packages where the OS has a standard package manager: `curl`, `unzip`, `git`, and Linux `ca-certificates`. Set `SKIP_PACKAGE_INSTALL=1` on macOS/Linux or pass `-SkipPackageInstall` on Windows to disable that behavior.
+
+Run the same installer again later to update the Flint-managed Dart SDK, Flint UI, and Flint Dart checkout.
 
 ## Environment
 

@@ -3,12 +3,25 @@ import 'dart:async';
 import 'package:flint_ui/flint_ui.dart';
 
 import '../copy_text.dart';
+import '../detect_os.dart';
 
 class QuickStart extends Component {
   String? _copiedStep;
+  String _selectedOs = 'linux';
+
+  @override
+  void didMount() {
+    final detected = detectOperatingSystem();
+    if (detected != null && detected != _selectedOs) {
+      setState(() => _selectedOs = detected);
+    }
+  }
 
   @override
   View build() {
+    final installCommand = _installCommand(_selectedOs);
+    final shellLabel = _selectedOs == 'windows' ? 'cmd / powershell' : 'terminal';
+
     return Container(
       dartStyle: DartStyle(
         width: SizeValue.percent(100),
@@ -103,6 +116,7 @@ class QuickStart extends Component {
                     color: Color('#a8b3c5'),
                   ),
                 ),
+                _osSwitch(),
                 Row(
                   dartStyle: const DartStyle(
                     display: Display.flex,
@@ -160,7 +174,7 @@ class QuickStart extends Component {
                       ],
                     ),
                     Text.span(
-                      'copy one step',
+                      shellLabel,
                       dartStyle: const DartStyle(
                         fontSize: 11,
                         fontWeight: 800,
@@ -172,7 +186,7 @@ class QuickStart extends Component {
                 _step(
                   '01',
                   'Install CLI',
-                  'curl -fsSL https://flintdart.dev/install.sh | sh',
+                  installCommand,
                 ),
                 _step('02', 'Create app', 'flint create new_app'),
                 _step('03', 'Run server', 'flint run'),
@@ -181,6 +195,54 @@ class QuickStart extends Component {
           ],
         ),
       ],
+    );
+  }
+
+  View _osSwitch() {
+    return Row(
+      dartStyle: const DartStyle(
+        display: Display.flex,
+        flexWrap: FlexWrap.wrap,
+        alignItems: AlignItems.center,
+        gap: 8,
+        margin: EdgeInsets.only(top: 10),
+      ),
+      children: [
+        _osButton('windows', 'Windows'),
+        _osButton('macos', 'macOS'),
+        _osButton('linux', 'Linux'),
+      ],
+    );
+  }
+
+  View _osButton(String value, String label) {
+    final active = _selectedOs == value;
+
+    return Button(
+      child: label,
+      size: ComponentSize.sm,
+      variant: active ? ButtonVariant.solid : ButtonVariant.soft,
+      tone: active ? Tone.primary : Tone.neutral,
+      props: {
+        'aria-pressed': active ? 'true' : 'false',
+        'title': 'Show $label commands',
+      },
+      dartStyle: DartStyle(
+        minHeight: 30,
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+        radius: 8,
+        border: Border(
+          color: active
+              ? const Color.rgba(103, 232, 249, 0.52)
+              : const Color.rgba(51, 65, 85, 0.72),
+          width: 1,
+        ),
+        background: active
+            ? Color.rgba(14, 165, 233, 0.2)
+            : Color.rgba(15, 23, 42, 0.44),
+        color: active ? const Color('#e0f2fe') : const Color('#94a3b8'),
+      ),
+      onPressed: (_) => setState(() => _selectedOs = value),
     );
   }
 
@@ -289,5 +351,12 @@ class QuickStart extends Component {
         setState(() => _copiedStep = null);
       }
     });
+  }
+
+  String _installCommand(String os) {
+    if (os == 'windows') {
+      return 'powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://flintdart.dev/install.ps1 | iex"';
+    }
+    return 'curl -fsSL https://flintdart.dev/install.sh | sh';
   }
 }

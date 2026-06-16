@@ -164,11 +164,11 @@ install_dart() {
   dart_home="$INSTALL_DIR/dart-sdk"
   dart_bin="$dart_home/bin"
   if [ -x "$dart_bin/dart" ]; then
-    info "Dart SDK already installed at $dart_home"
-    return
+    info "Updating Dart SDK ($CHANNEL) at $dart_home"
+  else
+    info "Installing Dart SDK ($CHANNEL)"
   fi
 
-  info "Installing Dart SDK ($CHANNEL)"
   version="$(curl -fsSL "https://storage.googleapis.com/dart-archive/channels/$CHANNEL/release/latest/VERSION" | sed -n 's/.*"version":[ ]*"\([^"]*\)".*/\1/p')"
   if [ -z "$version" ]; then
     fail "Could not resolve the latest Dart SDK version for channel '$CHANNEL'."

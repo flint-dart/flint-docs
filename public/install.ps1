@@ -91,11 +91,11 @@ function Install-DartSdk {
   $dartHome = Join-Path $InstallDir "dart-sdk"
   $dartExe = Join-Path $dartHome "bin\dart.exe"
   if (Test-Path -LiteralPath $dartExe) {
-    Write-Step "Dart SDK already installed at $dartHome"
-    return $dartHome
+    Write-Step "Updating Dart SDK ($Channel) at $dartHome"
+  } else {
+    Write-Step "Installing Dart SDK ($Channel)"
   }
 
-  Write-Step "Installing Dart SDK ($Channel)"
   Ensure-Directory $InstallDir
 
   $versionInfo = Invoke-RestMethod "https://storage.googleapis.com/dart-archive/channels/$Channel/release/latest/VERSION"
