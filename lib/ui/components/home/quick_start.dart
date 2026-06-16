@@ -27,7 +27,7 @@ class QuickStart extends Component {
         width: SizeValue.percent(100),
         maxWidth: 1152,
         margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 64),
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 44),
         background: Background.layers([
           Gradient.linear(
             135,
@@ -39,6 +39,9 @@ class QuickStart extends Component {
           ),
           Color.rgba(15, 23, 42, 0.2),
         ]),
+        sm: DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 64),
+        ),
       ),
       children: [
         Container(
@@ -46,8 +49,8 @@ class QuickStart extends Component {
             display: Display.grid,
             gridTemplateColumns: GridTemplateColumns.one,
             alignItems: AlignItems.center,
-            gap: 28,
-            padding: EdgeInsets.all(22),
+            gap: 20,
+            padding: EdgeInsets.all(14),
             radius: 8,
             border: Border(color: Color.rgba(56, 189, 248, 0.18), width: 1),
             background: Background.layers([
@@ -66,6 +69,7 @@ class QuickStart extends Component {
                 GridTrack.minmax(390, GridTrack.oneFr),
               ]),
               gap: 34,
+              padding: EdgeInsets.all(22),
             ),
           ),
           children: [
@@ -73,7 +77,7 @@ class QuickStart extends Component {
               dartStyle: const DartStyle(
                 display: Display.grid,
                 gap: 14,
-                minWidth: 300,
+                minWidth: 0,
               ),
               children: [
                 Row(
@@ -100,10 +104,14 @@ class QuickStart extends Component {
                   'Three commands from empty folder to running app.',
                   dartStyle: const DartStyle(
                     margin: EdgeInsets.all(0),
-                    fontSize: 32,
+                    fontSize: 25,
                     fontWeight: 700,
-                    lineHeight: 1.15,
+                    lineHeight: 1.18,
                     color: Colors.white,
+                    sm: DartStyle(
+                      fontSize: 32,
+                      lineHeight: 1.15,
+                    ),
                   ),
                 ),
                 Text.p(
@@ -111,9 +119,13 @@ class QuickStart extends Component {
                   dartStyle: const DartStyle(
                     margin: EdgeInsets.all(0),
                     maxWidth: 560,
-                    fontSize: 15,
-                    lineHeight: 1.65,
+                    fontSize: 14,
+                    lineHeight: 1.6,
                     color: Color('#a8b3c5'),
+                    sm: DartStyle(
+                      fontSize: 15,
+                      lineHeight: 1.65,
+                    ),
                   ),
                 ),
                 _osSwitch(),
@@ -140,11 +152,17 @@ class QuickStart extends Component {
               dartStyle: const DartStyle(
                 display: Display.grid,
                 gap: 12,
-                minWidth: 320,
-                padding: EdgeInsets.all(14),
+                width: SizeValue.percent(100),
+                minWidth: 0,
+                maxWidth: SizeValue.percent(100),
+                boxSizing: 'border-box',
+                padding: EdgeInsets.all(12),
                 radius: 8,
                 border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
                 background: Color.rgba(3, 7, 18, 0.62),
+                sm: DartStyle(
+                  padding: EdgeInsets.all(14),
+                ),
               ),
               children: [
                 Row(
@@ -204,6 +222,7 @@ class QuickStart extends Component {
         display: Display.flex,
         flexWrap: FlexWrap.wrap,
         alignItems: AlignItems.center,
+        width: SizeValue.percent(100),
         gap: 8,
         margin: EdgeInsets.only(top: 10),
       ),
@@ -228,6 +247,7 @@ class QuickStart extends Component {
         'title': 'Show $label commands',
       },
       dartStyle: DartStyle(
+        flex: '1 1 84px',
         minHeight: 30,
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         radius: 8,
@@ -254,11 +274,18 @@ class QuickStart extends Component {
         position: Position.relative,
         display: Display.flex,
         alignItems: AlignItems.start,
-        gap: 14,
-        padding: EdgeInsets.only(top: 16, right: 54, bottom: 16, left: 16),
+        width: SizeValue.percent(100),
+        minWidth: 0,
+        boxSizing: 'border-box',
+        gap: 10,
+        padding: EdgeInsets.only(top: 14, right: 46, bottom: 14, left: 12),
         radius: 8,
         border: Border(color: Color.rgba(51, 65, 85, 0.72), width: 1),
         background: Color.rgba(15, 23, 42, 0.52),
+        sm: DartStyle(
+          gap: 14,
+          padding: EdgeInsets.only(top: 16, right: 54, bottom: 16, left: 16),
+        ),
       ),
       children: [
         Container(
@@ -266,11 +293,14 @@ class QuickStart extends Component {
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.center,
-            minWidth: 42,
+            flex: '0 0 36px',
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             radius: 8,
             background: Color.rgba(56, 189, 248, 0.12),
             border: Border(color: Color.rgba(56, 189, 248, 0.34), width: 1),
+            sm: DartStyle(
+              flex: '0 0 42px',
+            ),
           ),
           children: [
             Text.span(
@@ -288,6 +318,8 @@ class QuickStart extends Component {
             display: Display.grid,
             gap: 6,
             minWidth: 0,
+            maxWidth: SizeValue.percent(100),
+            overflow: 'hidden',
           ),
           children: [
             Text.h3(
@@ -304,9 +336,14 @@ class QuickStart extends Component {
               dartStyle: const DartStyle(
                 margin: EdgeInsets.all(0),
                 fontFamily: FontFamily.monospace,
-                fontSize: 12,
+                fontSize: 11,
                 lineHeight: 1.5,
+                maxWidth: SizeValue.percent(100),
+                overflow: 'auto',
                 color: Color('#cbd5e1'),
+                sm: DartStyle(
+                  fontSize: 12,
+                ),
               ),
             ),
           ],
