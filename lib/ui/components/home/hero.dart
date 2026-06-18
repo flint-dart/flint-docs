@@ -160,7 +160,7 @@ class HomeHero extends FlintComponent {
           ),
         ),
         Text.h2(
-          'The backend framework that feels designed, fast, and finished.',
+          'The full-stack framework that feels designed, fast, and finished.',
           dartStyle: DartStyle(
             margin: EdgeInsets.only(top: 18, bottom: 0),
             maxWidth: 760,
@@ -223,7 +223,7 @@ class HomeHero extends FlintComponent {
             ),
           ),
           children: [
-            _signal(Icons.server, 'One runtime', 'backend + UI'),
+            _signal(Icons.server, 'Full-stack', 'unified backend & UI'),
             _signal(Icons.database, 'Models', 'query fluently'),
             _signal(Icons.rocket, 'Deployable', 'built to ship'),
           ],
@@ -625,13 +625,17 @@ const _mint = Color('#34d399');
 const _sky = Color('#38bdf8');
 const _violet = Color('#a78bfa');
 
-const _heroCode = "import 'package:flint_dart/flint_dart.dart';\n\n"
+const _heroCode = "import 'package:flint_dart/flint_dart.dart';\n"
+    "import 'package:flint_ui/flint_ui.dart';\n\n"
     "void main() {\n"
     "  final app = Flint();\n\n"
-    "  app.group('/docs', (docs) {\n"
-    "    docs.get('/guides', DocsController.guides);\n"
-    "    docs.get('/api', DocsController.api);\n"
-    "  }).middleware([auth.optional]);\n\n"
-    "  app.enableSwaggerDocs();\n"
+    "  // Render browser page with Flint UI\n"
+    "  app.get('/dashboard', (ctx) async {\n"
+    "    final users = await User().all();\n"
+    "    return ctx.res?.page(\n"
+    "      'DashboardPage',\n"
+    "      props: {'users': users.asMaps()},\n"
+    "    );\n"
+    "  });\n\n"
     "  app.listen(port: 3030);\n"
     "}";

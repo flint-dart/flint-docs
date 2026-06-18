@@ -19,7 +19,7 @@ class BuildFor extends FlintComponent {
           ),
           children: [
             Text.h2(
-              'Built for real backend work',
+              'Built for real full-stack work',
               dartStyle: const DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 32,

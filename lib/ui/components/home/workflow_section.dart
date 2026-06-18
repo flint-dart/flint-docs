@@ -71,7 +71,7 @@ class WorkflowSection extends Component {
                   ],
                 ),
                 Text.h2(
-                  'Feature routes stay obvious.',
+                  'Full-stack features stay organized.',
                   dartStyle: const DartStyle(
                     margin: EdgeInsets.all(0),
                     fontSize: 32,
@@ -81,7 +81,7 @@ class WorkflowSection extends Component {
                   ),
                 ),
                 Text.p(
-                  'The app composes route groups, each route group owns a feature, and each controller owns the request behavior. That is the structure we will keep using across docs, blog, and questions.',
+                  'Composed route groups handle API endpoints and render browser pages seamlessly. Controllers manage backend actions and return type-safe page structures directly to Flint UI components, keeping the entire lifecycle structured.',
                   dartStyle: const DartStyle(
                     margin: EdgeInsets.all(0),
                     fontSize: 15,
