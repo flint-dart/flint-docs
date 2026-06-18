@@ -424,8 +424,17 @@
         return J.UnknownJavaScriptObject.prototype;
       return receiver;
     },
+    get$first$ax(receiver) {
+      return J.getInterceptor$ax(receiver).get$first(receiver);
+    },
     get$hashCode$(receiver) {
       return J.getInterceptor$(receiver).get$hashCode(receiver);
+    },
+    get$isEmpty$asx(receiver) {
+      return J.getInterceptor$asx(receiver).get$isEmpty(receiver);
+    },
+    get$isNotEmpty$asx(receiver) {
+      return J.getInterceptor$asx(receiver).get$isNotEmpty(receiver);
     },
     get$iterator$ax(receiver) {
       return J.getInterceptor$ax(receiver).get$iterator(receiver);
@@ -443,8 +452,24 @@
         return a0 != null && receiver === a0;
       return J.getInterceptor$(receiver).$eq(receiver, a0);
     },
+    $index$asx(receiver, a0) {
+      if (typeof a0 === "number")
+        if (Array.isArray(receiver) || typeof receiver == "string" || A.isJsIndexable(receiver, receiver[init.dispatchPropertyName]))
+          if (a0 >>> 0 === a0 && a0 < receiver.length)
+            return receiver[a0];
+      return J.getInterceptor$asx(receiver).$index(receiver, a0);
+    },
+    $indexSet$ax(receiver, a0, a1) {
+      return J.getInterceptor$ax(receiver).$indexSet(receiver, a0, a1);
+    },
+    add$1$ax(receiver, a0) {
+      return J.getInterceptor$ax(receiver).add$1(receiver, a0);
+    },
     allMatches$1$s(receiver, a0) {
       return J.getInterceptor$s(receiver).allMatches$1(receiver, a0);
+    },
+    any$1$ax(receiver, a0) {
+      return J.getInterceptor$ax(receiver).any$1(receiver, a0);
     },
     elementAt$1$ax(receiver, a0) {
       return J.getInterceptor$ax(receiver).elementAt$1(receiver, a0);
@@ -454,6 +479,12 @@
     },
     toString$0$(receiver) {
       return J.getInterceptor$(receiver).toString$0(receiver);
+    },
+    where$1$ax(receiver, a0) {
+      return J.getInterceptor$ax(receiver).where$1(receiver, a0);
+    },
+    whereType$1$0$ax(receiver, $T1) {
+      return J.getInterceptor$ax(receiver).whereType$1$0(receiver, $T1);
     },
     Interceptor: function Interceptor() {
     },
@@ -502,8 +533,23 @@
   },
   A = {JS_CONST: function JS_CONST() {
     },
+    CastIterable_CastIterable(source, $S, $T) {
+      if (type$.EfficientLengthIterable_dynamic._is(source))
+        return new A._EfficientLengthCastIterable(source, $S._eval$1("@<0>")._bind$1($T)._eval$1("_EfficientLengthCastIterable<1,2>"));
+      return new A.CastIterable(source, $S._eval$1("@<0>")._bind$1($T)._eval$1("CastIterable<1,2>"));
+    },
     LateError$fieldADI(fieldName) {
       return new A.LateError("Field '" + fieldName + "' has been assigned during initialization.");
+    },
+    hexDigitValue(char) {
+      var letter,
+        digit = char ^ 48;
+      if (digit <= 9)
+        return digit;
+      letter = char | 32;
+      if (97 <= letter && letter <= 102)
+        return letter - 87;
+      return -1;
     },
     SystemHash_combine(hash, value) {
       hash = hash + value & 536870911;
@@ -530,8 +576,41 @@
         return new A.EfficientLengthMappedIterable(iterable, $function, $S._eval$1("@<0>")._bind$1($T)._eval$1("EfficientLengthMappedIterable<1,2>"));
       return new A.MappedIterable(iterable, $function, $S._eval$1("@<0>")._bind$1($T)._eval$1("MappedIterable<1,2>"));
     },
+    TakeIterable_TakeIterable(iterable, takeCount, $E) {
+      var _s9_ = "takeCount";
+      A.ArgumentError_checkNotNull(takeCount, _s9_, type$.int);
+      A.RangeError_checkNotNegative(takeCount, _s9_);
+      if (type$.EfficientLengthIterable_dynamic._is(iterable))
+        return new A.EfficientLengthTakeIterable(iterable, takeCount, $E._eval$1("EfficientLengthTakeIterable<0>"));
+      return new A.TakeIterable(iterable, takeCount, $E._eval$1("TakeIterable<0>"));
+    },
     IterableElementError_noElement() {
       return new A.StateError("No element");
+    },
+    _CastIterableBase: function _CastIterableBase() {
+    },
+    CastIterator: function CastIterator(t0, t1) {
+      this._source = t0;
+      this.$ti = t1;
+    },
+    CastIterable: function CastIterable(t0, t1) {
+      this._source = t0;
+      this.$ti = t1;
+    },
+    _EfficientLengthCastIterable: function _EfficientLengthCastIterable(t0, t1) {
+      this._source = t0;
+      this.$ti = t1;
+    },
+    CastMap: function CastMap(t0, t1) {
+      this._source = t0;
+      this.$ti = t1;
+    },
+    CastMap_forEach_closure: function CastMap_forEach_closure(t0, t1) {
+      this.$this = t0;
+      this.f = t1;
+    },
+    CastMap_entries_closure: function CastMap_entries_closure(t0) {
+      this.$this = t0;
     },
     LateError: function LateError(t0) {
       this._message = t0;
@@ -585,11 +664,70 @@
       this._f = t1;
       this.$ti = t2;
     },
+    TakeIterable: function TakeIterable(t0, t1, t2) {
+      this.__internal$_iterable = t0;
+      this._takeCount = t1;
+      this.$ti = t2;
+    },
+    EfficientLengthTakeIterable: function EfficientLengthTakeIterable(t0, t1, t2) {
+      this.__internal$_iterable = t0;
+      this._takeCount = t1;
+      this.$ti = t2;
+    },
+    TakeIterator: function TakeIterator(t0, t1, t2) {
+      this._iterator = t0;
+      this._remaining = t1;
+      this.$ti = t2;
+    },
+    WhereTypeIterable: function WhereTypeIterable(t0, t1) {
+      this._source = t0;
+      this.$ti = t1;
+    },
+    WhereTypeIterator: function WhereTypeIterator(t0, t1) {
+      this._source = t0;
+      this.$ti = t1;
+    },
     FixedLengthListMixin: function FixedLengthListMixin() {
     },
     UnmodifiableListMixin: function UnmodifiableListMixin() {
     },
     UnmodifiableListBase: function UnmodifiableListBase() {
+    },
+    ConstantMap_ConstantMap$from(other, $K, $V) {
+      var allStrings, k, object, index, index0, values, map,
+        t1 = A._instanceType(other),
+        keys = A.List_List$from(new A.LinkedHashMapKeysIterable(other, t1._eval$1("LinkedHashMapKeysIterable<1>")), true, $K),
+        t2 = keys.length,
+        _i = 0;
+      for (;;) {
+        if (!(_i < t2)) {
+          allStrings = true;
+          break;
+        }
+        k = keys[_i];
+        if (typeof k != "string" || "__proto__" === k) {
+          allStrings = false;
+          break;
+        }
+        ++_i;
+      }
+      if (allStrings) {
+        object = {};
+        for (index = 0, _i = 0; _i < keys.length; keys.length === t2 || (0, A.throwConcurrentModificationError)(keys), ++_i, index = index0) {
+          k = keys[_i];
+          $V._as(other.$index(0, k));
+          index0 = index + 1;
+          object[k] = index;
+        }
+        values = A.List_List$from(new A.LinkedHashMapValuesIterable(other, t1._eval$1("LinkedHashMapValuesIterable<2>")), true, $V);
+        map = new A.ConstantStringMap(object, values, $K._eval$1("@<0>")._bind$1($V)._eval$1("ConstantStringMap<1,2>"));
+        map.$keys = keys;
+        return map;
+      }
+      return new A.ConstantMapView(A.LinkedHashMap_LinkedHashMap$from(other, $K, $V), $K._eval$1("@<0>")._bind$1($V)._eval$1("ConstantMapView<1,2>"));
+    },
+    ConstantMap__throwUnmodifiable() {
+      throw A.wrapException(A.UnsupportedError$("Cannot modify unmodifiable Map"));
     },
     unminifyOrTag(rawClassName) {
       var preserved = init.mangledGlobalNames[rawClassName];
@@ -634,6 +772,20 @@
       }
       return hash;
     },
+    Primitives_parseInt(source, radix) {
+      var decimalMatch,
+        match = /^\s*[+-]?((0x[a-f0-9]+)|(\d+)|([a-z0-9]+))\s*$/i.exec(source);
+      if (match == null)
+        return null;
+      if (3 >= match.length)
+        return A.ioore(match, 3);
+      decimalMatch = match[3];
+      if (decimalMatch != null)
+        return parseInt(source, 10);
+      if (match[2] != null)
+        return parseInt(source, 16);
+      return null;
+    },
     Primitives_objectTypeName(object) {
       var interceptor, dispatchName, $constructor, constructorName;
       if (object instanceof A.Object)
@@ -670,15 +822,77 @@
       }
       return "Instance of '" + A.Primitives_objectTypeName(object) + "'";
     },
+    Primitives_dateNow() {
+      return Date.now();
+    },
+    Primitives_initTicker() {
+      var $window, performance;
+      if ($.Primitives_timerFrequency !== 0)
+        return;
+      $.Primitives_timerFrequency = 1000;
+      if (typeof window == "undefined")
+        return;
+      $window = window;
+      if ($window == null)
+        return;
+      if (!!$window.dartUseDateNowForTicks)
+        return;
+      performance = $window.performance;
+      if (performance == null)
+        return;
+      if (typeof performance.now != "function")
+        return;
+      $.Primitives_timerFrequency = 1000000;
+      $.Primitives_timerTicks = new A.Primitives_initTicker_closure(performance);
+    },
+    Primitives_stringFromNativeUint8List(charCodes, start, end) {
+      var i, result, i0, chunkEnd;
+      if (end <= 500 && start === 0 && end === charCodes.length)
+        return String.fromCharCode.apply(null, charCodes);
+      for (i = start, result = ""; i < end; i = i0) {
+        i0 = i + 500;
+        chunkEnd = i0 < end ? i0 : end;
+        result += String.fromCharCode.apply(null, charCodes.subarray(i, chunkEnd));
+      }
+      return result;
+    },
     Primitives_stringFromCharCode(charCode) {
       var bits;
-      if (charCode <= 65535)
-        return String.fromCharCode(charCode);
-      if (charCode <= 1114111) {
-        bits = charCode - 65536;
-        return String.fromCharCode((B.JSInt_methods._shrOtherPositive$1(bits, 10) | 55296) >>> 0, bits & 1023 | 56320);
+      if (0 <= charCode) {
+        if (charCode <= 65535)
+          return String.fromCharCode(charCode);
+        if (charCode <= 1114111) {
+          bits = charCode - 65536;
+          return String.fromCharCode((B.JSInt_methods._shrOtherPositive$1(bits, 10) | 55296) >>> 0, bits & 1023 | 56320);
+        }
       }
       throw A.wrapException(A.RangeError$range(charCode, 0, 1114111, null, null));
+    },
+    Primitives_lazyAsJsDate(receiver) {
+      if (receiver.date === void 0)
+        receiver.date = new Date(receiver._core$_value);
+      return receiver.date;
+    },
+    Primitives_getYear(receiver) {
+      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCFullYear() + 0 : A.Primitives_lazyAsJsDate(receiver).getFullYear() + 0;
+    },
+    Primitives_getMonth(receiver) {
+      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCMonth() + 1 : A.Primitives_lazyAsJsDate(receiver).getMonth() + 1;
+    },
+    Primitives_getDay(receiver) {
+      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCDate() + 0 : A.Primitives_lazyAsJsDate(receiver).getDate() + 0;
+    },
+    Primitives_getHours(receiver) {
+      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCHours() + 0 : A.Primitives_lazyAsJsDate(receiver).getHours() + 0;
+    },
+    Primitives_getMinutes(receiver) {
+      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCMinutes() + 0 : A.Primitives_lazyAsJsDate(receiver).getMinutes() + 0;
+    },
+    Primitives_getSeconds(receiver) {
+      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCSeconds() + 0 : A.Primitives_lazyAsJsDate(receiver).getSeconds() + 0;
+    },
+    Primitives_getMilliseconds(receiver) {
+      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCMilliseconds() + 0 : A.Primitives_lazyAsJsDate(receiver).getMilliseconds() + 0;
     },
     Primitives_extractStackTrace(error) {
       var jsError = error.$thrownJsError;
@@ -695,6 +909,9 @@
         jsError.stack = stackTrace.toString$0(0);
       }
     },
+    iae(argument) {
+      throw A.wrapException(A.argumentErrorValue(argument));
+    },
     ioore(receiver, index) {
       if (receiver == null)
         J.get$length$asx(receiver);
@@ -708,6 +925,17 @@
       if (index < 0 || index >= $length)
         return A.IndexError$withLength(index, $length, indexable, _s5_);
       return new A.RangeError(null, null, true, index, _s5_, "Value not in range");
+    },
+    diagnoseRangeError(start, end, $length) {
+      if (start > $length)
+        return A.RangeError$range(start, 0, $length, "start", null);
+      if (end != null)
+        if (end < start || end > $length)
+          return A.RangeError$range(end, start, $length, "end", null);
+      return new A.ArgumentError(true, end, "end", null);
+    },
+    argumentErrorValue(object) {
+      return new A.ArgumentError(true, object, null, null);
     },
     wrapException(ex) {
       return A.initializeExceptionWrapper(ex, new Error());
@@ -908,6 +1136,15 @@
       if (typeof object == "object")
         return A.Primitives_objectHashCode(object);
       return J.get$hashCode$(object);
+    },
+    constantHashCode(key) {
+      if (typeof key == "number")
+        return B.JSNumber_methods.get$hashCode(key);
+      if (key instanceof A._Type)
+        return A.Primitives_objectHashCode(key);
+      if (key instanceof A._Record)
+        return key.get$hashCode(key);
+      return A.objectHashCode(key);
     },
     fillLiteralMap(keyValuePairs, result) {
       var index, index0, index1,
@@ -1354,12 +1591,22 @@
         }(source, m + i + u + s + extraFlags);
       if (regexp instanceof RegExp)
         return regexp;
-      throw A.wrapException(A.FormatException$("Illegal RegExp pattern (" + String(regexp) + ")", source));
+      throw A.wrapException(A.FormatException$("Illegal RegExp pattern (" + String(regexp) + ")", source, null));
+    },
+    stringContainsUnchecked(receiver, other, startIndex) {
+      var t1 = receiver.indexOf(other, startIndex);
+      return t1 >= 0;
     },
     escapeReplacement(replacement) {
       if (replacement.indexOf("$", 0) >= 0)
         return replacement.replace(/\$/g, "$$$$");
       return replacement;
+    },
+    stringReplaceFirstRE(receiver, regexp, replacement, startIndex) {
+      var match = regexp._execGlobal$2(receiver, startIndex);
+      if (match == null)
+        return receiver;
+      return A.stringReplaceRangeUnchecked(receiver, match._match.index, match.get$end(), replacement);
     },
     quoteStringForRegExp(string) {
       if (/[[\]{}()*+?.\\^$|]/.test(string))
@@ -1403,6 +1650,12 @@
         return receiver.split(pattern).join(replacement);
       return receiver.replace(new RegExp(A.quoteStringForRegExp(pattern), "g"), A.escapeReplacement(replacement));
     },
+    stringReplaceFirstUnchecked(receiver, pattern, replacement, startIndex) {
+      return startIndex === 0 ? receiver.replace(pattern._nativeRegExp, A.escapeReplacement(replacement)) : A.stringReplaceFirstRE(receiver, pattern, replacement, startIndex);
+    },
+    stringReplaceRangeUnchecked(receiver, start, end, replacement) {
+      return receiver.substring(0, start) + replacement + receiver.substring(end);
+    },
     _Record_2: function _Record_2(t0, t1) {
       this._0 = t0;
       this._1 = t1;
@@ -1411,6 +1664,10 @@
       this._0 = t0;
       this._1 = t1;
       this._2 = t2;
+    },
+    ConstantMapView: function ConstantMapView(t0, t1) {
+      this._collection$_map = t0;
+      this.$ti = t1;
     },
     ConstantMap: function ConstantMap() {
     },
@@ -1442,6 +1699,13 @@
       this._jsIndex = t0;
       this.__js_helper$_length = t1;
       this.$ti = t2;
+    },
+    GeneralConstantSet: function GeneralConstantSet(t0, t1) {
+      this._elements = t0;
+      this.$ti = t1;
+    },
+    Primitives_initTicker_closure: function Primitives_initTicker_closure(t0) {
+      this.performance = t0;
     },
     SafeToStringHook: function SafeToStringHook() {
     },
@@ -1544,6 +1808,13 @@
       _.__js_helper$_current = null;
       _.$ti = t3;
     },
+    JsConstantLinkedHashMap: function JsConstantLinkedHashMap(t0) {
+      var _ = this;
+      _.__js_helper$_length = 0;
+      _._last = _._first = _.__js_helper$_rest = _._nums = _._strings = null;
+      _._modifications = 0;
+      _.$ti = t0;
+    },
     initHooks_closure: function initHooks_closure(t0) {
       this.getTag = t0;
     },
@@ -1596,9 +1867,25 @@
       _.__js_helper$_index = t2;
       _.__js_helper$_current = null;
     },
+    _ensureNativeList(list) {
+      return list;
+    },
+    NativeUint8List_NativeUint8List($length) {
+      return new Uint8Array($length);
+    },
     _checkValidIndex(index, list, $length) {
       if (index >>> 0 !== index || index >= $length)
         throw A.wrapException(A.diagnoseIndexError(list, index));
+    },
+    _checkValidRange(start, end, $length) {
+      var t1;
+      if (!(start >>> 0 !== start))
+        t1 = end >>> 0 !== end || start > end || end > $length;
+      else
+        t1 = true;
+      if (t1)
+        throw A.wrapException(A.diagnoseRangeError(start, end, $length));
+      return end;
     },
     NativeByteBuffer: function NativeByteBuffer() {
     },
@@ -3126,12 +3413,24 @@
       self.setImmediate(A.convertDartClosureToJS(new A._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback(type$.void_Function._as(callback)), 0));
     },
     _AsyncRun__scheduleImmediateWithTimer(callback) {
-      type$.void_Function._as(callback);
-      A._TimerImpl$(0, callback);
+      A.Timer__createTimer(B.Duration_0, type$.void_Function._as(callback));
+    },
+    Timer__createTimer(duration, callback) {
+      var milliseconds = B.JSInt_methods._tdivFast$1(duration._duration, 1000);
+      return A._TimerImpl$(milliseconds < 0 ? 0 : milliseconds, callback);
+    },
+    Timer__createPeriodicTimer(duration, callback) {
+      var milliseconds = B.JSInt_methods._tdivFast$1(duration._duration, 1000);
+      return A._TimerImpl$periodic(milliseconds < 0 ? 0 : milliseconds, callback);
     },
     _TimerImpl$(milliseconds, callback) {
-      var t1 = new A._TimerImpl();
+      var t1 = new A._TimerImpl(true);
       t1._TimerImpl$2(milliseconds, callback);
+      return t1;
+    },
+    _TimerImpl$periodic(milliseconds, callback) {
+      var t1 = new A._TimerImpl(false);
+      t1._TimerImpl$periodic$2(milliseconds, callback);
       return t1;
     },
     _makeAsyncAwaitCompleter($T) {
@@ -3197,6 +3496,11 @@
       }
       return B.C__StringStackTrace;
     },
+    Future_Future$delayed(duration, computation, $T) {
+      var result = new A._Future($.Zone__current, $T._eval$1("_Future<0>"));
+      A.Timer_Timer(duration, new A.Future_Future$delayed_closure(computation, result, $T));
+      return result;
+    },
     _interceptError(error, stackTrace) {
       if ($.Zone__current === B.C__RootZone)
         return null;
@@ -3217,6 +3521,13 @@
       else if (type$.Error._is(error))
         A.Primitives_trySetStackTrace(error, stackTrace);
       return new A.AsyncError(error, stackTrace);
+    },
+    _Future$value(value, $T) {
+      var t1 = new A._Future($.Zone__current, $T._eval$1("_Future<0>"));
+      $T._as(value);
+      t1._state = 8;
+      t1._resultOrListeners = value;
+      return t1;
     },
     _Future__chainCoreFuture(source, target, sync) {
       var t2, t3, ignoreError, listeners, _box_0 = {},
@@ -3429,6 +3740,18 @@
       A.checkNotNullable(stream, "stream", type$.Object);
       return new A._StreamIterator($T._eval$1("_StreamIterator<0>"));
     },
+    Timer_Timer(duration, callback) {
+      var t1 = $.Zone__current;
+      if (t1 === B.C__RootZone)
+        return A.Timer__createTimer(duration, type$.void_Function._as(callback));
+      return A.Timer__createTimer(duration, type$.void_Function._as(t1.bindCallbackGuarded$1(callback)));
+    },
+    Timer_Timer$periodic(duration, callback) {
+      var t1 = $.Zone__current;
+      if (t1 === B.C__RootZone)
+        return A.Timer__createPeriodicTimer(duration, type$.void_Function_Timer._as(callback));
+      return A.Timer__createPeriodicTimer(duration, type$.void_Function_Timer._as(t1.bindUnaryCallbackGuarded$1$1(callback, type$.Timer)));
+    },
     _rootHandleError(error, stackTrace) {
       A._schedulePriorityAsyncCallback(new A._rootHandleError_closure(error, stackTrace));
     },
@@ -3496,11 +3819,21 @@
     _AsyncRun__scheduleImmediateWithSetImmediate_internalCallback: function _AsyncRun__scheduleImmediateWithSetImmediate_internalCallback(t0) {
       this.callback = t0;
     },
-    _TimerImpl: function _TimerImpl() {
+    _TimerImpl: function _TimerImpl(t0) {
+      this._once = t0;
+      this._handle = null;
+      this._tick = 0;
     },
     _TimerImpl_internalCallback: function _TimerImpl_internalCallback(t0, t1) {
       this.$this = t0;
       this.callback = t1;
+    },
+    _TimerImpl$periodic_closure: function _TimerImpl$periodic_closure(t0, t1, t2, t3) {
+      var _ = this;
+      _.$this = t0;
+      _.milliseconds = t1;
+      _.start = t2;
+      _.callback = t3;
     },
     _AsyncAwaitCompleter: function _AsyncAwaitCompleter(t0, t1) {
       this._future = t0;
@@ -3529,6 +3862,11 @@
     AsyncError: function AsyncError(t0, t1) {
       this.error = t0;
       this.stackTrace = t1;
+    },
+    Future_Future$delayed_closure: function Future_Future$delayed_closure(t0, t1, t2) {
+      this.computation = t0;
+      this.result = t1;
+      this.T = t2;
     },
     _Completer: function _Completer() {
     },
@@ -3592,6 +3930,22 @@
       this._box_1 = t0;
       this._box_0 = t1;
     },
+    _Future_timeout_closure: function _Future_timeout_closure(t0, t1, t2, t3) {
+      var _ = this;
+      _.$this = t0;
+      _._future = t1;
+      _.zone = t2;
+      _.onTimeoutHandler = t3;
+    },
+    _Future_timeout_closure0: function _Future_timeout_closure0(t0, t1, t2) {
+      this._box_0 = t0;
+      this.$this = t1;
+      this._future = t2;
+    },
+    _Future_timeout_closure1: function _Future_timeout_closure1(t0, t1) {
+      this._box_0 = t0;
+      this._future = t1;
+    },
     _AsyncCallbackEntry: function _AsyncCallbackEntry(t0) {
       this.callback = t0;
       this.next = null;
@@ -3626,6 +3980,22 @@
       this.error = t0;
       this.stackTrace = t1;
     },
+    _HashMap__getTableEntry(table, key) {
+      var entry = table[key];
+      return entry === table ? null : entry;
+    },
+    _HashMap__setTableEntry(table, key, value) {
+      if (value == null)
+        table[key] = table;
+      else
+        table[key] = value;
+    },
+    _HashMap__newHashTable() {
+      var table = Object.create(null);
+      A._HashMap__setTableEntry(table, "<non-identifier-key>", table);
+      delete table["<non-identifier-key>"];
+      return table;
+    },
     LinkedHashMap_LinkedHashMap($K, $V) {
       return new A.JsLinkedHashMap($K._eval$1("@<0>")._bind$1($V)._eval$1("JsLinkedHashMap<1,2>"));
     },
@@ -3646,6 +4016,11 @@
       table["<non-identifier-key>"] = table;
       delete table["<non-identifier-key>"];
       return table;
+    },
+    LinkedHashMap_LinkedHashMap$from(other, $K, $V) {
+      var result = A.LinkedHashMap_LinkedHashMap($K, $V);
+      other.forEach$1(0, new A.LinkedHashMap_LinkedHashMap$from_closure(result, $K, $V));
+      return result;
     },
     LinkedHashMap_LinkedHashMap$of(other, $K, $V) {
       var t1 = A.LinkedHashMap_LinkedHashMap($K, $V);
@@ -3672,6 +4047,29 @@
       t1 = result._contents;
       return t1.charCodeAt(0) == 0 ? t1 : t1;
     },
+    _HashMap: function _HashMap() {
+    },
+    _HashMap_values_closure: function _HashMap_values_closure(t0) {
+      this.$this = t0;
+    },
+    _IdentityHashMap: function _IdentityHashMap(t0) {
+      var _ = this;
+      _._collection$_length = 0;
+      _._collection$_keys = _._collection$_rest = _._collection$_nums = _._collection$_strings = null;
+      _.$ti = t0;
+    },
+    _HashMapKeyIterable: function _HashMapKeyIterable(t0, t1) {
+      this._collection$_map = t0;
+      this.$ti = t1;
+    },
+    _HashMapKeyIterator: function _HashMapKeyIterator(t0, t1, t2) {
+      var _ = this;
+      _._collection$_map = t0;
+      _._collection$_keys = t1;
+      _._offset = 0;
+      _._collection$_current = null;
+      _.$ti = t2;
+    },
     _LinkedHashSet: function _LinkedHashSet(t0) {
       var _ = this;
       _._collection$_length = 0;
@@ -3681,7 +4079,7 @@
     },
     _LinkedHashSetCell: function _LinkedHashSetCell(t0) {
       this._element = t0;
-      this._collection$_next = null;
+      this._collection$_previous = this._collection$_next = null;
     },
     _LinkedHashSetIterator: function _LinkedHashSetIterator(t0, t1, t2) {
       var _ = this;
@@ -3689,6 +4087,11 @@
       _._collection$_modifications = t1;
       _._collection$_current = _._collection$_cell = null;
       _.$ti = t2;
+    },
+    LinkedHashMap_LinkedHashMap$from_closure: function LinkedHashMap_LinkedHashMap$from_closure(t0, t1, t2) {
+      this.result = t0;
+      this.K = t1;
+      this.V = t2;
     },
     ListBase: function ListBase() {
     },
@@ -3701,9 +4104,30 @@
       this._box_0 = t0;
       this.result = t1;
     },
+    _MapBaseValueIterable: function _MapBaseValueIterable(t0, t1) {
+      this._collection$_map = t0;
+      this.$ti = t1;
+    },
+    _MapBaseValueIterator: function _MapBaseValueIterator(t0, t1, t2) {
+      var _ = this;
+      _._collection$_keys = t0;
+      _._collection$_map = t1;
+      _._collection$_current = null;
+      _.$ti = t2;
+    },
+    _UnmodifiableMapMixin: function _UnmodifiableMapMixin() {
+    },
+    MapView: function MapView() {
+    },
+    UnmodifiableMapView: function UnmodifiableMapView(t0, t1) {
+      this._collection$_map = t0;
+      this.$ti = t1;
+    },
     SetBase: function SetBase() {
     },
     _SetBase: function _SetBase() {
+    },
+    _UnmodifiableMapView_MapView__UnmodifiableMapMixin: function _UnmodifiableMapView_MapView__UnmodifiableMapMixin() {
     },
     _parseJson(source, reviver) {
       var e, exception, t1, parsed = null;
@@ -3711,7 +4135,7 @@
         parsed = JSON.parse(source);
       } catch (exception) {
         e = A.unwrapException(exception);
-        t1 = A.FormatException$(String(e), null);
+        t1 = A.FormatException$(String(e), null, null);
         throw A.wrapException(t1);
       }
       t1 = A._convertJsonToDartLazy(parsed);
@@ -3728,6 +4152,46 @@
       for (i = 0; i < object.length; ++i)
         object[i] = A._convertJsonToDartLazy(object[i]);
       return object;
+    },
+    _Utf8Decoder__makeNativeUint8List(codeUnits, start, end) {
+      var bytes, t1, i, b,
+        $length = end - start;
+      if ($length <= 4096)
+        bytes = $.$get$_Utf8Decoder__reusableBuffer();
+      else
+        bytes = new Uint8Array($length);
+      for (t1 = J.getInterceptor$asx(codeUnits), i = 0; i < $length; ++i) {
+        b = t1.$index(codeUnits, start + i);
+        if ((b & 255) !== b)
+          b = 255;
+        bytes[i] = b;
+      }
+      return bytes;
+    },
+    _Utf8Decoder__convertInterceptedUint8List(allowMalformed, codeUnits, start, end) {
+      var decoder = allowMalformed ? $.$get$_Utf8Decoder__decoderNonfatal() : $.$get$_Utf8Decoder__decoder();
+      if (decoder == null)
+        return null;
+      if (0 === start && end === codeUnits.length)
+        return A._Utf8Decoder__useTextDecoder(decoder, codeUnits);
+      return A._Utf8Decoder__useTextDecoder(decoder, codeUnits.subarray(start, end));
+    },
+    _Utf8Decoder__useTextDecoder(decoder, codeUnits) {
+      var t1, exception;
+      try {
+        t1 = decoder.decode(codeUnits);
+        return t1;
+      } catch (exception) {
+      }
+      return null;
+    },
+    Base64Codec__checkPadding(source, sourceIndex, sourceEnd, firstPadding, paddingCount, $length) {
+      if (B.JSInt_methods.$mod($length, 4) !== 0)
+        throw A.wrapException(A.FormatException$("Invalid base64 padding, padded length must be multiple of four, is " + $length, source, sourceEnd));
+      if (firstPadding + paddingCount !== $length)
+        throw A.wrapException(A.FormatException$("Invalid base64 padding, '=' not at the end", source, sourceIndex));
+      if (paddingCount > 2)
+        throw A.wrapException(A.FormatException$("Invalid base64 padding, more than two '=' characters", source, sourceIndex));
     },
     JsonUnsupportedObjectError$(unsupportedObject, cause, partialResult) {
       return new A.JsonUnsupportedObjectError(unsupportedObject, cause);
@@ -3746,17 +4210,50 @@
       t1 = output._contents;
       return t1.charCodeAt(0) == 0 ? t1 : t1;
     },
+    _Utf8Decoder_errorDescription(state) {
+      switch (state) {
+        case 65:
+          return "Missing extension byte";
+        case 67:
+          return "Unexpected extension byte";
+        case 69:
+          return "Invalid UTF-8 byte";
+        case 71:
+          return "Overlong encoding";
+        case 73:
+          return "Out of unicode range";
+        case 75:
+          return "Encoded surrogate";
+        case 77:
+          return "Unfinished UTF-8 octet sequence";
+        default:
+          return "";
+      }
+    },
     _JsonMap: function _JsonMap(t0, t1) {
       this._original = t0;
       this._processed = t1;
       this._data = null;
     },
+    _JsonMap_values_closure: function _JsonMap_values_closure(t0) {
+      this.$this = t0;
+    },
     _JsonMapKeyIterable: function _JsonMapKeyIterable(t0) {
       this._parent = t0;
+    },
+    _Utf8Decoder__decoder_closure: function _Utf8Decoder__decoder_closure() {
+    },
+    _Utf8Decoder__decoderNonfatal_closure: function _Utf8Decoder__decoderNonfatal_closure() {
+    },
+    Base64Codec: function Base64Codec() {
+    },
+    Base64Encoder: function Base64Encoder() {
     },
     Codec: function Codec() {
     },
     Converter: function Converter() {
+    },
+    Encoding: function Encoding() {
     },
     JsonUnsupportedObjectError: function JsonUnsupportedObjectError(t0, t1) {
       this.unsupportedObject = t0;
@@ -3785,6 +4282,28 @@
       this._seen = t1;
       this._toEncodable = t2;
     },
+    Utf8Codec: function Utf8Codec() {
+    },
+    Utf8Encoder: function Utf8Encoder() {
+    },
+    _Utf8Encoder: function _Utf8Encoder(t0) {
+      this._bufferIndex = 0;
+      this._buffer = t0;
+    },
+    Utf8Decoder: function Utf8Decoder(t0) {
+      this._allowMalformed = t0;
+    },
+    _Utf8Decoder: function _Utf8Decoder(t0) {
+      this.allowMalformed = t0;
+      this._convert$_state = 16;
+      this._charOrIndex = 0;
+    },
+    int_parse(source) {
+      var value = A.Primitives_parseInt(source, null);
+      if (value != null)
+        return value;
+      throw A.wrapException(A.FormatException$(source, null, null));
+    },
     Error__throw(error, stackTrace) {
       error = A.initializeExceptionWrapper(error, new Error());
       if (error == null)
@@ -3801,19 +4320,47 @@
       return result;
     },
     List_List$from(elements, growable, $E) {
-      var t1, _i,
+      var t1,
         list = A._setArrayType([], $E._eval$1("JSArray<0>"));
-      for (t1 = elements.length, _i = 0; _i < elements.length; elements.length === t1 || (0, A.throwConcurrentModificationError)(elements), ++_i)
-        B.JSArray_methods.add$1(list, $E._as(elements[_i]));
+      for (t1 = J.get$iterator$ax(elements); t1.moveNext$0();)
+        B.JSArray_methods.add$1(list, $E._as(t1.get$current()));
+      if (growable)
+        return list;
       list.$flags = 1;
       return list;
     },
     List_List$_of(elements, $E) {
-      var t1,
-        list = A._setArrayType([], $E._eval$1("JSArray<0>"));
-      for (t1 = elements.get$iterator(elements); t1.moveNext$0();)
+      var list, t1;
+      if (Array.isArray(elements))
+        return A._setArrayType(elements.slice(0), $E._eval$1("JSArray<0>"));
+      list = A._setArrayType([], $E._eval$1("JSArray<0>"));
+      for (t1 = J.get$iterator$ax(elements); t1.moveNext$0();)
         B.JSArray_methods.add$1(list, t1.get$current());
       return list;
+    },
+    List_List$unmodifiable(elements, $E) {
+      var result = A.List_List$from(elements, false, $E);
+      result.$flags = 3;
+      return result;
+    },
+    String_String$fromCharCodes(charCodes, start, end) {
+      var maxLength, t1;
+      A.RangeError_checkNotNegative(start, "start");
+      if (end != null) {
+        maxLength = end - start;
+        if (maxLength < 0)
+          throw A.wrapException(A.RangeError$range(end, start, null, "end", null));
+        if (maxLength === 0)
+          return "";
+      }
+      t1 = A.String__stringFromUint8List(charCodes, start, end);
+      return t1;
+    },
+    String__stringFromUint8List(charCodes, start, endOrNull) {
+      var len = charCodes.length;
+      if (start >= len)
+        return "";
+      return A.Primitives_stringFromNativeUint8List(charCodes, start, endOrNull == null || endOrNull > len ? len : endOrNull);
     },
     RegExp_RegExp(source, caseSensitive, dotAll) {
       return new A.JSSyntaxRegExp(source, A.JSSyntaxRegExp_makeNative(source, false, caseSensitive, false, dotAll, ""));
@@ -3833,8 +4380,66 @@
       }
       return string;
     },
+    _Uri__uriEncode(canonicalMask, text, encoding, spaceToPlus) {
+      var t1, bytes, i, t2, byte,
+        _s16_ = "0123456789ABCDEF";
+      if (encoding === B.C_Utf8Codec) {
+        t1 = $.$get$_Uri__needsNoEncoding();
+        t1 = t1._nativeRegExp.test(text);
+      } else
+        t1 = false;
+      if (t1)
+        return text;
+      bytes = B.C_Utf8Encoder.convert$1(text);
+      for (t1 = bytes.length, i = 0, t2 = ""; i < t1; ++i) {
+        byte = bytes[i];
+        if (byte < 128 && (string$.______.charCodeAt(byte) & canonicalMask) !== 0)
+          t2 += A.Primitives_stringFromCharCode(byte);
+        else
+          t2 = spaceToPlus && byte === 32 ? t2 + "+" : t2 + "%" + _s16_[byte >>> 4 & 15] + _s16_[byte & 15];
+      }
+      return t2.charCodeAt(0) == 0 ? t2 : t2;
+    },
+    _Uri__makeQueryFromParameters(queryParameters) {
+      var params, encoded, $length;
+      if (!$.$get$_Uri__useURLSearchParams())
+        return A._Uri__makeQueryFromParametersDefault(queryParameters);
+      params = new URLSearchParams();
+      queryParameters.forEach$1(0, new A._Uri__makeQueryFromParameters_closure(params));
+      encoded = params.toString();
+      $length = encoded.length;
+      if ($length > 0 && encoded[$length - 1] === "=")
+        encoded = B.JSString_methods.substring$2(encoded, 0, $length - 1);
+      return encoded.replace(/=&|\*|%7E/g, m => m === "=&" ? "&" : m === "*" ? "%2A" : "~");
+    },
     StackTrace_current() {
       return A.getTraceFromException(new Error());
+    },
+    DateTime__fourDigits(n) {
+      var absN = Math.abs(n),
+        sign = n < 0 ? "-" : "";
+      if (absN >= 1000)
+        return "" + n;
+      if (absN >= 100)
+        return sign + "0" + absN;
+      if (absN >= 10)
+        return sign + "00" + absN;
+      return sign + "000" + absN;
+    },
+    DateTime__threeDigits(n) {
+      if (n >= 100)
+        return "" + n;
+      if (n >= 10)
+        return "0" + n;
+      return "00" + n;
+    },
+    DateTime__twoDigits(n) {
+      if (n >= 10)
+        return "" + n;
+      return "0" + n;
+    },
+    Duration$(microseconds, milliseconds, seconds) {
+      return new A.Duration(microseconds + 1000 * milliseconds + 1000000 * seconds);
     },
     Error_safeToString(object) {
       if (typeof object == "number" || A._isBool(object) || object == null)
@@ -3857,6 +4462,9 @@
     ArgumentError$value(value, $name, message) {
       return new A.ArgumentError(true, value, $name, message);
     },
+    ArgumentError_checkNotNull(argument, $name, $T) {
+      return argument;
+    },
     RangeError$range(invalidValue, minValue, maxValue, $name, message) {
       return new A.RangeError(minValue, maxValue, true, invalidValue, $name, "Invalid value");
     },
@@ -3871,6 +4479,8 @@
       return $length;
     },
     RangeError_checkNotNegative(value, $name) {
+      if (value < 0)
+        throw A.wrapException(A.RangeError$range(value, 0, null, $name, null));
       return value;
     },
     IndexError$withLength(invalidValue, $length, indexable, $name) {
@@ -3888,8 +4498,8 @@
     ConcurrentModificationError$(modifiedObject) {
       return new A.ConcurrentModificationError(modifiedObject);
     },
-    FormatException$(message, source) {
-      return new A.FormatException(message, source);
+    FormatException$(message, source, offset) {
+      return new A.FormatException(message, source, offset);
     },
     Iterable_iterableToShortString(iterable, leftDelimiter, rightDelimiter) {
       var parts, t1;
@@ -4009,6 +4619,9 @@
       B.JSArray_methods.add$1(parts, penultimateString);
       B.JSArray_methods.add$1(parts, ultimateString);
     },
+    Map_castFrom(source, $K, $V, $K2, $V2) {
+      return new A.CastMap(source, $K._eval$1("@<0>")._bind$1($V)._bind$1($K2)._bind$1($V2)._eval$1("CastMap<1,2,3,4>"));
+    },
     Object_hash(object1, object2, object3, object4) {
       var t1;
       if (B.C_SentinelValue === object3) {
@@ -4028,6 +4641,1154 @@
       object4 = J.get$hashCode$(object4);
       object4 = A.SystemHash_finish(A.SystemHash_combine(A.SystemHash_combine(A.SystemHash_combine(A.SystemHash_combine($.$get$_hashSeed(), t1), object2), object3), object4));
       return object4;
+    },
+    print(object) {
+      A.printString(object);
+    },
+    Uri_parse(uri, start, end) {
+      var t1, t2, t3, t4, t5, delta, indices, schemeEnd, hostStart, portStart, pathStart, queryStart, fragmentStart, isSimple, scheme, start0, schemeAuth, port, userInfoStart, userInfo, host, portNumber, path, query, _null = null;
+      end = uri.length;
+      t1 = start + 5;
+      if (end >= t1) {
+        t2 = start + 4;
+        if (!(t2 < end))
+          return A.ioore(uri, t2);
+        if (!(start < end))
+          return A.ioore(uri, start);
+        t3 = start + 1;
+        if (!(t3 < end))
+          return A.ioore(uri, t3);
+        t4 = start + 2;
+        if (!(t4 < end))
+          return A.ioore(uri, t4);
+        t5 = start + 3;
+        if (!(t5 < end))
+          return A.ioore(uri, t5);
+        delta = ((uri.charCodeAt(t2) ^ 58) * 3 | uri.charCodeAt(start) ^ 100 | uri.charCodeAt(t3) ^ 97 | uri.charCodeAt(t4) ^ 116 | uri.charCodeAt(t5) ^ 97) >>> 0;
+        if (delta === 0)
+          return A.UriData__parse(start > 0 || end < end ? B.JSString_methods.substring$2(uri, start, end) : uri, 5, _null).get$uri();
+        else if (delta === 32)
+          return A.UriData__parse(B.JSString_methods.substring$2(uri, t1, end), 0, _null).get$uri();
+      }
+      indices = A.List_List$filled(8, 0, false, type$.int);
+      B.JSArray_methods.$indexSet(indices, 0, 0);
+      t2 = start - 1;
+      B.JSArray_methods.$indexSet(indices, 1, t2);
+      B.JSArray_methods.$indexSet(indices, 2, t2);
+      B.JSArray_methods.$indexSet(indices, 7, t2);
+      B.JSArray_methods.$indexSet(indices, 3, start);
+      B.JSArray_methods.$indexSet(indices, 4, start);
+      B.JSArray_methods.$indexSet(indices, 5, end);
+      B.JSArray_methods.$indexSet(indices, 6, end);
+      if (A._scan(uri, start, end, 0, indices) >= 14)
+        B.JSArray_methods.$indexSet(indices, 7, end);
+      schemeEnd = indices[1];
+      if (schemeEnd >= start)
+        if (A._scan(uri, start, schemeEnd, 20, indices) === 20)
+          indices[7] = schemeEnd;
+      hostStart = indices[2] + 1;
+      portStart = indices[3];
+      pathStart = indices[4];
+      queryStart = indices[5];
+      fragmentStart = indices[6];
+      if (fragmentStart < queryStart)
+        queryStart = fragmentStart;
+      if (pathStart < hostStart)
+        pathStart = queryStart;
+      else if (pathStart <= schemeEnd)
+        pathStart = schemeEnd + 1;
+      if (portStart < hostStart)
+        portStart = pathStart;
+      isSimple = indices[7] < start;
+      scheme = _null;
+      if (isSimple) {
+        isSimple = false;
+        if (!(hostStart > schemeEnd + 3)) {
+          t2 = portStart > start;
+          start0 = 0;
+          if (!(t2 && portStart + 1 === pathStart)) {
+            if (!B.JSString_methods.startsWith$2(uri, "\\", pathStart))
+              if (hostStart > start)
+                t3 = B.JSString_methods.startsWith$2(uri, "\\", hostStart - 1) || B.JSString_methods.startsWith$2(uri, "\\", hostStart - 2);
+              else
+                t3 = false;
+            else
+              t3 = true;
+            if (!t3) {
+              if (!(queryStart < end && queryStart === pathStart + 2 && B.JSString_methods.startsWith$2(uri, "..", pathStart)))
+                t3 = queryStart > pathStart + 2 && B.JSString_methods.startsWith$2(uri, "/..", queryStart - 3);
+              else
+                t3 = true;
+              if (!t3)
+                if (schemeEnd === start + 4) {
+                  if (B.JSString_methods.startsWith$2(uri, "file", start)) {
+                    if (hostStart <= start) {
+                      if (!B.JSString_methods.startsWith$2(uri, "/", pathStart)) {
+                        schemeAuth = "file:///";
+                        delta = 3;
+                      } else {
+                        schemeAuth = "file://";
+                        delta = 2;
+                      }
+                      uri = schemeAuth + B.JSString_methods.substring$2(uri, pathStart, end);
+                      schemeEnd -= start;
+                      t1 = delta - start;
+                      queryStart += t1;
+                      fragmentStart += t1;
+                      end = uri.length;
+                      start = start0;
+                      hostStart = 7;
+                      portStart = 7;
+                      pathStart = 7;
+                    } else if (pathStart === queryStart) {
+                      t1 = start === 0;
+                      t1;
+                      if (t1) {
+                        uri = B.JSString_methods.replaceRange$3(uri, pathStart, queryStart, "/");
+                        ++queryStart;
+                        ++fragmentStart;
+                        ++end;
+                      } else {
+                        uri = B.JSString_methods.substring$2(uri, start, pathStart) + "/" + B.JSString_methods.substring$2(uri, queryStart, end);
+                        schemeEnd -= start;
+                        hostStart -= start;
+                        portStart -= start;
+                        pathStart -= start;
+                        t1 = 1 - start;
+                        queryStart += t1;
+                        fragmentStart += t1;
+                        end = uri.length;
+                        start = start0;
+                      }
+                    }
+                    scheme = "file";
+                  } else if (B.JSString_methods.startsWith$2(uri, "http", start)) {
+                    if (t2 && portStart + 3 === pathStart && B.JSString_methods.startsWith$2(uri, "80", portStart + 1)) {
+                      t1 = start === 0;
+                      t1;
+                      if (t1) {
+                        uri = B.JSString_methods.replaceRange$3(uri, portStart, pathStart, "");
+                        pathStart -= 3;
+                        queryStart -= 3;
+                        fragmentStart -= 3;
+                        end -= 3;
+                      } else {
+                        uri = B.JSString_methods.substring$2(uri, start, portStart) + B.JSString_methods.substring$2(uri, pathStart, end);
+                        schemeEnd -= start;
+                        hostStart -= start;
+                        portStart -= start;
+                        t1 = 3 + start;
+                        pathStart -= t1;
+                        queryStart -= t1;
+                        fragmentStart -= t1;
+                        end = uri.length;
+                        start = start0;
+                      }
+                    }
+                    scheme = "http";
+                  }
+                } else if (schemeEnd === t1 && B.JSString_methods.startsWith$2(uri, "https", start)) {
+                  if (t2 && portStart + 4 === pathStart && B.JSString_methods.startsWith$2(uri, "443", portStart + 1)) {
+                    t1 = start === 0;
+                    t1;
+                    if (t1) {
+                      uri = B.JSString_methods.replaceRange$3(uri, portStart, pathStart, "");
+                      pathStart -= 4;
+                      queryStart -= 4;
+                      fragmentStart -= 4;
+                      end -= 3;
+                    } else {
+                      uri = B.JSString_methods.substring$2(uri, start, portStart) + B.JSString_methods.substring$2(uri, pathStart, end);
+                      schemeEnd -= start;
+                      hostStart -= start;
+                      portStart -= start;
+                      t1 = 4 + start;
+                      pathStart -= t1;
+                      queryStart -= t1;
+                      fragmentStart -= t1;
+                      end = uri.length;
+                      start = start0;
+                    }
+                  }
+                  scheme = "https";
+                }
+              isSimple = !t3;
+            }
+          }
+        }
+      }
+      if (isSimple) {
+        if (start > 0 || end < uri.length) {
+          uri = B.JSString_methods.substring$2(uri, start, end);
+          schemeEnd -= start;
+          hostStart -= start;
+          portStart -= start;
+          pathStart -= start;
+          queryStart -= start;
+          fragmentStart -= start;
+        }
+        return new A._SimpleUri(uri, schemeEnd, hostStart, portStart, pathStart, queryStart, fragmentStart, scheme);
+      }
+      if (scheme == null)
+        if (schemeEnd > start)
+          scheme = A._Uri__makeScheme(uri, start, schemeEnd);
+        else {
+          if (schemeEnd === start)
+            A._Uri__fail(uri, start, "Invalid empty scheme");
+          scheme = "";
+        }
+      port = _null;
+      if (hostStart > start) {
+        userInfoStart = schemeEnd + 3;
+        userInfo = userInfoStart < hostStart ? A._Uri__makeUserInfo(uri, userInfoStart, hostStart - 1) : "";
+        host = A._Uri__makeHost(uri, hostStart, portStart, false);
+        t1 = portStart + 1;
+        if (t1 < pathStart) {
+          portNumber = A.Primitives_parseInt(B.JSString_methods.substring$2(uri, t1, pathStart), _null);
+          port = A._Uri__makePort(portNumber == null ? A.throwExpression(A.FormatException$("Invalid port", uri, t1)) : portNumber, scheme);
+        }
+      } else {
+        host = _null;
+        userInfo = "";
+      }
+      path = A._Uri__makePath(uri, pathStart, queryStart, _null, scheme, host != null);
+      query = queryStart < fragmentStart ? A._Uri__makeQuery(uri, queryStart + 1, fragmentStart, _null) : _null;
+      return A._Uri$_internal(scheme, userInfo, host, port, path, query, fragmentStart < end ? A._Uri__makeFragment(uri, fragmentStart + 1, end) : _null);
+    },
+    Uri_tryParse(uri) {
+      var t1, exception, start = 0, end = null;
+      try {
+        t1 = A.Uri_parse(uri, start, end);
+        return t1;
+      } catch (exception) {
+        if (A.unwrapException(exception) instanceof A.FormatException)
+          return null;
+        else
+          throw exception;
+      }
+    },
+    Uri_splitQueryString(query) {
+      var t1 = type$.String;
+      return B.JSArray_methods.fold$1$2(A._setArrayType(query.split("&"), type$.JSArray_String), A.LinkedHashMap_LinkedHashMap$_empty(t1, t1), new A.Uri_splitQueryString_closure(B.C_Utf8Codec), type$.Map_String_String);
+    },
+    Uri__ipv4FormatError(msg, source, position) {
+      throw A.wrapException(A.FormatException$("Illegal IPv4 address, " + msg, source, position));
+    },
+    Uri__parseIPv4Address(host, start, end, target, targetOffset) {
+      var t1, octetStart, cursor, octetIndex, octetValue, char, digit, octetIndex0, t2,
+        _s17_ = "invalid character";
+      for (t1 = host.length, octetStart = start, cursor = octetStart, octetIndex = 0, octetValue = 0;;) {
+        if (cursor >= end)
+          char = 0;
+        else {
+          if (!(cursor >= 0 && cursor < t1))
+            return A.ioore(host, cursor);
+          char = host.charCodeAt(cursor);
+        }
+        digit = char ^ 48;
+        if (digit <= 9) {
+          if (octetValue !== 0 || cursor === octetStart) {
+            octetValue = octetValue * 10 + digit;
+            if (octetValue <= 255) {
+              ++cursor;
+              continue;
+            }
+            A.Uri__ipv4FormatError("each part must be in the range 0..255", host, octetStart);
+          }
+          A.Uri__ipv4FormatError("parts must not have leading zeros", host, octetStart);
+        }
+        if (cursor === octetStart) {
+          if (cursor === end)
+            break;
+          A.Uri__ipv4FormatError(_s17_, host, cursor);
+        }
+        octetIndex0 = octetIndex + 1;
+        t2 = targetOffset + octetIndex;
+        target.$flags & 2 && A.throwUnsupportedOperation(target);
+        if (!(t2 < 16))
+          return A.ioore(target, t2);
+        target[t2] = octetValue;
+        if (char === 46) {
+          if (octetIndex0 < 4) {
+            ++cursor;
+            octetIndex = octetIndex0;
+            octetStart = cursor;
+            octetValue = 0;
+            continue;
+          }
+          break;
+        }
+        if (cursor === end) {
+          if (octetIndex0 === 4)
+            return;
+          break;
+        }
+        A.Uri__ipv4FormatError(_s17_, host, cursor);
+        octetIndex = octetIndex0;
+      }
+      A.Uri__ipv4FormatError("IPv4 address should contain exactly 4 parts", host, cursor);
+    },
+    Uri__validateIPvAddress(host, start, end) {
+      var error;
+      if (start === end)
+        throw A.wrapException(A.FormatException$("Empty IP address", host, start));
+      if (!(start >= 0 && start < host.length))
+        return A.ioore(host, start);
+      if (host.charCodeAt(start) === 118) {
+        error = A.Uri__validateIPvFutureAddress(host, start, end);
+        if (error != null)
+          throw A.wrapException(error);
+        return false;
+      }
+      A.Uri_parseIPv6Address(host, start, end);
+      return true;
+    },
+    Uri__validateIPvFutureAddress(host, start, end) {
+      var t1, cursor, cursor0, char, ucChar,
+        _s38_ = "Missing hex-digit in IPvFuture address",
+        _s128_ = string$.______;
+      ++start;
+      for (t1 = host.length, cursor = start;; cursor = cursor0) {
+        if (cursor < end) {
+          cursor0 = cursor + 1;
+          if (!(cursor >= 0 && cursor < t1))
+            return A.ioore(host, cursor);
+          char = host.charCodeAt(cursor);
+          if ((char ^ 48) <= 9)
+            continue;
+          ucChar = char | 32;
+          if (ucChar >= 97 && ucChar <= 102)
+            continue;
+          if (char === 46) {
+            if (cursor0 - 1 === start)
+              return new A.FormatException(_s38_, host, cursor0);
+            cursor = cursor0;
+            break;
+          }
+          return new A.FormatException("Unexpected character", host, cursor0 - 1);
+        }
+        if (cursor - 1 === start)
+          return new A.FormatException(_s38_, host, cursor);
+        return new A.FormatException("Missing '.' in IPvFuture address", host, cursor);
+      }
+      if (cursor === end)
+        return new A.FormatException("Missing address in IPvFuture address, host, cursor", null, null);
+      for (;;) {
+        if (!(cursor >= 0 && cursor < t1))
+          return A.ioore(host, cursor);
+        char = host.charCodeAt(cursor);
+        if (!(char < 128))
+          return A.ioore(_s128_, char);
+        if ((_s128_.charCodeAt(char) & 16) !== 0) {
+          ++cursor;
+          if (cursor < end)
+            continue;
+          return null;
+        }
+        return new A.FormatException("Invalid IPvFuture address character", host, cursor);
+      }
+    },
+    Uri_parseIPv6Address(host, start, end) {
+      var result, t1, wildcardAt, partCount, t2, cursor, partStart, hexValue, decValue, char, _0_0, decValue0, hexDigit, _1_0, t3, partCount0, partAfterWildcard, partsAfterWildcard, positionAfterWildcard, newPositionAfterWildcard,
+        _s39_ = "an address must contain at most 8 parts",
+        error = new A.Uri_parseIPv6Address_error(host);
+      if (end - start < 2)
+        error.call$2("address is too short", null);
+      result = new Uint8Array(16);
+      t1 = host.length;
+      if (!(start >= 0 && start < t1))
+        return A.ioore(host, start);
+      wildcardAt = -1;
+      partCount = 0;
+      if (host.charCodeAt(start) === 58) {
+        t2 = start + 1;
+        if (!(t2 < t1))
+          return A.ioore(host, t2);
+        if (host.charCodeAt(t2) === 58) {
+          cursor = start + 2;
+          partStart = cursor;
+          wildcardAt = 0;
+          partCount = 1;
+        } else {
+          error.call$2("invalid start colon", start);
+          cursor = start;
+          partStart = cursor;
+        }
+      } else {
+        cursor = start;
+        partStart = cursor;
+      }
+      for (hexValue = 0, decValue = true;;) {
+        if (cursor >= end)
+          char = 0;
+        else {
+          if (!(cursor < t1))
+            return A.ioore(host, cursor);
+          char = host.charCodeAt(cursor);
+        }
+        $label0$0: {
+          _0_0 = char ^ 48;
+          decValue0 = false;
+          if (_0_0 <= 9)
+            hexDigit = _0_0;
+          else {
+            _1_0 = char | 32;
+            if (_1_0 >= 97 && _1_0 <= 102)
+              hexDigit = _1_0 - 87;
+            else
+              break $label0$0;
+            decValue = decValue0;
+          }
+          if (cursor < partStart + 4) {
+            hexValue = hexValue * 16 + hexDigit;
+            ++cursor;
+            continue;
+          }
+          error.call$2("an IPv6 part can contain a maximum of 4 hex digits", partStart);
+        }
+        if (cursor > partStart) {
+          if (char === 46) {
+            if (decValue) {
+              if (partCount <= 6) {
+                A.Uri__parseIPv4Address(host, partStart, end, result, partCount * 2);
+                partCount += 2;
+                cursor = end;
+                break;
+              }
+              error.call$2(_s39_, partStart);
+            }
+            break;
+          }
+          t2 = partCount * 2;
+          t3 = B.JSInt_methods._shrOtherPositive$1(hexValue, 8);
+          if (!(t2 < 16))
+            return A.ioore(result, t2);
+          result[t2] = t3;
+          ++t2;
+          if (!(t2 < 16))
+            return A.ioore(result, t2);
+          result[t2] = hexValue & 255;
+          ++partCount;
+          if (char === 58) {
+            if (partCount < 8) {
+              ++cursor;
+              partStart = cursor;
+              hexValue = 0;
+              decValue = true;
+              continue;
+            }
+            error.call$2(_s39_, cursor);
+          }
+          break;
+        }
+        if (char === 58) {
+          if (wildcardAt < 0) {
+            partCount0 = partCount + 1;
+            ++cursor;
+            wildcardAt = partCount;
+            partCount = partCount0;
+            partStart = cursor;
+            continue;
+          }
+          error.call$2("only one wildcard `::` is allowed", cursor);
+        }
+        if (wildcardAt !== partCount - 1)
+          error.call$2("missing part", cursor);
+        break;
+      }
+      if (cursor < end)
+        error.call$2("invalid character", cursor);
+      if (partCount < 8) {
+        if (wildcardAt < 0)
+          error.call$2("an address without a wildcard must contain exactly 8 parts", end);
+        partAfterWildcard = wildcardAt + 1;
+        partsAfterWildcard = partCount - partAfterWildcard;
+        if (partsAfterWildcard > 0) {
+          positionAfterWildcard = partAfterWildcard * 2;
+          newPositionAfterWildcard = 16 - partsAfterWildcard * 2;
+          B.NativeUint8List_methods.setRange$4(result, newPositionAfterWildcard, 16, result, positionAfterWildcard);
+          B.NativeUint8List_methods.fillRange$3(result, positionAfterWildcard, newPositionAfterWildcard, 0);
+        }
+      }
+      return result;
+    },
+    _Uri$_internal(scheme, _userInfo, _host, _port, path, _query, _fragment) {
+      return new A._Uri(scheme, _userInfo, _host, _port, path, _query, _fragment);
+    },
+    _Uri__defaultPort(scheme) {
+      if (scheme === "http")
+        return 80;
+      if (scheme === "https")
+        return 443;
+      return 0;
+    },
+    _Uri__fail(uri, index, message) {
+      throw A.wrapException(A.FormatException$(message, uri, index));
+    },
+    _Uri__makePort(port, scheme) {
+      if (port != null && port === A._Uri__defaultPort(scheme))
+        return null;
+      return port;
+    },
+    _Uri__makeHost(host, start, end, strictIPv6) {
+      var t1, t2, t3, zoneID, index, zoneIDstart, isIPv6, hostChars, i;
+      if (start === end)
+        return "";
+      t1 = host.length;
+      if (!(start >= 0 && start < t1))
+        return A.ioore(host, start);
+      if (host.charCodeAt(start) === 91) {
+        t2 = end - 1;
+        if (!(t2 >= 0 && t2 < t1))
+          return A.ioore(host, t2);
+        if (host.charCodeAt(t2) !== 93)
+          A._Uri__fail(host, start, "Missing end `]` to match `[` in host");
+        t3 = start + 1;
+        if (!(t3 < t1))
+          return A.ioore(host, t3);
+        zoneID = "";
+        if (host.charCodeAt(t3) !== 118) {
+          index = A._Uri__checkZoneID(host, t3, t2);
+          if (index < t2) {
+            zoneIDstart = index + 1;
+            zoneID = A._Uri__normalizeZoneID(host, B.JSString_methods.startsWith$2(host, "25", zoneIDstart) ? index + 3 : zoneIDstart, t2, "%25");
+          }
+        } else
+          index = t2;
+        isIPv6 = A.Uri__validateIPvAddress(host, t3, index);
+        hostChars = B.JSString_methods.substring$2(host, t3, index);
+        return "[" + (isIPv6 ? hostChars.toLowerCase() : hostChars) + zoneID + "]";
+      }
+      for (i = start; i < end; ++i) {
+        if (!(i < t1))
+          return A.ioore(host, i);
+        if (host.charCodeAt(i) === 58) {
+          index = B.JSString_methods.indexOf$2(host, "%", start);
+          index = index >= start && index < end ? index : end;
+          if (index < end) {
+            zoneIDstart = index + 1;
+            zoneID = A._Uri__normalizeZoneID(host, B.JSString_methods.startsWith$2(host, "25", zoneIDstart) ? index + 3 : zoneIDstart, end, "%25");
+          } else
+            zoneID = "";
+          A.Uri_parseIPv6Address(host, start, index);
+          return "[" + B.JSString_methods.substring$2(host, start, index) + zoneID + "]";
+        }
+      }
+      return A._Uri__normalizeRegName(host, start, end);
+    },
+    _Uri__checkZoneID(host, start, end) {
+      var index = B.JSString_methods.indexOf$2(host, "%", start);
+      return index >= start && index < end ? index : end;
+    },
+    _Uri__normalizeZoneID(host, start, end, prefix) {
+      var t1, index, sectionStart, isNormalized, char, replacement, t2, t3, sourceLength, tail, slice,
+        buffer = prefix !== "" ? new A.StringBuffer(prefix) : null;
+      for (t1 = host.length, index = start, sectionStart = index, isNormalized = true; index < end;) {
+        if (!(index >= 0 && index < t1))
+          return A.ioore(host, index);
+        char = host.charCodeAt(index);
+        if (char === 37) {
+          replacement = A._Uri__normalizeEscape(host, index, true);
+          t2 = replacement == null;
+          if (t2 && isNormalized) {
+            index += 3;
+            continue;
+          }
+          if (buffer == null)
+            buffer = new A.StringBuffer("");
+          t3 = buffer._contents += B.JSString_methods.substring$2(host, sectionStart, index);
+          if (t2)
+            replacement = B.JSString_methods.substring$2(host, index, index + 3);
+          else if (replacement === "%")
+            A._Uri__fail(host, index, "ZoneID should not contain % anymore");
+          buffer._contents = t3 + replacement;
+          index += 3;
+          sectionStart = index;
+          isNormalized = true;
+        } else if (char < 127 && (string$.______.charCodeAt(char) & 1) !== 0) {
+          if (isNormalized && 65 <= char && 90 >= char) {
+            if (buffer == null)
+              buffer = new A.StringBuffer("");
+            if (sectionStart < index) {
+              buffer._contents += B.JSString_methods.substring$2(host, sectionStart, index);
+              sectionStart = index;
+            }
+            isNormalized = false;
+          }
+          ++index;
+        } else {
+          sourceLength = 1;
+          if ((char & 64512) === 55296 && index + 1 < end) {
+            t2 = index + 1;
+            if (!(t2 < t1))
+              return A.ioore(host, t2);
+            tail = host.charCodeAt(t2);
+            if ((tail & 64512) === 56320) {
+              char = 65536 + ((char & 1023) << 10) + (tail & 1023);
+              sourceLength = 2;
+            }
+          }
+          slice = B.JSString_methods.substring$2(host, sectionStart, index);
+          if (buffer == null) {
+            buffer = new A.StringBuffer("");
+            t2 = buffer;
+          } else
+            t2 = buffer;
+          t2._contents += slice;
+          t3 = A._Uri__escapeChar(char);
+          t2._contents += t3;
+          index += sourceLength;
+          sectionStart = index;
+        }
+      }
+      if (buffer == null)
+        return B.JSString_methods.substring$2(host, start, end);
+      if (sectionStart < end) {
+        slice = B.JSString_methods.substring$2(host, sectionStart, end);
+        buffer._contents += slice;
+      }
+      t1 = buffer._contents;
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    _Uri__normalizeRegName(host, start, end) {
+      var t1, index, sectionStart, buffer, isNormalized, char, replacement, t2, slice, t3, sourceLength, tail,
+        _s128_ = string$.______;
+      for (t1 = host.length, index = start, sectionStart = index, buffer = null, isNormalized = true; index < end;) {
+        if (!(index >= 0 && index < t1))
+          return A.ioore(host, index);
+        char = host.charCodeAt(index);
+        if (char === 37) {
+          replacement = A._Uri__normalizeEscape(host, index, true);
+          t2 = replacement == null;
+          if (t2 && isNormalized) {
+            index += 3;
+            continue;
+          }
+          if (buffer == null)
+            buffer = new A.StringBuffer("");
+          slice = B.JSString_methods.substring$2(host, sectionStart, index);
+          if (!isNormalized)
+            slice = slice.toLowerCase();
+          t3 = buffer._contents += slice;
+          sourceLength = 3;
+          if (t2)
+            replacement = B.JSString_methods.substring$2(host, index, index + 3);
+          else if (replacement === "%") {
+            replacement = "%25";
+            sourceLength = 1;
+          }
+          buffer._contents = t3 + replacement;
+          index += sourceLength;
+          sectionStart = index;
+          isNormalized = true;
+        } else if (char < 127 && (_s128_.charCodeAt(char) & 32) !== 0) {
+          if (isNormalized && 65 <= char && 90 >= char) {
+            if (buffer == null)
+              buffer = new A.StringBuffer("");
+            if (sectionStart < index) {
+              buffer._contents += B.JSString_methods.substring$2(host, sectionStart, index);
+              sectionStart = index;
+            }
+            isNormalized = false;
+          }
+          ++index;
+        } else if (char <= 93 && (_s128_.charCodeAt(char) & 1024) !== 0)
+          A._Uri__fail(host, index, "Invalid character");
+        else {
+          sourceLength = 1;
+          if ((char & 64512) === 55296 && index + 1 < end) {
+            t2 = index + 1;
+            if (!(t2 < t1))
+              return A.ioore(host, t2);
+            tail = host.charCodeAt(t2);
+            if ((tail & 64512) === 56320) {
+              char = 65536 + ((char & 1023) << 10) + (tail & 1023);
+              sourceLength = 2;
+            }
+          }
+          slice = B.JSString_methods.substring$2(host, sectionStart, index);
+          if (!isNormalized)
+            slice = slice.toLowerCase();
+          if (buffer == null) {
+            buffer = new A.StringBuffer("");
+            t2 = buffer;
+          } else
+            t2 = buffer;
+          t2._contents += slice;
+          t3 = A._Uri__escapeChar(char);
+          t2._contents += t3;
+          index += sourceLength;
+          sectionStart = index;
+        }
+      }
+      if (buffer == null)
+        return B.JSString_methods.substring$2(host, start, end);
+      if (sectionStart < end) {
+        slice = B.JSString_methods.substring$2(host, sectionStart, end);
+        if (!isNormalized)
+          slice = slice.toLowerCase();
+        buffer._contents += slice;
+      }
+      t1 = buffer._contents;
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    _Uri__makeScheme(scheme, start, end) {
+      var t1, i, containsUpperCase, codeUnit;
+      if (start === end)
+        return "";
+      t1 = scheme.length;
+      if (!(start < t1))
+        return A.ioore(scheme, start);
+      if (!A._Uri__isAlphabeticCharacter(scheme.charCodeAt(start)))
+        A._Uri__fail(scheme, start, "Scheme not starting with alphabetic character");
+      for (i = start, containsUpperCase = false; i < end; ++i) {
+        if (!(i < t1))
+          return A.ioore(scheme, i);
+        codeUnit = scheme.charCodeAt(i);
+        if (!(codeUnit < 128 && (string$.______.charCodeAt(codeUnit) & 8) !== 0))
+          A._Uri__fail(scheme, i, "Illegal scheme character");
+        if (65 <= codeUnit && codeUnit <= 90)
+          containsUpperCase = true;
+      }
+      scheme = B.JSString_methods.substring$2(scheme, start, end);
+      return A._Uri__canonicalizeScheme(containsUpperCase ? scheme.toLowerCase() : scheme);
+    },
+    _Uri__canonicalizeScheme(scheme) {
+      if (scheme === "http")
+        return "http";
+      if (scheme === "file")
+        return "file";
+      if (scheme === "https")
+        return "https";
+      if (scheme === "package")
+        return "package";
+      return scheme;
+    },
+    _Uri__makeUserInfo(userInfo, start, end) {
+      return A._Uri__normalizeOrSubstring(userInfo, start, end, 16, false, false);
+    },
+    _Uri__makePath(path, start, end, pathSegments, scheme, hasAuthority) {
+      var result,
+        isFile = scheme === "file",
+        ensureLeadingSlash = isFile || hasAuthority;
+      if (path == null)
+        return isFile ? "/" : "";
+      else
+        result = A._Uri__normalizeOrSubstring(path, start, end, 128, true, true);
+      if (result.length === 0) {
+        if (isFile)
+          return "/";
+      } else if (ensureLeadingSlash && !B.JSString_methods.startsWith$1(result, "/"))
+        result = "/" + result;
+      return A._Uri__normalizePath(result, scheme, hasAuthority);
+    },
+    _Uri__normalizePath(path, scheme, hasAuthority) {
+      var t1 = scheme.length === 0;
+      if (t1 && !hasAuthority && !B.JSString_methods.startsWith$1(path, "/") && !B.JSString_methods.startsWith$1(path, "\\"))
+        return A._Uri__normalizeRelativePath(path, !t1 || hasAuthority);
+      return A._Uri__removeDotSegments(path);
+    },
+    _Uri__makeQuery(query, start, end, queryParameters) {
+      if (query != null) {
+        if (queryParameters != null)
+          throw A.wrapException(A.ArgumentError$("Both query and queryParameters specified", null));
+        return A._Uri__normalizeOrSubstring(query, start, end, 256, true, false);
+      }
+      if (queryParameters == null)
+        return null;
+      return A._Uri__makeQueryFromParameters(queryParameters);
+    },
+    _Uri__makeQueryFromParametersDefault(queryParameters) {
+      var t1 = {},
+        result = new A.StringBuffer("");
+      t1.separator = "";
+      queryParameters.forEach$1(0, new A._Uri__makeQueryFromParametersDefault_closure(new A._Uri__makeQueryFromParametersDefault_writeParameter(t1, result)));
+      t1 = result._contents;
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    _Uri__makeFragment(fragment, start, end) {
+      return A._Uri__normalizeOrSubstring(fragment, start, end, 256, true, false);
+    },
+    _Uri__normalizeEscape(source, index, lowerCase) {
+      var t3, firstDigit, secondDigit, firstDigitValue, secondDigitValue, value,
+        _s128_ = string$.______,
+        t1 = index + 2,
+        t2 = source.length;
+      if (t1 >= t2)
+        return "%";
+      t3 = index + 1;
+      if (!(t3 >= 0 && t3 < t2))
+        return A.ioore(source, t3);
+      firstDigit = source.charCodeAt(t3);
+      if (!(t1 >= 0))
+        return A.ioore(source, t1);
+      secondDigit = source.charCodeAt(t1);
+      firstDigitValue = A.hexDigitValue(firstDigit);
+      secondDigitValue = A.hexDigitValue(secondDigit);
+      if (firstDigitValue < 0 || secondDigitValue < 0)
+        return "%";
+      value = firstDigitValue * 16 + secondDigitValue;
+      if (value < 127) {
+        if (!(value >= 0))
+          return A.ioore(_s128_, value);
+        t1 = (_s128_.charCodeAt(value) & 1) !== 0;
+      } else
+        t1 = false;
+      if (t1)
+        return A.Primitives_stringFromCharCode(lowerCase && 65 <= value && 90 >= value ? (value | 32) >>> 0 : value);
+      if (firstDigit >= 97 || secondDigit >= 97)
+        return B.JSString_methods.substring$2(source, index, index + 3).toUpperCase();
+      return null;
+    },
+    _Uri__escapeChar(char) {
+      var codeUnits, t1, flag, encodedBytes, index, byte, t2, t3,
+        _s16_ = "0123456789ABCDEF";
+      if (char <= 127) {
+        codeUnits = new Uint8Array(3);
+        codeUnits[0] = 37;
+        t1 = char >>> 4;
+        if (!(t1 < 16))
+          return A.ioore(_s16_, t1);
+        codeUnits[1] = _s16_.charCodeAt(t1);
+        codeUnits[2] = _s16_.charCodeAt(char & 15);
+      } else {
+        if (char > 2047)
+          if (char > 65535) {
+            flag = 240;
+            encodedBytes = 4;
+          } else {
+            flag = 224;
+            encodedBytes = 3;
+          }
+        else {
+          flag = 192;
+          encodedBytes = 2;
+        }
+        t1 = 3 * encodedBytes;
+        codeUnits = new Uint8Array(t1);
+        for (index = 0; --encodedBytes, encodedBytes >= 0; flag = 128) {
+          byte = B.JSInt_methods._shrReceiverPositive$1(char, 6 * encodedBytes) & 63 | flag;
+          if (!(index < t1))
+            return A.ioore(codeUnits, index);
+          codeUnits[index] = 37;
+          t2 = index + 1;
+          t3 = byte >>> 4;
+          if (!(t3 < 16))
+            return A.ioore(_s16_, t3);
+          if (!(t2 < t1))
+            return A.ioore(codeUnits, t2);
+          codeUnits[t2] = _s16_.charCodeAt(t3);
+          t3 = index + 2;
+          if (!(t3 < t1))
+            return A.ioore(codeUnits, t3);
+          codeUnits[t3] = _s16_.charCodeAt(byte & 15);
+          index += 3;
+        }
+      }
+      return A.String_String$fromCharCodes(codeUnits, 0, null);
+    },
+    _Uri__normalizeOrSubstring(component, start, end, charMask, escapeDelimiters, replaceBackslash) {
+      var t1 = A._Uri__normalize(component, start, end, charMask, escapeDelimiters, replaceBackslash);
+      return t1 == null ? B.JSString_methods.substring$2(component, start, end) : t1;
+    },
+    _Uri__normalize(component, start, end, charMask, escapeDelimiters, replaceBackslash) {
+      var t1, t2, index, sectionStart, buffer, char, sourceLength, replacement, t3, tail, _null = null,
+        _s128_ = string$.______;
+      for (t1 = !escapeDelimiters, t2 = component.length, index = start, sectionStart = index, buffer = _null; index < end;) {
+        if (!(index >= 0 && index < t2))
+          return A.ioore(component, index);
+        char = component.charCodeAt(index);
+        if (char < 127 && (_s128_.charCodeAt(char) & charMask) !== 0)
+          ++index;
+        else {
+          sourceLength = 1;
+          if (char === 37) {
+            replacement = A._Uri__normalizeEscape(component, index, false);
+            if (replacement == null) {
+              index += 3;
+              continue;
+            }
+            if ("%" === replacement)
+              replacement = "%25";
+            else
+              sourceLength = 3;
+          } else if (char === 92 && replaceBackslash)
+            replacement = "/";
+          else if (t1 && char <= 93 && (_s128_.charCodeAt(char) & 1024) !== 0) {
+            A._Uri__fail(component, index, "Invalid character");
+            sourceLength = _null;
+            replacement = sourceLength;
+          } else {
+            if ((char & 64512) === 55296) {
+              t3 = index + 1;
+              if (t3 < end) {
+                if (!(t3 < t2))
+                  return A.ioore(component, t3);
+                tail = component.charCodeAt(t3);
+                if ((tail & 64512) === 56320) {
+                  char = 65536 + ((char & 1023) << 10) + (tail & 1023);
+                  sourceLength = 2;
+                }
+              }
+            }
+            replacement = A._Uri__escapeChar(char);
+          }
+          if (buffer == null) {
+            buffer = new A.StringBuffer("");
+            t3 = buffer;
+          } else
+            t3 = buffer;
+          t3._contents = (t3._contents += B.JSString_methods.substring$2(component, sectionStart, index)) + replacement;
+          if (typeof sourceLength !== "number")
+            return A.iae(sourceLength);
+          index += sourceLength;
+          sectionStart = index;
+        }
+      }
+      if (buffer == null)
+        return _null;
+      if (sectionStart < end) {
+        t1 = B.JSString_methods.substring$2(component, sectionStart, end);
+        buffer._contents += t1;
+      }
+      t1 = buffer._contents;
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    _Uri__mayContainDotSegments(path) {
+      if (B.JSString_methods.startsWith$1(path, "."))
+        return true;
+      return B.JSString_methods.indexOf$1(path, "/.") !== -1;
+    },
+    _Uri__removeDotSegments(path) {
+      var output, t1, t2, appendSlash, _i, segment, t3;
+      if (!A._Uri__mayContainDotSegments(path))
+        return path;
+      output = A._setArrayType([], type$.JSArray_String);
+      for (t1 = path.split("/"), t2 = t1.length, appendSlash = false, _i = 0; _i < t2; ++_i) {
+        segment = t1[_i];
+        if (segment === "..") {
+          t3 = output.length;
+          if (t3 !== 0) {
+            if (0 >= t3)
+              return A.ioore(output, -1);
+            output.pop();
+            if (output.length === 0)
+              B.JSArray_methods.add$1(output, "");
+          }
+          appendSlash = true;
+        } else {
+          appendSlash = "." === segment;
+          if (!appendSlash)
+            B.JSArray_methods.add$1(output, segment);
+        }
+      }
+      if (appendSlash)
+        B.JSArray_methods.add$1(output, "");
+      return B.JSArray_methods.join$1(output, "/");
+    },
+    _Uri__normalizeRelativePath(path, allowScheme) {
+      var output, t1, t2, appendSlash, _i, segment;
+      if (!A._Uri__mayContainDotSegments(path))
+        return !allowScheme ? A._Uri__escapeScheme(path) : path;
+      output = A._setArrayType([], type$.JSArray_String);
+      for (t1 = path.split("/"), t2 = t1.length, appendSlash = false, _i = 0; _i < t2; ++_i) {
+        segment = t1[_i];
+        if (".." === segment) {
+          if (output.length !== 0 && B.JSArray_methods.get$last(output) !== "..") {
+            if (0 >= output.length)
+              return A.ioore(output, -1);
+            output.pop();
+          } else
+            B.JSArray_methods.add$1(output, "..");
+          appendSlash = true;
+        } else {
+          appendSlash = "." === segment;
+          if (!appendSlash)
+            B.JSArray_methods.add$1(output, segment.length === 0 && output.length === 0 ? "./" : segment);
+        }
+      }
+      if (output.length === 0)
+        return "./";
+      if (appendSlash)
+        B.JSArray_methods.add$1(output, "");
+      if (!allowScheme) {
+        if (0 >= output.length)
+          return A.ioore(output, 0);
+        B.JSArray_methods.$indexSet(output, 0, A._Uri__escapeScheme(output[0]));
+      }
+      return B.JSArray_methods.join$1(output, "/");
+    },
+    _Uri__escapeScheme(path) {
+      var i, char, t2,
+        _s128_ = string$.______,
+        t1 = path.length;
+      if (t1 >= 2 && A._Uri__isAlphabeticCharacter(path.charCodeAt(0)))
+        for (i = 1; i < t1; ++i) {
+          char = path.charCodeAt(i);
+          if (char === 58)
+            return B.JSString_methods.substring$2(path, 0, i) + "%3A" + B.JSString_methods.substring$1(path, i + 1);
+          if (char <= 127) {
+            if (!(char < 128))
+              return A.ioore(_s128_, char);
+            t2 = (_s128_.charCodeAt(char) & 8) === 0;
+          } else
+            t2 = true;
+          if (t2)
+            break;
+        }
+      return path;
+    },
+    _Uri__hexCharPairToByte(s, pos) {
+      var t1, byte, i, t2, charCode;
+      for (t1 = s.length, byte = 0, i = 0; i < 2; ++i) {
+        t2 = pos + i;
+        if (!(t2 < t1))
+          return A.ioore(s, t2);
+        charCode = s.charCodeAt(t2);
+        if (48 <= charCode && charCode <= 57)
+          byte = byte * 16 + charCode - 48;
+        else {
+          charCode |= 32;
+          if (97 <= charCode && charCode <= 102)
+            byte = byte * 16 + charCode - 87;
+          else
+            throw A.wrapException(A.ArgumentError$("Invalid URL encoding", null));
+        }
+      }
+      return byte;
+    },
+    _Uri__uriDecode(text, start, end, encoding, plusToSpace) {
+      var simple, codeUnit, t2, bytes,
+        t1 = text.length,
+        i = start;
+      for (;;) {
+        if (!(i < end)) {
+          simple = true;
+          break;
+        }
+        if (!(i < t1))
+          return A.ioore(text, i);
+        codeUnit = text.charCodeAt(i);
+        t2 = true;
+        if (codeUnit <= 127)
+          if (codeUnit !== 37)
+            t2 = codeUnit === 43;
+        if (t2) {
+          simple = false;
+          break;
+        }
+        ++i;
+      }
+      if (simple)
+        if (B.C_Utf8Codec === encoding)
+          return B.JSString_methods.substring$2(text, start, end);
+        else
+          bytes = new A.CodeUnits(B.JSString_methods.substring$2(text, start, end));
+      else {
+        bytes = A._setArrayType([], type$.JSArray_int);
+        for (i = start; i < end; ++i) {
+          if (!(i < t1))
+            return A.ioore(text, i);
+          codeUnit = text.charCodeAt(i);
+          if (codeUnit > 127)
+            throw A.wrapException(A.ArgumentError$("Illegal percent encoding in URI", null));
+          if (codeUnit === 37) {
+            if (i + 3 > t1)
+              throw A.wrapException(A.ArgumentError$("Truncated URI", null));
+            B.JSArray_methods.add$1(bytes, A._Uri__hexCharPairToByte(text, i + 1));
+            i += 2;
+          } else if (codeUnit === 43)
+            B.JSArray_methods.add$1(bytes, 32);
+          else
+            B.JSArray_methods.add$1(bytes, codeUnit);
+        }
+      }
+      type$.List_int._as(bytes);
+      return B.Utf8Decoder_false.convert$1(bytes);
+    },
+    _Uri__isAlphabeticCharacter(codeUnit) {
+      var lowerCase = codeUnit | 32;
+      return 97 <= lowerCase && lowerCase <= 122;
+    },
+    UriData__parse(text, start, sourceUri) {
+      var t1, i, slashIndex, char, equalsIndex, lastSeparator, t2, data,
+        _s17_ = "Invalid MIME type",
+        indices = A._setArrayType([start - 1], type$.JSArray_int);
+      for (t1 = text.length, i = start, slashIndex = -1, char = null; i < t1; ++i) {
+        char = text.charCodeAt(i);
+        if (char === 44 || char === 59)
+          break;
+        if (char === 47) {
+          if (slashIndex < 0) {
+            slashIndex = i;
+            continue;
+          }
+          throw A.wrapException(A.FormatException$(_s17_, text, i));
+        }
+      }
+      if (slashIndex < 0 && i > start)
+        throw A.wrapException(A.FormatException$(_s17_, text, i));
+      while (char !== 44) {
+        B.JSArray_methods.add$1(indices, i);
+        ++i;
+        for (equalsIndex = -1; i < t1; ++i) {
+          if (!(i >= 0))
+            return A.ioore(text, i);
+          char = text.charCodeAt(i);
+          if (char === 61) {
+            if (equalsIndex < 0)
+              equalsIndex = i;
+          } else if (char === 59 || char === 44)
+            break;
+        }
+        if (equalsIndex >= 0)
+          B.JSArray_methods.add$1(indices, equalsIndex);
+        else {
+          lastSeparator = B.JSArray_methods.get$last(indices);
+          if (char !== 44 || i !== lastSeparator + 7 || !B.JSString_methods.startsWith$2(text, "base64", lastSeparator + 1))
+            throw A.wrapException(A.FormatException$("Expecting '='", text, i));
+          break;
+        }
+      }
+      B.JSArray_methods.add$1(indices, i);
+      t2 = i + 1;
+      if ((indices.length & 1) === 1)
+        text = B.C_Base64Codec.normalize$3(text, t2, t1);
+      else {
+        data = A._Uri__normalize(text, t2, t1, 256, true, false);
+        if (data != null)
+          text = B.JSString_methods.replaceRange$3(text, t2, t1, data);
+      }
+      return new A.UriData(text, indices, sourceUri);
+    },
+    _scan(uri, start, end, state, indices) {
+      var t1, i, char, t2, transition,
+        _s2112_ = '\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xe1\xe1\xe1\x01\xe1\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xe1\xe3\xe1\xe1\x01\xe1\x01\xe1\xcd\x01\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x0e\x03\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01"\x01\xe1\x01\xe1\xac\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xe1\xe1\xe1\x01\xe1\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xe1\xea\xe1\xe1\x01\xe1\x01\xe1\xcd\x01\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x01\n\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01"\x01\xe1\x01\xe1\xac\xeb\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\xeb\xeb\xeb\x8b\xeb\xeb\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\xeb\x83\xeb\xeb\x8b\xeb\x8b\xeb\xcd\x8b\xeb\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x92\x83\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\x8b\xeb\x8b\xeb\x8b\xeb\xac\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xeb\xeb\v\xeb\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xebD\xeb\xeb\v\xeb\v\xeb\xcd\v\xeb\v\v\v\v\v\v\v\v\x12D\v\v\v\v\v\v\v\v\v\v\xeb\v\xeb\v\xeb\xac\xe5\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xe5\xe5\xe5\x05\xe5D\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe8\x8a\xe5\xe5\x05\xe5\x05\xe5\xcd\x05\xe5\x05\x05\x05\x05\x05\x05\x05\x05\x05\x8a\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05f\x05\xe5\x05\xe5\xac\xe5\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xe5\xe5\xe5\x05\xe5D\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\xe5\x8a\xe5\xe5\x05\xe5\x05\xe5\xcd\x05\xe5\x05\x05\x05\x05\x05\x05\x05\x05\x05\x8a\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05f\x05\xe5\x05\xe5\xac\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7D\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\x8a\xe7\xe7\xe7\xe7\xe7\xe7\xcd\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\x8a\xe7\x07\x07\x07\x07\x07\x07\x07\x07\x07\xe7\xe7\xe7\xe7\xe7\xac\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7D\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\x8a\xe7\xe7\xe7\xe7\xe7\xe7\xcd\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\xe7\x8a\x07\x07\x07\x07\x07\x07\x07\x07\x07\x07\xe7\xe7\xe7\xe7\xe7\xac\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\x05\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xeb\xeb\v\xeb\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xea\xeb\xeb\v\xeb\v\xeb\xcd\v\xeb\v\v\v\v\v\v\v\v\x10\xea\v\v\v\v\v\v\v\v\v\v\xeb\v\xeb\v\xeb\xac\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xeb\xeb\v\xeb\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xea\xeb\xeb\v\xeb\v\xeb\xcd\v\xeb\v\v\v\v\v\v\v\v\x12\n\v\v\v\v\v\v\v\v\v\v\xeb\v\xeb\v\xeb\xac\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xeb\xeb\v\xeb\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xea\xeb\xeb\v\xeb\v\xeb\xcd\v\xeb\v\v\v\v\v\v\v\v\v\n\v\v\v\v\v\v\v\v\v\v\xeb\v\xeb\v\xeb\xac\xec\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\xec\xec\xec\f\xec\xec\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\xec\xec\xec\xec\f\xec\f\xec\xcd\f\xec\f\f\f\f\f\f\f\f\f\xec\f\f\f\f\f\f\f\f\f\f\xec\f\xec\f\xec\f\xed\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\xed\xed\xed\r\xed\xed\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\xed\xed\xed\xed\r\xed\r\xed\xed\r\xed\r\r\r\r\r\r\r\r\r\xed\r\r\r\r\r\r\r\r\r\r\xed\r\xed\r\xed\r\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xe1\xe1\xe1\x01\xe1\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xe1\xea\xe1\xe1\x01\xe1\x01\xe1\xcd\x01\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x0f\xea\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01"\x01\xe1\x01\xe1\xac\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xe1\xe1\xe1\x01\xe1\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xe1\xe9\xe1\xe1\x01\xe1\x01\xe1\xcd\x01\xe1\x01\x01\x01\x01\x01\x01\x01\x01\x01\t\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01"\x01\xe1\x01\xe1\xac\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xeb\xeb\v\xeb\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xea\xeb\xeb\v\xeb\v\xeb\xcd\v\xeb\v\v\v\v\v\v\v\v\x11\xea\v\v\v\v\v\v\v\v\v\v\xeb\v\xeb\v\xeb\xac\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xeb\xeb\v\xeb\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xe9\xeb\xeb\v\xeb\v\xeb\xcd\v\xeb\v\v\v\v\v\v\v\v\v\t\v\v\v\v\v\v\v\v\v\v\xeb\v\xeb\v\xeb\xac\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xeb\xeb\v\xeb\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xea\xeb\xeb\v\xeb\v\xeb\xcd\v\xeb\v\v\v\v\v\v\v\v\x13\xea\v\v\v\v\v\v\v\v\v\v\xeb\v\xeb\v\xeb\xac\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xeb\xeb\v\xeb\xeb\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\xeb\xea\xeb\xeb\v\xeb\v\xeb\xcd\v\xeb\v\v\v\v\v\v\v\v\v\xea\v\v\v\v\v\v\v\v\v\v\xeb\v\xeb\v\xeb\xac\xf5\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\xf5\x15\xf5\x15\x15\xf5\x15\x15\x15\x15\x15\x15\x15\x15\x15\x15\xf5\xf5\xf5\xf5\xf5\xf5';
+      for (t1 = uri.length, i = start; i < end; ++i) {
+        if (!(i < t1))
+          return A.ioore(uri, i);
+        char = uri.charCodeAt(i) ^ 96;
+        if (char > 95)
+          char = 31;
+        t2 = state * 96 + char;
+        if (!(t2 < 2112))
+          return A.ioore(_s2112_, t2);
+        transition = _s2112_.charCodeAt(t2);
+        state = transition & 31;
+        B.JSArray_methods.$indexSet(indices, transition >>> 5, i);
+      }
+      return state;
+    },
+    _Uri__makeQueryFromParameters_closure: function _Uri__makeQueryFromParameters_closure(t0) {
+      this.params = t0;
+    },
+    DateTime: function DateTime(t0, t1, t2) {
+      this._core$_value = t0;
+      this._microsecond = t1;
+      this.isUtc = t2;
+    },
+    Duration: function Duration(t0) {
+      this._duration = t0;
     },
     _Enum: function _Enum() {
     },
@@ -4081,9 +5842,10 @@
     _Exception: function _Exception(t0) {
       this.message = t0;
     },
-    FormatException: function FormatException(t0, t1) {
+    FormatException: function FormatException(t0, t1, t2) {
       this.message = t0;
       this.source = t1;
+      this.offset = t2;
     },
     Iterable: function Iterable() {
     },
@@ -4098,8 +5860,253 @@
     },
     _StringStackTrace: function _StringStackTrace() {
     },
+    Stopwatch: function Stopwatch() {
+      this._stop = this._core$_start = 0;
+    },
     StringBuffer: function StringBuffer(t0) {
       this._contents = t0;
+    },
+    Uri_splitQueryString_closure: function Uri_splitQueryString_closure(t0) {
+      this.encoding = t0;
+    },
+    Uri_parseIPv6Address_error: function Uri_parseIPv6Address_error(t0) {
+      this.host = t0;
+    },
+    _Uri: function _Uri(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.scheme = t0;
+      _._userInfo = t1;
+      _._host = t2;
+      _._port = t3;
+      _.path = t4;
+      _._query = t5;
+      _._fragment = t6;
+      _.___Uri_queryParameters_FI = _.___Uri_hashCode_FI = _.___Uri__text_FI = $;
+    },
+    _Uri__makeQueryFromParametersDefault_writeParameter: function _Uri__makeQueryFromParametersDefault_writeParameter(t0, t1) {
+      this._box_0 = t0;
+      this.result = t1;
+    },
+    _Uri__makeQueryFromParametersDefault_closure: function _Uri__makeQueryFromParametersDefault_closure(t0) {
+      this.writeParameter = t0;
+    },
+    UriData: function UriData(t0, t1, t2) {
+      this._core$_text = t0;
+      this._separatorIndices = t1;
+      this._uriCache = t2;
+    },
+    _SimpleUri: function _SimpleUri(t0, t1, t2, t3, t4, t5, t6, t7) {
+      var _ = this;
+      _._uri = t0;
+      _._schemeEnd = t1;
+      _._hostStart = t2;
+      _._portStart = t3;
+      _._pathStart = t4;
+      _._queryStart = t5;
+      _._fragmentStart = t6;
+      _._schemeCache = t7;
+      _._hashCodeCache = null;
+    },
+    _DataUri: function _DataUri(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.scheme = t0;
+      _._userInfo = t1;
+      _._host = t2;
+      _._port = t3;
+      _.path = t4;
+      _._query = t5;
+      _._fragment = t6;
+      _.___Uri_queryParameters_FI = _.___Uri_hashCode_FI = _.___Uri__text_FI = $;
+    },
+    NullRejectionException: function NullRejectionException(t0) {
+      this.isUndefined = t0;
+    },
+    _functionToJS1(f) {
+      var result;
+      if (typeof f == "function")
+        throw A.wrapException(A.ArgumentError$("Attempting to rewrap a JS function.", null));
+      result = function(_call, f) {
+        return function(arg1) {
+          return _call(f, arg1, arguments.length);
+        };
+      }(A._callDartFunctionFast1, f);
+      result[$.$get$DART_CLOSURE_PROPERTY_NAME()] = f;
+      return result;
+    },
+    _callDartFunctionFast1(callback, arg1, $length) {
+      type$.Function._as(callback);
+      if (A._asInt($length) >= 1)
+        return callback.call$1(arg1);
+      return callback.call$0();
+    },
+    promiseToFuture(jsPromise, $T) {
+      var t1 = new A._Future($.Zone__current, $T._eval$1("_Future<0>")),
+        completer = new A._AsyncCompleter(t1, $T._eval$1("_AsyncCompleter<0>"));
+      jsPromise.then(A.convertDartClosureToJS(new A.promiseToFuture_closure(completer, $T), 1), A.convertDartClosureToJS(new A.promiseToFuture_closure0(completer), 1));
+      return t1;
+    },
+    _noDartifyRequired(o) {
+      return o == null || typeof o === "boolean" || typeof o === "number" || typeof o === "string" || o instanceof Int8Array || o instanceof Uint8Array || o instanceof Uint8ClampedArray || o instanceof Int16Array || o instanceof Uint16Array || o instanceof Int32Array || o instanceof Uint32Array || o instanceof Float32Array || o instanceof Float64Array || o instanceof ArrayBuffer || o instanceof DataView;
+    },
+    dartify(o) {
+      if (A._noDartifyRequired(o))
+        return o;
+      return new A.dartify_convert(new A._IdentityHashMap(type$._IdentityHashMap_of_nullable_Object_and_nullable_Object)).call$1(o);
+    },
+    promiseToFuture_closure: function promiseToFuture_closure(t0, t1) {
+      this.completer = t0;
+      this.T = t1;
+    },
+    promiseToFuture_closure0: function promiseToFuture_closure0(t0) {
+      this.completer = t0;
+    },
+    dartify_convert: function dartify_convert(t0) {
+      this._convertedObjects = t0;
+    },
+    WebSocketConnectionState: function WebSocketConnectionState(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    FlintError$(message, data, kind, method, originalException, statusCode, timestamp, url) {
+      var t1 = kind == null ? A.FlintError__inferKind(message, statusCode, originalException) : kind,
+        t2 = Date.now();
+      return new A.FlintError(message, statusCode, data, url, method, t1, new A.DateTime(t2, 0, false));
+    },
+    FlintError_FlintError$fromException(exception, method, url) {
+      var _null = null;
+      if (exception instanceof A.FlintError)
+        return exception;
+      return A.FlintError$(J.toString$0$(exception), _null, _null, method, exception, _null, _null, url);
+    },
+    FlintError__inferKind(message, statusCode, originalException) {
+      var lower = message.toLowerCase();
+      if (B.JSString_methods.contains$1(lower, "cancel"))
+        return B.FlintErrorKind_2;
+      if (statusCode === 408 || B.JSString_methods.contains$1(lower, "timeout"))
+        return B.FlintErrorKind_1;
+      if (statusCode != null)
+        return B.FlintErrorKind_4;
+      if (originalException instanceof A.FormatException)
+        return B.FlintErrorKind_5;
+      if (B.JSString_methods.contains$1(lower, "network"))
+        return B.FlintErrorKind_3;
+      return B.FlintErrorKind_0;
+    },
+    FlintResponse$(data, duration, headers, method, statusCode, statusConfig, type, url, $T) {
+      var t1 = B.Set_m93Pc.contains$1(0, statusCode);
+      B.Set_m93Pc.contains$1(0, statusCode);
+      if (!B.Set_m93Pc.contains$1(0, statusCode))
+        A.FlintError$("HTTP " + statusCode, data, B.FlintErrorKind_4, method, null, statusCode, null, url);
+      Date.now();
+      return new A.FlintResponse(statusCode, data, type, headers, t1, statusConfig, $T._eval$1("FlintResponse<0>"));
+    },
+    FlintErrorKind: function FlintErrorKind(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    FlintResponseType: function FlintResponseType(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    StatusCodeConfig: function StatusCodeConfig() {
+    },
+    FlintError: function FlintError(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.message = t0;
+      _.statusCode = t1;
+      _.data = t2;
+      _.url = t3;
+      _.method = t4;
+      _.kind = t5;
+      _.timestamp = t6;
+    },
+    FlintResponse: function FlintResponse(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.statusCode = t0;
+      _.data = t1;
+      _.type = t2;
+      _.headers = t3;
+      _.success = t4;
+      _.statusConfig = t5;
+      _.$ti = t6;
+    },
+    FlintClient: function FlintClient(t0, t1, t2, t3, t4, t5, t6, t7, t8) {
+      var _ = this;
+      _.baseUrl = t0;
+      _.headers = t1;
+      _.defaultQueryParameters = t2;
+      _.timeout = t3;
+      _.onError = t4;
+      _.throwIfError = t5;
+      _.onDone = t6;
+      _.debug = t7;
+      _.statusCodeConfig = t8;
+    },
+    FlintClient__send_closure: function FlintClient__send_closure(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.$this = t0;
+      _.xhr = t1;
+      _.parser = t2;
+      _.url = t3;
+      _.method = t4;
+      _.completer = t5;
+      _.T = t6;
+    },
+    FlintClient__send_closure0: function FlintClient__send_closure0(t0, t1, t2) {
+      this.completer = t0;
+      this.url = t1;
+      this.method = t2;
+    },
+    FlintClient__send_closure1: function FlintClient__send_closure1(t0, t1, t2, t3) {
+      var _ = this;
+      _.xhr = t0;
+      _.timeout = t1;
+      _.url = t2;
+      _.method = t3;
+    },
+    FlintClient__body_closure: function FlintClient__body_closure() {
+    },
+    FlintWebSocketClient: function FlintWebSocketClient(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9) {
+      var _ = this;
+      _.url = t0;
+      _.params = t1;
+      _.debug = t2;
+      _.sendTokenAsQuery = t3;
+      _.queryTokenKey = t4;
+      _._socket = null;
+      _._token = t5;
+      _._tokenProvider = t6;
+      _._eventHandlers = t7;
+      _._messageQueue = t8;
+      _._manuallyClosed = _._reconnecting = false;
+      _._reconnectAttempts = 0;
+      _._lastPong = _._heartbeatTimer = null;
+      _._flint_client_web$_state = t9;
+    },
+    FlintWebSocketClient_connect_closure: function FlintWebSocketClient_connect_closure(t0) {
+      this.$this = t0;
+    },
+    FlintWebSocketClient_connect_closure0: function FlintWebSocketClient_connect_closure0(t0) {
+      this.$this = t0;
+    },
+    FlintWebSocketClient_connect_closure1: function FlintWebSocketClient_connect_closure1(t0) {
+      this.$this = t0;
+    },
+    FlintWebSocketClient_connect_closure2: function FlintWebSocketClient_connect_closure2(t0) {
+      this.$this = t0;
+    },
+    FlintWebSocketClient_on_closure: function FlintWebSocketClient_on_closure() {
+    },
+    FlintWebSocketClient__handleDisconnect_closure: function FlintWebSocketClient__handleDisconnect_closure(t0) {
+      this.$this = t0;
+    },
+    FlintWebSocketClient__startHeartbeat_closure: function FlintWebSocketClient__startHeartbeat_closure(t0) {
+      this.$this = t0;
+    },
+    _ParsedResponse: function _ParsedResponse(t0, t1, t2) {
+      this.data = t0;
+      this.type = t1;
+      this.$ti = t2;
     },
     ApiSidebar: function ApiSidebar(t0, t1) {
       this.active = t0;
@@ -4126,9 +6133,160 @@
       this.isOpen = t1;
       this.groupKey = t2;
     },
-    UiDocsPage: function UiDocsPage(t0) {
-      this.props = t0;
-      this._component$_scheduleRender = null;
+    QuestionDetailPage: function QuestionDetailPage(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.props = t0;
+      _._answerFormState = t1;
+      _._answerErrors = t2;
+      _._answerMessage = null;
+      _._answerLoading = false;
+      _._answersSignal = t3;
+      _._deletingAnswerIds = t4;
+      _._answersSocket = _._answersTimer = null;
+      _._liveStatus = "Connecting";
+      _._component$_scheduleRender = null;
+    },
+    QuestionDetailPage__initialAnswers_closure: function QuestionDetailPage__initialAnswers_closure() {
+    },
+    QuestionDetailPage_build_closure: function QuestionDetailPage_build_closure(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__answerCard_closure: function QuestionDetailPage__answerCard_closure(t0, t1) {
+      this.$this = t0;
+      this.answerId = t1;
+    },
+    QuestionDetailPage__answerForm_closure: function QuestionDetailPage__answerForm_closure(t0, t1) {
+      this.$this = t0;
+      this.slug = t1;
+    },
+    QuestionDetailPage__submitAnswer_closure: function QuestionDetailPage__submitAnswer_closure(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__submitAnswer_closure0: function QuestionDetailPage__submitAnswer_closure0(t0, t1) {
+      this.$this = t0;
+      this.localErrors = t1;
+    },
+    QuestionDetailPage__submitAnswer_closure1: function QuestionDetailPage__submitAnswer_closure1(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__submitAnswer_closure2: function QuestionDetailPage__submitAnswer_closure2(t0, t1, t2) {
+      this.$this = t0;
+      this.errors = t1;
+      this.errorMessage = t2;
+    },
+    QuestionDetailPage__submitAnswer_closure3: function QuestionDetailPage__submitAnswer_closure3(t0, t1, t2) {
+      this.$this = t0;
+      this.errors = t1;
+      this.errorMessage = t2;
+    },
+    QuestionDetailPage__submitAnswer_closure4: function QuestionDetailPage__submitAnswer_closure4(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__errorData_closure: function QuestionDetailPage__errorData_closure() {
+    },
+    QuestionDetailPage__startAnswerRefresh_closure: function QuestionDetailPage__startAnswerRefresh_closure(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket_closure: function QuestionDetailPage__connectAnswerSocket_closure(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket__closure3: function QuestionDetailPage__connectAnswerSocket__closure3(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket_closure0: function QuestionDetailPage__connectAnswerSocket_closure0(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket__closure2: function QuestionDetailPage__connectAnswerSocket__closure2(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket_closure1: function QuestionDetailPage__connectAnswerSocket_closure1(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket_closure2: function QuestionDetailPage__connectAnswerSocket_closure2(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket_closure3: function QuestionDetailPage__connectAnswerSocket_closure3(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket__closure1: function QuestionDetailPage__connectAnswerSocket__closure1(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket_closure4: function QuestionDetailPage__connectAnswerSocket_closure4(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket__closure0: function QuestionDetailPage__connectAnswerSocket__closure0(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket_closure5: function QuestionDetailPage__connectAnswerSocket_closure5(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__connectAnswerSocket__closure: function QuestionDetailPage__connectAnswerSocket__closure(t0) {
+      this.$this = t0;
+    },
+    QuestionDetailPage__refreshAnswers_closure: function QuestionDetailPage__refreshAnswers_closure() {
+    },
+    QuestionDetailPage__addAnswer_closure: function QuestionDetailPage__addAnswer_closure(t0) {
+      this.answerId = t0;
+    },
+    QuestionDetailPage__addAnswer_closure0: function QuestionDetailPage__addAnswer_closure0(t0, t1) {
+      this.current = t0;
+      this.answer = t1;
+    },
+    QuestionDetailPage__deleteAnswer_closure: function QuestionDetailPage__deleteAnswer_closure(t0, t1) {
+      this.$this = t0;
+      this.answerId = t1;
+    },
+    QuestionDetailPage__deleteAnswer_closure0: function QuestionDetailPage__deleteAnswer_closure0(t0, t1) {
+      this.$this = t0;
+      this.answerId = t1;
+    },
+    QuestionDetailPage__removeAnswer_closure: function QuestionDetailPage__removeAnswer_closure(t0) {
+      this.answerId = t0;
+    },
+    QuestionDetailPage__removeAnswer_closure0: function QuestionDetailPage__removeAnswer_closure0(t0, t1) {
+      this.current = t0;
+      this.answerId = t1;
+    },
+    QuestionDetailPage__removeAnswer__closure: function QuestionDetailPage__removeAnswer__closure(t0) {
+      this.answerId = t0;
+    },
+    AuthPanel: function AuthPanel(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.title = t0;
+      _.body = t1;
+      _.backHref = t2;
+      _.backLabel = t3;
+      _._email = t4;
+      _._auth_panel$_name = t5;
+      _._password = t6;
+      _._showRegisterOverride = null;
+      _._loading = false;
+      _._component$_scheduleRender = _._auth_panel$_error = null;
+    },
+    AuthPanel_build_closure: function AuthPanel_build_closure(t0) {
+      this.$this = t0;
+    },
+    AuthPanel_build__closure0: function AuthPanel_build__closure0(t0) {
+      this.$this = t0;
+    },
+    AuthPanel_build_closure0: function AuthPanel_build_closure0(t0) {
+      this.$this = t0;
+    },
+    AuthPanel_build__closure: function AuthPanel_build__closure(t0) {
+      this.$this = t0;
+    },
+    AuthPanel_build_closure1: function AuthPanel_build_closure1(t0) {
+      this.$this = t0;
+    },
+    AuthPanel__submit_closure: function AuthPanel__submit_closure(t0) {
+      this.$this = t0;
+    },
+    AuthPanel__submit_closure0: function AuthPanel__submit_closure0(t0, t1) {
+      this.$this = t0;
+      this.res = t1;
+    },
+    AuthPanel__submit_closure1: function AuthPanel__submit_closure1(t0) {
+      this.$this = t0;
     },
     FlashBanner: function FlashBanner(t0) {
       this.props = t0;
@@ -4240,6 +6398,21 @@
       _.childSlots = t2;
       _.mounted = _.renderQueued = false;
     },
+    _browserOrigin() {
+      var protocol, host,
+        $location = A._asJSObject(A._asJSObject(init.G.window).location),
+        origin = A._asString($location.origin);
+      if (origin.length !== 0)
+        return origin;
+      protocol = A._asString($location.protocol);
+      host = A._asString($location.host);
+      if (protocol.length !== 0 && host.length !== 0)
+        return protocol + "//" + host;
+      return "http://localhost";
+    },
+    ClientRouter: function ClientRouter(t0) {
+      this.client = t0;
+    },
     FlintComponent: function FlintComponent() {
     },
     StatefulComponent: function StatefulComponent() {
@@ -4283,10 +6456,10 @@
         }
         if (!t6)
           if (dartStyle.hover == null)
-            if (dartStyle.focusVisible == null) {
-              t5 = dartStyle.active;
-              t5 = t5 != null;
-            }
+            if (dartStyle.focusVisible == null)
+              if (dartStyle.active == null)
+                if (dartStyle.disabled == null)
+                  t5 = dartStyle.invalid != null;
       }
       if (t5 === true) {
         dartStyle.toString;
@@ -4413,6 +6586,8 @@
     },
     _styleToCssImportant_closure0: function _styleToCssImportant_closure0() {
     },
+    BrowserNavigation: function BrowserNavigation() {
+    },
     FlintNode: function FlintNode() {
     },
     FlintText: function FlintText(t0) {
@@ -4428,6 +6603,23 @@
     },
     FlintComponentNode: function FlintComponentNode(t0) {
       this.component = t0;
+    },
+    ToastPlacement: function ToastPlacement(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    ToastService: function ToastService() {
+    },
+    ToastService__show_closure: function ToastService__show_closure(t0) {
+      this.item = t0;
+    },
+    ToastService__show_closure0: function ToastService__show_closure0(t0, t1) {
+      this.item = t0;
+      this.container = t1;
+    },
+    ToastService__show__closure: function ToastService__show__closure(t0, t1) {
+      this.item = t0;
+      this.container = t1;
     },
     FlintPage_FlintPage$fromJson(json) {
       var t2, t3,
@@ -4553,9 +6745,36 @@
       this.page = t0;
       this.title = t1;
     },
+    StateSignal: function StateSignal(t0, t1, t2) {
+      this._value = t0;
+      this._listeners = t1;
+      this.$ti = t2;
+    },
+    StateSignal_listen_closure: function StateSignal_listen_closure(t0, t1) {
+      this.$this = t0;
+      this.listener = t1;
+    },
+    StateSignalListener: function StateSignalListener(t0, t1, t2) {
+      var _ = this;
+      _.signal = t0;
+      _.builder = t1;
+      _._component$_scheduleRender = _._unsubscribe = _._boundSignal = null;
+      _.$ti = t2;
+    },
+    StateSignalListener__bindSignal_closure: function StateSignalListener__bindSignal_closure(t0) {
+      this.$this = t0;
+    },
+    StateSignalListener__bindSignal__closure: function StateSignalListener__bindSignal__closure() {
+    },
     BrowserStorage: function BrowserStorage() {
     },
     BrowserStorage_readMap_closure: function BrowserStorage_readMap_closure() {
+    },
+    CookieSameSite: function CookieSameSite(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    Cookies: function Cookies() {
     },
     LocalStorage: function LocalStorage() {
     },
@@ -4608,16 +6827,12 @@
       var t1 = A._instanceType(style)._eval$1("LinkedHashMapEntriesIterable<1,2>");
       return new A.MappedIterable(new A.WhereIterable(new A.LinkedHashMapEntriesIterable(style, t1), t1._eval$1("bool(Iterable.E)")._as(new A.rootStyleToCss_closure()), t1._eval$1("WhereIterable<Iterable.E>")), t1._eval$1("String(Iterable.E)")._as(new A.rootStyleToCss_closure0()), t1._eval$1("MappedIterable<Iterable.E,String>")).join$1(0, "; ");
     },
-    _gridCssValue(value, unitlessNumber) {
-      if (value instanceof A.GridTrack)
-        return value.value;
-      return A.cssValue(value, unitlessNumber);
-    },
     Border$all(color) {
       return new A.Border(1, color, "solid");
     },
-    StyleTransition_StyleTransition$property(property, milliseconds, timing) {
-      return new A.StyleTransition(property + " " + milliseconds + "ms " + timing.value);
+    StyleTransition_StyleTransition$colors(milliseconds) {
+      var t1 = "" + milliseconds;
+      return A.StyleTransition_StyleTransition$combine(A._setArrayType([new A.StyleTransition("color " + t1 + "ms ease"), new A.StyleTransition("background " + t1 + "ms ease"), new A.StyleTransition("border-color " + t1 + "ms ease")], type$.JSArray_StyleTransition));
     },
     StyleTransition_StyleTransition$combine(transitions) {
       var t1;
@@ -4625,6 +6840,14 @@
         throw A.wrapException(A.ArgumentError$value(transitions, "transitions", "Must not be empty."));
       t1 = A._arrayInstanceType(transitions);
       return new A.StyleTransition(new A.MappedListIterable(transitions, t1._eval$1("String(1)")._as(new A.StyleTransition_StyleTransition$combine_closure()), t1._eval$1("MappedListIterable<1,String>")).join$1(0, ", "));
+    },
+    StyleAnimation_StyleAnimation$named($name, iteration, milliseconds, timing) {
+      var t1 = A._setArrayType([$name, "" + milliseconds + "ms", timing], type$.JSArray_Object);
+      t1.push(A.cssValue(iteration, true));
+      t1.push(B.C_AnimationDirection);
+      t1.push(B.C_AnimationFillMode);
+      t1.push(B.C_AnimationPlayState);
+      return new A.StyleAnimation(new A.MappedListIterable(t1, type$.String_Function_Object._as(new A.StyleAnimation_StyleAnimation$named_closure()), type$.MappedListIterable_Object_String).join$1(0, " "));
     },
     cssValue(value, unitlessNumber) {
       A._asBool(unitlessNumber);
@@ -4807,12 +7030,6 @@
     SizeValue: function SizeValue(t0) {
       this.value = t0;
     },
-    GridTrack: function GridTrack(t0) {
-      this.value = t0;
-    },
-    GridTemplateColumns: function GridTemplateColumns(t0) {
-      this.value = t0;
-    },
     Border: function Border(t0, t1, t2) {
       this.width = t0;
       this.color = t1;
@@ -4848,6 +7065,8 @@
     },
     FlexWrap: function FlexWrap() {
     },
+    Resize: function Resize() {
+    },
     TransitionTiming: function TransitionTiming(t0) {
       this.value = t0;
     },
@@ -4856,8 +7075,20 @@
     },
     StyleTransition_StyleTransition$combine_closure: function StyleTransition_StyleTransition$combine_closure() {
     },
+    AnimationDirection: function AnimationDirection() {
+    },
+    AnimationFillMode: function AnimationFillMode() {
+    },
+    AnimationPlayState: function AnimationPlayState() {
+    },
+    AnimationIteration: function AnimationIteration() {
+    },
     StyleAnimation: function StyleAnimation(t0) {
       this.value = t0;
+    },
+    StyleAnimation_StyleAnimation$named_closure: function StyleAnimation_StyleAnimation$named_closure() {
+    },
+    WillChange: function WillChange() {
     },
     Display: function Display(t0, t1, t2) {
       this.css = t0;
@@ -4878,37 +7109,180 @@
       this.index = t1;
       this._name = t2;
     },
-    Button$(child, children, dartStyle, onPressed, props, tone, variant) {
-      var t1 = A.LinkedHashMap_LinkedHashMap$of(props, type$.String, type$.nullable_Object),
-        t2 = props.$index(0, "type");
-      t1.$indexSet(0, "type", t2 == null ? "button" : t2);
-      t1.$indexSet(0, "onClick", onPressed);
-      t1 = A.mergeComponentProps(t1, null, A.buttonComponentStyle(false, false, B.ComponentSize_2, tone, variant).merge$1(dartStyle), B.Map_empty1, B.Map_empty1);
-      t2 = A._setArrayType([], type$.JSArray_FlintNode);
-      B.JSArray_methods.addAll$1(t2, A.normalizeChildren(child, children));
-      return new A.Button("button", t1, t2);
+    Button$(child, children, dartStyle, loading, onPressed, props, size, tone, variant) {
+      var t5,
+        t1 = type$.String,
+        t2 = type$.nullable_Object,
+        t3 = A.LinkedHashMap_LinkedHashMap$of(props, t1, t2),
+        t4 = props.$index(0, "type");
+      t3.$indexSet(0, "type", t4 == null ? "button" : t4);
+      if (loading)
+        t3.$indexSet(0, "disabled", true);
+      if (loading)
+        t3.$indexSet(0, "aria-busy", "true");
+      if (onPressed != null)
+        t4 = !loading;
+      else
+        t4 = false;
+      if (t4)
+        t3.$indexSet(0, "onClick", onPressed);
+      t3 = A.mergeComponentProps(t3, null, A.buttonComponentStyle(false, loading, size, tone, variant).merge$1(dartStyle), B.Map_empty1, B.Map_empty1);
+      t4 = A._setArrayType([], type$.JSArray_FlintNode);
+      if (loading) {
+        t5 = A.LinkedHashMap_LinkedHashMap$of(B.Map_empty1, t1, t2);
+        t5.$indexSet(0, "role", "status");
+        t5.$indexSet(0, "aria-label", "Loading");
+        t1 = A.mergeComponentProps(t5, null, null, A.LinkedHashMap_LinkedHashMap$_literal(["display", "inline-block", "width", A.spinnerSize(B.ComponentSize_0), "height", A.spinnerSize(B.ComponentSize_0), "border", "2px solid " + A.toneSoft(tone), "border-top-color", A.toneSolid(tone), "border-radius", "999px", "animation", A.cssValue(A.StyleAnimation_StyleAnimation$named("flint-spin", B.C_AnimationIteration, 800, B.TransitionTiming_linear), false), "will-change", A.cssValue(B.C_WillChange, false), "flex-shrink", 0], t1, t2), B.Map_empty1);
+        t4.push(new A.Spinner("span", t1, B.List_empty3));
+      }
+      B.JSArray_methods.addAll$1(t4, A.normalizeChildren(child, children));
+      return new A.Button("button", t3, t4);
     },
     Button: function Button(t0, t1, t2) {
       this.tag = t0;
       this.props = t1;
       this.children = t2;
     },
-    HtmlContent: function HtmlContent(t0, t1, t2, t3) {
-      var _ = this;
-      _.html = t0;
-      _.id = t1;
-      _.selector = null;
-      _.className = t2;
-      _.dartStyle = null;
-      _.props = t3;
-      _.trusted = true;
-      _.__HtmlContent__generatedId_FI = $;
-      _._component$_scheduleRender = null;
-    },
     Spinner: function Spinner(t0, t1, t2) {
       this.tag = t0;
       this.props = t1;
       this.children = t2;
+    },
+    TextEditingController: function TextEditingController(t0, t1) {
+      this._text = t0;
+      this._controllers$_listeners = t1;
+    },
+    FormController: function FormController(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _._defaults = t0;
+      _._controllers$_data = t1;
+      _._controllers = t2;
+      _._controllers$_listeners = t3;
+      _.errors = t4;
+    },
+    FormController_controller_closure: function FormController_controller_closure(t0, t1) {
+      this.$this = t0;
+      this.key = t1;
+    },
+    FormController_controller__closure: function FormController_controller__closure(t0, t1, t2) {
+      this.$this = t0;
+      this.key = t1;
+      this.controller = t2;
+    },
+    Form$(children, dartStyle, onSubmit) {
+      var t1 = A.LinkedHashMap_LinkedHashMap$of(B.Map_empty1, type$.String, type$.nullable_Object);
+      if (onSubmit != null)
+        t1.$indexSet(0, "onSubmit", onSubmit);
+      return new A.Form("form", A.mergeComponentProps(t1, null, dartStyle, B.Map_CKyJ0, B.Map_empty1), A.normalizeChildren(null, children));
+    },
+    Form: function Form(t0, t1, t2) {
+      this.tag = t0;
+      this.props = t1;
+      this.children = t2;
+    },
+    TextArea__controlledOnChanged(controller, onChanged) {
+      return new A.TextArea__controlledOnChanged_closure(controller, onChanged);
+    },
+    TextArea: function TextArea(t0, t1, t2) {
+      this.tag = t0;
+      this.props = t1;
+      this.children = t2;
+    },
+    TextArea__controlledOnChanged_closure: function TextArea__controlledOnChanged_closure(t0, t1) {
+      this.controller = t0;
+      this.onChanged = t1;
+    },
+    TextField$(controller, inputDartStyle, label, $name, placeholder, type) {
+      var t6, _null = null,
+        t1 = A.mergeComponentProps(B.Map_empty1, _null, _null, B.Map_CKAM1, B.Map_empty1),
+        t2 = controller._text,
+        t3 = A.resolveFieldError(_null, _null, $name),
+        t4 = A.TextField__controlledOnChanged(controller, _null),
+        id = A.fieldId("field", $name, B.Map_empty1),
+        ariaDescribedBy = A.describedBy(_null, t3, _null, id),
+        t5 = A._setArrayType([], type$.JSArray_FlintNode);
+      t5.push(A.fieldLabel(id, label, false));
+      t6 = A.LinkedHashMap_LinkedHashMap$of(A.controlProps(ariaDescribedBy, false, t3, id, $name, B.Map_empty1, false), type$.String, type$.nullable_Object);
+      t6.$indexSet(0, "type", type);
+      if (t2 != null)
+        t6.$indexSet(0, "value", t2);
+      t6.$indexSet(0, "placeholder", placeholder);
+      if (t4 != null)
+        t6.$indexSet(0, "onInput", t4);
+      t5.push(new A.FlintElement("input", A.mergeComponentProps(t6, _null, A.inputComponentStyle(false, t3 != null && t3.length !== 0, B.ComponentSize_2, B.InputVariant_0).merge$1(inputDartStyle), B.Map_empty1, B.Map_empty1), B.List_empty3));
+      B.JSArray_methods.addAll$1(t5, A.fieldMessages(t3, _null, id));
+      return new A.TextField("div", t1, t5);
+    },
+    TextField__controlledOnChanged(controller, onChanged) {
+      return new A.TextField__controlledOnChanged_closure(controller, onChanged);
+    },
+    TextField: function TextField(t0, t1, t2) {
+      this.tag = t0;
+      this.props = t1;
+      this.children = t2;
+    },
+    TextField__controlledOnChanged_closure: function TextField__controlledOnChanged_closure(t0, t1) {
+      this.controller = t0;
+      this.onChanged = t1;
+    },
+    FormErrors_FormErrors$from(value) {
+      var t1, t2, t3, t4, source;
+      if (value == null)
+        return B.FormErrors_Map_empty;
+      if (type$.Map_String_String._is(value)) {
+        t1 = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.List_String);
+        for (t2 = value.get$entries(), t2 = t2.get$iterator(t2), t3 = type$.JSArray_String; t2.moveNext$0();) {
+          t4 = t2.get$current();
+          t1.$indexSet(0, t4.key, A._setArrayType([t4.value], t3));
+        }
+        return new A.FormErrors(t1);
+      }
+      source = A._extractErrorMap(value);
+      t1 = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.List_String);
+      for (t2 = source.get$entries(), t2 = t2.get$iterator(t2); t2.moveNext$0();) {
+        t3 = t2.get$current();
+        t1.$indexSet(0, J.toString$0$(t3.key), A._normalizeMessages(t3.value));
+      }
+      return new A.FormErrors(t1);
+    },
+    resolveFieldError(error, errors, $name) {
+      var t1, messages;
+      if (errors == null)
+        t1 = null;
+      else {
+        messages = errors.fieldMessages$1($name);
+        t1 = messages.length === 0 ? null : B.JSArray_methods.get$first(messages);
+      }
+      return t1;
+    },
+    _extractErrorMap(value) {
+      var nested = value.$index(0, "errors");
+      if (type$.Map_dynamic_dynamic._is(nested))
+        return nested;
+      return value;
+    },
+    _normalizeMessages(value) {
+      var t1, t2, item;
+      if (value == null)
+        return B.List_empty4;
+      if (typeof value == "string")
+        return A._setArrayType([value], type$.JSArray_String);
+      if (type$.Iterable_dynamic._is(value)) {
+        t1 = A._setArrayType([], type$.JSArray_String);
+        for (t2 = J.get$iterator$ax(value); t2.moveNext$0();) {
+          item = t2.get$current();
+          if (item != null && J.toString$0$(item).length !== 0)
+            t1.push(J.toString$0$(item));
+        }
+        return t1;
+      }
+      return A._setArrayType([J.toString$0$(value)], type$.JSArray_String);
+    },
+    FormErrors: function FormErrors(t0) {
+      this._messages = t0;
+    },
+    FormErrors_without_closure: function FormErrors_without_closure(t0) {
+      this.keys = t0;
     },
     IconData$($name, shapes) {
       return new A.IconData($name, shapes);
@@ -4945,9 +7319,6 @@
     },
     _path(d) {
       return new A.IconShape("path", A.LinkedHashMap_LinkedHashMap$_literal(["d", d], type$.String, type$.nullable_Object));
-    },
-    _polyline(points) {
-      return new A.IconShape("polyline", A.LinkedHashMap_LinkedHashMap$_literal(["points", points], type$.String, type$.nullable_Object));
     },
     _line(x1, y1, x2, y2) {
       return new A.IconShape("line", A.LinkedHashMap_LinkedHashMap$_literal(["x1", x1, "y1", y1, "x2", x2, "y2", y2], type$.String, type$.nullable_Object));
@@ -4993,10 +7364,14 @@
       this.children = t2;
     },
     buttonComponentStyle(disabled, loading, size, tone, variant) {
-      var _null = null,
-        t1 = $.$get$buttonBaseStyle().merge$1(A.buttonSizeStyle(size)).merge$1(A.buttonVariantStyle(variant, tone)),
+      var t2, _null = null,
+        t1 = $.$get$buttonBaseStyle().merge$1(A.buttonSizeStyle(size)).merge$1(A.buttonVariantStyle(variant, tone));
+      if (loading)
+        t2 = B.DartStyle_7DG;
+      else {
         t2 = A.buttonHoverStyle(variant, tone);
-      t2 = A.DartStyle$(A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.StyleTransform("scale(0.98)"), _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.Shadow(0, 0, 3, A.toneFocus(tone)), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, t2, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+        t2 = A.DartStyle$(A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.StyleTransform("scale(0.98)"), _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.Shadow(0, 0, 3, A.toneFocus(tone)), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, t2, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      }
       return t1.merge$1(t2);
     },
     buttonSizeStyle(size) {
@@ -5056,6 +7431,75 @@
           break;
         default:
           t1 = _null;
+      }
+      return t1;
+    },
+    inputComponentStyle(disabled, invalid, size, variant) {
+      var _null = null, _s5_ = "solid",
+        _s7_ = "#d92d20",
+        _s17_ = "color.dangerSolid",
+        t1 = new A.TokenRef("color.inputBorder", "#d0d5dd").toCss$0(),
+        t2 = new A.TokenRef("radius.md", "8px").toCss$0(),
+        t3 = new A.TokenRef("color.inputText", "#101828").toCss$0(),
+        t4 = new A.TokenRef("color.inputSurface", "#ffffff").toCss$0(),
+        t5 = A.StyleTransition_StyleTransition$colors(120),
+        t6 = A.DartStyle$(_null, _null, _null, _null, _null, _null, new A.Border(1, new A.TokenRef("color.primarySolid", "#155eef").toCss$0(), _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.Shadow(0, 0, 3, new A.TokenRef("color.primaryFocus", "#155eef").toCss$0()), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null),
+        t7 = A.DartStyle$(_null, _null, _null, _null, _null, _null, new A.Border(1, new A.TokenRef(_s17_, _s7_).toCss$0(), _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.Shadow(0, 0, 3, new A.TokenRef("color.dangerFocus", _s7_).toCss$0()), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null),
+        base = A.DartStyle$(_null, _null, _null, _null, _null, t4, new A.Border(1, t1, _s5_), _null, _null, _null, _null, _null, _null, _null, t3, _null, A.DartStyle$(_null, _null, _null, _null, _null, new A.TokenRef("color.disabledSurface", "#f3f4f6").toCss$0(), _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.disabledText", "#98a2b3").toCss$0(), B.Cursor_Yvp, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, t6, B.FontFamily_Cjp, _null, _null, _null, _null, _null, _null, _null, t7, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, t2, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, t5, B.SizeValue_lLc, _null, _null, _null).merge$1(A.inputSizeStyle(size));
+      switch (variant.index) {
+        case 0:
+          t1 = B.DartStyle_pAJ0;
+          break;
+        case 1:
+          t1 = A.DartStyle$(_null, _null, _null, _null, _null, new A.TokenRef("color.inputSoft", "#f9fafb").toCss$0(), new A.Border(1, B.Color_transparent, _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+          break;
+        case 2:
+          t1 = A.DartStyle$(_null, _null, _null, _null, _null, B.Color_transparent, B.Border_1_Color_transparent_solid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+          break;
+        default:
+          t1 = _null;
+      }
+      t1 = base.merge$1(t1);
+      t1 = t1.merge$1(_null);
+      return t1.merge$1(invalid ? A.DartStyle$(_null, _null, _null, _null, _null, _null, new A.Border(1, new A.TokenRef(_s17_, _s7_).toCss$0(), _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null) : _null);
+    },
+    inputSizeStyle(size) {
+      var t1;
+      switch (size.index) {
+        case 0:
+          t1 = B.DartStyle_nV3;
+          break;
+        case 1:
+          t1 = B.DartStyle_XPR;
+          break;
+        case 2:
+          t1 = B.DartStyle_Pmf;
+          break;
+        case 3:
+          t1 = B.DartStyle_XN8;
+          break;
+        default:
+          t1 = null;
+      }
+      return t1;
+    },
+    spinnerSize(size) {
+      var t1;
+      switch (size.index) {
+        case 0:
+          t1 = "14px";
+          break;
+        case 1:
+          t1 = "16px";
+          break;
+        case 2:
+          t1 = "20px";
+          break;
+        case 3:
+          t1 = "24px";
+          break;
+        default:
+          t1 = null;
       }
       return t1;
     },
@@ -5265,6 +7709,10 @@
       this.index = t0;
       this._name = t1;
     },
+    InputVariant: function InputVariant(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
     _EventStreamSubscription$(_target, _eventType, onData, _useCapture, $T) {
       var t1 = A._wrapZone(new A._EventStreamSubscription_closure(onData), type$.JSObject);
       t1 = t1 == null ? null : A._functionToJS1(t1);
@@ -5301,30 +7749,27 @@
       this.onData = t0;
     },
     main() {
-      A.createFlintApp("#app", A.LinkedHashMap_LinkedHashMap$_literal(["UiDocs", new A.main_closure()], type$.String, type$.FlintComponent_Function_Map_String_dynamic), $.$get$docsRootDesign());
+      A.createFlintApp("#app", A.LinkedHashMap_LinkedHashMap$_literal(["QuestionDetail", new A.main_closure()], type$.String, type$.FlintComponent_Function_Map_String_dynamic), $.$get$docsRootDesign());
     },
     main_closure: function main_closure() {
     },
+    printString(string) {
+      if (typeof dartPrint == "function") {
+        dartPrint(string);
+        return;
+      }
+      if (typeof console == "object" && typeof console.log != "undefined") {
+        console.log(string);
+        return;
+      }
+      if (typeof print == "function") {
+        print(string);
+        return;
+      }
+      throw "Unable to print message: " + String(string);
+    },
     throwLateFieldADI(fieldName) {
       throw A.initializeExceptionWrapper(A.LateError$fieldADI(fieldName), new Error());
-    },
-    _functionToJS1(f) {
-      var result;
-      if (typeof f == "function")
-        throw A.wrapException(A.ArgumentError$("Attempting to rewrap a JS function.", null));
-      result = function(_call, f) {
-        return function(arg1) {
-          return _call(f, arg1, arguments.length);
-        };
-      }(A._callDartFunctionFast1, f);
-      result[$.$get$DART_CLOSURE_PROPERTY_NAME()] = f;
-      return result;
-    },
-    _callDartFunctionFast1(callback, arg1, $length) {
-      type$.Function._as(callback);
-      if (A._asInt($length) >= 1)
-        return callback.call$1(arg1);
-      return callback.call$0();
     },
     h(tag, children, props) {
       var t1 = A._arrayInstanceType(children),
@@ -5364,6 +7809,49 @@
       element.textContent = stylesheet.get$cssText();
       A._asJSObject(head.appendChild(element));
       $._registeredStyleSheets.add$1(0, stylesheet.get$name());
+    },
+    fieldId(prefix, $name, props) {
+      var base, t1, t2;
+      props.$index(0, "id");
+      base = $name.length === 0 ? prefix : $name;
+      t1 = A.RegExp_RegExp("[^a-z0-9_-]+", true, false);
+      t1 = A.stringReplaceAllUnchecked(base.toLowerCase(), t1, "-");
+      t2 = A.RegExp_RegExp("^-+|-+$", true, false);
+      return "flint-" + prefix + "-" + A.stringReplaceAllUnchecked(t1, t2, "");
+    },
+    describedBy(describedBy, error, helpText, id) {
+      var t1 = A._setArrayType([], type$.JSArray_String);
+      if (error != null && error.length !== 0)
+        t1.push(id + "-error");
+      return t1.length === 0 ? null : B.JSArray_methods.join$1(t1, " ");
+    },
+    fieldMessages(error, helpText, id) {
+      var t1 = A._setArrayType([], type$.JSArray_FlintNode);
+      if (error != null && error.length !== 0)
+        t1.push(new A.FlintElement("p", A.LinkedHashMap_LinkedHashMap$_literal(["id", id + "-error", "style", B.Map_7LgLw], type$.String, type$.nullable_Object), A.normalizeChildren(error, B.List_empty2)));
+      return t1;
+    },
+    fieldLabel(id, label, required) {
+      var t1 = A.LinkedHashMap_LinkedHashMap$_literal(["for", id, "style", B.Map_szNRN], type$.String, type$.nullable_Object),
+        t2 = A._setArrayType([new A.FlintText(label)], type$.JSArray_FlintNode);
+      if (required)
+        t2.push(B.FlintText_ED0);
+      return new A.FlintElement("label", t1, t2);
+    },
+    controlProps(describedBy, disabled, error, id, $name, props, required) {
+      var t1 = A.LinkedHashMap_LinkedHashMap$of(props, type$.String, type$.nullable_Object);
+      t1.$indexSet(0, "id", id);
+      t1.$indexSet(0, "name", $name);
+      if (required)
+        t1.$indexSet(0, "required", true);
+      if (error != null && error.length !== 0)
+        t1.$indexSet(0, "aria-invalid", "true");
+      if (describedBy != null)
+        t1.$indexSet(0, "aria-describedby", describedBy);
+      return t1;
+    },
+    Text_h2(value, dartStyle) {
+      return A._element("h2", value, null, B.Map_empty1, B.Map_empty1, dartStyle);
     },
     Text_p(value, dartStyle) {
       return A._element("p", value, null, B.Map_empty1, B.Map_empty1, dartStyle);
@@ -5416,7 +7904,8 @@
     get$hashCode(receiver) {
       return 0;
     },
-    $isTrustedGetRuntimeType: 1
+    $isTrustedGetRuntimeType: 1,
+    $isNull: 1
   };
   J.JavaScriptObject.prototype = {$isJSObject: 1};
   J.LegacyJavaScriptObject.prototype = {
@@ -5460,6 +7949,20 @@
       receiver.$flags & 1 && A.throwUnsupportedOperation(receiver, 29);
       receiver.push(value);
     },
+    remove$1(receiver, element) {
+      var i;
+      receiver.$flags & 1 && A.throwUnsupportedOperation(receiver, "remove", 1);
+      for (i = 0; i < receiver.length; ++i)
+        if (J.$eq$(receiver[i], element)) {
+          receiver.splice(i, 1);
+          return true;
+        }
+      return false;
+    },
+    where$1(receiver, f) {
+      var t1 = A._arrayInstanceType(receiver);
+      return new A.WhereIterable(receiver, t1._eval$1("bool(1)")._as(f), t1._eval$1("WhereIterable<1>"));
+    },
     addAll$1(receiver, collection) {
       var t1;
       A._arrayInstanceType(receiver)._eval$1("Iterable<1>")._as(collection);
@@ -5482,6 +7985,10 @@
       for (i = 0; i < len; ++i)
         receiver.push(array[i]);
     },
+    clear$0(receiver) {
+      receiver.$flags & 1 && A.throwUnsupportedOperation(receiver, "clear", "clear");
+      receiver.length = 0;
+    },
     map$1$1(receiver, f, $T) {
       var t1 = A._arrayInstanceType(receiver);
       return new A.MappedListIterable(receiver, t1._bind$1($T)._eval$1("1(2)")._as(f), t1._eval$1("@<1>")._bind$1($T)._eval$1("MappedListIterable<1,2>"));
@@ -5493,14 +8000,32 @@
         this.$indexSet(list, i, A.S(receiver[i]));
       return list.join(separator);
     },
+    fold$1$2(receiver, initialValue, combine, $T) {
+      var $length, value, i;
+      $T._as(initialValue);
+      A._arrayInstanceType(receiver)._bind$1($T)._eval$1("1(1,2)")._as(combine);
+      $length = receiver.length;
+      for (value = initialValue, i = 0; i < $length; ++i) {
+        value = combine.call$2(value, receiver[i]);
+        if (receiver.length !== $length)
+          throw A.wrapException(A.ConcurrentModificationError$(receiver));
+      }
+      return value;
+    },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
     get$first(receiver) {
       if (receiver.length > 0)
         return receiver[0];
+      throw A.wrapException(A.IterableElementError_noElement());
+    },
+    get$last(receiver) {
+      var t1 = receiver.length;
+      if (t1 > 0)
+        return receiver[t1 - 1];
       throw A.wrapException(A.IterableElementError_noElement());
     },
     any$1(receiver, test) {
@@ -5534,6 +8059,9 @@
           return true;
       return false;
     },
+    get$isEmpty(receiver) {
+      return receiver.length === 0;
+    },
     get$isNotEmpty(receiver) {
       return receiver.length !== 0;
     },
@@ -5560,6 +8088,9 @@
       if (!(index >= 0 && index < receiver.length))
         throw A.wrapException(A.diagnoseIndexError(receiver, index));
       receiver[index] = value;
+    },
+    whereType$1$0(receiver, $T) {
+      return new A.WhereTypeIterable(receiver, $T._eval$1("WhereTypeIterable<0>"));
     },
     $isEfficientLengthIterable: 1,
     $isIterable: 1,
@@ -5619,6 +8150,20 @@
       }
       throw A.wrapException(A.UnsupportedError$("" + receiver + ".toInt()"));
     },
+    floor$0(receiver) {
+      var truncated, d;
+      if (receiver >= 0) {
+        if (receiver <= 2147483647)
+          return receiver | 0;
+      } else if (receiver >= -2147483648) {
+        truncated = receiver | 0;
+        return receiver === truncated ? truncated : truncated - 1;
+      }
+      d = Math.floor(receiver);
+      if (isFinite(d))
+        return d;
+      throw A.wrapException(A.UnsupportedError$("" + receiver + ".floor()"));
+    },
     toRadixString$1(receiver, radix) {
       var result, t1, t2, match, exponent;
       if (radix < 2 || radix > 36)
@@ -5672,6 +8217,29 @@
         return result;
       return result + other;
     },
+    $tdiv(receiver, other) {
+      if ((receiver | 0) === receiver)
+        if (other >= 1 || other < -1)
+          return receiver / other | 0;
+      return this._tdivSlow$1(receiver, other);
+    },
+    _tdivFast$1(receiver, other) {
+      return (receiver | 0) === receiver ? receiver / other | 0 : this._tdivSlow$1(receiver, other);
+    },
+    _tdivSlow$1(receiver, other) {
+      var quotient = receiver / other;
+      if (quotient >= -2147483648 && quotient <= 2147483647)
+        return quotient | 0;
+      if (quotient > 0) {
+        if (quotient !== 1 / 0)
+          return Math.floor(quotient);
+      } else if (quotient > -1 / 0)
+        return Math.ceil(quotient);
+      throw A.wrapException(A.UnsupportedError$("Result of truncating division is " + A.S(quotient) + ": " + A.S(receiver) + " ~/ " + other));
+    },
+    _shlPositive$1(receiver, other) {
+      return other > 31 ? 0 : receiver << other >>> 0;
+    },
     _shrOtherPositive$1(receiver, other) {
       var t1;
       if (receiver > 0)
@@ -5681,6 +8249,11 @@
         t1 = receiver >> t1 >>> 0;
       }
       return t1;
+    },
+    _shrReceiverPositive$1(receiver, other) {
+      if (0 > other)
+        throw A.wrapException(A.argumentErrorValue(other));
+      return this._shrBothPositive$1(receiver, other);
     },
     _shrBothPositive$1(receiver, other) {
       return other > 31 ? 0 : receiver >>> other;
@@ -5705,14 +8278,73 @@
     $isTrustedGetRuntimeType: 1
   };
   J.JSString.prototype = {
+    allMatches$2(receiver, string, start) {
+      var t1 = string.length;
+      if (start > t1)
+        throw A.wrapException(A.RangeError$range(start, 0, t1, null, null));
+      return new A._StringAllMatchesIterable(string, receiver, start);
+    },
     allMatches$1(receiver, string) {
-      return new A._StringAllMatchesIterable(string, receiver, 0);
+      return this.allMatches$2(receiver, string, 0);
+    },
+    endsWith$1(receiver, other) {
+      var otherLength = other.length,
+        t1 = receiver.length;
+      if (otherLength > t1)
+        return false;
+      return other === this.substring$1(receiver, t1 - otherLength);
+    },
+    replaceFirst$2(receiver, from, to) {
+      return A.stringReplaceFirstUnchecked(receiver, from, to, 0);
+    },
+    split$1(receiver, pattern) {
+      var t1;
+      if (typeof pattern == "string")
+        return A._setArrayType(receiver.split(pattern), type$.JSArray_String);
+      else {
+        if (pattern instanceof A.JSSyntaxRegExp) {
+          t1 = pattern._hasCapturesCache;
+          t1 = !(t1 == null ? pattern._hasCapturesCache = pattern._computeHasCaptures$0() : t1);
+        } else
+          t1 = false;
+        if (t1)
+          return A._setArrayType(receiver.split(pattern._nativeRegExp), type$.JSArray_String);
+        else
+          return this._defaultSplit$1(receiver, pattern);
+      }
+    },
+    replaceRange$3(receiver, start, end, replacement) {
+      var e = A.RangeError_checkValidRange(start, end, receiver.length);
+      return A.stringReplaceRangeUnchecked(receiver, start, e, replacement);
+    },
+    _defaultSplit$1(receiver, pattern) {
+      var t1, start, $length, match, matchStart, matchEnd,
+        result = A._setArrayType([], type$.JSArray_String);
+      for (t1 = J.allMatches$1$s(pattern, receiver), t1 = t1.get$iterator(t1), start = 0, $length = 1; t1.moveNext$0();) {
+        match = t1.get$current();
+        matchStart = match.get$start();
+        matchEnd = match.get$end();
+        $length = matchEnd - matchStart;
+        if ($length === 0 && start === matchStart)
+          continue;
+        B.JSArray_methods.add$1(result, this.substring$2(receiver, start, matchStart));
+        start = matchEnd;
+      }
+      if (start < receiver.length || $length > 0)
+        B.JSArray_methods.add$1(result, this.substring$1(receiver, start));
+      return result;
+    },
+    startsWith$2(receiver, pattern, index) {
+      var endIndex;
+      if (index < 0 || index > receiver.length)
+        throw A.wrapException(A.RangeError$range(index, 0, receiver.length, null, null));
+      endIndex = index + pattern.length;
+      if (endIndex > receiver.length)
+        return false;
+      return pattern === receiver.substring(index, endIndex);
     },
     startsWith$1(receiver, pattern) {
-      var otherLength = pattern.length;
-      if (otherLength > receiver.length)
-        return false;
-      return pattern === receiver.substring(0, otherLength);
+      return this.startsWith$2(receiver, pattern, 0);
     },
     substring$2(receiver, start, end) {
       return receiver.substring(start, A.RangeError_checkValidRange(start, end, receiver.length));
@@ -5742,6 +8374,17 @@
         return result;
       return result.substring(startIndex, endIndex0);
     },
+    trimLeft$0(receiver) {
+      var result = receiver.trimStart(),
+        t1 = result.length;
+      if (t1 === 0)
+        return result;
+      if (0 >= t1)
+        return A.ioore(result, 0);
+      if (result.charCodeAt(0) !== 133)
+        return result;
+      return result.substring(J.JSString__skipLeadingWhitespace(result, 1));
+    },
     $mul(receiver, times) {
       var s, result;
       if (0 >= times)
@@ -5759,6 +8402,25 @@
         s += s;
       }
       return result;
+    },
+    padLeft$2(receiver, width, padding) {
+      var delta = width - receiver.length;
+      if (delta <= 0)
+        return receiver;
+      return this.$mul(padding, delta) + receiver;
+    },
+    indexOf$2(receiver, pattern, start) {
+      var t1;
+      if (start < 0 || start > receiver.length)
+        throw A.wrapException(A.RangeError$range(start, 0, receiver.length, null, null));
+      t1 = receiver.indexOf(pattern, start);
+      return t1;
+    },
+    indexOf$1(receiver, pattern) {
+      return this.indexOf$2(receiver, pattern, 0);
+    },
+    contains$1(receiver, other) {
+      return A.stringContainsUnchecked(receiver, other, 0);
     },
     toString$0(receiver) {
       return receiver;
@@ -5783,6 +8445,106 @@
     $isTrustedGetRuntimeType: 1,
     $isPattern: 1,
     $isString: 1
+  };
+  A._CastIterableBase.prototype = {
+    get$iterator(_) {
+      var t1 = this._source;
+      return new A.CastIterator(t1.get$iterator(t1), A._instanceType(this)._eval$1("CastIterator<1,2>"));
+    },
+    get$length(_) {
+      var t1 = this._source;
+      return t1.get$length(t1);
+    },
+    get$isEmpty(_) {
+      var t1 = this._source;
+      return t1.get$isEmpty(t1);
+    },
+    get$isNotEmpty(_) {
+      var t1 = this._source;
+      return t1.get$isNotEmpty(t1);
+    },
+    get$first(_) {
+      var t1 = this._source;
+      return A._instanceType(this)._rest[1]._as(t1.get$first(t1));
+    },
+    toString$0(_) {
+      return this._source.toString$0(0);
+    }
+  };
+  A.CastIterator.prototype = {
+    moveNext$0() {
+      return this._source.moveNext$0();
+    },
+    get$current() {
+      return this.$ti._rest[1]._as(this._source.get$current());
+    },
+    $isIterator: 1
+  };
+  A.CastIterable.prototype = {};
+  A._EfficientLengthCastIterable.prototype = {$isEfficientLengthIterable: 1};
+  A.CastMap.prototype = {
+    cast$2$0(_, $RK, $RV) {
+      return new A.CastMap(this._source, this.$ti._eval$1("@<1,2>")._bind$1($RK)._bind$1($RV)._eval$1("CastMap<1,2,3,4>"));
+    },
+    $index(_, key) {
+      return this.$ti._eval$1("4?")._as(this._source.$index(0, key));
+    },
+    $indexSet(_, key, value) {
+      var t1 = this.$ti;
+      t1._rest[2]._as(key);
+      t1._rest[3]._as(value);
+      this._source.$indexSet(0, t1._precomputed1._as(key), t1._rest[1]._as(value));
+    },
+    remove$1(_, key) {
+      return this.$ti._eval$1("4?")._as(this._source.remove$1(0, key));
+    },
+    forEach$1(_, f) {
+      this._source.forEach$1(0, new A.CastMap_forEach_closure(this, this.$ti._eval$1("~(3,4)")._as(f)));
+    },
+    get$keys() {
+      var t1 = this.$ti;
+      return A.CastIterable_CastIterable(this._source.get$keys(), t1._precomputed1, t1._rest[2]);
+    },
+    get$values() {
+      var t1 = this.$ti;
+      return A.CastIterable_CastIterable(this._source.get$values(), t1._rest[1], t1._rest[3]);
+    },
+    get$length(_) {
+      var t1 = this._source;
+      return t1.get$length(t1);
+    },
+    get$isEmpty(_) {
+      var t1 = this._source;
+      return t1.get$isEmpty(t1);
+    },
+    get$isNotEmpty(_) {
+      var t1 = this._source;
+      return t1.get$isNotEmpty(t1);
+    },
+    get$entries() {
+      return this._source.get$entries().map$1$1(0, new A.CastMap_entries_closure(this), this.$ti._eval$1("MapEntry<3,4>"));
+    }
+  };
+  A.CastMap_forEach_closure.prototype = {
+    call$2(key, value) {
+      var t1 = this.$this.$ti;
+      t1._precomputed1._as(key);
+      t1._rest[1]._as(value);
+      this.f.call$2(t1._rest[2]._as(key), t1._rest[3]._as(value));
+    },
+    $signature() {
+      return this.$this.$ti._eval$1("~(1,2)");
+    }
+  };
+  A.CastMap_entries_closure.prototype = {
+    call$1(e) {
+      var t1 = this.$this.$ti;
+      t1._eval$1("MapEntry<1,2>")._as(e);
+      return new A.MapEntry(t1._rest[2]._as(e.key), t1._rest[3]._as(e.value), t1._eval$1("MapEntry<3,4>"));
+    },
+    $signature() {
+      return this.$this.$ti._eval$1("MapEntry<3,4>(MapEntry<1,2>)");
+    }
   };
   A.LateError.prototype = {
     toString$0(_) {
@@ -5809,6 +8571,11 @@
     },
     get$isEmpty(_) {
       return this.get$length(this) === 0;
+    },
+    get$first(_) {
+      if (this.get$length(this) === 0)
+        throw A.wrapException(A.IterableElementError_noElement());
+      return this.elementAt$1(0, 0);
     },
     join$1(_, separator) {
       var first, t1, i, _this = this,
@@ -5876,6 +8643,12 @@
     },
     get$length(_) {
       return J.get$length$asx(this.__internal$_iterable);
+    },
+    get$isEmpty(_) {
+      return J.get$isEmpty$asx(this.__internal$_iterable);
+    },
+    get$first(_) {
+      return this._f.call$1(J.get$first$ax(this.__internal$_iterable));
     }
   };
   A.EfficientLengthMappedIterable.prototype = {$isEfficientLengthIterable: 1};
@@ -5926,17 +8699,105 @@
     },
     $isIterator: 1
   };
-  A.FixedLengthListMixin.prototype = {};
-  A.UnmodifiableListMixin.prototype = {};
+  A.TakeIterable.prototype = {
+    get$iterator(_) {
+      var t1 = this.__internal$_iterable;
+      return new A.TakeIterator(t1.get$iterator(t1), this._takeCount, A._instanceType(this)._eval$1("TakeIterator<1>"));
+    }
+  };
+  A.EfficientLengthTakeIterable.prototype = {
+    get$length(_) {
+      var t1 = this.__internal$_iterable,
+        iterableLength = t1.get$length(t1);
+      t1 = this._takeCount;
+      if (iterableLength > t1)
+        return t1;
+      return iterableLength;
+    },
+    $isEfficientLengthIterable: 1
+  };
+  A.TakeIterator.prototype = {
+    moveNext$0() {
+      if (--this._remaining >= 0)
+        return this._iterator.moveNext$0();
+      this._remaining = -1;
+      return false;
+    },
+    get$current() {
+      if (this._remaining < 0) {
+        this.$ti._precomputed1._as(null);
+        return null;
+      }
+      return this._iterator.get$current();
+    },
+    $isIterator: 1
+  };
+  A.WhereTypeIterable.prototype = {
+    get$iterator(_) {
+      return new A.WhereTypeIterator(J.get$iterator$ax(this._source), this.$ti._eval$1("WhereTypeIterator<1>"));
+    }
+  };
+  A.WhereTypeIterator.prototype = {
+    moveNext$0() {
+      var t1, t2;
+      for (t1 = this._source, t2 = this.$ti._precomputed1; t1.moveNext$0();)
+        if (t2._is(t1.get$current()))
+          return true;
+      return false;
+    },
+    get$current() {
+      return this.$ti._precomputed1._as(this._source.get$current());
+    },
+    $isIterator: 1
+  };
+  A.FixedLengthListMixin.prototype = {
+    set$length(receiver, newLength) {
+      throw A.wrapException(A.UnsupportedError$("Cannot change the length of a fixed-length list"));
+    },
+    add$1(receiver, value) {
+      A.instanceType(receiver)._eval$1("FixedLengthListMixin.E")._as(value);
+      throw A.wrapException(A.UnsupportedError$("Cannot add to a fixed-length list"));
+    }
+  };
+  A.UnmodifiableListMixin.prototype = {
+    $indexSet(_, index, value) {
+      A._instanceType(this)._eval$1("UnmodifiableListMixin.E")._as(value);
+      throw A.wrapException(A.UnsupportedError$("Cannot modify an unmodifiable list"));
+    },
+    set$length(_, newLength) {
+      throw A.wrapException(A.UnsupportedError$("Cannot change the length of an unmodifiable list"));
+    },
+    add$1(_, value) {
+      A._instanceType(this)._eval$1("UnmodifiableListMixin.E")._as(value);
+      throw A.wrapException(A.UnsupportedError$("Cannot add to an unmodifiable list"));
+    }
+  };
   A.UnmodifiableListBase.prototype = {};
   A._Record_2.prototype = {$recipe: "+(1,2)", $shape: 1};
   A._Record_3.prototype = {$recipe: "+(1,2,3)", $shape: 2};
+  A.ConstantMapView.prototype = {};
   A.ConstantMap.prototype = {
+    cast$2$0(_, $RK, $RV) {
+      var t1 = A._instanceType(this);
+      return A.Map_castFrom(this, t1._precomputed1, t1._rest[1], $RK, $RV);
+    },
     get$isEmpty(_) {
       return this.get$length(this) === 0;
     },
+    get$isNotEmpty(_) {
+      return this.get$length(this) !== 0;
+    },
     toString$0(_) {
       return A.MapBase_mapToString(this);
+    },
+    $indexSet(_, key, value) {
+      var t1 = A._instanceType(this);
+      t1._precomputed1._as(key);
+      t1._rest[1]._as(value);
+      A.ConstantMap__throwUnmodifiable();
+    },
+    remove$1(_, key) {
+      A.ConstantMap__throwUnmodifiable();
     },
     get$entries() {
       return new A._SyncStarIterable(this.entries$body$ConstantMap(), A._instanceType(this)._eval$1("_SyncStarIterable<MapEntry<1,2>>"));
@@ -6033,11 +8894,20 @@
     },
     get$keys() {
       return new A._KeysOrValues(this.get$_keys(), this.$ti._eval$1("_KeysOrValues<1>"));
+    },
+    get$values() {
+      return new A._KeysOrValues(this._values, this.$ti._eval$1("_KeysOrValues<2>"));
     }
   };
   A._KeysOrValues.prototype = {
     get$length(_) {
       return this._elements.length;
+    },
+    get$isEmpty(_) {
+      return 0 === this._elements.length;
+    },
+    get$isNotEmpty(_) {
+      return 0 !== this._elements.length;
     },
     get$iterator(_) {
       var t1 = this._elements;
@@ -6067,6 +8937,9 @@
     get$length(_) {
       return this.__js_helper$_length;
     },
+    get$isEmpty(_) {
+      return this.__js_helper$_length === 0;
+    },
     get$iterator(_) {
       var t1, _this = this,
         keys = _this.$keys;
@@ -6078,10 +8951,46 @@
       return new A._KeysOrValuesOrElementsIterator(t1, t1.length, _this.$ti._eval$1("_KeysOrValuesOrElementsIterator<1>"));
     },
     contains$1(_, key) {
+      if (typeof key != "string")
+        return false;
       if ("__proto__" === key)
         return false;
       return this._jsIndex.hasOwnProperty(key);
     }
+  };
+  A.GeneralConstantSet.prototype = {
+    get$length(_) {
+      return this._elements.length;
+    },
+    get$isEmpty(_) {
+      return this._elements.length === 0;
+    },
+    get$iterator(_) {
+      var t1 = this._elements;
+      return new A._KeysOrValuesOrElementsIterator(t1, t1.length, this.$ti._eval$1("_KeysOrValuesOrElementsIterator<1>"));
+    },
+    _getMap$0() {
+      var t1, t2, _i, key, _this = this,
+        backingMap = _this.$map;
+      if (backingMap == null) {
+        backingMap = new A.JsConstantLinkedHashMap(_this.$ti._eval$1("JsConstantLinkedHashMap<1,1>"));
+        for (t1 = _this._elements, t2 = t1.length, _i = 0; _i < t1.length; t1.length === t2 || (0, A.throwConcurrentModificationError)(t1), ++_i) {
+          key = t1[_i];
+          backingMap.$indexSet(0, key, key);
+        }
+        _this.$map = backingMap;
+      }
+      return backingMap;
+    },
+    contains$1(_, key) {
+      return this._getMap$0().containsKey$1(key);
+    }
+  };
+  A.Primitives_initTicker_closure.prototype = {
+    call$0() {
+      return B.JSNumber_methods.floor$0(1000 * this.performance.now());
+    },
+    $signature: 20
   };
   A.SafeToStringHook.prototype = {};
   A.TypeErrorDecoder.prototype = {
@@ -6205,17 +9114,38 @@
     get$isEmpty(_) {
       return this.__js_helper$_length === 0;
     },
+    get$isNotEmpty(_) {
+      return this.__js_helper$_length !== 0;
+    },
     get$keys() {
       return new A.LinkedHashMapKeysIterable(this, A._instanceType(this)._eval$1("LinkedHashMapKeysIterable<1>"));
+    },
+    get$values() {
+      return new A.LinkedHashMapValuesIterable(this, A._instanceType(this)._eval$1("LinkedHashMapValuesIterable<2>"));
     },
     get$entries() {
       return new A.LinkedHashMapEntriesIterable(this, A._instanceType(this)._eval$1("LinkedHashMapEntriesIterable<1,2>"));
     },
     containsKey$1(key) {
-      var strings = this._strings;
-      if (strings == null)
+      var strings, nums;
+      if (typeof key == "string") {
+        strings = this._strings;
+        if (strings == null)
+          return false;
+        return strings[key] != null;
+      } else if (typeof key == "number" && (key & 0x3fffffff) === key) {
+        nums = this._nums;
+        if (nums == null)
+          return false;
+        return nums[key] != null;
+      } else
+        return this.internalContainsKey$1(key);
+    },
+    internalContainsKey$1(key) {
+      var rest = this.__js_helper$_rest;
+      if (rest == null)
         return false;
-      return strings[key] != null;
+      return this.internalFindBucketIndex$2(rest[this.internalComputeHashCode$1(key)], key) >= 0;
     },
     addAll$1(_, other) {
       A._instanceType(this)._eval$1("Map<1,2>")._as(other).forEach$1(0, new A.JsLinkedHashMap_addAll_closure(this));
@@ -6284,9 +9214,51 @@
           bucket.push(_this._newLinkedCell$2(key, value));
       }
     },
+    putIfAbsent$2(key, ifAbsent) {
+      var t2, value, _this = this,
+        t1 = A._instanceType(_this);
+      t1._precomputed1._as(key);
+      t1._eval$1("2()")._as(ifAbsent);
+      if (_this.containsKey$1(key)) {
+        t2 = _this.$index(0, key);
+        return t2 == null ? t1._rest[1]._as(t2) : t2;
+      }
+      value = ifAbsent.call$0();
+      _this.$indexSet(0, key, value);
+      return value;
+    },
     remove$1(_, key) {
-      var t1 = this._removeHashTableEntry$2(this._strings, key);
-      return t1;
+      var _this = this;
+      if (typeof key == "string")
+        return _this.__js_helper$_removeHashTableEntry$2(_this._strings, key);
+      else if (typeof key == "number" && (key & 0x3fffffff) === key)
+        return _this.__js_helper$_removeHashTableEntry$2(_this._nums, key);
+      else
+        return _this.internalRemove$1(key);
+    },
+    internalRemove$1(key) {
+      var hash, bucket, index, cell, _this = this,
+        rest = _this.__js_helper$_rest;
+      if (rest == null)
+        return null;
+      hash = _this.internalComputeHashCode$1(key);
+      bucket = rest[hash];
+      index = _this.internalFindBucketIndex$2(bucket, key);
+      if (index < 0)
+        return null;
+      cell = bucket.splice(index, 1)[0];
+      _this.__js_helper$_unlinkCell$1(cell);
+      if (bucket.length === 0)
+        delete rest[hash];
+      return cell.hashMapCellValue;
+    },
+    clear$0(_) {
+      var _this = this;
+      if (_this.__js_helper$_length > 0) {
+        _this._strings = _this._nums = _this.__js_helper$_rest = _this._first = _this._last = null;
+        _this.__js_helper$_length = 0;
+        _this._modified$0();
+      }
     },
     forEach$1(_, action) {
       var cell, modifications, _this = this;
@@ -6311,14 +9283,14 @@
       else
         cell.hashMapCellValue = value;
     },
-    _removeHashTableEntry$2(table, key) {
+    __js_helper$_removeHashTableEntry$2(table, key) {
       var cell;
       if (table == null)
         return null;
       cell = table[key];
       if (cell == null)
         return null;
-      this._unlinkCell$1(cell);
+      this.__js_helper$_unlinkCell$1(cell);
       delete table[key];
       return cell.hashMapCellValue;
     },
@@ -6341,7 +9313,7 @@
       _this._modified$0();
       return cell;
     },
-    _unlinkCell$1(cell) {
+    __js_helper$_unlinkCell$1(cell) {
       var _this = this,
         previous = cell._previous,
         next = cell._next;
@@ -6428,6 +9400,9 @@
     get$length(_) {
       return this._map.__js_helper$_length;
     },
+    get$isEmpty(_) {
+      return this._map.__js_helper$_length === 0;
+    },
     get$iterator(_) {
       var t1 = this._map;
       return new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, this.$ti._eval$1("LinkedHashMapValueIterator<1>"));
@@ -6458,6 +9433,9 @@
     get$length(_) {
       return this._map.__js_helper$_length;
     },
+    get$isEmpty(_) {
+      return this._map.__js_helper$_length === 0;
+    },
     get$iterator(_) {
       var t1 = this._map;
       return new A.LinkedHashMapEntryIterator(t1, t1._modifications, t1._first, this.$ti._eval$1("LinkedHashMapEntryIterator<1,2>"));
@@ -6486,23 +9464,38 @@
     },
     $isIterator: 1
   };
+  A.JsConstantLinkedHashMap.prototype = {
+    internalComputeHashCode$1(key) {
+      return A.constantHashCode(key) & 1073741823;
+    },
+    internalFindBucketIndex$2(bucket, key) {
+      var $length, i;
+      if (bucket == null)
+        return -1;
+      $length = bucket.length;
+      for (i = 0; i < $length; ++i)
+        if (J.$eq$(bucket[i].hashMapCellKey, key))
+          return i;
+      return -1;
+    }
+  };
   A.initHooks_closure.prototype = {
     call$1(o) {
       return this.getTag(o);
     },
-    $signature: 11
+    $signature: 21
   };
   A.initHooks_closure0.prototype = {
     call$2(o, tag) {
       return this.getUnknownTag(o, tag);
     },
-    $signature: 17
+    $signature: 50
   };
   A.initHooks_closure1.prototype = {
     call$1(tag) {
       return this.prototypeForTag(A._asString(tag));
     },
-    $signature: 18
+    $signature: 13
   };
   A._Record.prototype = {
     toString$0(_) {
@@ -6557,9 +9550,7 @@
           B.JSArray_methods.$indexSet(result, last, names[i]);
         }
       }
-      result = A.List_List$from(result, false, type$.Object);
-      result.$flags = 3;
-      return result;
+      return A.List_List$unmodifiable(result, type$.Object);
     }
   };
   A._Record2.prototype = {
@@ -6602,14 +9593,28 @@
       t1 = _this._nativeRegExp;
       return _this._nativeGlobalRegExp = A.JSSyntaxRegExp_makeNative(_this.pattern, t1.multiline, !t1.ignoreCase, t1.unicode, t1.dotAll, "g");
     },
+    _computeHasCaptures$0() {
+      var t2,
+        t1 = this.pattern;
+      if (!B.JSString_methods.contains$1(t1, "("))
+        return false;
+      t2 = this._nativeRegExp.unicode ? "u" : "";
+      return new RegExp("(?:)|" + t1, t2).exec("").length > 1;
+    },
     firstMatch$1(string) {
       var m = this._nativeRegExp.exec(string);
       if (m == null)
         return null;
       return new A._MatchImplementation(m);
     },
+    allMatches$2(_, string, start) {
+      var t1 = string.length;
+      if (start > t1)
+        throw A.wrapException(A.RangeError$range(start, 0, t1, null, null));
+      return new A._AllMatchesIterable(this, string, start);
+    },
     allMatches$1(_, string) {
-      return new A._AllMatchesIterable(this, string, 0);
+      return this.allMatches$2(0, string, 0);
     },
     _execGlobal$2(string, start) {
       var match,
@@ -6699,6 +9704,13 @@
   A._StringAllMatchesIterable.prototype = {
     get$iterator(_) {
       return new A._StringAllMatchesIterator(this._input, this._pattern, this.__js_helper$_index);
+    },
+    get$first(_) {
+      var t1 = this._pattern,
+        index = this._input.indexOf(t1, this.__js_helper$_index);
+      if (index >= 0)
+        return new A.StringMatch(index, t1);
+      throw A.wrapException(A.IterableElementError_noElement());
     }
   };
   A._StringAllMatchesIterator.prototype = {
@@ -6737,7 +9749,16 @@
     },
     $isTrustedGetRuntimeType: 1
   };
-  A.NativeTypedData.prototype = {};
+  A.NativeTypedData.prototype = {
+    _invalidPosition$3(receiver, position, $length, $name) {
+      var t1 = A.RangeError$range(position, 0, $length, $name, null);
+      throw A.wrapException(t1);
+    },
+    _checkPosition$3(receiver, position, $length, $name) {
+      if (position >>> 0 !== position || position > $length)
+        this._invalidPosition$3(receiver, position, $length, $name);
+    }
+  };
   A.NativeByteData.prototype = {
     get$runtimeType(receiver) {
       return B.Type_ByteData_9dB;
@@ -6755,11 +9776,45 @@
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
+    $indexSet(receiver, index, value) {
+      A._asDouble(value);
+      receiver.$flags & 2 && A.throwUnsupportedOperation(receiver);
+      A._checkValidIndex(index, receiver, receiver.length);
+      receiver[index] = value;
+    },
     $isEfficientLengthIterable: 1,
     $isIterable: 1,
     $isList: 1
   };
-  A.NativeTypedArrayOfInt.prototype = {$isEfficientLengthIterable: 1, $isIterable: 1, $isList: 1};
+  A.NativeTypedArrayOfInt.prototype = {
+    $indexSet(receiver, index, value) {
+      A._asInt(value);
+      receiver.$flags & 2 && A.throwUnsupportedOperation(receiver);
+      A._checkValidIndex(index, receiver, receiver.length);
+      receiver[index] = value;
+    },
+    setRange$4(receiver, start, end, iterable, skipCount) {
+      var targetLength, count, source;
+      type$.Iterable_int._as(iterable);
+      receiver.$flags & 2 && A.throwUnsupportedOperation(receiver, 5);
+      targetLength = receiver.length;
+      this._checkPosition$3(receiver, start, targetLength, "start");
+      this._checkPosition$3(receiver, end, targetLength, "end");
+      if (start > end)
+        A.throwExpression(A.RangeError$range(start, 0, end, null, null));
+      count = end - start;
+      if (skipCount < 0)
+        A.throwExpression(A.ArgumentError$(skipCount, null));
+      if (16 - skipCount < count)
+        A.throwExpression(A.StateError$("Not enough elements"));
+      source = skipCount !== 0 || 16 !== count ? iterable.subarray(skipCount, skipCount + count) : iterable;
+      receiver.set(source, start);
+      return;
+    },
+    $isEfficientLengthIterable: 1,
+    $isIterable: 1,
+    $isList: 1
+  };
   A.NativeFloat32List.prototype = {
     get$runtimeType(receiver) {
       return B.Type_Float32List_9Kz;
@@ -6846,7 +9901,8 @@
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
-    $isTrustedGetRuntimeType: 1
+    $isTrustedGetRuntimeType: 1,
+    $isUint8List: 1
   };
   A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin.prototype = {};
   A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin.prototype = {};
@@ -6879,7 +9935,7 @@
       t1.storedCallback = null;
       f.call$0();
     },
-    $signature: 12
+    $signature: 2
   };
   A._AsyncRun__initializeScheduleImmediate_closure.prototype = {
     call$1(callback) {
@@ -6889,33 +9945,72 @@
       t2 = this.span;
       t1.firstChild ? t1.removeChild(t2) : t1.appendChild(t2);
     },
-    $signature: 15
+    $signature: 27
   };
   A._AsyncRun__scheduleImmediateJsOverride_internalCallback.prototype = {
     call$0() {
       this.callback.call$0();
     },
-    $signature: 9
+    $signature: 8
   };
   A._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback.prototype = {
     call$0() {
       this.callback.call$0();
     },
-    $signature: 9
+    $signature: 8
   };
   A._TimerImpl.prototype = {
     _TimerImpl$2(milliseconds, callback) {
       if (self.setTimeout != null)
-        self.setTimeout(A.convertDartClosureToJS(new A._TimerImpl_internalCallback(this, callback), 0), milliseconds);
+        this._handle = self.setTimeout(A.convertDartClosureToJS(new A._TimerImpl_internalCallback(this, callback), 0), milliseconds);
       else
         throw A.wrapException(A.UnsupportedError$("`setTimeout()` not found."));
-    }
+    },
+    _TimerImpl$periodic$2(milliseconds, callback) {
+      if (self.setTimeout != null)
+        this._handle = self.setInterval(A.convertDartClosureToJS(new A._TimerImpl$periodic_closure(this, milliseconds, Date.now(), callback), 0), milliseconds);
+      else
+        throw A.wrapException(A.UnsupportedError$("Periodic timer."));
+    },
+    cancel$0() {
+      if (self.setTimeout != null) {
+        var t1 = this._handle;
+        if (t1 == null)
+          return;
+        if (this._once)
+          self.clearTimeout(t1);
+        else
+          self.clearInterval(t1);
+        this._handle = null;
+      } else
+        throw A.wrapException(A.UnsupportedError$("Canceling a timer."));
+    },
+    $isTimer: 1
   };
   A._TimerImpl_internalCallback.prototype = {
     call$0() {
+      var t1 = this.$this;
+      t1._handle = null;
+      t1._tick = 1;
       this.callback.call$0();
     },
     $signature: 0
+  };
+  A._TimerImpl$periodic_closure.prototype = {
+    call$0() {
+      var duration, _this = this,
+        t1 = _this.$this,
+        tick = t1._tick + 1,
+        t2 = _this.milliseconds;
+      if (t2 > 0) {
+        duration = Date.now() - _this.start;
+        if (duration > (tick + 1) * t2)
+          tick = B.JSInt_methods.$tdiv(duration, t2);
+      }
+      t1._tick = tick;
+      _this.callback.call$1(t1);
+    },
+    $signature: 8
   };
   A._AsyncAwaitCompleter.prototype = {
     complete$1(value) {
@@ -6946,19 +10041,19 @@
     call$1(result) {
       return this.bodyFunction.call$2(0, result);
     },
-    $signature: 2
+    $signature: 4
   };
   A._awaitOnObject_closure0.prototype = {
     call$2(error, stackTrace) {
       this.bodyFunction.call$2(1, new A.ExceptionAndStackTrace(error, type$.StackTrace._as(stackTrace)));
     },
-    $signature: 26
+    $signature: 45
   };
   A._wrapJsFunctionForAsync_closure.prototype = {
     call$2(errorCode, result) {
       this.$protected(A._asInt(errorCode), result);
     },
-    $signature: 31
+    $signature: 37
   };
   A._SyncStarIterator.prototype = {
     get$current() {
@@ -7067,6 +10162,32 @@
     get$stackTrace() {
       return this.stackTrace;
     }
+  };
+  A.Future_Future$delayed_closure.prototype = {
+    call$0() {
+      var computationResult, e, s, exception, t2, t3, _this = this,
+        t1 = _this.computation;
+      if (t1 == null) {
+        _this.T._as(null);
+        _this.result._complete$1(null);
+      } else {
+        computationResult = null;
+        try {
+          computationResult = t1.call$0();
+        } catch (exception) {
+          e = A.unwrapException(exception);
+          s = A.getTraceFromException(exception);
+          t1 = e;
+          t2 = s;
+          t3 = A._interceptError(t1, t2);
+          t1 = new A.AsyncError(t1, t2);
+          _this.result._completeErrorObject$1(t1);
+          return;
+        }
+        _this.result._complete$1(computationResult);
+      }
+    },
+    $signature: 0
   };
   A._Completer.prototype = {
     completeError$2(error, stackTrace) {
@@ -7213,6 +10334,20 @@
       }
       return prev;
     },
+    _complete$1(value) {
+      var listeners, _this = this,
+        t1 = _this.$ti;
+      t1._eval$1("1/")._as(value);
+      if (t1._eval$1("Future<1>")._is(value))
+        A._Future__chainCoreFuture(value, _this, true);
+      else {
+        listeners = _this._removeListeners$0();
+        t1._precomputed1._as(value);
+        _this._state = 8;
+        _this._resultOrListeners = value;
+        A._Future__propagateToListeners(_this, listeners);
+      }
+    },
     _completeWithValue$1(value) {
       var listeners, _this = this;
       _this.$ti._precomputed1._as(value);
@@ -7261,6 +10396,22 @@
     _asyncCompleteErrorObject$1(error) {
       this._state ^= 2;
       A._rootScheduleMicrotask(null, null, this._zone, type$.void_Function._as(new A._Future__asyncCompleteErrorObject_closure(this, error)));
+    },
+    timeout$2$onTimeout(timeLimit, onTimeout) {
+      var t3, _future, _this = this, t1 = {},
+        t2 = _this.$ti;
+      t2._eval$1("1/()?")._as(onTimeout);
+      if ((_this._state & 24) !== 0) {
+        t1 = new A._Future($.Zone__current, t2);
+        t1._asyncComplete$1(_this);
+        return t1;
+      }
+      t3 = $.Zone__current;
+      _future = new A._Future(t3, t2);
+      t1.timer = null;
+      t1.timer = A.Timer_Timer(timeLimit, new A._Future_timeout_closure(_this, _future, t3, t2._eval$1("1/()")._as(onTimeout)));
+      _this.then$1$2$onError(new A._Future_timeout_closure0(t1, _this, _future), new A._Future_timeout_closure1(t1, _future), type$.Null);
+      return _future;
     },
     $isFuture: 1
   };
@@ -7341,7 +10492,7 @@
     call$1(__wc0_formal) {
       this.joinedResult._completeWithResultOf$1(this.originalSource);
     },
-    $signature: 12
+    $signature: 2
   };
   A._Future__propagateToListeners_handleWhenCompleteCallback_closure0.prototype = {
     call$2(e, s) {
@@ -7349,7 +10500,7 @@
       type$.StackTrace._as(s);
       this.joinedResult._completeErrorObject$1(new A.AsyncError(e, s));
     },
-    $signature: 14
+    $signature: 15
   };
   A._Future__propagateToListeners_handleValueCallback.prototype = {
     call$0() {
@@ -7407,6 +10558,50 @@
     },
     $signature: 0
   };
+  A._Future_timeout_closure.prototype = {
+    call$0() {
+      var e, s, exception, t1, t2, _this = this;
+      try {
+        _this._future._complete$1(_this.zone.run$1$1(_this.onTimeoutHandler, _this.$this.$ti._eval$1("1/")));
+      } catch (exception) {
+        e = A.unwrapException(exception);
+        s = A.getTraceFromException(exception);
+        t1 = e;
+        t2 = s;
+        if (t2 == null)
+          t2 = A.AsyncError_defaultStackTrace(t1);
+        _this._future._completeErrorObject$1(new A.AsyncError(t1, t2));
+      }
+    },
+    $signature: 0
+  };
+  A._Future_timeout_closure0.prototype = {
+    call$1(v) {
+      var t1;
+      this.$this.$ti._precomputed1._as(v);
+      t1 = this._box_0.timer;
+      if (t1._handle != null) {
+        t1.cancel$0();
+        this._future._completeWithValue$1(v);
+      }
+    },
+    $signature() {
+      return this.$this.$ti._eval$1("Null(1)");
+    }
+  };
+  A._Future_timeout_closure1.prototype = {
+    call$2(e, s) {
+      var t1;
+      A._asObject(e);
+      type$.StackTrace._as(s);
+      t1 = this._box_0.timer;
+      if (t1._handle != null) {
+        t1.cancel$0();
+        this._future._completeErrorObject$1(new A.AsyncError(e, s));
+      }
+    },
+    $signature: 15
+  };
   A._AsyncCallbackEntry.prototype = {};
   A.Stream.prototype = {
     get$length(_) {
@@ -7431,14 +10626,7 @@
   };
   A.Stream_length_closure0.prototype = {
     call$0() {
-      var t1 = this.future,
-        t2 = t1.$ti,
-        t3 = t2._eval$1("1/")._as(this._box_0.count),
-        listeners = t1._removeListeners$0();
-      t2._precomputed1._as(t3);
-      t1._state = 8;
-      t1._resultOrListeners = t3;
-      A._Future__propagateToListeners(t1, listeners);
+      this.future._complete$1(this._box_0.count);
     },
     $signature: 0
   };
@@ -7528,6 +10716,263 @@
     },
     $signature: 0
   };
+  A._HashMap.prototype = {
+    get$length(_) {
+      return this._collection$_length;
+    },
+    get$isEmpty(_) {
+      return this._collection$_length === 0;
+    },
+    get$isNotEmpty(_) {
+      return this._collection$_length !== 0;
+    },
+    get$keys() {
+      return new A._HashMapKeyIterable(this, this.$ti._eval$1("_HashMapKeyIterable<1>"));
+    },
+    get$values() {
+      var t1 = this.$ti;
+      return A.MappedIterable_MappedIterable(new A._HashMapKeyIterable(this, t1._eval$1("_HashMapKeyIterable<1>")), new A._HashMap_values_closure(this), t1._precomputed1, t1._rest[1]);
+    },
+    containsKey$1(key) {
+      var strings, nums;
+      if (typeof key == "string" && key !== "__proto__") {
+        strings = this._collection$_strings;
+        return strings == null ? false : strings[key] != null;
+      } else if (typeof key == "number" && (key & 1073741823) === key) {
+        nums = this._collection$_nums;
+        return nums == null ? false : nums[key] != null;
+      } else
+        return this._containsKey$1(key);
+    },
+    _containsKey$1(key) {
+      var rest = this._collection$_rest;
+      if (rest == null)
+        return false;
+      return this._findBucketIndex$2(this._getBucket$2(rest, key), key) >= 0;
+    },
+    $index(_, key) {
+      var strings, t1, nums;
+      if (typeof key == "string" && key !== "__proto__") {
+        strings = this._collection$_strings;
+        t1 = strings == null ? null : A._HashMap__getTableEntry(strings, key);
+        return t1;
+      } else if (typeof key == "number" && (key & 1073741823) === key) {
+        nums = this._collection$_nums;
+        t1 = nums == null ? null : A._HashMap__getTableEntry(nums, key);
+        return t1;
+      } else
+        return this._get$1(key);
+    },
+    _get$1(key) {
+      var bucket, index,
+        rest = this._collection$_rest;
+      if (rest == null)
+        return null;
+      bucket = this._getBucket$2(rest, key);
+      index = this._findBucketIndex$2(bucket, key);
+      return index < 0 ? null : bucket[index + 1];
+    },
+    $indexSet(_, key, value) {
+      var strings, nums, rest, hash, bucket, index, _this = this,
+        t1 = _this.$ti;
+      t1._precomputed1._as(key);
+      t1._rest[1]._as(value);
+      if (typeof key == "string" && key !== "__proto__") {
+        strings = _this._collection$_strings;
+        _this._collection$_addHashTableEntry$3(strings == null ? _this._collection$_strings = A._HashMap__newHashTable() : strings, key, value);
+      } else if (typeof key == "number" && (key & 1073741823) === key) {
+        nums = _this._collection$_nums;
+        _this._collection$_addHashTableEntry$3(nums == null ? _this._collection$_nums = A._HashMap__newHashTable() : nums, key, value);
+      } else {
+        rest = _this._collection$_rest;
+        if (rest == null)
+          rest = _this._collection$_rest = A._HashMap__newHashTable();
+        hash = A.objectHashCode(key) & 1073741823;
+        bucket = rest[hash];
+        if (bucket == null) {
+          A._HashMap__setTableEntry(rest, hash, [key, value]);
+          ++_this._collection$_length;
+          _this._collection$_keys = null;
+        } else {
+          index = _this._findBucketIndex$2(bucket, key);
+          if (index >= 0)
+            bucket[index + 1] = value;
+          else {
+            bucket.push(key, value);
+            ++_this._collection$_length;
+            _this._collection$_keys = null;
+          }
+        }
+      }
+    },
+    remove$1(_, key) {
+      var _this = this;
+      if (typeof key == "string" && key !== "__proto__")
+        return _this._removeHashTableEntry$2(_this._collection$_strings, key);
+      else if (typeof key == "number" && (key & 1073741823) === key)
+        return _this._removeHashTableEntry$2(_this._collection$_nums, key);
+      else
+        return _this._remove$1(key);
+    },
+    _remove$1(key) {
+      var hash, bucket, index, result, _this = this,
+        rest = _this._collection$_rest;
+      if (rest == null)
+        return null;
+      hash = A.objectHashCode(key) & 1073741823;
+      bucket = rest[hash];
+      index = _this._findBucketIndex$2(bucket, key);
+      if (index < 0)
+        return null;
+      --_this._collection$_length;
+      _this._collection$_keys = null;
+      result = bucket.splice(index, 2)[1];
+      if (0 === bucket.length)
+        delete rest[hash];
+      return result;
+    },
+    forEach$1(_, action) {
+      var keys, $length, t2, i, key, t3, _this = this,
+        t1 = _this.$ti;
+      t1._eval$1("~(1,2)")._as(action);
+      keys = _this._collection$_computeKeys$0();
+      for ($length = keys.length, t2 = t1._precomputed1, t1 = t1._rest[1], i = 0; i < $length; ++i) {
+        key = keys[i];
+        t2._as(key);
+        t3 = _this.$index(0, key);
+        action.call$2(key, t3 == null ? t1._as(t3) : t3);
+        if (keys !== _this._collection$_keys)
+          throw A.wrapException(A.ConcurrentModificationError$(_this));
+      }
+    },
+    _collection$_computeKeys$0() {
+      var strings, index, names, entries, i, nums, rest, bucket, $length, i0, _this = this,
+        result = _this._collection$_keys;
+      if (result != null)
+        return result;
+      result = A.List_List$filled(_this._collection$_length, null, false, type$.dynamic);
+      strings = _this._collection$_strings;
+      index = 0;
+      if (strings != null) {
+        names = Object.getOwnPropertyNames(strings);
+        entries = names.length;
+        for (i = 0; i < entries; ++i) {
+          result[index] = names[i];
+          ++index;
+        }
+      }
+      nums = _this._collection$_nums;
+      if (nums != null) {
+        names = Object.getOwnPropertyNames(nums);
+        entries = names.length;
+        for (i = 0; i < entries; ++i) {
+          result[index] = +names[i];
+          ++index;
+        }
+      }
+      rest = _this._collection$_rest;
+      if (rest != null) {
+        names = Object.getOwnPropertyNames(rest);
+        entries = names.length;
+        for (i = 0; i < entries; ++i) {
+          bucket = rest[names[i]];
+          $length = bucket.length;
+          for (i0 = 0; i0 < $length; i0 += 2) {
+            result[index] = bucket[i0];
+            ++index;
+          }
+        }
+      }
+      return _this._collection$_keys = result;
+    },
+    _collection$_addHashTableEntry$3(table, key, value) {
+      var t1 = this.$ti;
+      t1._precomputed1._as(key);
+      t1._rest[1]._as(value);
+      if (table[key] == null) {
+        ++this._collection$_length;
+        this._collection$_keys = null;
+      }
+      A._HashMap__setTableEntry(table, key, value);
+    },
+    _removeHashTableEntry$2(table, key) {
+      var value;
+      if (table != null && table[key] != null) {
+        value = this.$ti._rest[1]._as(A._HashMap__getTableEntry(table, key));
+        delete table[key];
+        --this._collection$_length;
+        this._collection$_keys = null;
+        return value;
+      } else
+        return null;
+    },
+    _getBucket$2(table, key) {
+      return table[A.objectHashCode(key) & 1073741823];
+    }
+  };
+  A._HashMap_values_closure.prototype = {
+    call$1(each) {
+      var t1 = this.$this,
+        t2 = t1.$ti;
+      t1 = t1.$index(0, t2._precomputed1._as(each));
+      return t1 == null ? t2._rest[1]._as(t1) : t1;
+    },
+    $signature() {
+      return this.$this.$ti._eval$1("2(1)");
+    }
+  };
+  A._IdentityHashMap.prototype = {
+    _findBucketIndex$2(bucket, key) {
+      var $length, i, t1;
+      if (bucket == null)
+        return -1;
+      $length = bucket.length;
+      for (i = 0; i < $length; i += 2) {
+        t1 = bucket[i];
+        if (t1 == null ? key == null : t1 === key)
+          return i;
+      }
+      return -1;
+    }
+  };
+  A._HashMapKeyIterable.prototype = {
+    get$length(_) {
+      return this._collection$_map._collection$_length;
+    },
+    get$isEmpty(_) {
+      return this._collection$_map._collection$_length === 0;
+    },
+    get$isNotEmpty(_) {
+      return this._collection$_map._collection$_length !== 0;
+    },
+    get$iterator(_) {
+      var t1 = this._collection$_map;
+      return new A._HashMapKeyIterator(t1, t1._collection$_computeKeys$0(), this.$ti._eval$1("_HashMapKeyIterator<1>"));
+    }
+  };
+  A._HashMapKeyIterator.prototype = {
+    get$current() {
+      var t1 = this._collection$_current;
+      return t1 == null ? this.$ti._precomputed1._as(t1) : t1;
+    },
+    moveNext$0() {
+      var _this = this,
+        keys = _this._collection$_keys,
+        offset = _this._offset,
+        t1 = _this._collection$_map;
+      if (keys !== t1._collection$_keys)
+        throw A.wrapException(A.ConcurrentModificationError$(t1));
+      else if (offset >= keys.length) {
+        _this._collection$_current = null;
+        return false;
+      } else {
+        _this._collection$_current = keys[offset];
+        _this._offset = offset + 1;
+        return true;
+      }
+    },
+    $isIterator: 1
+  };
   A._LinkedHashSet.prototype = {
     get$iterator(_) {
       var _this = this,
@@ -7538,23 +10983,35 @@
     get$length(_) {
       return this._collection$_length;
     },
+    get$isEmpty(_) {
+      return this._collection$_length === 0;
+    },
     contains$1(_, object) {
-      var strings, t1;
-      if (object !== "__proto__") {
+      var strings, nums;
+      if (typeof object == "string" && object !== "__proto__") {
         strings = this._collection$_strings;
         if (strings == null)
           return false;
         return type$.nullable__LinkedHashSetCell._as(strings[object]) != null;
-      } else {
-        t1 = this._contains$1(object);
-        return t1;
-      }
+      } else if (typeof object == "number" && (object & 1073741823) === object) {
+        nums = this._collection$_nums;
+        if (nums == null)
+          return false;
+        return type$.nullable__LinkedHashSetCell._as(nums[object]) != null;
+      } else
+        return this._contains$1(object);
     },
     _contains$1(object) {
       var rest = this._collection$_rest;
       if (rest == null)
         return false;
-      return this._findBucketIndex$2(rest[B.JSString_methods.get$hashCode(object) & 1073741823], object) >= 0;
+      return this._findBucketIndex$2(rest[J.get$hashCode$(object) & 1073741823], object) >= 0;
+    },
+    get$first(_) {
+      var first = this._collection$_first;
+      if (first == null)
+        throw A.wrapException(A.StateError$("No elements"));
+      return this.$ti._precomputed1._as(first._element);
     },
     add$1(_, element) {
       var strings, nums, _this = this;
@@ -7585,6 +11042,31 @@
       }
       return true;
     },
+    remove$1(_, object) {
+      var _this = this;
+      if (typeof object == "string" && object !== "__proto__")
+        return _this._removeHashTableEntry$2(_this._collection$_strings, object);
+      else if (typeof object == "number" && (object & 1073741823) === object)
+        return _this._removeHashTableEntry$2(_this._collection$_nums, object);
+      else
+        return _this._remove$1(object);
+    },
+    _remove$1(object) {
+      var hash, bucket, index, cell,
+        rest = this._collection$_rest;
+      if (rest == null)
+        return false;
+      hash = J.get$hashCode$(object) & 1073741823;
+      bucket = rest[hash];
+      index = this._findBucketIndex$2(bucket, object);
+      if (index < 0)
+        return false;
+      cell = bucket.splice(index, 1)[0];
+      if (0 === bucket.length)
+        delete rest[hash];
+      this._unlinkCell$1(cell);
+      return true;
+    },
     _collection$_addHashTableEntry$2(table, element) {
       this.$ti._precomputed1._as(element);
       if (type$.nullable__LinkedHashSetCell._as(table[element]) != null)
@@ -7592,16 +11074,49 @@
       table[element] = this._collection$_newLinkedCell$1(element);
       return true;
     },
+    _removeHashTableEntry$2(table, element) {
+      var cell;
+      if (table == null)
+        return false;
+      cell = type$.nullable__LinkedHashSetCell._as(table[element]);
+      if (cell == null)
+        return false;
+      this._unlinkCell$1(cell);
+      delete table[element];
+      return true;
+    },
+    _collection$_modified$0() {
+      this._collection$_modifications = this._collection$_modifications + 1 & 1073741823;
+    },
     _collection$_newLinkedCell$1(element) {
-      var _this = this,
+      var t1, _this = this,
         cell = new A._LinkedHashSetCell(_this.$ti._precomputed1._as(element));
       if (_this._collection$_first == null)
         _this._collection$_first = _this._collection$_last = cell;
-      else
-        _this._collection$_last = _this._collection$_last._collection$_next = cell;
+      else {
+        t1 = _this._collection$_last;
+        t1.toString;
+        cell._collection$_previous = t1;
+        _this._collection$_last = t1._collection$_next = cell;
+      }
       ++_this._collection$_length;
-      _this._collection$_modifications = _this._collection$_modifications + 1 & 1073741823;
+      _this._collection$_modified$0();
       return cell;
+    },
+    _unlinkCell$1(cell) {
+      var _this = this,
+        previous = cell._collection$_previous,
+        next = cell._collection$_next;
+      if (previous == null)
+        _this._collection$_first = next;
+      else
+        previous._collection$_next = next;
+      if (next == null)
+        _this._collection$_last = previous;
+      else
+        next._collection$_previous = previous;
+      --_this._collection$_length;
+      _this._collection$_modified$0();
     },
     _findBucketIndex$2(bucket, element) {
       var $length, i;
@@ -7638,6 +11153,12 @@
     },
     $isIterator: 1
   };
+  A.LinkedHashMap_LinkedHashMap$from_closure.prototype = {
+    call$2(k, v) {
+      this.result.$indexSet(0, this.K._as(k), this.V._as(v));
+    },
+    $signature: 36
+  };
   A.ListBase.prototype = {
     get$iterator(receiver) {
       return new A.ListIterator(receiver, this.get$length(receiver), A.instanceType(receiver)._eval$1("ListIterator<ListBase.E>"));
@@ -7645,8 +11166,16 @@
     elementAt$1(receiver, index) {
       return this.$index(receiver, index);
     },
+    get$isEmpty(receiver) {
+      return this.get$length(receiver) === 0;
+    },
     get$isNotEmpty(receiver) {
       return this.get$length(receiver) !== 0;
+    },
+    get$first(receiver) {
+      if (this.get$length(receiver) === 0)
+        throw A.wrapException(A.IterableElementError_noElement());
+      return this.$index(receiver, 0);
     },
     any$1(receiver, test) {
       var $length, i;
@@ -7660,9 +11189,30 @@
       }
       return false;
     },
+    where$1(receiver, test) {
+      var t1 = A.instanceType(receiver);
+      return new A.WhereIterable(receiver, t1._eval$1("bool(ListBase.E)")._as(test), t1._eval$1("WhereIterable<ListBase.E>"));
+    },
+    whereType$1$0(receiver, $T) {
+      return new A.WhereTypeIterable(receiver, $T._eval$1("WhereTypeIterable<0>"));
+    },
     map$1$1(receiver, f, $T) {
       var t1 = A.instanceType(receiver);
       return new A.MappedListIterable(receiver, t1._bind$1($T)._eval$1("1(ListBase.E)")._as(f), t1._eval$1("@<ListBase.E>")._bind$1($T)._eval$1("MappedListIterable<1,2>"));
+    },
+    add$1(receiver, element) {
+      var t1;
+      A.instanceType(receiver)._eval$1("ListBase.E")._as(element);
+      t1 = this.get$length(receiver);
+      this.set$length(receiver, t1 + 1);
+      this.$indexSet(receiver, t1, element);
+    },
+    fillRange$3(receiver, start, end, fill) {
+      var i;
+      A.instanceType(receiver)._eval$1("ListBase.E?")._as(fill);
+      A.RangeError_checkValidRange(start, end, this.get$length(receiver));
+      for (i = start; i < end; ++i)
+        this.$indexSet(receiver, i, fill);
     },
     toString$0(receiver) {
       return A.Iterable_iterableToFullString(receiver, "[", "]");
@@ -7672,6 +11222,10 @@
     $isList: 1
   };
   A.MapBase.prototype = {
+    cast$2$0(_, $RK, $RV) {
+      var t1 = A._instanceType(this);
+      return A.Map_castFrom(this, t1._eval$1("MapBase.K"), t1._eval$1("MapBase.V"), $RK, $RV);
+    },
     forEach$1(_, action) {
       var t2, key, t3,
         t1 = A._instanceType(this);
@@ -7698,6 +11252,20 @@
       }
       return result;
     },
+    removeWhere$1(_, test) {
+      var keysToRemove, t2, key, t3, _i, _this = this,
+        t1 = A._instanceType(_this);
+      t1._eval$1("bool(MapBase.K,MapBase.V)")._as(test);
+      keysToRemove = A._setArrayType([], t1._eval$1("JSArray<MapBase.K>"));
+      for (t2 = _this.get$keys(), t2 = t2.get$iterator(t2), t1 = t1._eval$1("MapBase.V"); t2.moveNext$0();) {
+        key = t2.get$current();
+        t3 = _this.$index(0, key);
+        if (test.call$2(key, t3 == null ? t1._as(t3) : t3))
+          B.JSArray_methods.add$1(keysToRemove, key);
+      }
+      for (t1 = keysToRemove.length, _i = 0; _i < keysToRemove.length; keysToRemove.length === t1 || (0, A.throwConcurrentModificationError)(keysToRemove), ++_i)
+        _this.remove$1(0, keysToRemove[_i]);
+    },
     get$length(_) {
       var t1 = this.get$keys();
       return t1.get$length(t1);
@@ -7705,6 +11273,13 @@
     get$isEmpty(_) {
       var t1 = this.get$keys();
       return t1.get$isEmpty(t1);
+    },
+    get$isNotEmpty(_) {
+      var t1 = this.get$keys();
+      return t1.get$isNotEmpty(t1);
+    },
+    get$values() {
+      return new A._MapBaseValueIterable(this, A._instanceType(this)._eval$1("_MapBaseValueIterable<MapBase.K,MapBase.V>"));
     },
     toString$0(_) {
       return A.MapBase_mapToString(this);
@@ -7738,9 +11313,107 @@
       t2 = A.S(v);
       t1._contents += t2;
     },
-    $signature: 10
+    $signature: 16
+  };
+  A._MapBaseValueIterable.prototype = {
+    get$length(_) {
+      var t1 = this._collection$_map;
+      return t1.get$length(t1);
+    },
+    get$isEmpty(_) {
+      var t1 = this._collection$_map;
+      return t1.get$isEmpty(t1);
+    },
+    get$isNotEmpty(_) {
+      var t1 = this._collection$_map;
+      return t1.get$isNotEmpty(t1);
+    },
+    get$first(_) {
+      var t1 = this._collection$_map,
+        t2 = t1.get$keys();
+      t2 = t1.$index(0, t2.get$first(t2));
+      return t2 == null ? this.$ti._rest[1]._as(t2) : t2;
+    },
+    get$iterator(_) {
+      var t1 = this._collection$_map,
+        t2 = t1.get$keys();
+      return new A._MapBaseValueIterator(t2.get$iterator(t2), t1, this.$ti._eval$1("_MapBaseValueIterator<1,2>"));
+    }
+  };
+  A._MapBaseValueIterator.prototype = {
+    moveNext$0() {
+      var _this = this,
+        t1 = _this._collection$_keys;
+      if (t1.moveNext$0()) {
+        _this._collection$_current = _this._collection$_map.$index(0, t1.get$current());
+        return true;
+      }
+      _this._collection$_current = null;
+      return false;
+    },
+    get$current() {
+      var t1 = this._collection$_current;
+      return t1 == null ? this.$ti._rest[1]._as(t1) : t1;
+    },
+    $isIterator: 1
+  };
+  A._UnmodifiableMapMixin.prototype = {
+    $indexSet(_, key, value) {
+      var t1 = A._instanceType(this);
+      t1._precomputed1._as(key);
+      t1._rest[1]._as(value);
+      throw A.wrapException(A.UnsupportedError$("Cannot modify unmodifiable map"));
+    }
+  };
+  A.MapView.prototype = {
+    cast$2$0(_, $RK, $RV) {
+      return this._collection$_map.cast$2$0(0, $RK, $RV);
+    },
+    $index(_, key) {
+      return this._collection$_map.$index(0, key);
+    },
+    $indexSet(_, key, value) {
+      var t1 = A._instanceType(this);
+      this._collection$_map.$indexSet(0, t1._precomputed1._as(key), t1._rest[1]._as(value));
+    },
+    forEach$1(_, action) {
+      this._collection$_map.forEach$1(0, A._instanceType(this)._eval$1("~(1,2)")._as(action));
+    },
+    get$isEmpty(_) {
+      var t1 = this._collection$_map;
+      return t1.get$isEmpty(t1);
+    },
+    get$isNotEmpty(_) {
+      var t1 = this._collection$_map;
+      return t1.get$isNotEmpty(t1);
+    },
+    get$length(_) {
+      var t1 = this._collection$_map;
+      return t1.get$length(t1);
+    },
+    toString$0(_) {
+      return this._collection$_map.toString$0(0);
+    },
+    get$values() {
+      return this._collection$_map.get$values();
+    },
+    get$entries() {
+      return this._collection$_map.get$entries();
+    },
+    map$2$1(_, transform, $K2, $V2) {
+      return this._collection$_map.map$2$1(0, A._instanceType(this)._bind$1($K2)._bind$1($V2)._eval$1("MapEntry<1,2>(3,4)")._as(transform), $K2, $V2);
+    },
+    $isMap: 1
+  };
+  A.UnmodifiableMapView.prototype = {
+    cast$2$0(_, $RK, $RV) {
+      return new A.UnmodifiableMapView(this._collection$_map.cast$2$0(0, $RK, $RV), $RK._eval$1("@<0>")._bind$1($RV)._eval$1("UnmodifiableMapView<1,2>"));
+    }
   };
   A.SetBase.prototype = {
+    get$isEmpty(_) {
+      return this.get$length(this) === 0;
+    },
     map$1$1(_, f, $T) {
       var t1 = A._instanceType(this);
       return new A.EfficientLengthMappedIterable(this, t1._bind$1($T)._eval$1("1(2)")._as(f), t1._eval$1("@<1>")._bind$1($T)._eval$1("EfficientLengthMappedIterable<1,2>"));
@@ -7748,11 +11421,18 @@
     toString$0(_) {
       return A.Iterable_iterableToFullString(this, "{", "}");
     },
+    get$first(_) {
+      var it = this.get$iterator(this);
+      if (!it.moveNext$0())
+        throw A.wrapException(A.IterableElementError_noElement());
+      return it.get$current();
+    },
     $isEfficientLengthIterable: 1,
     $isIterable: 1,
     $isSet: 1
   };
   A._SetBase.prototype = {};
+  A._UnmodifiableMapView_MapView__UnmodifiableMapMixin.prototype = {};
   A._JsonMap.prototype = {
     $index(_, key) {
       var result,
@@ -7772,12 +11452,49 @@
     get$isEmpty(_) {
       return this.get$length(0) === 0;
     },
+    get$isNotEmpty(_) {
+      return this.get$length(0) > 0;
+    },
     get$keys() {
       if (this._processed == null) {
         var t1 = this._data;
         return new A.LinkedHashMapKeysIterable(t1, A._instanceType(t1)._eval$1("LinkedHashMapKeysIterable<1>"));
       }
       return new A._JsonMapKeyIterable(this);
+    },
+    get$values() {
+      var t1, _this = this;
+      if (_this._processed == null) {
+        t1 = _this._data;
+        return new A.LinkedHashMapValuesIterable(t1, A._instanceType(t1)._eval$1("LinkedHashMapValuesIterable<2>"));
+      }
+      return A.MappedIterable_MappedIterable(_this._computeKeys$0(), new A._JsonMap_values_closure(_this), type$.String, type$.dynamic);
+    },
+    $indexSet(_, key, value) {
+      var processed, original, _this = this;
+      A._asString(key);
+      if (_this._processed == null)
+        _this._data.$indexSet(0, key, value);
+      else if (_this.containsKey$1(key)) {
+        processed = _this._processed;
+        processed[key] = value;
+        original = _this._original;
+        if (original == null ? processed != null : original !== processed)
+          original[key] = null;
+      } else
+        _this._upgrade$0().$indexSet(0, key, value);
+    },
+    containsKey$1(key) {
+      if (this._processed == null)
+        return this._data.containsKey$1(key);
+      if (typeof key != "string")
+        return false;
+      return Object.prototype.hasOwnProperty.call(this._original, key);
+    },
+    remove$1(_, key) {
+      if (this._processed != null && !this.containsKey$1(key))
+        return null;
+      return this._upgrade$0().remove$1(0, key);
     },
     forEach$1(_, f) {
       var keys, i, key, value, _this = this;
@@ -7803,6 +11520,23 @@
         keys = this._data = A._setArrayType(Object.keys(this._original), type$.JSArray_String);
       return keys;
     },
+    _upgrade$0() {
+      var result, keys, i, t1, key, _this = this;
+      if (_this._processed == null)
+        return _this._data;
+      result = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic);
+      keys = _this._computeKeys$0();
+      for (i = 0; t1 = keys.length, i < t1; ++i) {
+        key = keys[i];
+        result.$indexSet(0, key, _this.$index(0, key));
+      }
+      if (t1 === 0)
+        B.JSArray_methods.add$1(keys, "");
+      else
+        B.JSArray_methods.clear$0(keys);
+      _this._original = _this._processed = null;
+      return _this._data = result;
+    },
     _process$1(key) {
       var result;
       if (!Object.prototype.hasOwnProperty.call(this._original, key))
@@ -7810,6 +11544,12 @@
       result = A._convertJsonToDartLazy(this._original[key]);
       return this._processed[key] = result;
     }
+  };
+  A._JsonMap_values_closure.prototype = {
+    call$1(each) {
+      return this.$this.$index(0, A._asString(each));
+    },
+    $signature: 13
   };
   A._JsonMapKeyIterable.prototype = {
     get$length(_) {
@@ -7821,7 +11561,7 @@
         t1 = t1.get$keys().elementAt$1(0, index);
       else {
         t1 = t1._computeKeys$0();
-        if (!(index < t1.length))
+        if (!(index >= 0 && index < t1.length))
           return A.ioore(t1, index);
         t1 = t1[index];
       }
@@ -7839,8 +11579,138 @@
       return t1;
     }
   };
+  A._Utf8Decoder__decoder_closure.prototype = {
+    call$0() {
+      var t1, exception;
+      try {
+        t1 = new TextDecoder("utf-8", {fatal: true});
+        return t1;
+      } catch (exception) {
+      }
+      return null;
+    },
+    $signature: 17
+  };
+  A._Utf8Decoder__decoderNonfatal_closure.prototype = {
+    call$0() {
+      var t1, exception;
+      try {
+        t1 = new TextDecoder("utf-8", {fatal: false});
+        return t1;
+      } catch (exception) {
+      }
+      return null;
+    },
+    $signature: 17
+  };
+  A.Base64Codec.prototype = {
+    normalize$3(source, start, end) {
+      var inverseAlphabet, t2, i, sliceStart, buffer, firstPadding, firstPaddingSourceIndex, paddingCount, i0, char, i1, digit1, t3, digit2, char0, value, t4, endLength, $length,
+        _s64_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+        _s31_ = "Invalid base64 encoding length ",
+        t1 = source.length;
+      end = A.RangeError_checkValidRange(start, end, t1);
+      inverseAlphabet = $.$get$_Base64Decoder__inverseAlphabet();
+      for (t2 = inverseAlphabet.length, i = start, sliceStart = i, buffer = null, firstPadding = -1, firstPaddingSourceIndex = -1, paddingCount = 0; i < end; i = i0) {
+        i0 = i + 1;
+        if (!(i < t1))
+          return A.ioore(source, i);
+        char = source.charCodeAt(i);
+        if (char === 37) {
+          i1 = i0 + 2;
+          if (i1 <= end) {
+            if (!(i0 < t1))
+              return A.ioore(source, i0);
+            digit1 = A.hexDigitValue(source.charCodeAt(i0));
+            t3 = i0 + 1;
+            if (!(t3 < t1))
+              return A.ioore(source, t3);
+            digit2 = A.hexDigitValue(source.charCodeAt(t3));
+            char0 = digit1 * 16 + digit2 - (digit2 & 256);
+            if (char0 === 37)
+              char0 = -1;
+            i0 = i1;
+          } else
+            char0 = -1;
+        } else
+          char0 = char;
+        if (0 <= char0 && char0 <= 127) {
+          if (!(char0 >= 0 && char0 < t2))
+            return A.ioore(inverseAlphabet, char0);
+          value = inverseAlphabet[char0];
+          if (value >= 0) {
+            if (!(value < 64))
+              return A.ioore(_s64_, value);
+            char0 = _s64_.charCodeAt(value);
+            if (char0 === char)
+              continue;
+            char = char0;
+          } else {
+            if (value === -1) {
+              if (firstPadding < 0) {
+                t3 = buffer == null ? null : buffer._contents.length;
+                if (t3 == null)
+                  t3 = 0;
+                firstPadding = t3 + (i - sliceStart);
+                firstPaddingSourceIndex = i;
+              }
+              ++paddingCount;
+              if (char === 61)
+                continue;
+            }
+            char = char0;
+          }
+          if (value !== -2) {
+            if (buffer == null) {
+              buffer = new A.StringBuffer("");
+              t3 = buffer;
+            } else
+              t3 = buffer;
+            t3._contents += B.JSString_methods.substring$2(source, sliceStart, i);
+            t4 = A.Primitives_stringFromCharCode(char);
+            t3._contents += t4;
+            sliceStart = i0;
+            continue;
+          }
+        }
+        throw A.wrapException(A.FormatException$("Invalid base64 data", source, i));
+      }
+      if (buffer != null) {
+        t1 = B.JSString_methods.substring$2(source, sliceStart, end);
+        t1 = buffer._contents += t1;
+        t2 = t1.length;
+        if (firstPadding >= 0)
+          A.Base64Codec__checkPadding(source, firstPaddingSourceIndex, end, firstPadding, paddingCount, t2);
+        else {
+          endLength = B.JSInt_methods.$mod(t2 - 1, 4) + 1;
+          if (endLength === 1)
+            throw A.wrapException(A.FormatException$(_s31_, source, end));
+          while (endLength < 4) {
+            t1 += "=";
+            buffer._contents = t1;
+            ++endLength;
+          }
+        }
+        t1 = buffer._contents;
+        return B.JSString_methods.replaceRange$3(source, start, end, t1.charCodeAt(0) == 0 ? t1 : t1);
+      }
+      $length = end - start;
+      if (firstPadding >= 0)
+        A.Base64Codec__checkPadding(source, firstPaddingSourceIndex, end, firstPadding, paddingCount, $length);
+      else {
+        endLength = B.JSInt_methods.$mod($length, 4);
+        if (endLength === 1)
+          throw A.wrapException(A.FormatException$(_s31_, source, end));
+        if (endLength > 1)
+          source = B.JSString_methods.replaceRange$3(source, end, end, endLength === 2 ? "==" : "=");
+      }
+      return source;
+    }
+  };
+  A.Base64Encoder.prototype = {};
   A.Codec.prototype = {};
   A.Converter.prototype = {};
+  A.Encoding.prototype = {};
   A.JsonUnsupportedObjectError.prototype = {
     toString$0(_) {
       var safeString = A.Error_safeToString(this.unsupportedObject);
@@ -8093,12 +11963,401 @@
       B.JSArray_methods.$indexSet(t1, t2.i++, key);
       B.JSArray_methods.$indexSet(t1, t2.i++, value);
     },
-    $signature: 10
+    $signature: 16
   };
   A._JsonStringStringifier.prototype = {
     get$_partialResult() {
       var t1 = this._sink._contents;
       return t1.charCodeAt(0) == 0 ? t1 : t1;
+    }
+  };
+  A.Utf8Codec.prototype = {};
+  A.Utf8Encoder.prototype = {
+    convert$1(string) {
+      var t1, t2, encoder, t3,
+        stringLength = string.length,
+        end = A.RangeError_checkValidRange(0, null, stringLength);
+      if (end === 0)
+        return new Uint8Array(0);
+      t1 = end * 3;
+      t2 = new Uint8Array(t1);
+      encoder = new A._Utf8Encoder(t2);
+      if (encoder._fillBuffer$3(string, 0, end) !== end) {
+        t3 = end - 1;
+        if (!(t3 >= 0 && t3 < stringLength))
+          return A.ioore(string, t3);
+        encoder._writeReplacementCharacter$0();
+      }
+      return new Uint8Array(t2.subarray(0, A._checkValidRange(0, encoder._bufferIndex, t1)));
+    }
+  };
+  A._Utf8Encoder.prototype = {
+    _writeReplacementCharacter$0() {
+      var t4, _this = this,
+        t1 = _this._buffer,
+        t2 = _this._bufferIndex,
+        t3 = _this._bufferIndex = t2 + 1;
+      t1.$flags & 2 && A.throwUnsupportedOperation(t1);
+      t4 = t1.length;
+      if (!(t2 < t4))
+        return A.ioore(t1, t2);
+      t1[t2] = 239;
+      t2 = _this._bufferIndex = t3 + 1;
+      if (!(t3 < t4))
+        return A.ioore(t1, t3);
+      t1[t3] = 191;
+      _this._bufferIndex = t2 + 1;
+      if (!(t2 < t4))
+        return A.ioore(t1, t2);
+      t1[t2] = 189;
+    },
+    _writeSurrogate$2(leadingSurrogate, nextCodeUnit) {
+      var rune, t1, t2, t3, t4, _this = this;
+      if ((nextCodeUnit & 64512) === 56320) {
+        rune = 65536 + ((leadingSurrogate & 1023) << 10) | nextCodeUnit & 1023;
+        t1 = _this._buffer;
+        t2 = _this._bufferIndex;
+        t3 = _this._bufferIndex = t2 + 1;
+        t1.$flags & 2 && A.throwUnsupportedOperation(t1);
+        t4 = t1.length;
+        if (!(t2 < t4))
+          return A.ioore(t1, t2);
+        t1[t2] = rune >>> 18 | 240;
+        t2 = _this._bufferIndex = t3 + 1;
+        if (!(t3 < t4))
+          return A.ioore(t1, t3);
+        t1[t3] = rune >>> 12 & 63 | 128;
+        t3 = _this._bufferIndex = t2 + 1;
+        if (!(t2 < t4))
+          return A.ioore(t1, t2);
+        t1[t2] = rune >>> 6 & 63 | 128;
+        _this._bufferIndex = t3 + 1;
+        if (!(t3 < t4))
+          return A.ioore(t1, t3);
+        t1[t3] = rune & 63 | 128;
+        return true;
+      } else {
+        _this._writeReplacementCharacter$0();
+        return false;
+      }
+    },
+    _fillBuffer$3(str, start, end) {
+      var t1, t2, t3, t4, stringIndex, codeUnit, t5, t6, _this = this;
+      if (start !== end) {
+        t1 = end - 1;
+        if (!(t1 >= 0 && t1 < str.length))
+          return A.ioore(str, t1);
+        t1 = (str.charCodeAt(t1) & 64512) === 55296;
+      } else
+        t1 = false;
+      if (t1)
+        --end;
+      for (t1 = _this._buffer, t2 = t1.$flags | 0, t3 = t1.length, t4 = str.length, stringIndex = start; stringIndex < end; ++stringIndex) {
+        if (!(stringIndex < t4))
+          return A.ioore(str, stringIndex);
+        codeUnit = str.charCodeAt(stringIndex);
+        if (codeUnit <= 127) {
+          t5 = _this._bufferIndex;
+          if (t5 >= t3)
+            break;
+          _this._bufferIndex = t5 + 1;
+          t2 & 2 && A.throwUnsupportedOperation(t1);
+          t1[t5] = codeUnit;
+        } else {
+          t5 = codeUnit & 64512;
+          if (t5 === 55296) {
+            if (_this._bufferIndex + 4 > t3)
+              break;
+            t5 = stringIndex + 1;
+            if (!(t5 < t4))
+              return A.ioore(str, t5);
+            if (_this._writeSurrogate$2(codeUnit, str.charCodeAt(t5)))
+              stringIndex = t5;
+          } else if (t5 === 56320) {
+            if (_this._bufferIndex + 3 > t3)
+              break;
+            _this._writeReplacementCharacter$0();
+          } else if (codeUnit <= 2047) {
+            t5 = _this._bufferIndex;
+            t6 = t5 + 1;
+            if (t6 >= t3)
+              break;
+            _this._bufferIndex = t6;
+            t2 & 2 && A.throwUnsupportedOperation(t1);
+            if (!(t5 < t3))
+              return A.ioore(t1, t5);
+            t1[t5] = codeUnit >>> 6 | 192;
+            _this._bufferIndex = t6 + 1;
+            t1[t6] = codeUnit & 63 | 128;
+          } else {
+            t5 = _this._bufferIndex;
+            if (t5 + 2 >= t3)
+              break;
+            t6 = _this._bufferIndex = t5 + 1;
+            t2 & 2 && A.throwUnsupportedOperation(t1);
+            if (!(t5 < t3))
+              return A.ioore(t1, t5);
+            t1[t5] = codeUnit >>> 12 | 224;
+            t5 = _this._bufferIndex = t6 + 1;
+            if (!(t6 < t3))
+              return A.ioore(t1, t6);
+            t1[t6] = codeUnit >>> 6 & 63 | 128;
+            _this._bufferIndex = t5 + 1;
+            if (!(t5 < t3))
+              return A.ioore(t1, t5);
+            t1[t5] = codeUnit & 63 | 128;
+          }
+        }
+      }
+      return stringIndex;
+    }
+  };
+  A.Utf8Decoder.prototype = {
+    convert$1(codeUnits) {
+      return new A._Utf8Decoder(this._allowMalformed)._convertGeneral$4(type$.List_int._as(codeUnits), 0, null, true);
+    }
+  };
+  A._Utf8Decoder.prototype = {
+    _convertGeneral$4(codeUnits, start, maybeEnd, single) {
+      var end, casted, bytes, errorOffset, t1, result, message, _this = this;
+      type$.List_int._as(codeUnits);
+      end = A.RangeError_checkValidRange(start, maybeEnd, J.get$length$asx(codeUnits));
+      if (start === end)
+        return "";
+      if (codeUnits instanceof Uint8Array) {
+        casted = codeUnits;
+        bytes = casted;
+        errorOffset = 0;
+      } else {
+        bytes = A._Utf8Decoder__makeNativeUint8List(codeUnits, start, end);
+        end -= start;
+        errorOffset = start;
+        start = 0;
+      }
+      if (end - start >= 15) {
+        t1 = _this.allowMalformed;
+        result = A._Utf8Decoder__convertInterceptedUint8List(t1, bytes, start, end);
+        if (result != null) {
+          if (!t1)
+            return result;
+          if (result.indexOf("\ufffd") < 0)
+            return result;
+        }
+      }
+      result = _this._decodeRecursive$4(bytes, start, end, true);
+      t1 = _this._convert$_state;
+      if ((t1 & 1) !== 0) {
+        message = A._Utf8Decoder_errorDescription(t1);
+        _this._convert$_state = 0;
+        throw A.wrapException(A.FormatException$(message, codeUnits, errorOffset + _this._charOrIndex));
+      }
+      return result;
+    },
+    _decodeRecursive$4(bytes, start, end, single) {
+      var mid, s1, _this = this;
+      if (end - start > 1000) {
+        mid = B.JSInt_methods._tdivFast$1(start + end, 2);
+        s1 = _this._decodeRecursive$4(bytes, start, mid, false);
+        if ((_this._convert$_state & 1) !== 0)
+          return s1;
+        return s1 + _this._decodeRecursive$4(bytes, mid, end, single);
+      }
+      return _this.decodeGeneral$4(bytes, start, end, single);
+    },
+    decodeGeneral$4(bytes, start, end, single) {
+      var byte, t2, type, t3, i0, markEnd, i1, m, _this = this,
+        _s256_ = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGHHHHHHHHHHHHHHHHHHHHHHHHHHHIHHHJEEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBKCCCCCCCCCCCCDCLONNNMEEEEEEEEEEE",
+        _s144_ = " \x000:XECCCCCN:lDb \x000:XECCCCCNvlDb \x000:XECCCCCN:lDb AAAAA\x00\x00\x00\x00\x00AAAAA00000AAAAA:::::AAAAAGG000AAAAA00KKKAAAAAG::::AAAAA:IIIIAAAAA000\x800AAAAA\x00\x00\x00\x00 AAAAA",
+        _65533 = 65533,
+        state = _this._convert$_state,
+        char = _this._charOrIndex,
+        buffer = new A.StringBuffer(""),
+        i = start + 1,
+        t1 = bytes.length;
+      if (!(start >= 0 && start < t1))
+        return A.ioore(bytes, start);
+      byte = bytes[start];
+      $label0$0:
+        for (t2 = _this.allowMalformed;;) {
+          for (;; i = i0) {
+            if (!(byte >= 0 && byte < 256))
+              return A.ioore(_s256_, byte);
+            type = _s256_.charCodeAt(byte) & 31;
+            char = state <= 32 ? byte & 61694 >>> type : (byte & 63 | char << 6) >>> 0;
+            t3 = state + type;
+            if (!(t3 >= 0 && t3 < 144))
+              return A.ioore(_s144_, t3);
+            state = _s144_.charCodeAt(t3);
+            if (state === 0) {
+              t3 = A.Primitives_stringFromCharCode(char);
+              buffer._contents += t3;
+              if (i === end)
+                break $label0$0;
+              break;
+            } else if ((state & 1) !== 0) {
+              if (t2)
+                switch (state) {
+                  case 69:
+                  case 67:
+                    t3 = A.Primitives_stringFromCharCode(_65533);
+                    buffer._contents += t3;
+                    break;
+                  case 65:
+                    t3 = A.Primitives_stringFromCharCode(_65533);
+                    buffer._contents += t3;
+                    --i;
+                    break;
+                  default:
+                    t3 = A.Primitives_stringFromCharCode(_65533);
+                    buffer._contents = (buffer._contents += t3) + t3;
+                    break;
+                }
+              else {
+                _this._convert$_state = state;
+                _this._charOrIndex = i - 1;
+                return "";
+              }
+              state = 0;
+            }
+            if (i === end)
+              break $label0$0;
+            i0 = i + 1;
+            if (!(i >= 0 && i < t1))
+              return A.ioore(bytes, i);
+            byte = bytes[i];
+          }
+          i0 = i + 1;
+          if (!(i >= 0 && i < t1))
+            return A.ioore(bytes, i);
+          byte = bytes[i];
+          if (byte < 128) {
+            for (;;) {
+              if (!(i0 < end)) {
+                markEnd = end;
+                break;
+              }
+              i1 = i0 + 1;
+              if (!(i0 >= 0 && i0 < t1))
+                return A.ioore(bytes, i0);
+              byte = bytes[i0];
+              if (byte >= 128) {
+                markEnd = i1 - 1;
+                i0 = i1;
+                break;
+              }
+              i0 = i1;
+            }
+            if (markEnd - i < 20)
+              for (m = i; m < markEnd; ++m) {
+                if (!(m < t1))
+                  return A.ioore(bytes, m);
+                t3 = A.Primitives_stringFromCharCode(bytes[m]);
+                buffer._contents += t3;
+              }
+            else {
+              t3 = A.String_String$fromCharCodes(bytes, i, markEnd);
+              buffer._contents += t3;
+            }
+            if (markEnd === end)
+              break $label0$0;
+            i = i0;
+          } else
+            i = i0;
+        }
+      if (single && state > 32)
+        if (t2) {
+          t1 = A.Primitives_stringFromCharCode(_65533);
+          buffer._contents += t1;
+        } else {
+          _this._convert$_state = 77;
+          _this._charOrIndex = end;
+          return "";
+        }
+      _this._convert$_state = state;
+      _this._charOrIndex = char;
+      t1 = buffer._contents;
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    }
+  };
+  A._Uri__makeQueryFromParameters_closure.prototype = {
+    call$2(key, value) {
+      var t1, t2;
+      A._asString(key);
+      if (typeof value == "string")
+        this.params.set(key, value);
+      else if (value == null)
+        this.params.set(key, "");
+      else
+        for (t1 = J.get$iterator$ax(type$.Iterable_dynamic._as(value)), t2 = this.params; t1.moveNext$0();) {
+          value = t1.get$current();
+          if (typeof value == "string")
+            t2.append(key, value);
+          else if (value == null)
+            t2.append(key, "");
+          else
+            A._asStringQ(value);
+        }
+    },
+    $signature: 18
+  };
+  A.DateTime.prototype = {
+    $eq(_, other) {
+      if (other == null)
+        return false;
+      return other instanceof A.DateTime && this._core$_value === other._core$_value && this._microsecond === other._microsecond && this.isUtc === other.isUtc;
+    },
+    get$hashCode(_) {
+      return A.Object_hash(this._core$_value, this._microsecond, B.C_SentinelValue, B.C_SentinelValue);
+    },
+    toString$0(_) {
+      var _this = this,
+        y = A.DateTime__fourDigits(A.Primitives_getYear(_this)),
+        m = A.DateTime__twoDigits(A.Primitives_getMonth(_this)),
+        d = A.DateTime__twoDigits(A.Primitives_getDay(_this)),
+        h = A.DateTime__twoDigits(A.Primitives_getHours(_this)),
+        min = A.DateTime__twoDigits(A.Primitives_getMinutes(_this)),
+        sec = A.DateTime__twoDigits(A.Primitives_getSeconds(_this)),
+        ms = A.DateTime__threeDigits(A.Primitives_getMilliseconds(_this)),
+        t1 = _this._microsecond,
+        us = t1 === 0 ? "" : A.DateTime__threeDigits(t1);
+      t1 = y + "-" + m;
+      if (_this.isUtc)
+        return t1 + "-" + d + " " + h + ":" + min + ":" + sec + "." + ms + us + "Z";
+      else
+        return t1 + "-" + d + " " + h + ":" + min + ":" + sec + "." + ms + us;
+    }
+  };
+  A.Duration.prototype = {
+    get$inMilliseconds() {
+      return B.JSInt_methods._tdivFast$1(this._duration, 1000);
+    },
+    $eq(_, other) {
+      if (other == null)
+        return false;
+      return other instanceof A.Duration && this._duration === other._duration;
+    },
+    get$hashCode(_) {
+      return B.JSInt_methods.get$hashCode(this._duration);
+    },
+    toString$0(_) {
+      var sign, minutes, minutesPadding, seconds, secondsPadding,
+        microseconds = this._duration,
+        hours = B.JSInt_methods._tdivFast$1(microseconds, 3600000000),
+        microseconds0 = microseconds % 3600000000;
+      if (microseconds < 0) {
+        hours = 0 - hours;
+        microseconds = 0 - microseconds0;
+        sign = "-";
+      } else {
+        microseconds = microseconds0;
+        sign = "";
+      }
+      minutes = B.JSInt_methods._tdivFast$1(microseconds, 60000000);
+      microseconds %= 60000000;
+      minutesPadding = minutes < 10 ? "0" : "";
+      seconds = B.JSInt_methods._tdivFast$1(microseconds, 1000000);
+      secondsPadding = seconds < 10 ? "0" : "";
+      return sign + hours + ":" + minutesPadding + minutes + ":" + secondsPadding + seconds + "." + B.JSString_methods.padLeft$2(B.JSInt_methods.toString$0(microseconds % 1000000), 6, "0");
     }
   };
   A._Enum.prototype = {
@@ -8132,7 +12391,7 @@
         $name = _this.name,
         nameString = $name == null ? "" : " (" + $name + ")",
         message = _this.message,
-        messageString = message == null ? "" : ": " + message,
+        messageString = message == null ? "" : ": " + A.S(message),
         prefix = _this.get$_errorName() + nameString + messageString;
       if (!_this._hasValue)
         return prefix;
@@ -8231,15 +12490,73 @@
   };
   A.FormatException.prototype = {
     toString$0(_) {
-      var message = this.message,
+      var t1, lineEnd, lineNum, lineStart, previousCharWasCR, i, char, prefix, postfix, end, start,
+        message = this.message,
         report = "" !== message ? "FormatException: " + message : "FormatException",
+        offset = this.offset,
         source = this.source;
       if (typeof source == "string") {
-        if (source.length > 78)
-          source = B.JSString_methods.substring$2(source, 0, 75) + "...";
-        return report + "\n" + source;
+        if (offset != null)
+          t1 = offset < 0 || offset > source.length;
+        else
+          t1 = false;
+        if (t1)
+          offset = null;
+        if (offset == null) {
+          if (source.length > 78)
+            source = B.JSString_methods.substring$2(source, 0, 75) + "...";
+          return report + "\n" + source;
+        }
+        for (lineEnd = source.length, lineNum = 1, lineStart = 0, previousCharWasCR = false, i = 0; i < offset; ++i) {
+          if (!(i < lineEnd))
+            return A.ioore(source, i);
+          char = source.charCodeAt(i);
+          if (char === 10) {
+            if (lineStart !== i || !previousCharWasCR)
+              ++lineNum;
+            lineStart = i + 1;
+            previousCharWasCR = false;
+          } else if (char === 13) {
+            ++lineNum;
+            lineStart = i + 1;
+            previousCharWasCR = true;
+          }
+        }
+        report = lineNum > 1 ? report + (" (at line " + lineNum + ", character " + (offset - lineStart + 1) + ")\n") : report + (" (at character " + (offset + 1) + ")\n");
+        for (i = offset; i < lineEnd; ++i) {
+          if (!(i >= 0))
+            return A.ioore(source, i);
+          char = source.charCodeAt(i);
+          if (char === 10 || char === 13) {
+            lineEnd = i;
+            break;
+          }
+        }
+        prefix = "";
+        if (lineEnd - lineStart > 78) {
+          postfix = "...";
+          if (offset - lineStart < 75) {
+            end = lineStart + 75;
+            start = lineStart;
+          } else {
+            if (lineEnd - offset < 75) {
+              start = lineEnd - 75;
+              end = lineEnd;
+              postfix = "";
+            } else {
+              start = offset - 36;
+              end = offset + 36;
+            }
+            prefix = "...";
+          }
+        } else {
+          end = lineEnd;
+          start = lineStart;
+          postfix = "";
+        }
+        return report + prefix + B.JSString_methods.substring$2(source, start, end) + postfix + "\n" + B.JSString_methods.$mul(" ", offset - start + prefix.length) + "^\n";
       } else
-        return report;
+        return offset != null ? report + (" (at offset " + A.S(offset) + ")") : report;
     }
   };
   A.Iterable.prototype = {
@@ -8273,8 +12590,14 @@
       return t1.charCodeAt(0) == 0 ? t1 : t1;
     },
     toList$1$growable(_, growable) {
-      var t1 = A.List_List$_of(this, A._instanceType(this)._eval$1("Iterable.E"));
-      t1.$flags = 1;
+      var t1 = A._instanceType(this)._eval$1("Iterable.E");
+      if (growable)
+        t1 = A.List_List$_of(this, t1);
+      else {
+        t1 = A.List_List$_of(this, t1);
+        t1.$flags = 1;
+        t1 = t1;
+      }
       return t1;
     },
     get$length(_) {
@@ -8283,6 +12606,18 @@
       for (count = 0; it.moveNext$0();)
         ++count;
       return count;
+    },
+    get$isEmpty(_) {
+      return !this.get$iterator(this).moveNext$0();
+    },
+    get$isNotEmpty(_) {
+      return !this.get$isEmpty(this);
+    },
+    get$first(_) {
+      var it = this.get$iterator(this);
+      if (!it.moveNext$0())
+        throw A.wrapException(A.IterableElementError_noElement());
+      return it.get$current();
     },
     elementAt$1(_, index) {
       var iterator, skipCount;
@@ -8335,6 +12670,18 @@
     },
     $isStackTrace: 1
   };
+  A.Stopwatch.prototype = {
+    get$elapsedMicroseconds() {
+      var ticks,
+        t1 = this._stop;
+      if (t1 == null)
+        t1 = $.Primitives_timerTicks.call$0();
+      ticks = t1 - this._core$_start;
+      if ($.$get$Stopwatch__frequency() === 1000000)
+        return ticks;
+      return ticks * 1000;
+    }
+  };
   A.StringBuffer.prototype = {
     get$length(_) {
       return this._contents.length;
@@ -8345,6 +12692,1066 @@
     },
     $isStringSink: 1
   };
+  A.Uri_splitQueryString_closure.prototype = {
+    call$2(map, element) {
+      var index, key, value, t1;
+      type$.Map_String_String._as(map);
+      A._asString(element);
+      index = B.JSString_methods.indexOf$1(element, "=");
+      if (index === -1) {
+        if (element !== "")
+          map.$indexSet(0, A._Uri__uriDecode(element, 0, element.length, this.encoding, true), "");
+      } else if (index !== 0) {
+        key = B.JSString_methods.substring$2(element, 0, index);
+        value = B.JSString_methods.substring$1(element, index + 1);
+        t1 = this.encoding;
+        map.$indexSet(0, A._Uri__uriDecode(key, 0, key.length, t1, true), A._Uri__uriDecode(value, 0, value.length, t1, true));
+      }
+      return map;
+    },
+    $signature: 35
+  };
+  A.Uri_parseIPv6Address_error.prototype = {
+    call$2(msg, position) {
+      throw A.wrapException(A.FormatException$("Illegal IPv6 address, " + msg, this.host, position));
+    },
+    $signature: 32
+  };
+  A._Uri.prototype = {
+    get$_core$_text() {
+      var t1, t2, t3, t4, _this = this,
+        value = _this.___Uri__text_FI;
+      if (value === $) {
+        t1 = _this.scheme;
+        t2 = t1.length !== 0 ? t1 + ":" : "";
+        t3 = _this._host;
+        t4 = t3 == null;
+        if (!t4 || t1 === "file") {
+          t1 = t2 + "//";
+          t2 = _this._userInfo;
+          if (t2.length !== 0)
+            t1 = t1 + t2 + "@";
+          if (!t4)
+            t1 += t3;
+          t2 = _this._port;
+          if (t2 != null)
+            t1 = t1 + ":" + A.S(t2);
+        } else
+          t1 = t2;
+        t1 += _this.path;
+        t2 = _this._query;
+        if (t2 != null)
+          t1 = t1 + "?" + t2;
+        t2 = _this._fragment;
+        if (t2 != null)
+          t1 = t1 + "#" + t2;
+        value = _this.___Uri__text_FI = t1.charCodeAt(0) == 0 ? t1 : t1;
+      }
+      return value;
+    },
+    get$hashCode(_) {
+      var result, _this = this,
+        value = _this.___Uri_hashCode_FI;
+      if (value === $) {
+        result = B.JSString_methods.get$hashCode(_this.get$_core$_text());
+        _this.___Uri_hashCode_FI !== $ && A.throwLateFieldADI("hashCode");
+        _this.___Uri_hashCode_FI = result;
+        value = result;
+      }
+      return value;
+    },
+    get$queryParameters() {
+      var t1, _this = this,
+        value = _this.___Uri_queryParameters_FI;
+      if (value === $) {
+        t1 = _this._query;
+        t1 = A.Uri_splitQueryString(t1 == null ? "" : t1);
+        _this.___Uri_queryParameters_FI !== $ && A.throwLateFieldADI("queryParameters");
+        value = _this.___Uri_queryParameters_FI = new A.UnmodifiableMapView(t1, type$.UnmodifiableMapView_String_String);
+      }
+      return value;
+    },
+    get$userInfo() {
+      return this._userInfo;
+    },
+    get$host() {
+      var host = this._host;
+      if (host == null)
+        return "";
+      if (B.JSString_methods.startsWith$1(host, "[") && !B.JSString_methods.startsWith$2(host, "v", 1))
+        return B.JSString_methods.substring$2(host, 1, host.length - 1);
+      return host;
+    },
+    get$port() {
+      var t1 = this._port;
+      return t1 == null ? A._Uri__defaultPort(this.scheme) : t1;
+    },
+    get$query() {
+      var t1 = this._query;
+      return t1 == null ? "" : t1;
+    },
+    get$fragment() {
+      var t1 = this._fragment;
+      return t1 == null ? "" : t1;
+    },
+    replace$1$queryParameters(queryParameters) {
+      var scheme, isFile, userInfo, port, host, currentPath, t1, path, query, _this = this;
+      type$.nullable_Map_String_dynamic._as(queryParameters);
+      scheme = _this.scheme;
+      isFile = scheme === "file";
+      userInfo = _this._userInfo;
+      port = _this._port;
+      host = _this._host;
+      if (!(host != null))
+        host = userInfo.length !== 0 || port != null || isFile ? "" : null;
+      currentPath = _this.path;
+      if (!isFile)
+        t1 = host != null && currentPath.length !== 0;
+      else
+        t1 = true;
+      if (t1 && !B.JSString_methods.startsWith$1(currentPath, "/"))
+        currentPath = "/" + currentPath;
+      path = currentPath;
+      if (queryParameters != null)
+        query = A._Uri__makeQuery(null, 0, 0, queryParameters);
+      else
+        query = _this._query;
+      return A._Uri$_internal(scheme, userInfo, host, port, path, query, _this._fragment);
+    },
+    get$hasScheme() {
+      return this.scheme.length !== 0;
+    },
+    get$hasAuthority() {
+      return this._host != null;
+    },
+    get$hasQuery() {
+      return this._query != null;
+    },
+    get$hasFragment() {
+      return this._fragment != null;
+    },
+    toString$0(_) {
+      return this.get$_core$_text();
+    },
+    $eq(_, other) {
+      var t1, t2, t3, _this = this;
+      if (other == null)
+        return false;
+      if (_this === other)
+        return true;
+      t1 = false;
+      if (type$.Uri._is(other))
+        if (_this.scheme === other.get$scheme())
+          if (_this._host != null === other.get$hasAuthority())
+            if (_this._userInfo === other.get$userInfo())
+              if (_this.get$host() === other.get$host())
+                if (_this.get$port() === other.get$port())
+                  if (_this.path === other.get$path()) {
+                    t2 = _this._query;
+                    t3 = t2 == null;
+                    if (!t3 === other.get$hasQuery()) {
+                      if (t3)
+                        t2 = "";
+                      if (t2 === other.get$query()) {
+                        t2 = _this._fragment;
+                        t3 = t2 == null;
+                        if (!t3 === other.get$hasFragment()) {
+                          t1 = t3 ? "" : t2;
+                          t1 = t1 === other.get$fragment();
+                        }
+                      }
+                    }
+                  }
+      return t1;
+    },
+    $isUri: 1,
+    get$scheme() {
+      return this.scheme;
+    },
+    get$path() {
+      return this.path;
+    }
+  };
+  A._Uri__makeQueryFromParametersDefault_writeParameter.prototype = {
+    call$2(key, value) {
+      var t1 = this.result,
+        t2 = this._box_0;
+      t1._contents += t2.separator;
+      t2.separator = "&";
+      t2 = A._Uri__uriEncode(1, key, B.C_Utf8Codec, true);
+      t2 = t1._contents += t2;
+      if (value != null && value.length !== 0) {
+        t1._contents = t2 + "=";
+        t2 = A._Uri__uriEncode(1, value, B.C_Utf8Codec, true);
+        t1._contents += t2;
+      }
+    },
+    $signature: 26
+  };
+  A._Uri__makeQueryFromParametersDefault_closure.prototype = {
+    call$2(key, value) {
+      var t1, t2;
+      A._asString(key);
+      if (value == null || typeof value == "string")
+        this.writeParameter.call$2(key, A._asStringQ(value));
+      else
+        for (t1 = J.get$iterator$ax(type$.Iterable_dynamic._as(value)), t2 = this.writeParameter; t1.moveNext$0();)
+          t2.call$2(key, A._asString(t1.get$current()));
+    },
+    $signature: 18
+  };
+  A.UriData.prototype = {
+    get$uri() {
+      var t2, queryIndex, end, query, _this = this, _null = null,
+        t1 = _this._uriCache;
+      if (t1 == null) {
+        t1 = _this._separatorIndices;
+        if (0 >= t1.length)
+          return A.ioore(t1, 0);
+        t2 = _this._core$_text;
+        t1 = t1[0] + 1;
+        queryIndex = B.JSString_methods.indexOf$2(t2, "?", t1);
+        end = t2.length;
+        if (queryIndex >= 0) {
+          query = A._Uri__normalizeOrSubstring(t2, queryIndex + 1, end, 256, false, false);
+          end = queryIndex;
+        } else
+          query = _null;
+        t1 = _this._uriCache = new A._DataUri("data", "", _null, _null, A._Uri__normalizeOrSubstring(t2, t1, end, 128, false, false), query, _null);
+      }
+      return t1;
+    },
+    toString$0(_) {
+      var t2,
+        t1 = this._separatorIndices;
+      if (0 >= t1.length)
+        return A.ioore(t1, 0);
+      t2 = this._core$_text;
+      return t1[0] === -1 ? "data:" + t2 : t2;
+    }
+  };
+  A._SimpleUri.prototype = {
+    get$hasScheme() {
+      return this._schemeEnd > 0;
+    },
+    get$hasAuthority() {
+      return this._hostStart > 0;
+    },
+    get$hasPort() {
+      return this._hostStart > 0 && this._portStart + 1 < this._pathStart;
+    },
+    get$hasQuery() {
+      return this._queryStart < this._fragmentStart;
+    },
+    get$hasFragment() {
+      return this._fragmentStart < this._uri.length;
+    },
+    get$scheme() {
+      var t1 = this._schemeCache;
+      return t1 == null ? this._schemeCache = this._computeScheme$0() : t1;
+    },
+    _computeScheme$0() {
+      var t2, _this = this,
+        t1 = _this._schemeEnd;
+      if (t1 <= 0)
+        return "";
+      t2 = t1 === 4;
+      if (t2 && B.JSString_methods.startsWith$1(_this._uri, "http"))
+        return "http";
+      if (t1 === 5 && B.JSString_methods.startsWith$1(_this._uri, "https"))
+        return "https";
+      if (t2 && B.JSString_methods.startsWith$1(_this._uri, "file"))
+        return "file";
+      if (t1 === 7 && B.JSString_methods.startsWith$1(_this._uri, "package"))
+        return "package";
+      return B.JSString_methods.substring$2(_this._uri, 0, t1);
+    },
+    get$userInfo() {
+      var t1 = this._hostStart,
+        t2 = this._schemeEnd + 3;
+      return t1 > t2 ? B.JSString_methods.substring$2(this._uri, t2, t1 - 1) : "";
+    },
+    get$host() {
+      var t1 = this._hostStart;
+      return t1 > 0 ? B.JSString_methods.substring$2(this._uri, t1, this._portStart) : "";
+    },
+    get$port() {
+      var t1, _this = this;
+      if (_this.get$hasPort())
+        return A.int_parse(B.JSString_methods.substring$2(_this._uri, _this._portStart + 1, _this._pathStart));
+      t1 = _this._schemeEnd;
+      if (t1 === 4 && B.JSString_methods.startsWith$1(_this._uri, "http"))
+        return 80;
+      if (t1 === 5 && B.JSString_methods.startsWith$1(_this._uri, "https"))
+        return 443;
+      return 0;
+    },
+    get$path() {
+      return B.JSString_methods.substring$2(this._uri, this._pathStart, this._queryStart);
+    },
+    get$query() {
+      var t1 = this._queryStart,
+        t2 = this._fragmentStart;
+      return t1 < t2 ? B.JSString_methods.substring$2(this._uri, t1 + 1, t2) : "";
+    },
+    get$fragment() {
+      var t1 = this._fragmentStart,
+        t2 = this._uri;
+      return t1 < t2.length ? B.JSString_methods.substring$1(t2, t1 + 1) : "";
+    },
+    get$queryParameters() {
+      if (this._queryStart >= this._fragmentStart)
+        return B.Map_empty2;
+      return new A.UnmodifiableMapView(A.Uri_splitQueryString(this.get$query()), type$.UnmodifiableMapView_String_String);
+    },
+    replace$1$queryParameters(queryParameters) {
+      var scheme, isFile, t1, userInfo, port, host, t2, path, t3, query, fragment, _this = this, _null = null;
+      type$.nullable_Map_String_dynamic._as(queryParameters);
+      scheme = _this.get$scheme();
+      isFile = scheme === "file";
+      t1 = _this._hostStart;
+      userInfo = t1 > 0 ? B.JSString_methods.substring$2(_this._uri, _this._schemeEnd + 3, t1) : "";
+      port = _this.get$hasPort() ? _this.get$port() : _null;
+      t1 = _this._hostStart;
+      if (t1 > 0)
+        host = B.JSString_methods.substring$2(_this._uri, t1, _this._portStart);
+      else
+        host = userInfo.length !== 0 || port != null || isFile ? "" : _null;
+      t1 = _this._uri;
+      t2 = _this._queryStart;
+      path = B.JSString_methods.substring$2(t1, _this._pathStart, t2);
+      if (!isFile)
+        t3 = host != null && path.length !== 0;
+      else
+        t3 = true;
+      if (t3 && !B.JSString_methods.startsWith$1(path, "/"))
+        path = "/" + path;
+      if (queryParameters != null)
+        query = A._Uri__makeQuery(_null, 0, 0, queryParameters);
+      else {
+        t3 = _this._fragmentStart;
+        query = t2 < t3 ? B.JSString_methods.substring$2(t1, t2 + 1, t3) : _null;
+      }
+      t2 = _this._fragmentStart;
+      fragment = t2 < t1.length ? B.JSString_methods.substring$1(t1, t2 + 1) : _null;
+      return A._Uri$_internal(scheme, userInfo, host, port, path, query, fragment);
+    },
+    get$hashCode(_) {
+      var t1 = this._hashCodeCache;
+      return t1 == null ? this._hashCodeCache = B.JSString_methods.get$hashCode(this._uri) : t1;
+    },
+    $eq(_, other) {
+      if (other == null)
+        return false;
+      if (this === other)
+        return true;
+      return type$.Uri._is(other) && this._uri === other.toString$0(0);
+    },
+    toString$0(_) {
+      return this._uri;
+    },
+    $isUri: 1
+  };
+  A._DataUri.prototype = {};
+  A.NullRejectionException.prototype = {
+    toString$0(_) {
+      return "Promise was rejected with a value of `" + (this.isUndefined ? "undefined" : "null") + "`.";
+    }
+  };
+  A.promiseToFuture_closure.prototype = {
+    call$1(r) {
+      return this.completer.complete$1(this.T._eval$1("0/?")._as(r));
+    },
+    $signature: 4
+  };
+  A.promiseToFuture_closure0.prototype = {
+    call$1(e) {
+      if (e == null)
+        return this.completer.completeError$1(new A.NullRejectionException(e === undefined));
+      return this.completer.completeError$1(e);
+    },
+    $signature: 4
+  };
+  A.dartify_convert.prototype = {
+    call$1(o) {
+      var t1, millisSinceEpoch, proto, t2, dartObject, originalKeys, dartKeys, i, jsKey, dartKey, l, $length;
+      if (A._noDartifyRequired(o))
+        return o;
+      t1 = this._convertedObjects;
+      o.toString;
+      if (t1.containsKey$1(o))
+        return t1.$index(0, o);
+      if (o instanceof Date) {
+        millisSinceEpoch = o.getTime();
+        if (millisSinceEpoch < -864e13 || millisSinceEpoch > 864e13)
+          A.throwExpression(A.RangeError$range(millisSinceEpoch, -864e13, 864e13, "millisecondsSinceEpoch", null));
+        A.checkNotNullable(true, "isUtc", type$.bool);
+        return new A.DateTime(millisSinceEpoch, 0, true);
+      }
+      if (o instanceof RegExp)
+        throw A.wrapException(A.ArgumentError$("structured clone of RegExp", null));
+      if (o instanceof Promise)
+        return A.promiseToFuture(o, type$.nullable_Object);
+      proto = Object.getPrototypeOf(o);
+      if (proto === Object.prototype || proto === null) {
+        t2 = type$.nullable_Object;
+        dartObject = A.LinkedHashMap_LinkedHashMap$_empty(t2, t2);
+        t1.$indexSet(0, o, dartObject);
+        originalKeys = Object.keys(o);
+        dartKeys = [];
+        for (t1 = J.getInterceptor$ax(originalKeys), t2 = t1.get$iterator(originalKeys); t2.moveNext$0();)
+          dartKeys.push(A.dartify(t2.get$current()));
+        for (i = 0; i < t1.get$length(originalKeys); ++i) {
+          jsKey = t1.$index(originalKeys, i);
+          if (!(i < dartKeys.length))
+            return A.ioore(dartKeys, i);
+          dartKey = dartKeys[i];
+          if (jsKey != null)
+            dartObject.$indexSet(0, dartKey, this.call$1(o[jsKey]));
+        }
+        return dartObject;
+      }
+      if (o instanceof Array) {
+        l = o;
+        dartObject = [];
+        t1.$indexSet(0, o, dartObject);
+        $length = A._asInt(o.length);
+        for (t1 = J.getInterceptor$asx(l), i = 0; i < $length; ++i)
+          dartObject.push(this.call$1(t1.$index(l, i)));
+        return dartObject;
+      }
+      return o;
+    },
+    $signature: 31
+  };
+  A.WebSocketConnectionState.prototype = {
+    _enumToString$0() {
+      return "WebSocketConnectionState." + this._name;
+    }
+  };
+  A.FlintErrorKind.prototype = {
+    _enumToString$0() {
+      return "FlintErrorKind." + this._name;
+    }
+  };
+  A.FlintResponseType.prototype = {
+    _enumToString$0() {
+      return "FlintResponseType." + this._name;
+    }
+  };
+  A.StatusCodeConfig.prototype = {};
+  A.FlintError.prototype = {
+    toString$0(_) {
+      var t3, _this = this,
+        t1 = "FlintError: " + _this.message,
+        t2 = _this.statusCode;
+      if (t2 != null)
+        t1 += " (Status: " + A.S(t2) + ")";
+      t1 += " [Kind: " + _this.kind._name + "]";
+      t2 = _this.url;
+      if (t2 != null) {
+        t3 = _this.method;
+        t3 = t3 == null ? null : t3.toUpperCase();
+        if (t3 == null)
+          t3 = "GET";
+        t2 = t1 + (" [" + t3 + " " + t2.toString$0(0) + "]");
+        t1 = t2;
+      }
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    }
+  };
+  A.FlintResponse.prototype = {};
+  A.FlintClient.prototype = {
+    ws$1(path) {
+      var authHeader, entry, token, normalizedBase, normalizedPath, _null = null,
+        t1 = type$.String,
+        t2 = A.LinkedHashMap_LinkedHashMap$of(this.headers, t1, t1);
+      t2 = new A.LinkedHashMapEntriesIterable(t2, A._instanceType(t2)._eval$1("LinkedHashMapEntriesIterable<1,2>")).get$iterator(0);
+      for (;;) {
+        if (!t2.moveNext$0()) {
+          authHeader = _null;
+          break;
+        }
+        entry = t2.__js_helper$_current;
+        if (entry.key.toLowerCase() === "authorization") {
+          authHeader = entry.value;
+          break;
+        }
+      }
+      token = authHeader != null && B.JSString_methods.startsWith$1(authHeader, "Bearer ") ? B.JSString_methods.substring$1(authHeader, 7) : _null;
+      normalizedBase = this.baseUrl;
+      if (B.JSString_methods.endsWith$1(normalizedBase, "/"))
+        normalizedBase = B.JSString_methods.substring$2(normalizedBase, 0, normalizedBase.length - 1);
+      normalizedPath = B.JSString_methods.startsWith$1(path, "/") ? path : "/" + path;
+      return new A.FlintWebSocketClient(B.JSString_methods.replaceFirst$2(normalizedBase + normalizedPath, A.RegExp_RegExp("^http", true, false), "ws"), _null, false, false, "token", token, _null, A.LinkedHashMap_LinkedHashMap$_empty(t1, type$.List_Function), A._setArrayType([], type$.JSArray_Map_String_dynamic), B.WebSocketConnectionState_0);
+    },
+    request$1$9$body$headers$onDone$onError$parser$queryParameters$requestTimeout(method, path, body, headers, onDone, onError, parser, queryParameters, requestTimeout, $T) {
+      return this.request$body$FlintClient(method, path, body, type$.nullable_Map_String_String._as(headers), onDone, onError, parser, queryParameters, requestTimeout, $T, $T._eval$1("FlintResponse<0>"));
+    },
+    request$body$FlintClient(method, path, body, headers, onDone, onError, parser, queryParameters, requestTimeout, $T, $async$type) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter($async$type),
+        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$self = this, stopwatch, response, completed, error, flintError, errorResponse, handler, t1, t2, t3, t4, t5, exception, url, stopwatch0, $async$exception;
+      var $async$request$1$9$body$headers$onDone$onError$parser$queryParameters$requestTimeout = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1) {
+          $async$errorStack.push($async$result);
+          $async$goto = $async$handler;
+        }
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              url = $async$self._url$2(path, queryParameters);
+              stopwatch0 = new A.Stopwatch();
+              $.$get$Stopwatch__frequency();
+              t1 = $.Primitives_timerTicks.call$0();
+              stopwatch0._core$_start = t1;
+              stopwatch0._stop = null;
+              stopwatch = stopwatch0;
+              $async$handler = 4;
+              $async$goto = 7;
+              return A._asyncAwait($async$self._send$1$6$body$headers$parser$timeout(method.toUpperCase(), url, body, headers, parser, $async$self.timeout, $T), $async$request$1$9$body$headers$onDone$onError$parser$queryParameters$requestTimeout);
+            case 7:
+              // returning from await.
+              response = $async$result;
+              t1 = stopwatch;
+              if (t1._stop == null)
+                t1._stop = $.Primitives_timerTicks.call$0();
+              t1 = response.statusCode;
+              t2 = response.data;
+              t3 = response.type;
+              t4 = response.headers;
+              t5 = A.Uri_parse(url, 0, null);
+              completed = A.FlintResponse$(t2, A.Duration$(stopwatch.get$elapsedMicroseconds(), 0, 0), t4, method, t1, $async$self.statusCodeConfig, t3, t5, $T);
+              $async$self._finish$1$3(completed, null, onDone, $T);
+              $async$returnValue = completed;
+              // goto return
+              $async$goto = 1;
+              break;
+              $async$handler = 2;
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 4:
+              // catch
+              $async$handler = 3;
+              $async$exception = $async$errorStack.pop();
+              error = A.unwrapException($async$exception);
+              t1 = stopwatch;
+              if (t1._stop == null)
+                t1._stop = $.Primitives_timerTicks.call$0();
+              flintError = error instanceof A.FlintError ? error : A.FlintError_FlintError$fromException(error, method, A.Uri_parse(url, 0, null));
+              A.Duration$(stopwatch.get$elapsedMicroseconds(), 0, 0);
+              t1 = flintError.statusCode;
+              if (t1 == null)
+                t1 = 500;
+              errorResponse = new A.FlintResponse(t1, null, B.FlintResponseType_3, null, false, $async$self.statusCodeConfig, $T._eval$1("FlintResponse<0>"));
+              $async$self._finish$1$3(errorResponse, flintError, onDone, $T);
+              handler = $async$self.onError;
+              t1 = handler;
+              if (t1 != null)
+                t1.call$1(flintError);
+              $async$returnValue = errorResponse;
+              // goto return
+              $async$goto = 1;
+              break;
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 3:
+              // uncaught
+              // goto rethrow
+              $async$goto = 2;
+              break;
+            case 6:
+              // after finally
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+            case 2:
+              // rethrow
+              return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$request$1$9$body$headers$onDone$onError$parser$queryParameters$requestTimeout, $async$completer);
+    },
+    _send$1$6$body$headers$parser$timeout(method, url, body, headers, parser, timeout, $T) {
+      var xhr, t1, completer, t2, encodedBody, header, t3;
+      type$.nullable_Map_String_String._as(headers);
+      xhr = A._asJSObject(new init.G.XMLHttpRequest());
+      t1 = new A._Future($.Zone__current, $T._eval$1("_Future<FlintResponse<0>>"));
+      completer = new A._AsyncCompleter(t1, $T._eval$1("_AsyncCompleter<FlintResponse<0>>"));
+      t2 = type$.String;
+      t2 = A.LinkedHashMap_LinkedHashMap$_empty(t2, t2);
+      t2.$indexSet(0, "Accept", "application/json");
+      t2.addAll$1(0, this.headers);
+      if (headers != null)
+        t2.addAll$1(0, headers);
+      encodedBody = this._flint_client_web$_body$2(body, t2);
+      xhr.open(method, url, true);
+      for (t2 = new A.LinkedHashMapEntriesIterable(t2, t2.$ti._eval$1("LinkedHashMapEntriesIterable<1,2>")).get$iterator(0); t2.moveNext$0();) {
+        header = t2.__js_helper$_current;
+        xhr.setRequestHeader(header.key, header.value);
+      }
+      t2 = type$.nullable_void_Function_JSObject;
+      t3 = type$.JSObject;
+      A._EventStreamSubscription$(xhr, "load", t2._as(new A.FlintClient__send_closure(this, xhr, parser, url, method, completer, $T)), false, t3);
+      A._EventStreamSubscription$(xhr, "error", t2._as(new A.FlintClient__send_closure0(completer, url, method)), false, t3);
+      if (encodedBody == null)
+        xhr.send();
+      else
+        xhr.send(encodedBody);
+      return t1.timeout$2$onTimeout(timeout, new A.FlintClient__send_closure1(xhr, timeout, url, method));
+    },
+    _url$2(path, queryParameters) {
+      var uri, t1, t2, entry, t3,
+        normalizedBase = this.baseUrl;
+      if (B.JSString_methods.endsWith$1(normalizedBase, "/"))
+        normalizedBase = B.JSString_methods.substring$2(normalizedBase, 0, normalizedBase.length - 1);
+      uri = A.Uri_parse(normalizedBase + (B.JSString_methods.startsWith$1(path, "/") ? path : "/" + path), 0, null);
+      t1 = type$.String;
+      t2 = A.LinkedHashMap_LinkedHashMap$of(uri.get$queryParameters(), t1, type$.dynamic);
+      t2.addAll$1(0, this.defaultQueryParameters);
+      t1 = A.LinkedHashMap_LinkedHashMap$_empty(t1, t1);
+      for (t2 = new A.LinkedHashMapEntriesIterable(t2, A._instanceType(t2)._eval$1("LinkedHashMapEntriesIterable<1,2>")).get$iterator(0); t2.moveNext$0();) {
+        entry = t2.__js_helper$_current;
+        t3 = entry.value;
+        if (t3 != null)
+          t1.$indexSet(0, entry.key, J.toString$0$(t3));
+      }
+      return uri.replace$1$queryParameters(t1.__js_helper$_length === 0 ? null : t1).get$_core$_text();
+    },
+    _flint_client_web$_body$2(body, headers) {
+      type$.Map_String_String._as(headers);
+      if (body == null)
+        return null;
+      headers.putIfAbsent$2("Content-Type", new A.FlintClient__body_closure());
+      return B.C_JsonCodec.encode$2$toEncodable(body, null);
+    },
+    _parseResponse$1$3(text, contentType, parser, $T) {
+      var data;
+      if (B.JSString_methods.trim$0(text).length === 0)
+        return new A._ParsedResponse(null, B.FlintResponseType_3, $T._eval$1("_ParsedResponse<0>"));
+      if (B.JSString_methods.contains$1(contentType.toLowerCase(), "json") || B.JSString_methods.startsWith$1(B.JSString_methods.trimLeft$0(text), "{") || B.JSString_methods.startsWith$1(B.JSString_methods.trimLeft$0(text), "[")) {
+        data = $T._eval$1("0?")._as(B.C_JsonCodec.decode$2$reviver(text, null));
+        return new A._ParsedResponse(data, B.FlintResponseType_0, $T._eval$1("_ParsedResponse<0>"));
+      }
+      $T._eval$1("0?")._as(text);
+      return new A._ParsedResponse(text, B.FlintResponseType_1, $T._eval$1("_ParsedResponse<0>"));
+    },
+    _responseHeaders$1(rawHeaders) {
+      var t2, _i, line, separator,
+        t1 = type$.String,
+        parsed = A.LinkedHashMap_LinkedHashMap$_empty(t1, t1);
+      for (t1 = B.JSString_methods.split$1(rawHeaders, A.RegExp_RegExp("\\r?\\n", true, false)), t2 = t1.length, _i = 0; _i < t1.length; t1.length === t2 || (0, A.throwConcurrentModificationError)(t1), ++_i) {
+        line = t1[_i];
+        if (B.JSString_methods.trim$0(line).length === 0)
+          continue;
+        separator = B.JSString_methods.indexOf$1(line, ":");
+        if (separator <= 0)
+          continue;
+        parsed.$indexSet(0, B.JSString_methods.substring$2(line, 0, separator).toLowerCase(), B.JSString_methods.trim$0(B.JSString_methods.substring$1(line, separator + 1)));
+      }
+      return parsed;
+    },
+    _finish$1$3(response, error, onDone, $T) {
+      $T._eval$1("FlintResponse<0>")._as(response);
+    }
+  };
+  A.FlintClient__send_closure.prototype = {
+    call$1(__wc0_formal) {
+      var t5, parsed, t6, response, _this = this, _null = null,
+        t1 = _this.$this,
+        t2 = _this.xhr,
+        t3 = A._asString(t2.responseText),
+        t4 = A._asStringQ(t2.getResponseHeader("content-type"));
+      if (t4 == null)
+        t4 = "";
+      t5 = _this.T;
+      parsed = t1._parseResponse$1$3(t3, t4, _this.parser, t5);
+      t4 = A._asInt(t2.status);
+      t3 = _this.url;
+      t6 = _this.method;
+      response = A.FlintResponse$(parsed.data, _null, t1._responseHeaders$1(A._asString(t2.getAllResponseHeaders())), t6, t4, t1.statusCodeConfig, parsed.type, A.Uri_parse(t3, 0, _null), t5);
+      t1 = response.statusCode;
+      t2 = _this.completer;
+      if (B.Set_m93Pc.contains$1(0, t1))
+        t2.complete$1(response);
+      else
+        t2.completeError$1(A.FlintError$("HTTP " + t1, response.data, B.FlintErrorKind_4, t6, _null, t1, _null, A.Uri_parse(t3, 0, _null)));
+    },
+    $signature: 3
+  };
+  A.FlintClient__send_closure0.prototype = {
+    call$1(__wc1_formal) {
+      var _null = null;
+      this.completer.completeError$1(A.FlintError$("Network request failed", _null, B.FlintErrorKind_3, this.method, _null, _null, _null, A.Uri_parse(this.url, 0, _null)));
+    },
+    $signature: 3
+  };
+  A.FlintClient__send_closure1.prototype = {
+    call$0() {
+      var _this = this, _null = null;
+      _this.xhr.abort();
+      throw A.wrapException(A.FlintError$("Request timed out after " + _this.timeout.get$inMilliseconds() + "ms", _null, B.FlintErrorKind_1, _this.method, _null, _null, _null, A.Uri_parse(_this.url, 0, _null)));
+    },
+    $signature: 30
+  };
+  A.FlintClient__body_closure.prototype = {
+    call$0() {
+      return "application/json";
+    },
+    $signature: 28
+  };
+  A.FlintWebSocketClient.prototype = {
+    _resolveToken$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.nullable_String),
+        $async$returnValue, $async$self = this, t1, provided;
+      var $async$_resolveToken$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = A._Future$value(null, type$.nullable_String);
+              $async$goto = 3;
+              return A._asyncAwait(t1, $async$_resolveToken$0);
+            case 3:
+              // returning from await.
+              provided = $async$result;
+              $async$returnValue = provided == null ? $async$self._token : provided;
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_resolveToken$0, $async$completer);
+    },
+    _buildUrl$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.String),
+        $async$returnValue, $async$self = this, uri, t1;
+      var $async$_buildUrl$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              $async$goto = 3;
+              return A._asyncAwait($async$self._resolveToken$0(), $async$_buildUrl$0);
+            case 3:
+              // returning from await.
+              uri = A.Uri_parse($async$self.url, 0, null);
+              t1 = type$.String;
+              t1 = A.LinkedHashMap_LinkedHashMap$of(uri.get$queryParameters(), t1, t1);
+              $async$returnValue = uri.replace$1$queryParameters(t1.__js_helper$_length === 0 ? null : t1).get$_core$_text();
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_buildUrl$0, $async$completer);
+    },
+    connect$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.void),
+        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$self = this, wsUrl, socket, error, t2, exception, t1, $async$exception;
+      var $async$connect$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1) {
+          $async$errorStack.push($async$result);
+          $async$goto = $async$handler;
+        }
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = $async$self._flint_client_web$_state;
+              if (t1 === B.WebSocketConnectionState_2 || t1 === B.WebSocketConnectionState_1) {
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              $async$self._manuallyClosed = false;
+              $async$self._setState$1(B.WebSocketConnectionState_1);
+              $async$handler = 4;
+              $async$goto = 7;
+              return A._asyncAwait($async$self._buildUrl$0(), $async$connect$0);
+            case 7:
+              // returning from await.
+              wsUrl = $async$result;
+              socket = A._asJSObject(new init.G.WebSocket(wsUrl));
+              $async$self._socket = socket;
+              t1 = type$.nullable_void_Function_JSObject;
+              t2 = type$.JSObject;
+              A._EventStreamSubscription$(socket, "open", t1._as(new A.FlintWebSocketClient_connect_closure($async$self)), false, t2);
+              A._EventStreamSubscription$(socket, "message", t1._as(new A.FlintWebSocketClient_connect_closure0($async$self)), false, t2);
+              A._EventStreamSubscription$(socket, "error", t1._as(new A.FlintWebSocketClient_connect_closure1($async$self)), false, t2);
+              A._EventStreamSubscription$(socket, "close", t1._as(new A.FlintWebSocketClient_connect_closure2($async$self)), false, t2);
+              $async$handler = 2;
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 4:
+              // catch
+              $async$handler = 3;
+              $async$exception = $async$errorStack.pop();
+              error = A.unwrapException($async$exception);
+              $async$self._handleDisconnect$1(error);
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 3:
+              // uncaught
+              // goto rethrow
+              $async$goto = 2;
+              break;
+            case 6:
+              // after finally
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+            case 2:
+              // rethrow
+              return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$connect$0, $async$completer);
+    },
+    close$2(code, reason) {
+      var t1, exception, _this = this;
+      _this._manuallyClosed = true;
+      _this._reconnecting = false;
+      t1 = _this._heartbeatTimer;
+      if (t1 != null)
+        t1.cancel$0();
+      _this._heartbeatTimer = null;
+      try {
+        t1 = _this._socket;
+        if (t1 != null)
+          t1.close(code, reason);
+      } catch (exception) {
+      }
+      _this._socket = null;
+      _this._setState$1(B.WebSocketConnectionState_0);
+      _this._emitLocal$2("close", reason);
+    },
+    on$2($event, handler) {
+      type$.dynamic_Function_dynamic._as(handler);
+      J.add$1$ax(this._eventHandlers.putIfAbsent$2($event, new A.FlintWebSocketClient_on_closure()), handler);
+    },
+    emit$2($event, data) {
+      var exception,
+        payload = A.LinkedHashMap_LinkedHashMap$_literal(["event", $event, "data", data], type$.String, type$.dynamic),
+        t1 = this._socket;
+      if (t1 != null && this._flint_client_web$_state === B.WebSocketConnectionState_2)
+        try {
+          t1.send(B.C_JsonCodec.encode$2$toEncodable(payload, null));
+          return;
+        } catch (exception) {
+        }
+      B.JSArray_methods.add$1(this._messageQueue, payload);
+    },
+    _handleMessage$1(data) {
+      var decoded, $event, messageData, exception, _this = this,
+        _s7_ = "message";
+      try {
+        decoded = B.C_JsonCodec.decode$2$reviver(J.toString$0$(data), null);
+        if (type$.Map_String_dynamic._is(decoded)) {
+          $event = decoded.$index(0, "event");
+          messageData = decoded.$index(0, "data");
+          if (J.$eq$($event, "pong")) {
+            _this._lastPong = new A.DateTime(Date.now(), 0, false);
+            return;
+          }
+          if (typeof $event == "string" && $event.length !== 0)
+            _this._emitLocal$2($event, messageData);
+          else
+            _this._emitLocal$2(_s7_, decoded);
+        } else
+          _this._emitLocal$2(_s7_, decoded);
+      } catch (exception) {
+        _this._emitLocal$2(_s7_, data);
+      }
+    },
+    _handleDisconnect$1(error) {
+      var t1, delay, _this = this;
+      if (_this._flint_client_web$_state === B.WebSocketConnectionState_0)
+        return;
+      t1 = _this._heartbeatTimer;
+      if (t1 != null)
+        t1.cancel$0();
+      _this._heartbeatTimer = null;
+      _this._emitLocal$2("disconnect", error);
+      if (_this._manuallyClosed) {
+        _this._setState$1(B.WebSocketConnectionState_0);
+        return;
+      }
+      if (_this._reconnecting)
+        return;
+      _this._reconnecting = true;
+      _this._setState$1(B.WebSocketConnectionState_3);
+      t1 = _this._reconnectAttempts;
+      if (t1 >= 5) {
+        _this._reconnecting = false;
+        _this._setState$1(B.WebSocketConnectionState_0);
+        _this._emitLocal$1("reconnect_failed");
+        return;
+      }
+      delay = A.Duration$(0, 0, 3 * B.JSInt_methods._shlPositive$1(1, t1));
+      ++t1;
+      _this._reconnectAttempts = t1;
+      _this._emitLocal$2("reconnect_scheduled", A.LinkedHashMap_LinkedHashMap$_literal(["attempt", t1, "delaySeconds", B.JSInt_methods._tdivFast$1(delay._duration, 1000000)], type$.String, type$.int));
+      A.Timer_Timer(delay, new A.FlintWebSocketClient__handleDisconnect_closure(_this));
+    },
+    _setState$1(value) {
+      if (this._flint_client_web$_state === value)
+        return;
+      this._flint_client_web$_state = value;
+      this._emitLocal$2("state_change", value);
+    },
+    _emitLocal$2($event, data) {
+      var t1, t2, _i,
+        handlers = this._eventHandlers.$index(0, $event);
+      if (handlers == null)
+        return;
+      for (t1 = A.List_List$from(handlers, true, type$.Function), t2 = t1.length, _i = 0; _i < t2; ++_i)
+        t1[_i].call$1(data);
+    },
+    _emitLocal$1($event) {
+      return this._emitLocal$2($event, null);
+    },
+    _flushMessageQueue$0() {
+      var message, t1, t2, t3, _i, t4, exception, _this = this;
+      if (_this._flint_client_web$_state !== B.WebSocketConnectionState_2 || _this._socket == null)
+        return;
+      for (t1 = _this._messageQueue, t2 = A.List_List$from(t1, true, type$.Map_String_dynamic), t3 = t2.length, _i = 0; _i < t3; ++_i) {
+        message = t2[_i];
+        try {
+          t4 = _this._socket;
+          t4.toString;
+          t4.send(B.C_JsonCodec.encode$2$toEncodable(message, null));
+          B.JSArray_methods.remove$1(t1, message);
+        } catch (exception) {
+          break;
+        }
+      }
+    },
+    _startHeartbeat$0() {
+      var t1 = this._heartbeatTimer;
+      if (t1 != null)
+        t1.cancel$0();
+      this._heartbeatTimer = A.Timer_Timer$periodic(B.Duration_25000000, new A.FlintWebSocketClient__startHeartbeat_closure(this));
+    }
+  };
+  A.FlintWebSocketClient_connect_closure.prototype = {
+    call$1(__wc0_formal) {
+      var t1 = this.$this;
+      t1._setState$1(B.WebSocketConnectionState_2);
+      t1._reconnectAttempts = 0;
+      t1._lastPong = new A.DateTime(Date.now(), 0, false);
+      t1._emitLocal$1("connect");
+      t1._emitLocal$1("open");
+      t1._startHeartbeat$0();
+      t1._flushMessageQueue$0();
+    },
+    $signature: 3
+  };
+  A.FlintWebSocketClient_connect_closure0.prototype = {
+    call$1($event) {
+      this.$this._handleMessage$1(A.dartify($event.data));
+    },
+    $signature: 3
+  };
+  A.FlintWebSocketClient_connect_closure1.prototype = {
+    call$1($event) {
+      var t1 = this.$this;
+      t1._emitLocal$2("error", $event);
+      t1._handleDisconnect$1($event);
+    },
+    $signature: 3
+  };
+  A.FlintWebSocketClient_connect_closure2.prototype = {
+    call$1($event) {
+      var t1 = this.$this;
+      t1._emitLocal$2("close", $event);
+      t1._handleDisconnect$1($event);
+    },
+    $signature: 3
+  };
+  A.FlintWebSocketClient_on_closure.prototype = {
+    call$0() {
+      return A._setArrayType([], type$.JSArray_Function);
+    },
+    $signature: 25
+  };
+  A.FlintWebSocketClient__handleDisconnect_closure.prototype = {
+    call$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.void),
+        $async$returnValue, $async$self = this, t1;
+      var $async$call$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = $async$self.$this;
+              t1._reconnecting = false;
+              if (t1._manuallyClosed) {
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              $async$goto = 3;
+              return A._asyncAwait(t1.connect$0(), $async$call$0);
+            case 3:
+              // returning from await.
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$call$0, $async$completer);
+    },
+    $signature: 24
+  };
+  A.FlintWebSocketClient__startHeartbeat_closure.prototype = {
+    call$1(timer) {
+      var t1, t2, t3, t4;
+      type$.Timer._as(timer);
+      t1 = this.$this;
+      if (t1._flint_client_web$_state !== B.WebSocketConnectionState_2 || t1._socket == null) {
+        timer.cancel$0();
+        return;
+      }
+      if (t1._lastPong != null) {
+        t2 = Date.now();
+        t3 = t1._lastPong;
+        t4 = t3._core$_value;
+        t4 = A.Duration$(0 - t3._microsecond, t2 - t4, 0)._duration > 30000000;
+        t2 = t4;
+      } else
+        t2 = false;
+      if (t2) {
+        t1._handleDisconnect$1("Heartbeat timeout");
+        return;
+      }
+      t2 = type$.dynamic;
+      t1.emit$2("ping", A.LinkedHashMap_LinkedHashMap$_empty(t2, t2));
+    },
+    $signature: 23
+  };
+  A._ParsedResponse.prototype = {};
   A.ApiSidebar.prototype = {
     build$0() {
       var t1, lastGroup, _i, t2, slug, group, t3, _null = null, items = [];
@@ -8389,7 +13796,7 @@
       t2 = A.DartStyle$(_null, B.AlignItems_1_center, _null, _null, _null, new A.Color("rgba(0, 0, 0, 0)"), B.Border_Jpf, _null, _null, _null, _null, _null, _null, _null, t3, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 13, t2, 6, _null, _null, _null, _null, _null, B.JustifyContent_KKE, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_8_12_8_12, _null, 8, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.SizeValue("100%"), _null, _null, _null);
       t3 = A.Text_span(label, B.DartStyle_16H);
       t4 = $.$get$Icons_chevronDown();
-      t2 = [A.Button$(_null, [t3, A.Icon$(t4, groupActive ? new A.Color("#a7f3d0") : new A.Color("#94a3b8"), 14)], t2, new A.GuidesSidebar__sidebarItem_closure0(_this, isOpen, slug), B.Map_empty1, B.Tone_0, B.ButtonVariant_3)];
+      t2 = [A.Button$(_null, [t3, A.Icon$(t4, groupActive ? new A.Color("#a7f3d0") : new A.Color("#94a3b8"), 14)], t2, false, new A.GuidesSidebar__sidebarItem_closure0(_this, isOpen, slug), B.Map_empty1, B.ComponentSize_2, B.Tone_0, B.ButtonVariant_3)];
       if (isOpen) {
         t3 = [];
         for (t1 = t1.get$iterator(children), t4 = _this.active; t1.moveNext$0();) {
@@ -8407,7 +13814,7 @@
     call$1(c) {
       return type$.Record_2_String_and_String._as(c)._0 === this.$this.active;
     },
-    $signature: 19
+    $signature: 52
   };
   A.GuidesSidebar__sidebarItem_closure0.prototype = {
     call$1(_) {
@@ -8426,67 +13833,1047 @@
     },
     $signature: 0
   };
-  A.UiDocsPage.prototype = {
-    get$_contentHtml() {
-      var t1 = this.props.$index(0, "contentHtml");
+  A.QuestionDetailPage.prototype = {
+    get$_question() {
+      var t1 = type$.nullable_Map_dynamic_dynamic._as(this.props.$index(0, "question"));
+      t1 = t1 == null ? null : t1.cast$2$0(0, type$.String, type$.dynamic);
+      return t1 == null ? B.Map_empty : t1;
+    },
+    get$_answers() {
+      var t1 = this._answersSignal._value;
+      return t1 == null ? this.get$_initialAnswers() : t1;
+    },
+    get$_initialAnswers() {
+      var t1, t2,
+        raw = this.props.$index(0, "answers");
+      if (type$.List_dynamic._is(raw)) {
+        t1 = J.whereType$1$0$ax(raw, type$.Map_dynamic_dynamic);
+        t2 = t1.$ti;
+        t2 = A.MappedIterable_MappedIterable(t1, t2._eval$1("Map<String,@>(Iterable.E)")._as(new A.QuestionDetailPage__initialAnswers_closure()), t2._eval$1("Iterable.E"), type$.Map_String_dynamic);
+        t1 = A.List_List$_of(t2, A._instanceType(t2)._eval$1("Iterable.E"));
+        return t1;
+      }
+      return B.List_empty6;
+    },
+    get$_slug() {
+      var t1 = this.get$_question().$index(0, "slug");
       t1 = t1 == null ? null : J.toString$0$(t1);
       return t1 == null ? "" : t1;
     },
+    didMount$0() {
+      this._connectAnswerSocket$0();
+      this._startAnswerRefresh$0();
+    },
+    didUpdate$0() {
+      this._connectAnswerSocket$0();
+      this._startAnswerRefresh$0();
+    },
+    willUnmount$0() {
+      var t1 = this._answersSignal._listeners;
+      if (t1._collection$_length > 0) {
+        t1._collection$_strings = t1._collection$_nums = t1._collection$_rest = t1._collection$_first = t1._collection$_last = null;
+        t1._collection$_length = 0;
+        t1._collection$_modified$0();
+      }
+      t1 = this._answersSocket;
+      if (t1 != null) {
+        t1.close$2(1001, "Client disposed");
+        t1._eventHandlers.clear$0(0);
+        B.JSArray_methods.clear$0(t1._messageQueue);
+      }
+      t1 = this._answersTimer;
+      if (t1 != null)
+        t1.cancel$0();
+    },
     build$0() {
-      var t2, t3, t4, t5, t6, t7, t8, _this = this, _null = null, _s3_ = "div",
-        _s10_ = "Components",
-        _s28_ = "#a-component-is-a-dart-class",
-        _s11_ = "HtmlContent",
-        t1 = type$.JSArray_Object;
-      t1 = A.DartStyle$(_null, _null, _null, _null, _null, A.Background_Background$layers(A._setArrayType([A.Gradient_Gradient$linear(135, A._setArrayType([new A.GradientStop(new A.Color("rgba(52, 211, 153, 0.18)"), 0), new A.GradientStop(new A.Color("rgba(14, 165, 233, 0.12)"), 52), new A.GradientStop(new A.Color("rgba(15, 23, 42, 0.84)"), 100)], t1)), B.Color_9WD], t1)), B.Border_LNh, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 26, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_24_24_24_24, _null, 24, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t2 = A.Row$([_this._pill$2("Flint UI", B.Color_FUE), _this._pill$2("Dart components", B.Color_FZY)], B.DartStyle_yfD);
-      t3 = A._element("h1", "Build browser UI with Dart components.", _null, B.Map_empty1, B.Map_empty1, B.DartStyle_Vhg);
-      t4 = A.Text_p("Flint UI keeps components, state, events, styling, server props, and trusted HTML rendering inside the Dart ecosystem.", B.DartStyle_unr);
-      t5 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_Itj, B.Map_empty1, B.Map_empty1);
-      t4 = A.normalizeChildren(_null, [t2, t3, t4]);
-      t3 = A.Row$([A.Icon$($.$get$Icons_sparkles(), B.Color_FUE, 16), A.Text_span("Pure Dart UI", B.DartStyle_2I3)], B.DartStyle_Lve);
-      t2 = A.Text_span("class Counter extends Component", B.DartStyle_bv0);
-      t6 = A.Text_span("setState(() => count++)", B.DartStyle_lYQ);
-      t7 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_WTJ, B.Map_empty1, B.Map_empty1);
-      t6 = A.normalizeChildren(_null, [t2, t6]);
-      t2 = A.Text_p("The public API teaches Component, View, DartStyle, and state without exposing internal nodes.", B.DartStyle_jdq);
-      t8 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_Pre, B.Map_empty1, B.Map_empty1);
-      t2 = A.normalizeChildren(_null, [t3, new A.Container(_s3_, t7, t6), t2]);
-      t2 = A.Row$([new A.Container(_s3_, t5, t4), new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_QzA, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [new A.Container(_s3_, t8, t2)]))], B.DartStyle_YC7);
-      t8 = A.Row$([A.Link$(_s10_, B.List_empty2, B.DartStyle_Rug, _s28_, _null), A.Link$("State", B.List_empty2, B.DartStyle_Rug, "#state-updates-with-setstate", _null), A.Link$(_s11_, B.List_empty2, B.DartStyle_Rug, "#render-trusted-html", _null)], B.DartStyle_yfD);
-      t1 = A.mergeComponentProps(B.Map_empty1, _null, t1, B.Map_empty1, B.Map_empty1);
-      t8 = A.normalizeChildren(_null, [t2, t8]);
-      t2 = A._gridCssValue(240, false);
-      t4 = A._gridCssValue(B.GridTrack_2Nt, false);
-      t4 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue("auto-fit", true) + ", " + A._gridCssValue(new A.GridTrack("minmax(" + t2 + ", " + t4 + ")"), false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t2 = _this._featureCard$4($.$get$Icons_box(), _s10_, "Build screens from Dart classes with a simple View build method.", B.Color_FUE);
-      t5 = _this._featureCard$4($.$get$Icons_activity(), "State", "Preserve component state and receive new constructor values with updateFrom.", B.Color_aMD);
-      t6 = _this._featureCard$4($.$get$Icons_code(), "DartStyle", "Keep layout, spacing, colors, and responsive rules beside the component.", B.Color_ZUt);
-      t7 = _this._featureCard$4($.$get$Icons_clipboard(), _s11_, "Render trusted Markdown HTML without manual document selectors in app code.", B.Color_4Cx);
-      t4 = A.mergeComponentProps(B.Map_empty1, _null, t4, B.Map_empty1, B.Map_empty1);
-      t7 = A.normalizeChildren(_null, [t2, t5, t6, t7]);
-      t6 = A._element("h2", "UI documentation", _null, B.Map_empty1, B.Map_empty1, B.DartStyle_euP);
-      t5 = A.Text_p("Components, props, state, styling, page registration, client requests, and trusted HTML.", B.DartStyle_Pvi);
-      t5 = [A.Row$([new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_pjl, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [t6, t5])), A.Link$(_null, [A.Text_span("Start reading", B.DartStyle_2I3), A.Icon$($.$get$Icons_arrowRight(), B.Color_FUE, 14)], B.DartStyle_Hah, _s28_, _null)], B.DartStyle_1vI)];
-      if (_this.get$_contentHtml().length === 0)
-        t5.push(A.Text_p("The Flint UI guide is being written.", B.DartStyle_YrT));
+      var t3, t4, t5, _this = this, _null = null,
+        _s8_ = "Question",
+        t1 = _this.props,
+        t2 = _this.get$_question().$index(0, "tag");
+      t2 = t2 == null ? _null : J.toString$0$(t2);
+      if (t2 == null)
+        t2 = _s8_;
+      t3 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_JR3, B.Map_empty1, B.Map_empty1);
+      t2 = A.normalizeChildren(t2, B.List_empty2);
+      t4 = _this.get$_question().$index(0, "date");
+      t4 = t4 == null ? _null : J.toString$0$(t4);
+      t2 = A.Row$([new A.Container("div", t3, t2), A.Text_span(t4 == null ? "" : t4, B.DartStyle_2ck)], B.DartStyle_yfD);
+      t3 = _this.get$_question().$index(0, "title");
+      t3 = t3 == null ? _null : J.toString$0$(t3);
+      t3 = A._element("h1", t3 == null ? _s8_ : t3, _null, B.Map_empty1, B.Map_empty1, B.DartStyle_Su5);
+      t4 = _this.get$_question().$index(0, "body");
+      t4 = t4 == null ? _null : J.toString$0$(t4);
+      t4 = A.Text_p(t4 == null ? "" : t4, B.DartStyle_LAs);
+      t5 = _this.get$_question().$index(0, "author");
+      t5 = t5 == null ? _null : J.toString$0$(t5);
+      t5 = A.Text_span("By " + (t5 == null ? "Community" : t5), B.DartStyle_lYQ);
+      t5 = [new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_pe2, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [t2, t3, t4, t5])), new A.StateSignalListener(_this._answersSignal, new A.QuestionDetailPage_build_closure(_this), type$.StateSignalListener_nullable_List_Map_String_dynamic)];
+      if (!(J.$eq$(t1.$index(0, "isAuthenticated"), true) || B.C_AuthSessionManager.get$token() != null)) {
+        t2 = type$.JSArray_of_void_Function;
+        t5.push(new A.AuthPanel("Sign in to answer", "Create an account or sign in to answer this question and help improve the Flint knowledge base.", "/questions", "Back to Questions", new A.TextEditingController("", A._setArrayType([], t2)), new A.TextEditingController("", A._setArrayType([], t2)), new A.TextEditingController("", A._setArrayType([], t2))));
+      } else if (J.$eq$(t1.$index(0, "canAnswer"), true) || A.LinkedHashSet_LinkedHashSet$_literal(["admin", "contributor", "dev"], type$.String).contains$1(0, B.C_AuthSessionManager.get$role()))
+        t5.push(_this._answerForm$0());
       else
-        t5.push(new A.HtmlContent(_this.get$_contentHtml(), "ui-content", "api-md markdown-body", B.Map_rqkln));
-      t2 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_HoC, B.Map_empty1, B.Map_empty1);
-      t5 = A.normalizeChildren(_null, t5);
-      return new A.SiteLayout(_this.props, new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_SsC, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [new A.Container(_s3_, t1, t8), new A.Container(_s3_, t4, t7), new A.Container(_s3_, t2, t5)])));
+        t5.push(A.Text_p("Your account can read answers but cannot post yet.", B.DartStyle_0hJ));
+      return new A.SiteLayout(t1, new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_EJ2, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, t5)));
     },
-    _featureCard$4(icon, title, body, color) {
-      var t1 = A.Icon$(icon, color, 20),
-        t2 = A._element("h3", title, null, B.Map_empty1, B.Map_empty1, B.DartStyle_UsC),
-        t3 = A.Text_p(body, B.DartStyle_gH1);
-      return new A.Container("div", A.mergeComponentProps(B.Map_empty1, null, B.DartStyle_5wT, B.Map_empty1, B.Map_empty1), A.normalizeChildren(null, [t1, t2, t3]));
+    _answersList$1(answers) {
+      var t1, connected, t2, t3, t4, t5, _null = null;
+      type$.List_Map_String_dynamic._as(answers);
+      t1 = A.Text_h2("Answers", B.DartStyle_4QH);
+      connected = this._liveStatus === "Live";
+      t2 = connected ? B.Color_wdu : B.Color_HYX;
+      t3 = connected ? B.Color_OOk : B.Color_HYX0;
+      t2 = A.DartStyle$(_null, B.AlignItems_1_center, _null, _null, _null, t3, new A.Border(1, t2, "solid"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_eAD, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 7, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_6_10_6_10, _null, 999, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t3 = A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, _null, _null, _null, _null, connected ? B.Color_UWZ : B.Color_ZUt, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 7, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 999, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 7, _null, _null, _null), B.Map_empty1, B.Map_empty1);
+      t4 = A.normalizeChildren(_null, B.List_empty2);
+      t5 = this._liveStatus;
+      t5 = A.Text_span(t5, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, connected ? B.Color_FUE : B.Color_1kp, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
+      t5 = [A.Row$([t1, new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, t2, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [new A.Container("div", t3, t4), t5]))], B.DartStyle_1vI)];
+      t1 = J.getInterceptor$asx(answers);
+      if (t1.get$isEmpty(answers))
+        t5.push(A.Text_p("No answers yet. Be the first to help.", B.DartStyle_YrT));
+      else
+        for (t1 = t1.get$iterator(answers); t1.moveNext$0();)
+          t5.push(this._answerCard$1(t1.get$current()));
+      return new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_Mg8, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, t5));
     },
-    _pill$2(label, color) {
-      var _null = null,
-        t1 = A.Text_span(label, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, color, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 11, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
-      return new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_s8L, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [t1]));
+    _answerCard$1(answer) {
+      var t1, answerId, canDelete, deleting, t2, _null = null;
+      type$.Map_String_dynamic._as(answer);
+      t1 = answer.$index(0, "id");
+      answerId = t1 == null ? _null : J.toString$0$(t1);
+      canDelete = J.$eq$(answer.$index(0, "can_edit"), true) && answerId != null;
+      deleting = answerId != null && this._deletingAnswerIds.contains$1(0, answerId);
+      t1 = answer.$index(0, "body");
+      t1 = t1 == null ? _null : J.toString$0$(t1);
+      t1 = A.Text_p(t1 == null ? "" : t1, B.DartStyle_Dg7);
+      t2 = answer.$index(0, "author");
+      t2 = t2 == null ? _null : J.toString$0$(t2);
+      t2 = [A.Text_span("By " + (t2 == null ? "Community" : t2), B.DartStyle_lYQ)];
+      if (canDelete)
+        t2.push(A.Button$(_null, [A.Icon$($.$get$Icons_trash(), _null, 14), A.Text_span("Delete", _null)], _null, deleting, new A.QuestionDetailPage__answerCard_closure(this, answerId), B.Map_empty1, B.ComponentSize_1, B.Tone_4, B.ButtonVariant_3));
+      t2 = A.Row$(t2, B.DartStyle_1vI);
+      return new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_iim, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [t1, t2]));
+    },
+    _answerForm$0() {
+      var t2, t3, t4, t5, id, ariaDescribedBy, t6, t7, _this = this, _null = null, _s4_ = "body",
+        _s8_ = "textarea",
+        t1 = _this.get$_question().$index(0, "slug"),
+        slug = t1 == null ? _null : J.toString$0$(t1);
+      if (slug == null)
+        slug = "";
+      t1 = [];
+      t2 = _this._answerMessage;
+      if (t2 != null) {
+        t2 = A.Text_p(t2, B.DartStyle_jnn);
+        t1.push(new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_hUX, B.Map_empty1, B.Map_empty1), A.normalizeChildren(t2, B.List_empty2)));
+      }
+      t2 = _this._answerFormState.controller$1(_s4_);
+      t3 = _this._answerErrors;
+      t4 = A.mergeComponentProps(B.Map_empty1, _null, _null, B.Map_CKAM1, B.Map_empty1);
+      t5 = t2._text;
+      t3 = A.resolveFieldError(_null, t3, _s4_);
+      t2 = A.TextArea__controlledOnChanged(t2, _null);
+      id = A.fieldId(_s8_, _s4_, B.Map_empty1);
+      ariaDescribedBy = A.describedBy(_null, t3, _null, id);
+      t6 = A._setArrayType([], type$.JSArray_FlintNode);
+      t6.push(A.fieldLabel(id, "Your answer", true));
+      t7 = A.LinkedHashMap_LinkedHashMap$of(A.controlProps(ariaDescribedBy, false, t3, id, _s4_, B.Map_empty1, true), type$.String, type$.nullable_Object);
+      t7.$indexSet(0, "rows", 7);
+      t7.$indexSet(0, "placeholder", "Share the fix, explanation, or example...");
+      if (t2 != null)
+        t7.$indexSet(0, "onInput", t2);
+      t2 = A.mergeComponentProps(t7, _null, A.inputComponentStyle(false, t3 != null && t3.length !== 0, B.ComponentSize_2, B.InputVariant_0).merge$1(B.DartStyle_ElM).merge$1(B.DartStyle_80u), B.Map_empty1, B.Map_empty1);
+      t6.push(new A.FlintElement(_s8_, t2, t5 == null ? B.List_empty3 : A.normalizeChildren(t5, B.List_empty2)));
+      B.JSArray_methods.addAll$1(t6, A.fieldMessages(t3, _null, id));
+      t1.push(new A.TextArea("div", t4, t6));
+      t2 = _this._answerLoading;
+      t1.push(A.Button$(_null, [A.Icon$($.$get$Icons_send(), _null, 15), A.Text_span("Post Answer", _null)], _null, t2, _null, B.Map_eXYEy, B.ComponentSize_2, B.Tone_1, B.ButtonVariant_0));
+      t1 = A.Form$(t1, B.DartStyle_Mg8, new A.QuestionDetailPage__answerForm_closure(_this, slug));
+      return new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_KeN, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [t1]));
+    },
+    _submitAnswer$2($event, slug) {
+      return this._submitAnswer$body$QuestionDetailPage($event, slug);
+    },
+    _submitAnswer$body$QuestionDetailPage($event, slug) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.void),
+        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$self = this, token, t1, response, data, answer, errors, errorMessage, error, data0, errors0, errorMessage0, t2, t3, errors1, t4, localErrors, t5, exception, $async$exception;
+      var $async$_submitAnswer$2 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1) {
+          $async$errorStack.push($async$result);
+          $async$goto = $async$handler;
+        }
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              if (type$.JSObject._is($event))
+                $event.preventDefault();
+              if ($async$self._answerLoading) {
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              $async$self.setState$1(new A.QuestionDetailPage__submitAnswer_closure($async$self));
+              t2 = $async$self._answerFormState;
+              t3 = type$.String;
+              errors1 = A.LinkedHashMap_LinkedHashMap$_empty(t3, type$.List_String);
+              t4 = B.JSString_methods.trim$0(t2.string$1("body")).length;
+              if (t4 === 0)
+                errors1.$indexSet(0, "body", A._setArrayType(["The body field is required."], type$.JSArray_String));
+              else if (t4 < 10)
+                errors1.$indexSet(0, "body", A._setArrayType(["The body must be at least 10 characters."], type$.JSArray_String));
+              localErrors = new A.FormErrors(errors1);
+              if (errors1.get$isNotEmpty(0)) {
+                errorMessage = $async$self._toastErrorMessage$2(localErrors, "Please check your answer.");
+                $async$self.setState$1(new A.QuestionDetailPage__submitAnswer_closure0($async$self, localErrors));
+                B.C_ToastService.error$2$message("Answer not posted", errorMessage);
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              $async$handler = 4;
+              token = B.C_AuthSessionManager.get$token();
+              t4 = $.$get$clientRouter();
+              t5 = A.ConstantMap_ConstantMap$from(t2._controllers$_data, t3, type$.nullable_Object);
+              t1 = A.LinkedHashMap_LinkedHashMap$_empty(t3, t3);
+              J.$indexSet$ax(t1, "Accept", "application/json");
+              J.$indexSet$ax(t1, "X-Requested-With", "FlintClient");
+              if (token != null)
+                J.$indexSet$ax(t1, "Authorization", "Bearer " + token);
+              $async$goto = 7;
+              return A._asyncAwait(t4.post$1$3$body$headers("/questions/" + slug + "/answers", t5, t1, type$.Map_String_dynamic), $async$_submitAnswer$2);
+            case 7:
+              // returning from await.
+              response = $async$result;
+              data = response.data;
+              $async$goto = response.success && data != null ? 8 : 9;
+              break;
+            case 8:
+              // then
+              answer = data.$index(0, "answer");
+              $async$goto = type$.Map_dynamic_dynamic._is(answer) ? 10 : 12;
+              break;
+            case 10:
+              // then
+              $async$self._addAnswer$1(answer.cast$2$0(0, t3, type$.dynamic));
+              // goto join
+              $async$goto = 11;
+              break;
+            case 12:
+              // else
+              $async$goto = 13;
+              return A._asyncAwait($async$self._refreshAnswers$0(), $async$_submitAnswer$2);
+            case 13:
+              // returning from await.
+            case 11:
+              // join
+              t2.reset$1(A._setArrayType(["body"], type$.JSArray_String));
+              $async$self.setState$1(new A.QuestionDetailPage__submitAnswer_closure1($async$self));
+              B.C_ToastService.success$2$message("Answer posted", "Added to the thread.");
+              // goto return
+              $async$goto = 1;
+              break;
+            case 9:
+              // join
+              errors = A.FormErrors_FormErrors$from(data);
+              t1 = data;
+              if (t1 == null)
+                t1 = null;
+              else {
+                t1 = J.$index$asx(t1, "message");
+                t1 = t1 == null ? null : J.toString$0$(t1);
+              }
+              if (t1 == null)
+                t1 = "Could not post answer.";
+              errorMessage = $async$self._toastErrorMessage$2(errors, t1);
+              $async$self.setState$1(new A.QuestionDetailPage__submitAnswer_closure2($async$self, errors, errorMessage));
+              B.C_ToastService.error$2$message("Answer not posted", errorMessage);
+              $async$handler = 2;
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 4:
+              // catch
+              $async$handler = 3;
+              $async$exception = $async$errorStack.pop();
+              t1 = A.unwrapException($async$exception);
+              if (t1 instanceof A.FlintError) {
+                error = t1;
+                data0 = $async$self._errorData$1(error);
+                errors0 = A.FormErrors_FormErrors$from(data0);
+                t1 = data0;
+                if (t1 == null)
+                  t1 = null;
+                else {
+                  t1 = J.$index$asx(t1, "message");
+                  t1 = t1 == null ? null : J.toString$0$(t1);
+                }
+                if (t1 == null)
+                  t1 = "Could not post answer.";
+                errorMessage0 = $async$self._toastErrorMessage$2(errors0, t1);
+                $async$self.setState$1(new A.QuestionDetailPage__submitAnswer_closure3($async$self, errors0, errorMessage0));
+                B.C_ToastService.error$2$message("Answer not posted", errorMessage0);
+              } else {
+                $async$self.setState$1(new A.QuestionDetailPage__submitAnswer_closure4($async$self));
+                B.C_ToastService.error$2$message("Answer not posted", $async$self._answerMessage);
+              }
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 3:
+              // uncaught
+              // goto rethrow
+              $async$goto = 2;
+              break;
+            case 6:
+              // after finally
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+            case 2:
+              // rethrow
+              return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_submitAnswer$2, $async$completer);
+    },
+    _toastErrorMessage$2(errors, fallback) {
+      var t2,
+        t1 = errors._messages;
+      if (t1.get$isEmpty(t1))
+        return fallback;
+      t1 = errors.get$firstMessages();
+      t2 = A._instanceType(t1)._eval$1("LinkedHashMapValuesIterable<2>");
+      return A.TakeIterable_TakeIterable(new A.LinkedHashMapValuesIterable(t1, t2), 3, t2._eval$1("Iterable.E")).join$1(0, " ");
+    },
+    _errorData$1(error) {
+      var data = error.data;
+      if (type$.Map_String_dynamic._is(data))
+        return data;
+      if (type$.Map_dynamic_dynamic._is(data))
+        return data.map$2$1(0, new A.QuestionDetailPage__errorData_closure(), type$.String, type$.dynamic);
+      return null;
+    },
+    _startAnswerRefresh$0() {
+      var _this = this;
+      if (_this.get$_slug().length === 0 || _this._answersTimer != null)
+        return;
+      _this._answersTimer = A.Timer_Timer$periodic(B.Duration_4000000, new A.QuestionDetailPage__startAnswerRefresh_closure(_this));
+    },
+    _connectAnswerSocket$0() {
+      var socket, _this = this,
+        slug = _this.get$_slug();
+      if (slug.length === 0 || _this._answersSocket != null)
+        return;
+      socket = $.$get$clientRouter().client.ws$1("/questions/" + slug + "/live");
+      socket.on$2("connect", new A.QuestionDetailPage__connectAnswerSocket_closure(_this));
+      socket.on$2("connected", new A.QuestionDetailPage__connectAnswerSocket_closure0(_this));
+      socket.on$2("answer.created", new A.QuestionDetailPage__connectAnswerSocket_closure1(_this));
+      socket.on$2("answer.deleted", new A.QuestionDetailPage__connectAnswerSocket_closure2(_this));
+      socket.on$2("disconnect", new A.QuestionDetailPage__connectAnswerSocket_closure3(_this));
+      socket.on$2("error", new A.QuestionDetailPage__connectAnswerSocket_closure4(_this));
+      socket.on$2("reconnect_failed", new A.QuestionDetailPage__connectAnswerSocket_closure5(_this));
+      _this._answersSocket = socket;
+      socket.connect$0();
+    },
+    _refreshAnswers$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.void),
+        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$self = this, token, t1, response, rawAnswers, answers, currentSignature, nextSignature, t2, t3, t4, answers0, exception, slug, $async$exception;
+      var $async$_refreshAnswers$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1) {
+          $async$errorStack.push($async$result);
+          $async$goto = $async$handler;
+        }
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              slug = $async$self.get$_slug();
+              if (J.get$length$asx(slug) === 0) {
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              $async$handler = 4;
+              token = B.C_AuthSessionManager.get$token();
+              t2 = $.$get$clientRouter();
+              t3 = A.S(slug);
+              t4 = type$.String;
+              t1 = A.LinkedHashMap_LinkedHashMap$_empty(t4, t4);
+              J.$indexSet$ax(t1, "Accept", "application/json");
+              if (token != null)
+                J.$indexSet$ax(t1, "Authorization", "Bearer " + token);
+              t4 = type$.Map_String_dynamic;
+              t1 = type$.nullable_Map_String_String._as(t1);
+              $async$goto = 7;
+              return A._asyncAwait(t2.client.request$1$9$body$headers$onDone$onError$parser$queryParameters$requestTimeout("GET", t2._path$1("/api/questions/" + t3), null, t1, null, null, null, null, null, t4), $async$_refreshAnswers$0);
+            case 7:
+              // returning from await.
+              response = $async$result;
+              t1 = response.data;
+              rawAnswers = t1 == null ? null : t1.$index(0, "answers");
+              if (!type$.List_dynamic._is(rawAnswers)) {
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              t1 = J.whereType$1$0$ax(rawAnswers, type$.Map_dynamic_dynamic);
+              t2 = t1.$ti;
+              t4 = A.MappedIterable_MappedIterable(t1, t2._eval$1("Map<String,@>(Iterable.E)")._as(new A.QuestionDetailPage__refreshAnswers_closure()), t2._eval$1("Iterable.E"), t4);
+              answers0 = A.List_List$_of(t4, A._instanceType(t4)._eval$1("Iterable.E"));
+              answers = answers0;
+              currentSignature = B.C_JsonCodec.encode$2$toEncodable($async$self.get$_answers(), null);
+              nextSignature = B.C_JsonCodec.encode$2$toEncodable(answers, null);
+              if (J.$eq$(currentSignature, nextSignature)) {
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              t1 = $async$self._answersSignal;
+              t1._value = t1.$ti._precomputed1._as(answers);
+              t1.notifyListeners$0();
+              $async$handler = 2;
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 4:
+              // catch
+              $async$handler = 3;
+              $async$exception = $async$errorStack.pop();
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 3:
+              // uncaught
+              // goto rethrow
+              $async$goto = 2;
+              break;
+            case 6:
+              // after finally
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+            case 2:
+              // rethrow
+              return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_refreshAnswers$0, $async$completer);
+    },
+    _addAnswer$1(answer) {
+      var current, t1, answerId;
+      type$.Map_String_dynamic._as(answer);
+      current = this.get$_answers();
+      t1 = answer.$index(0, "id");
+      answerId = t1 == null ? null : J.toString$0$(t1);
+      if (answerId != null && J.any$1$ax(current, new A.QuestionDetailPage__addAnswer_closure(answerId)))
+        return;
+      this._answersSignal.update$1(new A.QuestionDetailPage__addAnswer_closure0(current, answer));
+    },
+    _deleteAnswer$1(answerId) {
+      return this._deleteAnswer$body$QuestionDetailPage(A._asString(answerId));
+    },
+    _deleteAnswer$body$QuestionDetailPage(answerId) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.void),
+        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$next = [], $async$self = this, token, t1, response, message, error, data, message0, t2, t3, t4, message1, exception, slug, $async$exception;
+      var $async$_deleteAnswer$1 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1) {
+          $async$errorStack.push($async$result);
+          $async$goto = $async$handler;
+        }
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              slug = $async$self.get$_slug();
+              if (J.get$length$asx(slug) === 0 || $async$self._deletingAnswerIds.contains$1(0, answerId)) {
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              if (!A._asBool(A._asJSObject(init.G.window).confirm("Delete this answer?"))) {
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              $async$self.setState$1(new A.QuestionDetailPage__deleteAnswer_closure($async$self, answerId));
+              $async$handler = 4;
+              token = B.C_AuthSessionManager.get$token();
+              t2 = $.$get$clientRouter();
+              t3 = A.S(slug);
+              t4 = type$.String;
+              t1 = A.LinkedHashMap_LinkedHashMap$_empty(t4, t4);
+              J.$indexSet$ax(t1, "Accept", "application/json");
+              J.$indexSet$ax(t1, "X-Requested-With", "FlintClient");
+              if (token != null)
+                J.$indexSet$ax(t1, "Authorization", "Bearer " + token);
+              $async$goto = 7;
+              return A._asyncAwait(t2.post$1$2$headers("/questions/" + t3 + "/answers/" + answerId + "/delete", t1, type$.Map_String_dynamic), $async$_deleteAnswer$1);
+            case 7:
+              // returning from await.
+              response = $async$result;
+              if (response.success) {
+                $async$self._removeAnswer$1(answerId);
+                B.C_ToastService.success$2$message("Answer deleted", "Removed from the thread.");
+              } else {
+                t1 = response.data;
+                if (t1 == null)
+                  message1 = null;
+                else {
+                  t1 = t1.$index(0, "message");
+                  t1 = t1 == null ? null : J.toString$0$(t1);
+                  message1 = t1;
+                }
+                message = message1 == null ? "Could not delete answer." : message1;
+                B.C_ToastService.error$2$message("Delete failed", message);
+              }
+              $async$next.push(6);
+              // goto finally
+              $async$goto = 5;
+              break;
+            case 4:
+              // catch
+              $async$handler = 3;
+              $async$exception = $async$errorStack.pop();
+              t1 = A.unwrapException($async$exception);
+              if (t1 instanceof A.FlintError) {
+                error = t1;
+                data = $async$self._errorData$1(error);
+                t1 = data;
+                if (t1 == null)
+                  message = null;
+                else {
+                  t1 = J.$index$asx(t1, "message");
+                  t1 = t1 == null ? null : J.toString$0$(t1);
+                  message = t1;
+                }
+                message0 = message == null ? "Could not delete answer." : message;
+                B.C_ToastService.error$2$message("Delete failed", message0);
+              } else
+                B.C_ToastService.error$2$message("Delete failed", "Could not delete answer.");
+              $async$next.push(6);
+              // goto finally
+              $async$goto = 5;
+              break;
+            case 3:
+              // uncaught
+              $async$next = [2];
+            case 5:
+              // finally
+              $async$handler = 2;
+              $async$self.setState$1(new A.QuestionDetailPage__deleteAnswer_closure0($async$self, answerId));
+              // goto the next finally handler
+              $async$goto = $async$next.pop();
+              break;
+            case 6:
+              // after finally
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+            case 2:
+              // rethrow
+              return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_deleteAnswer$1, $async$completer);
+    },
+    _removeAnswer$1(answerId) {
+      var current = this.get$_answers();
+      if (!J.any$1$ax(current, new A.QuestionDetailPage__removeAnswer_closure(answerId)))
+        return;
+      this._answersSignal.update$1(new A.QuestionDetailPage__removeAnswer_closure0(current, answerId));
     }
+  };
+  A.QuestionDetailPage__initialAnswers_closure.prototype = {
+    call$1(answer) {
+      return type$.Map_dynamic_dynamic._as(answer).cast$2$0(0, type$.String, type$.dynamic);
+    },
+    $signature: 22
+  };
+  A.QuestionDetailPage_build_closure.prototype = {
+    call$1(answers) {
+      var t1;
+      type$.nullable_List_Map_String_dynamic._as(answers);
+      t1 = this.$this;
+      return t1._answersList$1(answers == null ? t1.get$_initialAnswers() : answers);
+    },
+    $signature: 29
+  };
+  A.QuestionDetailPage__answerCard_closure.prototype = {
+    call$1(_) {
+      A._asObject(_);
+      return this.$this._deleteAnswer$1(this.answerId);
+    },
+    $signature: 1
+  };
+  A.QuestionDetailPage__answerForm_closure.prototype = {
+    call$1($event) {
+      return this.$this._submitAnswer$2(A._asObject($event), this.slug);
+    },
+    $signature: 1
+  };
+  A.QuestionDetailPage__submitAnswer_closure.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1._answerLoading = true;
+      t1._answerErrors = B.FormErrors_Map_empty;
+      t1._answerMessage = null;
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__submitAnswer_closure0.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1._answerLoading = false;
+      t1._answerErrors = this.localErrors;
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__submitAnswer_closure1.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1._answerLoading = false;
+      t1._answerErrors = B.FormErrors_Map_empty;
+      t1._answerMessage = null;
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__submitAnswer_closure2.prototype = {
+    call$0() {
+      var t2,
+        t1 = this.$this;
+      t1._answerLoading = false;
+      t2 = this.errors;
+      t1._answerErrors = t2;
+      t2 = t2._messages;
+      t1._answerMessage = t2.get$isEmpty(t2) ? this.errorMessage : null;
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__submitAnswer_closure3.prototype = {
+    call$0() {
+      var t2,
+        t1 = this.$this;
+      t1._answerLoading = false;
+      t2 = this.errors;
+      t1._answerErrors = t2;
+      t2 = t2._messages;
+      t1._answerMessage = t2.get$isEmpty(t2) ? this.errorMessage : null;
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__submitAnswer_closure4.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1._answerLoading = false;
+      t1._answerMessage = "Could not post answer. Please try again.";
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__errorData_closure.prototype = {
+    call$2(key, value) {
+      return new A.MapEntry(J.toString$0$(key), value, type$.MapEntry_String_dynamic);
+    },
+    $signature: 12
+  };
+  A.QuestionDetailPage__startAnswerRefresh_closure.prototype = {
+    call$1(_) {
+      type$.Timer._as(_);
+      return this.$this._refreshAnswers$0();
+    },
+    $signature: 23
+  };
+  A.QuestionDetailPage__connectAnswerSocket_closure.prototype = {
+    call$1(_) {
+      var t1;
+      A.print("[questions.live] connect");
+      t1 = this.$this;
+      t1.setState$1(new A.QuestionDetailPage__connectAnswerSocket__closure3(t1));
+    },
+    $signature: 2
+  };
+  A.QuestionDetailPage__connectAnswerSocket__closure3.prototype = {
+    call$0() {
+      return this.$this._liveStatus = "Live";
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__connectAnswerSocket_closure0.prototype = {
+    call$1(data) {
+      var t1;
+      A.print("[questions.live] connected payload: " + A.S(data));
+      t1 = this.$this;
+      t1.setState$1(new A.QuestionDetailPage__connectAnswerSocket__closure2(t1));
+    },
+    $signature: 2
+  };
+  A.QuestionDetailPage__connectAnswerSocket__closure2.prototype = {
+    call$0() {
+      return this.$this._liveStatus = "Live";
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__connectAnswerSocket_closure1.prototype = {
+    call$1(data) {
+      A.print("[questions.live] answer.created payload: " + A.S(data));
+      if (type$.Map_dynamic_dynamic._is(data))
+        this.$this._addAnswer$1(data.cast$2$0(0, type$.String, type$.dynamic));
+    },
+    $signature: 2
+  };
+  A.QuestionDetailPage__connectAnswerSocket_closure2.prototype = {
+    call$1(data) {
+      var t1, id;
+      A.print("[questions.live] answer.deleted payload: " + A.S(data));
+      if (type$.Map_dynamic_dynamic._is(data)) {
+        t1 = data.$index(0, "id");
+        id = t1 == null ? null : J.toString$0$(t1);
+        if (id != null)
+          this.$this._removeAnswer$1(id);
+      }
+    },
+    $signature: 2
+  };
+  A.QuestionDetailPage__connectAnswerSocket_closure3.prototype = {
+    call$1(_) {
+      var t1;
+      A.print("[questions.live] disconnect");
+      t1 = this.$this;
+      t1.setState$1(new A.QuestionDetailPage__connectAnswerSocket__closure1(t1));
+    },
+    $signature: 2
+  };
+  A.QuestionDetailPage__connectAnswerSocket__closure1.prototype = {
+    call$0() {
+      return this.$this._liveStatus = "Reconnecting";
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__connectAnswerSocket_closure4.prototype = {
+    call$1(_) {
+      var t1;
+      A.print("[questions.live] error");
+      t1 = this.$this;
+      t1.setState$1(new A.QuestionDetailPage__connectAnswerSocket__closure0(t1));
+    },
+    $signature: 2
+  };
+  A.QuestionDetailPage__connectAnswerSocket__closure0.prototype = {
+    call$0() {
+      return this.$this._liveStatus = "Reconnecting";
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__connectAnswerSocket_closure5.prototype = {
+    call$1(_) {
+      var t1;
+      A.print("[questions.live] reconnect_failed");
+      t1 = this.$this;
+      t1.setState$1(new A.QuestionDetailPage__connectAnswerSocket__closure(t1));
+    },
+    $signature: 2
+  };
+  A.QuestionDetailPage__connectAnswerSocket__closure.prototype = {
+    call$0() {
+      return this.$this._liveStatus = "Offline";
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__refreshAnswers_closure.prototype = {
+    call$1(answer) {
+      return type$.Map_dynamic_dynamic._as(answer).cast$2$0(0, type$.String, type$.dynamic);
+    },
+    $signature: 22
+  };
+  A.QuestionDetailPage__addAnswer_closure.prototype = {
+    call$1(item) {
+      var t1 = type$.Map_String_dynamic._as(item).$index(0, "id");
+      t1 = t1 == null ? null : J.toString$0$(t1);
+      return t1 === this.answerId;
+    },
+    $signature: 11
+  };
+  A.QuestionDetailPage__addAnswer_closure0.prototype = {
+    call$1(answers) {
+      var t1;
+      type$.nullable_List_Map_String_dynamic._as(answers);
+      t1 = answers == null ? this.current : answers;
+      t1 = A.List_List$_of(t1, type$.Map_String_dynamic);
+      t1.push(this.answer);
+      return t1;
+    },
+    $signature: 19
+  };
+  A.QuestionDetailPage__deleteAnswer_closure.prototype = {
+    call$0() {
+      return this.$this._deletingAnswerIds.add$1(0, this.answerId);
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__deleteAnswer_closure0.prototype = {
+    call$0() {
+      return this.$this._deletingAnswerIds.remove$1(0, this.answerId);
+    },
+    $signature: 0
+  };
+  A.QuestionDetailPage__removeAnswer_closure.prototype = {
+    call$1(answer) {
+      var t1 = type$.Map_String_dynamic._as(answer).$index(0, "id");
+      t1 = t1 == null ? null : J.toString$0$(t1);
+      return t1 === this.answerId;
+    },
+    $signature: 11
+  };
+  A.QuestionDetailPage__removeAnswer_closure0.prototype = {
+    call$1(answers) {
+      var t1;
+      type$.nullable_List_Map_String_dynamic._as(answers);
+      t1 = answers == null ? this.current : answers;
+      t1 = J.where$1$ax(t1, new A.QuestionDetailPage__removeAnswer__closure(this.answerId));
+      t1 = A.List_List$_of(t1, t1.$ti._eval$1("Iterable.E"));
+      return t1;
+    },
+    $signature: 19
+  };
+  A.QuestionDetailPage__removeAnswer__closure.prototype = {
+    call$1(answer) {
+      var t1 = type$.Map_String_dynamic._as(answer).$index(0, "id");
+      t1 = t1 == null ? null : J.toString$0$(t1);
+      return t1 !== this.answerId;
+    },
+    $signature: 11
+  };
+  A.AuthPanel.prototype = {
+    build$0() {
+      var t4, t5, _this = this, _null = null,
+        _s14_ = "Create account",
+        _s8_ = "password",
+        t1 = A.Text_h2(_this.title, B.DartStyle_OKC),
+        t2 = A.Text_p(_this.body, B.DartStyle_UN3),
+        t3 = _this._showRegisterOverride;
+      t3 = t3 === true ? B.ButtonVariant_3 : B.ButtonVariant_1;
+      t3 = A.Button$("Sign in", B.List_empty2, _null, false, new A.AuthPanel_build_closure(_this), B.Map_empty1, B.ComponentSize_2, B.Tone_1, t3);
+      t4 = _this._showRegisterOverride;
+      t4 = t4 === true ? B.ButtonVariant_1 : B.ButtonVariant_3;
+      t4 = [t1, t2, A.Row$([t3, A.Button$(_s14_, B.List_empty2, _null, false, new A.AuthPanel_build_closure0(_this), B.Map_empty1, B.ComponentSize_2, B.Tone_1, t4)], B.DartStyle_yfD)];
+      t1 = _this._auth_panel$_error;
+      if (t1 != null) {
+        t1 = A.Text_p(t1, B.DartStyle_jnn);
+        t4.push(new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_hUX, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [t1])));
+      }
+      t1 = [];
+      t2 = _this._showRegisterOverride;
+      if (t2 === true)
+        t1.push(A.TextField$(_this._auth_panel$_name, B.DartStyle_zcd, "Name", "name", "Your name", "text"));
+      t1.push(A.TextField$(_this._email, B.DartStyle_zcd, "Email or username", "email", "you@example.com", "text"));
+      t1.push(A.TextField$(_this._password, B.DartStyle_zcd, "Password", _s8_, "Minimum 8 characters", _s8_));
+      t2 = _this._loading;
+      t3 = _this._showRegisterOverride;
+      t5 = A.Icon$(t3 === true ? $.$get$Icons_plus() : $.$get$Icons_logIn(), _null, 15);
+      t3 = _this._showRegisterOverride;
+      t1.push(A.Row$([A.Button$(_null, [t5, A.Text_span(t3 === true ? _s14_ : "Sign in", _null)], _null, t2, new A.AuthPanel_build_closure1(_this), B.Map_empty1, B.ComponentSize_2, B.Tone_1, B.ButtonVariant_0), A.Link$(_this.backLabel, B.List_empty2, B.DartStyle_SX2, _this.backHref, _null)], B.DartStyle_4Jr));
+      t4.push(A.Form$(t1, B.DartStyle_Mg8, _null));
+      return new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_LTI, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, t4));
+    },
+    _submit$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.void),
+        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$self = this, endpoint, t1, res, t2, t3, t4, exception, $async$exception;
+      var $async$_submit$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1) {
+          $async$errorStack.push($async$result);
+          $async$goto = $async$handler;
+        }
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              $async$self.setState$1(new A.AuthPanel__submit_closure($async$self));
+              $async$handler = 4;
+              t2 = $async$self._showRegisterOverride;
+              endpoint = t2 === true ? "/auth/register" : "/auth/login";
+              t3 = $.$get$clientRouter();
+              t4 = type$.String;
+              t1 = A.LinkedHashMap_LinkedHashMap$_empty(t4, t4);
+              J.$indexSet$ax(t1, "email", B.JSString_methods.trim$0($async$self._email._text));
+              J.$indexSet$ax(t1, "password", $async$self._password._text);
+              t2 = $async$self._showRegisterOverride;
+              if (t2 === true)
+                J.$indexSet$ax(t1, "name", B.JSString_methods.trim$0($async$self._auth_panel$_name._text));
+              $async$goto = 7;
+              return A._asyncAwait(t3.post$1$2$body(endpoint, t1, type$.Map_String_dynamic), $async$_submit$0);
+            case 7:
+              // returning from await.
+              res = $async$result;
+              if (res.success) {
+                $async$self._saveSession$1(res.data);
+                t1 = $async$self._showRegisterOverride;
+                B.C_ToastService.success$2$message(t1 === true ? "Account created" : "Signed in", "Refreshing your session...");
+                A.Future_Future$delayed(B.Duration_650000, B.C_BrowserNavigation.get$reload(), type$.void);
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              $async$self.setState$1(new A.AuthPanel__submit_closure0($async$self, res));
+              B.C_ToastService.error$2$message("Authentication failed", $async$self._auth_panel$_error);
+              $async$handler = 2;
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 4:
+              // catch
+              $async$handler = 3;
+              $async$exception = $async$errorStack.pop();
+              $async$self.setState$1(new A.AuthPanel__submit_closure1($async$self));
+              B.C_ToastService.error$2$message("Authentication failed", $async$self._auth_panel$_error);
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 3:
+              // uncaught
+              // goto rethrow
+              $async$goto = 2;
+              break;
+            case 6:
+              // after finally
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+            case 2:
+              // rethrow
+              return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_submit$0, $async$completer);
+    },
+    _authMessage$1(data) {
+      var t1, errors, first;
+      type$.nullable_Map_String_dynamic._as(data);
+      t1 = data == null;
+      errors = t1 ? null : data.$index(0, "errors");
+      if (typeof errors == "string")
+        return errors;
+      if (type$.Map_dynamic_dynamic._is(errors) && errors.get$isNotEmpty(errors)) {
+        t1 = errors.get$values();
+        first = t1.get$first(t1);
+        if (type$.List_dynamic._is(first) && J.get$isNotEmpty$asx(first))
+          return J.toString$0$(J.get$first$ax(first));
+        return J.toString$0$(first);
+      }
+      if (t1)
+        t1 = null;
+      else {
+        t1 = data.$index(0, "message");
+        t1 = t1 == null ? null : J.toString$0$(t1);
+      }
+      return t1 == null ? "Authentication failed." : t1;
+    },
+    _saveSession$1(payload) {
+      var data, t1, authData, t2, token, t3, rawUser, user, _null = null;
+      type$.nullable_Map_String_dynamic._as(payload);
+      data = payload == null ? _null : payload.$index(0, "data");
+      t1 = type$.Map_dynamic_dynamic;
+      authData = t1._is(data) ? data.cast$2$0(0, type$.String, type$.dynamic) : _null;
+      t2 = authData == null;
+      if (t2)
+        token = _null;
+      else {
+        t3 = authData.$index(0, "token");
+        token = t3 == null ? _null : J.toString$0$(t3);
+      }
+      rawUser = t2 ? _null : authData.$index(0, "user");
+      if (rawUser == null)
+        rawUser = authData;
+      user = t1._is(rawUser) ? rawUser.cast$2$0(0, type$.String, type$.dynamic) : B.Map_empty;
+      if (token == null || token.length === 0) {
+        if (user.get$isNotEmpty(user)) {
+          t1 = B.C_JsonCodec.encode$2$toEncodable(type$.Map_String_dynamic._as(user), _null);
+          A._asJSObject(A._asJSObject(init.G.window).localStorage).setItem("auth.user", t1);
+        }
+        return;
+      }
+      type$.Map_String_dynamic._as(user);
+      t1 = init.G;
+      A._asJSObject(A._asJSObject(t1.window).localStorage).setItem("auth.token", token);
+      t2 = B.C_JsonCodec.encode$2$toEncodable(user, _null);
+      A._asJSObject(A._asJSObject(t1.window).localStorage).setItem("auth.user", t2);
+      t1 = A._asJSObject(t1.document);
+      t2 = A._setArrayType([A._Uri__uriEncode(2, "auth.token", B.C_Utf8Codec, false) + "=" + A._Uri__uriEncode(2, token, B.C_Utf8Codec, false)], type$.JSArray_String);
+      t2.push("Max-Age=2592000");
+      t2.push("Path=/");
+      t2.push("SameSite=" + B.C_Cookies._formatSameSite$1(B.CookieSameSite_0));
+      t1.cookie = B.JSArray_methods.join$1(t2, "; ");
+    }
+  };
+  A.AuthPanel_build_closure.prototype = {
+    call$1(_) {
+      var t1;
+      A._asObject(_);
+      t1 = this.$this;
+      return t1.setState$1(new A.AuthPanel_build__closure0(t1));
+    },
+    $signature: 1
+  };
+  A.AuthPanel_build__closure0.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1._showRegisterOverride = false;
+      t1._auth_panel$_error = null;
+    },
+    $signature: 0
+  };
+  A.AuthPanel_build_closure0.prototype = {
+    call$1(_) {
+      var t1;
+      A._asObject(_);
+      t1 = this.$this;
+      return t1.setState$1(new A.AuthPanel_build__closure(t1));
+    },
+    $signature: 1
+  };
+  A.AuthPanel_build__closure.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1._showRegisterOverride = true;
+      t1._auth_panel$_error = null;
+    },
+    $signature: 0
+  };
+  A.AuthPanel_build_closure1.prototype = {
+    call$1(_) {
+      A._asObject(_);
+      return this.$this._submit$0();
+    },
+    $signature: 1
+  };
+  A.AuthPanel__submit_closure.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1._loading = true;
+      t1._auth_panel$_error = null;
+    },
+    $signature: 0
+  };
+  A.AuthPanel__submit_closure0.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1._loading = false;
+      t1._auth_panel$_error = t1._authMessage$1(this.res.data);
+    },
+    $signature: 0
+  };
+  A.AuthPanel__submit_closure1.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1._loading = false;
+      t1._auth_panel$_error = "Could not sign in. Check your details and try again.";
+    },
+    $signature: 0
   };
   A.FlashBanner.prototype = {
     get$_success() {
@@ -8569,11 +14956,10 @@
   };
   A.NavBar.prototype = {
     get$_canWrite() {
-      var t1, t2, role;
+      var t1, role;
       if (!J.$eq$(this.props.$index(0, "canWriteBlog"), true)) {
         t1 = type$.Set_String._as(A.LinkedHashSet_LinkedHashSet$_literal(["admin", "contributor"], type$.String));
-        t2 = B.C_LocalStorage.readMap$1("auth.user").$index(0, "role");
-        role = t2 == null ? null : J.toString$0$(t2);
+        role = B.C_AuthSessionManager.get$role();
         t1 = role != null && t1.contains$1(0, role);
       } else
         t1 = true;
@@ -8617,7 +15003,7 @@
         t2 = this._guideDrawerOpen,
         t3 = t2 ? new A.Color("rgba(52, 211, 153, 0.16)") : new A.Color("rgba(15, 23, 42, 0.72)");
       t3 = A.DartStyle$(_null, B.AlignItems_1_center, _null, _null, _null, t3, new A.Border(1, new A.Color("rgba(52, 211, 153, 0.34)"), "solid"), _null, _null, _null, _null, _null, _null, _null, B.Color_FUE, _null, _null, B.Display_eAD, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 38, _null, _null, B.JustifyContent_center_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.DartStyle_QHi, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, new A.TokenRef("radius.md", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 38, _null, _null, _null);
-      return A.Button$(A.Icon$(t2 ? $.$get$Icons_x() : $.$get$Icons_book(), _null, 17), B.List_empty2, t3, new A.NavBar__guideToggle_closure(this), t1, B.Tone_0, B.ButtonVariant_2);
+      return A.Button$(A.Icon$(t2 ? $.$get$Icons_x() : $.$get$Icons_book(), _null, 17), B.List_empty2, t3, false, new A.NavBar__guideToggle_closure(this), t1, B.ComponentSize_2, B.Tone_0, B.ButtonVariant_2);
     },
     _apiToggle$0() {
       var _null = null,
@@ -8625,7 +15011,7 @@
         t2 = this._apiDrawerOpen,
         t3 = t2 ? new A.Color("rgba(14, 165, 233, 0.18)") : new A.Color("rgba(15, 23, 42, 0.72)");
       t3 = A.DartStyle$(_null, B.AlignItems_1_center, _null, _null, _null, t3, new A.Border(1, new A.Color("rgba(56, 189, 248, 0.34)"), "solid"), _null, _null, _null, _null, _null, _null, _null, B.Color_FZY, _null, _null, B.Display_eAD, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 38, _null, _null, B.JustifyContent_center_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.DartStyle_QHi, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, new A.TokenRef("radius.md", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 38, _null, _null, _null);
-      return A.Button$(A.Icon$(t2 ? $.$get$Icons_x() : $.$get$Icons_document(), _null, 17), B.List_empty2, t3, new A.NavBar__apiToggle_closure(this), t1, B.Tone_0, B.ButtonVariant_2);
+      return A.Button$(A.Icon$(t2 ? $.$get$Icons_x() : $.$get$Icons_document(), _null, 17), B.List_empty2, t3, false, new A.NavBar__apiToggle_closure(this), t1, B.ComponentSize_2, B.Tone_0, B.ButtonVariant_2);
     },
     _navLink$2(href, label) {
       var _null = null,
@@ -8660,7 +15046,7 @@
         t1.push(new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, t3, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [new A.Container("div", t4, t5), t2])));
       }
       t1.push(A.Link$("GitHub", B.List_empty2, A.DartStyle$(_null, _null, _null, _null, _null, new A.Color("rgba(14, 165, 233, 0.1)"), new A.Border(1, new A.Color("rgba(56, 189, 248, 0.32)"), _s5_), _null, _null, _null, _null, _null, _null, _null, new A.Color("#bae6fd"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 13, 800, _null, _null, _null, _null, B.DartStyle_Xan, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_8_12_8_12, _null, new A.TokenRef(_s9_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.StyleTransition("all 160ms ease"), _null, _null, _null, _null), "https://github.com/flint-dart/flint_dart", "_blank"));
-      t1.push(A.Button$("Menu", B.List_empty2, A.DartStyle$(_null, _null, _null, _null, _null, new A.Color("rgba(15, 23, 42, 0.72)"), new A.Border(1, new A.Color("rgba(51, 65, 85, 0.95)"), _s5_), _null, _null, _null, _null, _null, _null, _null, new A.Color("#cbd5e1"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.DartStyle_QHi, _null, _null, _null, _null, _null, _null, _null, 56, _null, _null, _null, B.EdgeInsets_7_10_7_10, _null, new A.TokenRef(_s9_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), new A.NavBar__mobileActions_closure(this), B.Map_empty1, B.Tone_0, B.ButtonVariant_2));
+      t1.push(A.Button$("Menu", B.List_empty2, A.DartStyle$(_null, _null, _null, _null, _null, new A.Color("rgba(15, 23, 42, 0.72)"), new A.Border(1, new A.Color("rgba(51, 65, 85, 0.95)"), _s5_), _null, _null, _null, _null, _null, _null, _null, new A.Color("#cbd5e1"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.DartStyle_QHi, _null, _null, _null, _null, _null, _null, _null, 56, _null, _null, _null, B.EdgeInsets_7_10_7_10, _null, new A.TokenRef(_s9_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), false, new A.NavBar__mobileActions_closure(this), B.Map_empty1, B.ComponentSize_2, B.Tone_0, B.ButtonVariant_2));
       return A.Row$(t1, B.DartStyle_oqj);
     },
     _mobileDrawer$0() {
@@ -8668,7 +15054,7 @@
         _s9_ = "radius.md",
         t1 = A.h("button", B.List_empty2, A.LinkedHashMap_LinkedHashMap$_literal(["type", "button", "aria-label", "Close navigation", "onClick", new A.NavBar__mobileDrawer_closure(_this), "style", B.Map_sloGg], type$.String, type$.nullable_Object)),
         t2 = A.DartStyle$(_null, _null, _null, _null, _null, new A.Color("rgba(5, 7, 13, 0.98)"), new A.Border(1, new A.Color("rgba(71, 85, 105, 0.8)"), "solid"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_18_18_18_18, B.Position_absolute_2_absolute, new A.TokenRef(_s9_, _null), _null, 12, _null, _null, new A.Shadow(18, 54, -24, new A.Color("rgba(0, 0, 0, 0.58)")), _null, _null, _null, _null, 12, _null, _null, new A.SizeValue("min(360px, calc(100% - 24px))"), _null, _null, _null),
-        t3 = A.Row$([A.Text_span("Navigation", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.text", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, 900, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null)), A.Button$("Close", B.List_empty2, A.DartStyle$(_null, _null, _null, _null, _null, new A.Color("rgba(15, 23, 42, 0.76)"), new A.Border(1, new A.Color("rgba(51, 65, 85, 0.95)"), "solid"), _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.muted", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 58, _null, _null, _null, B.EdgeInsets_6_8_6_8, _null, new A.TokenRef(_s9_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), new A.NavBar__mobileDrawer_closure0(_this), B.Map_empty1, B.Tone_0, B.ButtonVariant_2)], B.DartStyle_QnW),
+        t3 = A.Row$([A.Text_span("Navigation", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.text", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, 900, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null)), A.Button$("Close", B.List_empty2, A.DartStyle$(_null, _null, _null, _null, _null, new A.Color("rgba(15, 23, 42, 0.76)"), new A.Border(1, new A.Color("rgba(51, 65, 85, 0.95)"), "solid"), _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.muted", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 58, _null, _null, _null, B.EdgeInsets_6_8_6_8, _null, new A.TokenRef(_s9_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), false, new A.NavBar__mobileDrawer_closure0(_this), B.Map_empty1, B.ComponentSize_2, B.Tone_0, B.ButtonVariant_2)], B.DartStyle_QnW),
         t4 = [_this._drawerLink$2("/#features", "Features"), _this._drawerLink$2("/guides", "Guides"), _this._drawerLink$2("/ui", "UI"), _this._drawerLink$2("/client", "Client"), _this._drawerLink$2("/api", "API"), _this._drawerLink$2("/blog", "Blog"), _this._drawerLink$2("/questions", "Questions"), _this._drawerLink$2("/whats-new", "What's New"), _this._drawerLink$2("/changelog", "Changelog")];
       if (_this.get$_canWrite())
         t4.push(_this._drawerLink$2("/blog/write", "Write Blog Post"));
@@ -8686,7 +15072,7 @@
         t3 = A.DartStyle$(_null, _null, _null, _null, _null, new A.Color("rgba(5, 7, 13, 0.98)"), new A.Border(1, new A.Color("rgba(71, 85, 105, 0.8)"), "solid"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 16, _null, _null, _null, _null, _null, new A.SizeValue("calc(100vh - 104px)"), _null, _null, _null, _null, _null, _null, B.Overflow_auto, B.EdgeInsets_0_0_0_0, B.Position_absolute_2_absolute, new A.TokenRef(_s9_, _null), _null, 16, _null, _null, new A.Shadow(18, 54, -24, new A.Color("rgba(0, 0, 0, 0.58)")), _null, _null, _null, _null, 82, _null, _null, _null, _null, _null, _null),
         t4 = A.Row$([A.Icon$($.$get$Icons_book(), B.Color_FUE, 16), A.Text_span("Guides", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.text", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, 900, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null))], B.DartStyle_Lve),
         t5 = A.DartStyle$(_null, B.AlignItems_1_center, _null, _null, _null, new A.Color("rgba(15, 23, 42, 0.76)"), new A.Border(1, new A.Color("rgba(51, 65, 85, 0.95)"), "solid"), _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.muted", _null), _null, _null, B.Display_eAD, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 34, _null, _null, B.JustifyContent_center_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, new A.TokenRef(_s9_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 34, _null, _null, _null);
-      t5 = A.Row$([t4, A.Button$(A.Icon$($.$get$Icons_x(), _null, 16), B.List_empty2, t5, new A.NavBar__guideDrawer_closure0(this), B.Map_yRqVt, B.Tone_0, B.ButtonVariant_2)], B.DartStyle_OFK);
+      t5 = A.Row$([t4, A.Button$(A.Icon$($.$get$Icons_x(), _null, 16), B.List_empty2, t5, false, new A.NavBar__guideDrawer_closure0(this), B.Map_yRqVt, B.ComponentSize_2, B.Tone_0, B.ButtonVariant_2)], B.DartStyle_OFK);
       t4 = this.props.$index(0, "initialSection");
       t4 = t4 == null ? _null : J.toString$0$(t4);
       if (t4 == null)
@@ -8713,7 +15099,7 @@
         t2 = A.DartStyle$(_null, _null, _null, _null, _null, new A.Color("rgba(5, 7, 13, 0.98)"), new A.Border(1, new A.Color("rgba(71, 85, 105, 0.8)"), "solid"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 16, _null, _null, _null, _null, _null, new A.SizeValue("calc(100vh - 104px)"), _null, _null, _null, _null, _null, _null, B.Overflow_auto, B.EdgeInsets_0_0_0_0, B.Position_absolute_2_absolute, new A.TokenRef(_s9_, _null), _null, 16, _null, _null, new A.Shadow(18, 54, -24, new A.Color("rgba(0, 0, 0, 0.58)")), _null, _null, _null, _null, 82, _null, _null, _null, _null, _null, _null),
         t3 = A.Row$([A.Icon$($.$get$Icons_document(), B.Color_FZY, 16), A.Text_span("API", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.text", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, 900, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null))], B.DartStyle_Lve),
         t4 = A.DartStyle$(_null, B.AlignItems_1_center, _null, _null, _null, new A.Color("rgba(15, 23, 42, 0.76)"), new A.Border(1, new A.Color("rgba(51, 65, 85, 0.95)"), "solid"), _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.muted", _null), _null, _null, B.Display_eAD, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 34, _null, _null, B.JustifyContent_center_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, new A.TokenRef(_s9_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 34, _null, _null, _null);
-      t4 = A.Row$([t3, A.Button$(A.Icon$($.$get$Icons_x(), _null, 16), B.List_empty2, t4, new A.NavBar__apiDrawer_closure0(this), B.Map_yRm20, B.Tone_0, B.ButtonVariant_2)], B.DartStyle_OFK);
+      t4 = A.Row$([t3, A.Button$(A.Icon$($.$get$Icons_x(), _null, 16), B.List_empty2, t4, false, new A.NavBar__apiDrawer_closure0(this), B.Map_yRm20, B.ComponentSize_2, B.Tone_0, B.ButtonVariant_2)], B.DartStyle_OFK);
       t3 = this.props.$index(0, "initialSection");
       t3 = t3 == null ? _null : J.toString$0$(t3);
       if (t3 == null)
@@ -8785,7 +15171,7 @@
       var t1 = this.$this;
       return t1.setState$1(new A.NavBar__mobileDrawer__closure0(t1));
     },
-    $signature: 2
+    $signature: 4
   };
   A.NavBar__mobileDrawer__closure0.prototype = {
     call$0() {
@@ -8813,7 +15199,7 @@
       var t1 = this.$this;
       return t1.setState$1(new A.NavBar__guideDrawer__closure0(t1));
     },
-    $signature: 2
+    $signature: 4
   };
   A.NavBar__guideDrawer__closure0.prototype = {
     call$0() {
@@ -8841,7 +15227,7 @@
       var t1 = this.$this;
       return t1.setState$1(new A.NavBar__apiDrawer__closure0(t1));
     },
-    $signature: 2
+    $signature: 4
   };
   A.NavBar__apiDrawer__closure0.prototype = {
     call$0() {
@@ -8877,6 +15263,10 @@
       if (value == null || value.length === 0)
         return null;
       return value;
+    },
+    get$role() {
+      var t1 = B.C_LocalStorage.readMap$1("auth.user").$index(0, "role");
+      return t1 == null ? null : J.toString$0$(t1);
     }
   };
   A.FlintRoot.prototype = {
@@ -9011,6 +15401,7 @@
       var t1;
       for (t1 = mount.childSlots, t1 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>")); t1.moveNext$0();)
         this._unmountComponentTree$1(t1.__js_helper$_current);
+      mount.component.willUnmount$0();
     },
     _applyProps$2(element, props) {
       type$.Map_of_String_and_nullable_Object._as(props).forEach$1(0, new A.FlintRoot__applyProps_closure(this, element));
@@ -9047,7 +15438,13 @@
       element.addEventListener(eventName, A._functionToJS1(new A.FlintRoot__listen_closure(handler)));
     },
     _normalize$1(node) {
-      return node;
+      var t1;
+      if (node instanceof A.FlintNode)
+        return node;
+      if (node instanceof A.FlintComponent)
+        return new A.FlintComponentNode(node);
+      t1 = node == null ? null : J.toString$0$(node);
+      return new A.FlintText(t1 == null ? "" : t1);
     }
   };
   A.FlintRoot__scheduleRender_closure.prototype = {
@@ -9103,30 +15500,66 @@
       }
       _this.element.setAttribute($name, t1.toString$0(value));
     },
-    $signature: 16
+    $signature: 33
   };
   A.FlintRoot__applyStyle_closure.prototype = {
     call$1(entry) {
       return type$.MapEntry_of_String_and_nullable_Object._as(entry).value != null;
     },
-    $signature: 3
+    $signature: 5
   };
   A.FlintRoot__applyStyle_closure0.prototype = {
     call$1(entry) {
       type$.MapEntry_of_String_and_nullable_Object._as(entry);
       return entry.key + ": " + A.S(entry.value);
     },
-    $signature: 4
+    $signature: 7
   };
   A.FlintRoot__listen_closure.prototype = {
     call$1($event) {
       this.handler.call$1(A._asJSObject($event));
     },
-    $signature: 7
+    $signature: 10
   };
   A._ComponentMount.prototype = {
     set$childSlots(childSlots) {
       this.childSlots = type$.Map_String__ComponentMount._as(childSlots);
+    }
+  };
+  A.ClientRouter.prototype = {
+    post$1$3$body$headers(path, body, headers, $T) {
+      var _null = null;
+      type$.nullable_Map_String_String._as(headers);
+      return this.client.request$1$9$body$headers$onDone$onError$parser$queryParameters$requestTimeout("POST", this._path$1(path), body, headers, _null, _null, _null, _null, _null, $T);
+    },
+    post$1$2$body(path, body, $T) {
+      return this.post$1$3$body$headers(path, body, null, $T);
+    },
+    post$1$2$headers(path, headers, $T) {
+      return this.post$1$3$body$headers(path, null, headers, $T);
+    },
+    _path$1(path) {
+      var value = B.JSString_methods.trim$0(path),
+        uri = A.Uri_tryParse(value);
+      if (uri != null && uri.get$hasScheme() && uri.get$host().length !== 0)
+        return value;
+      return this._join$2("", value);
+    },
+    _join$2(left, right) {
+      var t1,
+        a = B.JSString_methods.trim$0(left),
+        b = B.JSString_methods.trim$0(right);
+      if (a.length === 0) {
+        if (b.length === 0)
+          t1 = "/";
+        else
+          t1 = B.JSString_methods.startsWith$1(b, "/") ? b : "/" + b;
+        return t1;
+      }
+      if (b.length === 0 || b === "/")
+        return B.JSString_methods.startsWith$1(a, "/") ? a : "/" + a;
+      t1 = B.JSString_methods.startsWith$1(a, "/") ? a : "/" + a;
+      return B.JSString_methods.replaceFirst$2(t1, A.RegExp_RegExp("/+$", true, false), "") + "/" + B.JSString_methods.replaceFirst$2(b, A.RegExp_RegExp("^/+", true, false), "");
     }
   };
   A.FlintComponent.prototype = {
@@ -9140,6 +15573,8 @@
     didMount$0() {
     },
     didUpdate$0() {
+    },
+    willUnmount$0() {
     }
   };
   A.StatefulComponent.prototype = {};
@@ -9147,14 +15582,14 @@
     call$1(value) {
       return B.JSString_methods.trim$0(A._asString(value)).length !== 0;
     },
-    $signature: 5
+    $signature: 6
   };
   A.joinClassNames_closure.prototype = {
     call$1(value) {
       A._asStringQ(value);
       return value != null && B.JSString_methods.trim$0(value).length !== 0;
     },
-    $signature: 20
+    $signature: 38
   };
   A.joinClassNames_closure0.prototype = {
     call$1(value) {
@@ -9162,55 +15597,184 @@
       value.toString;
       return B.JSString_methods.trim$0(value);
     },
-    $signature: 21
+    $signature: 39
   };
   A.styleToCss_closure.prototype = {
     call$1(entry) {
       type$.MapEntry_of_String_and_nullable_Object._as(entry);
       return entry.value != null && entry.key !== "_cssText";
     },
-    $signature: 3
+    $signature: 5
   };
   A.styleToCss_closure0.prototype = {
     call$1(entry) {
       type$.MapEntry_of_String_and_nullable_Object._as(entry);
       return entry.key + ": " + A.S(entry.value);
     },
-    $signature: 4
+    $signature: 7
   };
   A._scopedCssBody_closure.prototype = {
     call$1(entry) {
       type$.MapEntry_String_DartStyle._as(entry);
       return entry.key + ":" + A.styleToCss(entry.value.toMap$0());
     },
-    $signature: 22
+    $signature: 40
   };
   A._scopedCssBody_closure0.prototype = {
     call$1(entry) {
       type$.MapEntry_Breakpoint_DartStyle._as(entry);
       return entry.key._name + ":" + A.styleToCss(entry.value.toMap$0());
     },
-    $signature: 34
+    $signature: 41
   };
   A._styleToCssImportant_closure.prototype = {
     call$1(entry) {
       type$.MapEntry_of_String_and_nullable_Object._as(entry);
       return entry.value != null && entry.key !== "_cssText";
     },
-    $signature: 3
+    $signature: 5
   };
   A._styleToCssImportant_closure0.prototype = {
     call$1(entry) {
       type$.MapEntry_of_String_and_nullable_Object._as(entry);
       return entry.key + ": " + A.S(entry.value) + " !important";
     },
-    $signature: 4
+    $signature: 7
+  };
+  A.BrowserNavigation.prototype = {
+    reload$0() {
+      A._asJSObject(A._asJSObject(init.G.window).location).reload();
+    }
   };
   A.FlintNode.prototype = {};
   A.FlintText.prototype = {};
   A.FlintFragment.prototype = {};
   A.FlintElement.prototype = {};
   A.FlintComponentNode.prototype = {};
+  A.ToastPlacement.prototype = {
+    _enumToString$0() {
+      return "ToastPlacement." + this._name;
+    }
+  };
+  A.ToastService.prototype = {
+    success$2$message(title, message) {
+      this._show$7$accent$background$border$duration$message$placement(title, "#a7f3d0", "#052e22", "rgba(52, 211, 153, 0.38)", B.Duration_3000000, message, B.ToastPlacement_0);
+    },
+    error$2$message(title, message) {
+      this._show$7$accent$background$border$duration$message$placement(title, "#fca5a5", "#450a0a", "rgba(248, 113, 113, 0.42)", B.Duration_5000000, message, B.ToastPlacement_0);
+    },
+    _show$7$accent$background$border$duration$message$placement(title, accent, background, border, duration, message, placement) {
+      var titleEl, messageEl,
+        container = this._container$1(placement),
+        t1 = init.G,
+        item = A._asJSObject(A._asJSObject(t1.document).createElement("div")),
+        t2 = A._asJSObject(item.style);
+      t2.display = "grid";
+      t2.gap = "4px";
+      t2.minWidth = "260px";
+      t2.maxWidth = "360px";
+      t2.padding = "12px 14px";
+      t2.borderRadius = "10px";
+      t2.border = "1px solid " + border;
+      t2.background = background;
+      t2.color = "#f8fafc";
+      t2.boxShadow = "0 18px 48px rgba(0, 0, 0, 0.28)";
+      t2.transform = "translateY(-6px)";
+      t2.opacity = "0";
+      t2.transition = "opacity 160ms ease, transform 160ms ease";
+      titleEl = A._asJSObject(A._asJSObject(t1.document).createElement("strong"));
+      titleEl.textContent = title;
+      t2 = A._asJSObject(titleEl.style);
+      t2.fontSize = "13px";
+      t2.fontWeight = "800";
+      t2.color = accent;
+      A._asJSObject(item.appendChild(titleEl));
+      if (message != null && B.JSString_methods.trim$0(message).length !== 0) {
+        messageEl = A._asJSObject(A._asJSObject(t1.document).createElement("p"));
+        messageEl.textContent = message;
+        t1 = A._asJSObject(messageEl.style);
+        t1.margin = "0";
+        t1.fontSize = "12px";
+        t1.lineHeight = "1.5";
+        t1.color = "#cbd5e1";
+        A._asJSObject(item.appendChild(messageEl));
+      }
+      A._asJSObject(container.appendChild(item));
+      A.Timer_Timer(B.Duration_0, new A.ToastService__show_closure(item));
+      A.Timer_Timer(duration, new A.ToastService__show_closure0(item, container));
+    },
+    _container$1(placement) {
+      var el, t2,
+        id = "flint-toast-" + placement._name,
+        t1 = init.G,
+        existing = A._asJSObjectQ(A._asJSObject(t1.document).getElementById(id));
+      if (type$.JSObject._is(existing))
+        return existing;
+      el = A._asJSObject(A._asJSObject(t1.document).createElement("div"));
+      el.id = id;
+      t2 = A._asJSObject(el.style);
+      t2.position = "fixed";
+      t2.zIndex = "2147483647";
+      t2.display = "grid";
+      t2.gap = "10px";
+      t2.pointerEvents = "none";
+      switch (placement.index) {
+        case 0:
+          t2 = A._asJSObject(el.style);
+          t2.top = "16px";
+          t2.right = "16px";
+          break;
+        case 1:
+          t2 = A._asJSObject(el.style);
+          t2.top = "16px";
+          t2.left = "50%";
+          t2.transform = "translateX(-50%)";
+          break;
+        case 2:
+          t2 = A._asJSObject(el.style);
+          t2.right = "16px";
+          t2.bottom = "16px";
+          break;
+        case 3:
+          t2 = A._asJSObject(el.style);
+          t2.left = "50%";
+          t2.bottom = "16px";
+          t2.transform = "translateX(-50%)";
+          break;
+      }
+      t1 = A._asJSObjectQ(A._asJSObject(t1.document).body);
+      if (t1 != null)
+        A._asJSObject(t1.appendChild(el));
+      return el;
+    }
+  };
+  A.ToastService__show_closure.prototype = {
+    call$0() {
+      var t1 = A._asJSObject(this.item.style);
+      t1.opacity = "1";
+      t1.transform = "translateY(0)";
+    },
+    $signature: 0
+  };
+  A.ToastService__show_closure0.prototype = {
+    call$0() {
+      var t1 = this.item,
+        t2 = A._asJSObject(t1.style);
+      t2.opacity = "0";
+      t2.transform = "translateY(-6px)";
+      A.Timer_Timer(B.Duration_180000, new A.ToastService__show__closure(t1, this.container));
+    },
+    $signature: 0
+  };
+  A.ToastService__show__closure.prototype = {
+    call$0() {
+      this.item.remove();
+      var t1 = this.container;
+      if (A._asInt(t1.childElementCount) === 0)
+        t1.remove();
+    },
+    $signature: 0
+  };
   A.FlintPage.prototype = {};
   A.FlintPageContext.prototype = {};
   A.createFlintApp_renderPage.prototype = {
@@ -9234,8 +15798,7 @@
               break;
             case 3:
               // then
-              t1 = new A._Future($.Zone__current, type$._Future_of_nullable_FlintComponent_Function_Map_String_dynamic);
-              t1._state = 8;
+              t1 = A._Future$value(null, type$.nullable_FlintComponent_Function_Map_String_dynamic);
               $async$goto = 5;
               return A._asyncAwait(t1, $async$call$2);
             case 5:
@@ -9263,7 +15826,7 @@
       });
       return A._asyncStartSync($async$call$2, $async$completer);
     },
-    $signature: 24
+    $signature: 42
   };
   A.createFlintApp_renderCurrentLocation.prototype = {
     call$0() {
@@ -9333,27 +15896,27 @@
       });
       return A._asyncStartSync($async$call$0, $async$completer);
     },
-    $signature: 25
+    $signature: 24
   };
   A.createFlintApp_closure.prototype = {
     call$1(__wc1_formal) {
       A._asJSObject(__wc1_formal);
       this.renderCurrentLocation.call$0();
     },
-    $signature: 7
+    $signature: 10
   };
   A.createFlintApp_closure0.prototype = {
     call$1(__wc2_formal) {
       A._asJSObject(__wc2_formal);
       this.renderCurrentLocation.call$0();
     },
-    $signature: 7
+    $signature: 10
   };
   A._asStringKeyedMap_closure.prototype = {
     call$2(key, entryValue) {
       return new A.MapEntry(J.toString$0$(key), entryValue, type$.MapEntry_String_dynamic);
     },
-    $signature: 13
+    $signature: 12
   };
   A._fetchPageForCurrentLocation_closure.prototype = {
     call$1(__wc0_formal) {
@@ -9382,15 +15945,85 @@
         _this.completer.completeError$1(error);
       }
     },
-    $signature: 8
+    $signature: 3
   };
   A._fetchPageForCurrentLocation_closure0.prototype = {
     call$1(__wc1_formal) {
       this.completer.completeError$1(new A.StateError("Navigation request failed."));
     },
-    $signature: 8
+    $signature: 3
   };
   A._FetchedFlintPage.prototype = {};
+  A.StateSignal.prototype = {
+    update$1(updater) {
+      var _this = this,
+        t1 = _this.$ti,
+        next = t1._eval$1("1(1)")._as(updater).call$1(_this._value);
+      _this._value = t1._precomputed1._as(next);
+      _this.notifyListeners$0();
+      return next;
+    },
+    listen$1(listener) {
+      this.$ti._eval$1("~(1)")._as(listener);
+      this._listeners.add$1(0, listener);
+      return new A.StateSignal_listen_closure(this, listener);
+    },
+    notifyListeners$0() {
+      var t1, t2, _i;
+      for (t1 = A.List_List$from(this._listeners, true, this.$ti._eval$1("~(1)")), t2 = t1.length, _i = 0; _i < t2; ++_i)
+        t1[_i].call$1(this._value);
+    }
+  };
+  A.StateSignal_listen_closure.prototype = {
+    call$0() {
+      return this.$this._listeners.remove$1(0, this.listener);
+    },
+    $signature: 0
+  };
+  A.StateSignalListener.prototype = {
+    build$0() {
+      var t1 = this.signal._value;
+      return this.builder.call$1(t1);
+    },
+    didMount$0() {
+      this._bindSignal$0();
+    },
+    didUpdate$0() {
+      this._bindSignal$0();
+    },
+    willUnmount$0() {
+      var t1 = this._unsubscribe;
+      if (t1 != null)
+        t1.call$0();
+      this._boundSignal = this._unsubscribe = null;
+    },
+    _bindSignal$0() {
+      var t1, _this = this;
+      if (_this._boundSignal === _this.signal)
+        return;
+      t1 = _this._unsubscribe;
+      if (t1 != null)
+        t1.call$0();
+      t1 = _this.signal;
+      _this._boundSignal = t1;
+      _this._unsubscribe = t1.listen$1(new A.StateSignalListener__bindSignal_closure(_this));
+    }
+  };
+  A.StateSignalListener__bindSignal_closure.prototype = {
+    call$1(__wc0_formal) {
+      var t1 = this.$this;
+      t1.$ti._precomputed1._as(__wc0_formal);
+      t1.setState$1(new A.StateSignalListener__bindSignal__closure());
+    },
+    $signature() {
+      return this.$this.$ti._eval$1("~(1)");
+    }
+  };
+  A.StateSignalListener__bindSignal__closure.prototype = {
+    call$0() {
+    },
+    $signature: 0
+  };
   A.BrowserStorage.prototype = {
     readJson$1(key) {
       var value = A._asStringQ(A._asJSObject(A._asJSObject(init.G.window).localStorage).getItem(key));
@@ -9411,7 +16044,31 @@
     call$2(key, value) {
       return new A.MapEntry(J.toString$0$(key), value, type$.MapEntry_String_dynamic);
     },
-    $signature: 13
+    $signature: 12
+  };
+  A.CookieSameSite.prototype = {
+    _enumToString$0() {
+      return "CookieSameSite." + this._name;
+    }
+  };
+  A.Cookies.prototype = {
+    _formatSameSite$1(sameSite) {
+      var t1;
+      switch (sameSite.index) {
+        case 0:
+          t1 = "Lax";
+          break;
+        case 1:
+          t1 = "Strict";
+          break;
+        case 2:
+          t1 = "None";
+          break;
+        default:
+          t1 = null;
+      }
+      return t1;
+    }
   };
   A.LocalStorage.prototype = {};
   A.WebStorageBackend.prototype = {};
@@ -9493,21 +16150,33 @@
       return t1;
     },
     get$stateStyles() {
-      var t1 = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.DartStyle),
-        t2 = this.hover;
+      var t3, _this = this,
+        t1 = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.DartStyle),
+        t2 = _this.hover;
       if (t2 != null)
         t1.$indexSet(0, ":hover", t2);
-      t2 = this.focusVisible;
+      t2 = _this.focusVisible;
       if (t2 != null)
         t1.$indexSet(0, ":focus-visible", t2);
-      t2 = this.active;
+      t2 = _this.active;
       if (t2 != null)
         t1.$indexSet(0, ":active", t2);
+      t2 = _this.disabled;
+      t3 = t2 != null;
+      if (t3)
+        t1.$indexSet(0, ":disabled", t2);
+      if (t3)
+        t1.$indexSet(0, '[aria-disabled="true"]', t2);
+      t2 = _this.invalid;
+      if (t2 != null)
+        t1.$indexSet(0, '[aria-invalid="true"]', t2);
       return t1;
     },
     merge$1(override) {
-      var t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, _this = this,
-        t1 = override.padding;
+      var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, _this = this;
+      if (override == null)
+        return _this;
+      t1 = override.padding;
       if (t1 == null)
         t1 = _this.padding;
       t2 = override.margin;
@@ -9546,63 +16215,63 @@
       t13 = override.flexWrap;
       if (t13 == null)
         t13 = _this.flexWrap;
-      t14 = override.gridTemplateColumns;
+      t14 = override.position;
       if (t14 == null)
-        t14 = _this.gridTemplateColumns;
-      t15 = override.position;
+        t14 = _this.position;
+      t15 = override.top;
       if (t15 == null)
-        t15 = _this.position;
-      t16 = override.top;
+        t15 = _this.top;
+      t16 = override.right;
       if (t16 == null)
-        t16 = _this.top;
-      t17 = override.right;
+        t16 = _this.right;
+      t17 = override.bottom;
       if (t17 == null)
-        t17 = _this.right;
-      t18 = override.bottom;
+        t17 = _this.bottom;
+      t18 = override.left;
       if (t18 == null)
-        t18 = _this.bottom;
-      t19 = override.left;
+        t18 = _this.left;
+      t19 = override.zIndex;
       if (t19 == null)
-        t19 = _this.left;
-      t20 = override.zIndex;
+        t19 = _this.zIndex;
+      t20 = override.overflow;
       if (t20 == null)
-        t20 = _this.zIndex;
-      t21 = override.overflow;
+        t20 = _this.overflow;
+      t21 = override.boxSizing;
       if (t21 == null)
-        t21 = _this.overflow;
-      t22 = override.boxSizing;
+        t21 = _this.boxSizing;
+      t22 = override.scrollBehavior;
       if (t22 == null)
-        t22 = _this.boxSizing;
-      t23 = override.scrollBehavior;
+        t22 = _this.scrollBehavior;
+      t23 = override.transform;
       if (t23 == null)
-        t23 = _this.scrollBehavior;
-      t24 = override.transform;
+        t23 = _this.transform;
+      t24 = override.backdropFilter;
       if (t24 == null)
-        t24 = _this.transform;
-      t25 = override.backdropFilter;
+        t24 = _this.backdropFilter;
+      t25 = override.fontFamily;
       if (t25 == null)
-        t25 = _this.backdropFilter;
-      t26 = override.fontFamily;
+        t25 = _this.fontFamily;
+      t26 = override.fontSize;
       if (t26 == null)
-        t26 = _this.fontFamily;
-      t27 = override.fontSize;
+        t26 = _this.fontSize;
+      t27 = override.fontWeight;
       if (t27 == null)
-        t27 = _this.fontSize;
-      t28 = override.fontWeight;
+        t27 = _this.fontWeight;
+      t28 = override.lineHeight;
       if (t28 == null)
-        t28 = _this.fontWeight;
-      t29 = override.lineHeight;
+        t28 = _this.lineHeight;
+      t29 = override.color;
       if (t29 == null)
-        t29 = _this.lineHeight;
-      t30 = override.color;
+        t29 = _this.color;
+      t30 = override.textDecoration;
       if (t30 == null)
-        t30 = _this.color;
-      t31 = override.textDecoration;
+        t30 = _this.textDecoration;
+      t31 = override.cursor;
       if (t31 == null)
-        t31 = _this.textDecoration;
-      t32 = override.cursor;
+        t31 = _this.cursor;
+      t32 = override.resize;
       if (t32 == null)
-        t32 = _this.cursor;
+        t32 = _this.resize;
       t33 = override.background;
       if (t33 == null)
         t33 = _this.background;
@@ -9636,13 +16305,19 @@
       t43 = override.active;
       if (t43 == null)
         t43 = _this.active;
-      t44 = override.md;
+      t44 = override.disabled;
       if (t44 == null)
-        t44 = _this.md;
-      t45 = override.lg;
+        t44 = _this.disabled;
+      t45 = override.invalid;
       if (t45 == null)
-        t45 = _this.lg;
-      return A.DartStyle$(t43, t11, _this.animation, _this.aspectRatio, t25, t33, t35, t37, _this.borderLeft, _this.borderRight, t36, t18, t22, _this.checked, t30, t32, _this.disabled, t9, _this.expanded, _this.flex, _this.flexBasis, _this.flexDirection, _this.flexGrow, _this.flexShrink, t13, _this.focus, t42, t26, t27, t28, t10, _this.gradient, t14, t4, t41, _this.invalid, t12, _this.justifyItems, t19, _this.letterSpacing, t45, t29, t2, _this.maskImage, t8, t6, t44, t7, t5, _this.objectFit, t39, t21, t1, t15, t34, _this.resize, t17, t23, _this.selected, t38, _this.sm, _this.textAlign, t31, _this.textTransform, t16, t24, t40, t3, _this.willChange, _this.xl, t20);
+        t45 = _this.invalid;
+      t46 = override.md;
+      if (t46 == null)
+        t46 = _this.md;
+      t47 = override.lg;
+      if (t47 == null)
+        t47 = _this.lg;
+      return A.DartStyle$(t43, t11, _this.animation, _this.aspectRatio, t24, t33, t35, t37, _this.borderLeft, _this.borderRight, t36, t17, t21, _this.checked, t29, t31, t44, t9, _this.expanded, _this.flex, _this.flexBasis, _this.flexDirection, _this.flexGrow, _this.flexShrink, t13, _this.focus, t42, t25, t26, t27, t10, _this.gradient, _this.gridTemplateColumns, t4, t41, t45, t12, _this.justifyItems, t18, _this.letterSpacing, t47, t28, t2, _this.maskImage, t8, t6, t46, t7, t5, _this.objectFit, t39, t20, t1, t14, t34, t32, t16, t22, _this.selected, t38, _this.sm, _this.textAlign, t30, _this.textTransform, t15, t23, t40, t3, _this.willChange, _this.xl, t19);
     }
   };
   A.Gradient.prototype = {
@@ -9706,37 +16381,27 @@
   };
   A.FlintTheme.prototype = {
     get$allTokens() {
-      var t2, t3, t4,
+      var t2, t3,
         t1 = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.nullable_Object);
-      for (t2 = B.Map_qqXXg.get$entries(), t3 = t2.$ti, t2 = new A._SyncStarIterator(t2._outerHelper(), t3._eval$1("_SyncStarIterator<1>")), t3 = t3._precomputed1; t2.moveNext$0();) {
-        t4 = t2._async$_current;
-        if (t4 == null)
-          t4 = t3._as(t4);
-        t1.$indexSet(0, "color." + t4.key, t4.value);
+      for (t2 = B.Map_qqXXg.get$entries(), t2 = t2.get$iterator(t2); t2.moveNext$0();) {
+        t3 = t2.get$current();
+        t1.$indexSet(0, "color." + t3.key, t3.value);
       }
-      for (t2 = B.Map_Se8oZ.get$entries(), t3 = t2.$ti, t2 = new A._SyncStarIterator(t2._outerHelper(), t3._eval$1("_SyncStarIterator<1>")), t3 = t3._precomputed1; t2.moveNext$0();) {
-        t4 = t2._async$_current;
-        if (t4 == null)
-          t4 = t3._as(t4);
-        t1.$indexSet(0, "space." + t4.key, t4.value);
+      for (t2 = B.Map_Se8oZ.get$entries(), t2 = t2.get$iterator(t2); t2.moveNext$0();) {
+        t3 = t2.get$current();
+        t1.$indexSet(0, "space." + t3.key, t3.value);
       }
-      for (t2 = B.Map_LHCTW.get$entries(), t3 = t2.$ti, t2 = new A._SyncStarIterator(t2._outerHelper(), t3._eval$1("_SyncStarIterator<1>")), t3 = t3._precomputed1; t2.moveNext$0();) {
-        t4 = t2._async$_current;
-        if (t4 == null)
-          t4 = t3._as(t4);
-        t1.$indexSet(0, "radius." + t4.key, t4.value);
+      for (t2 = B.Map_LHCTW.get$entries(), t2 = t2.get$iterator(t2); t2.moveNext$0();) {
+        t3 = t2.get$current();
+        t1.$indexSet(0, "radius." + t3.key, t3.value);
       }
-      for (t2 = B.Map_Ntfnz.get$entries(), t3 = t2.$ti, t2 = new A._SyncStarIterator(t2._outerHelper(), t3._eval$1("_SyncStarIterator<1>")), t3 = t3._precomputed1; t2.moveNext$0();) {
-        t4 = t2._async$_current;
-        if (t4 == null)
-          t4 = t3._as(t4);
-        t1.$indexSet(0, "shadow." + t4.key, t4.value);
+      for (t2 = B.Map_Ntfnz.get$entries(), t2 = t2.get$iterator(t2); t2.moveNext$0();) {
+        t3 = t2.get$current();
+        t1.$indexSet(0, "shadow." + t3.key, t3.value);
       }
-      for (t2 = B.Map_Gfgsw.get$entries(), t3 = t2.$ti, t2 = new A._SyncStarIterator(t2._outerHelper(), t3._eval$1("_SyncStarIterator<1>")), t3 = t3._precomputed1; t2.moveNext$0();) {
-        t4 = t2._async$_current;
-        if (t4 == null)
-          t4 = t3._as(t4);
-        t1.$indexSet(0, "font." + t4.key, t4.value);
+      for (t2 = B.Map_Gfgsw.get$entries(), t2 = t2.get$iterator(t2); t2.moveNext$0();) {
+        t3 = t2.get$current();
+        t1.$indexSet(0, "font." + t3.key, t3.value);
       }
       t1.addAll$1(0, B.Map_empty1);
       return new A.ThemeTokens(t1);
@@ -9767,17 +16432,17 @@
         return "";
       return "  " + step.get$selector() + " { " + stepBody + "; }";
     },
-    $signature: 27
+    $signature: 43
   };
   A.StyleKeyframes_cssText_closure0.prototype = {
     call$1(chunk) {
       return A._asString(chunk).length !== 0;
     },
-    $signature: 5
+    $signature: 6
   };
   A.RootDesign.prototype = {
     get$cssText() {
-      var t3, t4, _i, _this = this,
+      var t3, _i, _this = this,
         t1 = A._setArrayType([], type$.JSArray_String),
         t2 = _this.theme;
       if (t2 != null)
@@ -9794,11 +16459,9 @@
       t2 = _this.links;
       if (t2 != null)
         t1.push(_this._compileRootRule$2("a", t2));
-      for (t2 = B.Map_empty0.get$entries(), t3 = t2.$ti, t2 = new A._SyncStarIterator(t2._outerHelper(), t3._eval$1("_SyncStarIterator<1>")), t3 = t3._precomputed1; t2.moveNext$0();) {
-        t4 = t2._async$_current;
-        if (t4 == null)
-          t4 = t3._as(t4);
-        t1.push(_this._compileRootRule$2(t4.key, t4.value));
+      for (t2 = B.Map_empty0.get$entries(), t2 = t2.get$iterator(t2); t2.moveNext$0();) {
+        t3 = t2.get$current();
+        t1.push(_this._compileRootRule$2(t3.key, t3.value));
       }
       for (t2 = _this.keyframes, t3 = t2.length, _i = 0; _i < t2.length; t2.length === t3 || (0, A.throwConcurrentModificationError)(t2), ++_i)
         t1.push(t2[_i].get$cssText());
@@ -9821,14 +16484,14 @@
     call$1(chunk) {
       return B.JSString_methods.trim$0(A._asString(chunk)).length !== 0;
     },
-    $signature: 5
+    $signature: 6
   };
   A.rootStyleToCss_closure.prototype = {
     call$1(entry) {
       type$.MapEntry_of_String_and_nullable_Object._as(entry);
       return entry.value != null && entry.key !== "_cssText";
     },
-    $signature: 3
+    $signature: 5
   };
   A.rootStyleToCss_closure0.prototype = {
     call$1(entry) {
@@ -9837,7 +16500,7 @@
       t1 = entry.key;
       return t1 + ": " + A.cssValue(entry.value, B.Set_a02Zq.contains$1(0, t1));
     },
-    $signature: 4
+    $signature: 7
   };
   A.EdgeInsets.prototype = {
     toCss$0() {
@@ -9866,19 +16529,9 @@
     call$1(value) {
       return A._asString(value) === B.JSArray_methods.get$first(this.values);
     },
-    $signature: 5
+    $signature: 6
   };
   A.SizeValue.prototype = {
-    toString$0(_) {
-      return this.value;
-    }
-  };
-  A.GridTrack.prototype = {
-    toString$0(_) {
-      return this.value;
-    }
-  };
-  A.GridTemplateColumns.prototype = {
     toString$0(_) {
       return this.value;
     }
@@ -9945,6 +16598,11 @@
       return "wrap";
     }
   };
+  A.Resize.prototype = {
+    toString$0(_) {
+      return "vertical";
+    }
+  };
   A.TransitionTiming.prototype = {
     toString$0(_) {
       return this.value;
@@ -9959,11 +16617,42 @@
     call$1(item) {
       return type$.StyleTransition._as(item).value;
     },
-    $signature: 28
+    $signature: 44
+  };
+  A.AnimationDirection.prototype = {
+    toString$0(_) {
+      return "normal";
+    }
+  };
+  A.AnimationFillMode.prototype = {
+    toString$0(_) {
+      return "none";
+    }
+  };
+  A.AnimationPlayState.prototype = {
+    toString$0(_) {
+      return "running";
+    }
+  };
+  A.AnimationIteration.prototype = {
+    toString$0(_) {
+      return A.cssValue("infinite", true);
+    }
   };
   A.StyleAnimation.prototype = {
     toString$0(_) {
       return this.value;
+    }
+  };
+  A.StyleAnimation_StyleAnimation$named_closure.prototype = {
+    call$1(item) {
+      return J.toString$0$(A._asObject(item));
+    },
+    $signature: 14
+  };
+  A.WillChange.prototype = {
+    toString$0(_) {
+      return "transform";
     }
   };
   A.Display.prototype = {
@@ -9987,30 +16676,167 @@
     }
   };
   A.Button.prototype = {};
-  A.HtmlContent.prototype = {
-    didMount$0() {
-      this._writeHtml$0();
-    },
-    didUpdate$0() {
-      this._writeHtml$0();
-    },
-    _writeHtml$0() {
-      var t1 = A._asJSObject(init.G.document),
-        t2 = this.id,
-        el = A._asJSObjectQ(t1.getElementById(t2));
-      if (el == null)
+  A.Spinner.prototype = {};
+  A.TextEditingController.prototype = {
+    set$text(value) {
+      if (this._text === value)
         return;
-      el.innerHTML = this.html;
+      this._text = value;
+      this._notifyListeners$0();
     },
-    build$0() {
-      var _this = this,
-        t1 = A.LinkedHashMap_LinkedHashMap$of(_this.props, type$.String, type$.nullable_Object),
-        t2 = _this.id;
-      t1.$indexSet(0, "id", t2);
-      return new A.Container("div", A.mergeComponentProps(t1, _this.className, _this.dartStyle, B.Map_empty1, B.Map_empty1), A.normalizeChildren(null, B.List_empty2));
+    _notifyListeners$0() {
+      var t1 = A.List_List$_of(this._controllers$_listeners, type$.void_Function),
+        t2 = t1.length,
+        _i = 0;
+      for (; _i < t1.length; t1.length === t2 || (0, A.throwConcurrentModificationError)(t1), ++_i)
+        t1[_i].call$0();
     }
   };
-  A.Spinner.prototype = {};
+  A.FormController.prototype = {
+    string$1(key) {
+      var t1 = this._controllers$_data.$index(0, key);
+      t1 = t1 == null ? null : J.toString$0$(t1);
+      return t1 == null ? "" : t1;
+    },
+    controller$1(key) {
+      return this._controllers.putIfAbsent$2(key, new A.FormController_controller_closure(this, key));
+    },
+    setField$2(key, value) {
+      var controller, t1, t2;
+      this._controllers$_data.$indexSet(0, key, value);
+      controller = this._controllers.$index(0, key);
+      if (controller != null) {
+        t1 = controller._text;
+        t2 = value == null ? null : J.toString$0$(value);
+        t1 = t1 !== (t2 == null ? "" : t2);
+      } else
+        t1 = false;
+      if (t1) {
+        t1 = value == null ? null : J.toString$0$(value);
+        controller.set$text(t1 == null ? "" : t1);
+        return;
+      }
+      this._notifyListeners$0();
+    },
+    reset$1(keys) {
+      var t2, t3, t4, _this = this,
+        t1 = type$.List_String;
+      t1._as(keys);
+      for (t2 = B.JSArray_methods.get$iterator(keys), t3 = _this._defaults; t2.moveNext$0();) {
+        t4 = t2.get$current();
+        _this.setField$2(t4, t3.$index(0, t4));
+      }
+      t2 = A._setArrayType(keys.slice(0), A._arrayInstanceType(keys));
+      t1 = t1._as(t2);
+      if (t1.length === 0)
+        _this.errors = B.FormErrors_Map_empty;
+      else
+        _this.errors = _this.errors.without$1(t1);
+      _this._notifyListeners$0();
+    },
+    _notifyListeners$0() {
+      var t1 = A.List_List$_of(this._controllers$_listeners, type$.void_Function),
+        t2 = t1.length,
+        _i = 0;
+      for (; _i < t1.length; t1.length === t2 || (0, A.throwConcurrentModificationError)(t1), ++_i)
+        t1[_i].call$0();
+    }
+  };
+  A.FormController_controller_closure.prototype = {
+    call$0() {
+      var t1 = this.$this,
+        t2 = this.key,
+        t3 = t1.string$1(t2),
+        t4 = A._setArrayType([], type$.JSArray_of_void_Function),
+        controller = new A.TextEditingController(t3, t4);
+      B.JSArray_methods.add$1(t4, type$.void_Function._as(new A.FormController_controller__closure(t1, t2, controller)));
+      return controller;
+    },
+    $signature: 46
+  };
+  A.FormController_controller__closure.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1._controllers$_data.$indexSet(0, this.key, this.controller._text);
+      t1._notifyListeners$0();
+    },
+    $signature: 0
+  };
+  A.Form.prototype = {};
+  A.TextArea.prototype = {};
+  A.TextArea__controlledOnChanged_closure.prototype = {
+    call$1($event) {
+      var t1, target;
+      A._asObject($event);
+      t1 = type$.JSObject;
+      target = t1._is($event) ? A._asJSObjectQ($event.target) : null;
+      if (t1._is(target))
+        this.controller.set$text(A._asString(target.value));
+    },
+    $signature: 1
+  };
+  A.TextField.prototype = {};
+  A.TextField__controlledOnChanged_closure.prototype = {
+    call$1($event) {
+      var t1, target;
+      A._asObject($event);
+      t1 = type$.JSObject;
+      target = t1._is($event) ? A._asJSObjectQ($event.target) : null;
+      if (t1._is(target))
+        this.controller.set$text(A._asString(target.value));
+    },
+    $signature: 1
+  };
+  A.FormErrors.prototype = {
+    fieldMessages$1($name) {
+      var t1;
+      if ($name.length === 0)
+        return B.List_empty4;
+      t1 = this._messages.$index(0, $name);
+      if (t1 == null)
+        t1 = B.List_empty5;
+      return A.List_List$unmodifiable(t1, type$.String);
+    },
+    without$1(keys) {
+      var t1 = type$.List_String;
+      t1._as(keys);
+      if (keys.length === 0)
+        return B.FormErrors_Map_empty;
+      t1 = A.LinkedHashMap_LinkedHashMap$of(this._messages, type$.String, t1);
+      t1.removeWhere$1(0, new A.FormErrors_without_closure(keys));
+      return new A.FormErrors(t1);
+    },
+    get$firstMessages() {
+      var t2, t3, t4, t5,
+        t1 = type$.String;
+      t1 = A.LinkedHashMap_LinkedHashMap$_empty(t1, t1);
+      for (t2 = this._messages.get$entries(), t2 = t2.get$iterator(t2); t2.moveNext$0();) {
+        t3 = t2.get$current();
+        t4 = t3.value;
+        t5 = J.getInterceptor$asx(t4);
+        if (t5.get$isNotEmpty(t4))
+          t1.$indexSet(0, t3.key, t5.get$first(t4));
+      }
+      return t1;
+    },
+    toJson$0() {
+      var t2, t3,
+        t1 = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.nullable_Object);
+      for (t2 = this._messages.get$entries(), t2 = t2.get$iterator(t2); t2.moveNext$0();) {
+        t3 = t2.get$current();
+        t1.$indexSet(0, t3.key, t3.value);
+      }
+      return t1;
+    }
+  };
+  A.FormErrors_without_closure.prototype = {
+    call$2(key, __wc0_formal) {
+      A._asString(key);
+      type$.List_String._as(__wc0_formal);
+      return B.JSArray_methods.contains$1(this.keys, key);
+    },
+    $signature: 47
+  };
   A.IconData.prototype = {};
   A.IconShape.prototype = {};
   A.Icon.prototype = {};
@@ -10019,7 +16845,7 @@
       type$.IconShape._as(shape);
       return new A.FlintElement(shape.tag, shape.props, B.List_empty3);
     },
-    $signature: 29
+    $signature: 48
   };
   A.Container.prototype = {};
   A.Link.prototype = {};
@@ -10039,6 +16865,11 @@
       return "ButtonVariant." + this._name;
     }
   };
+  A.InputVariant.prototype = {
+    _enumToString$0() {
+      return "InputVariant." + this._name;
+    }
+  };
   A.EventStreamProvider.prototype = {};
   A._EventStream.prototype = {};
   A._EventStreamSubscription.prototype = {$isStreamSubscription: 1};
@@ -10046,13 +16877,19 @@
     call$1(e) {
       return this.onData.call$1(A._asJSObject(e));
     },
-    $signature: 8
+    $signature: 3
   };
   A.main_closure.prototype = {
     call$1(props) {
-      return new A.UiDocsPage(type$.Map_String_dynamic._as(props));
+      var t1, t2, t3, t4;
+      type$.Map_String_dynamic._as(props);
+      t1 = type$.String;
+      t2 = type$.nullable_Object;
+      t3 = A.LinkedHashMap_LinkedHashMap$_literal(["body", ""], t1, t2);
+      t4 = A._setArrayType([], type$.JSArray_of_void_Function);
+      return new A.QuestionDetailPage(props, new A.FormController(A.LinkedHashMap_LinkedHashMap$from(t3, t1, t2), A.LinkedHashMap_LinkedHashMap$from(t3, t1, t2), A.LinkedHashMap_LinkedHashMap$_empty(t1, type$.TextEditingController), t4, B.FormErrors_Map_empty), B.FormErrors_Map_empty, new A.StateSignal(null, A.LinkedHashSet_LinkedHashSet$_empty(type$.void_Function_nullable_List_Map_String_dynamic), type$.StateSignal_nullable_List_Map_String_dynamic), A.LinkedHashSet_LinkedHashSet$_empty(t1));
     },
-    $signature: 30
+    $signature: 49
   };
   (function aliases() {
     var _ = J.LegacyJavaScriptObject.prototype;
@@ -10061,53 +16898,64 @@
     _.super$Iterable$where = _.where$1;
   })();
   (function installTearOffs() {
-    var _static_1 = hunkHelpers._static_1,
-      _static_0 = hunkHelpers._static_0,
+    var _static_0 = hunkHelpers._static_0,
+      _static_1 = hunkHelpers._static_1,
       _instance_0_u = hunkHelpers._instance_0u,
       _static = hunkHelpers.installStaticTearOff;
-    _static_1(A, "async__AsyncRun__scheduleImmediateJsOverride$closure", "_AsyncRun__scheduleImmediateJsOverride", 6);
-    _static_1(A, "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", "_AsyncRun__scheduleImmediateWithSetImmediate", 6);
-    _static_1(A, "async__AsyncRun__scheduleImmediateWithTimer$closure", "_AsyncRun__scheduleImmediateWithTimer", 6);
+    _static_0(A, "_js_helper_Primitives_dateNow$closure", "Primitives_dateNow", 20);
+    _static_1(A, "async__AsyncRun__scheduleImmediateJsOverride$closure", "_AsyncRun__scheduleImmediateJsOverride", 9);
+    _static_1(A, "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", "_AsyncRun__scheduleImmediateWithSetImmediate", 9);
+    _static_1(A, "async__AsyncRun__scheduleImmediateWithTimer$closure", "_AsyncRun__scheduleImmediateWithTimer", 9);
     _static_0(A, "async___startMicrotaskLoop$closure", "_startMicrotaskLoop", 0);
-    _static_1(A, "convert___defaultToEncodable$closure", "_defaultToEncodable", 11);
+    _static_1(A, "convert___defaultToEncodable$closure", "_defaultToEncodable", 21);
+    _instance_0_u(A.QuestionDetailPage.prototype, "get$didMount", "didMount$0", 0);
     _instance_0_u(A.FlintComponent.prototype, "get$didMount", "didMount$0", 0);
-    _static_1(A, "component_props__toFlintNode$closure", "toFlintNode", 32);
-    _static_1(A, "style___gradientStopValue$closure", "_gradientStopValue", 33);
+    _static_1(A, "component_props__toFlintNode$closure", "toFlintNode", 51);
+    _instance_0_u(A.BrowserNavigation.prototype, "get$reload", "reload$0", 0);
+    _instance_0_u(A.StateSignalListener.prototype, "get$didMount", "didMount$0", 0);
+    _static_1(A, "style___gradientStopValue$closure", "_gradientStopValue", 14);
     _static(A, "style__cssValue$closure", 1, null, ["call$2$unitlessNumber", "call$1"], ["cssValue", function(value) {
       return A.cssValue(value, false);
-    }], 23, 0);
-    _instance_0_u(A.HtmlContent.prototype, "get$didMount", "didMount$0", 0);
+    }], 34, 0);
   })();
   (function inheritance() {
     var _mixin = hunkHelpers.mixin,
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(A.Object, null);
-    _inheritMany(A.Object, [A.JS_CONST, J.Interceptor, A.SafeToStringHook, J.ArrayIterator, A.Error, A.ListBase, A.SentinelValue, A.Iterable, A.ListIterator, A.MappedIterator, A.WhereIterator, A.FixedLengthListMixin, A.UnmodifiableListMixin, A._Record, A.ConstantMap, A.Closure, A._KeysOrValuesOrElementsIterator, A.SetBase, A.TypeErrorDecoder, A.NullThrownFromJavaScriptException, A.ExceptionAndStackTrace, A._StackTrace, A.MapBase, A.LinkedHashMapCell, A.LinkedHashMapKeyIterator, A.LinkedHashMapValueIterator, A.LinkedHashMapEntryIterator, A.JSSyntaxRegExp, A._MatchImplementation, A._AllMatchesIterator, A.StringMatch, A._StringAllMatchesIterator, A.Rti, A._FunctionParameters, A._Type, A._TimerImpl, A._AsyncAwaitCompleter, A._SyncStarIterator, A.AsyncError, A._Completer, A._FutureListener, A._Future, A._AsyncCallbackEntry, A.Stream, A._StreamIterator, A._Zone, A._LinkedHashSetCell, A._LinkedHashSetIterator, A.Codec, A.Converter, A._JsonStringifier, A._Enum, A.OutOfMemoryError, A.StackOverflowError, A._Exception, A.FormatException, A.MapEntry, A.Null, A._StringStackTrace, A.StringBuffer, A.FlintNode, A.AuthSessionManager, A.FlintRoot, A._ComponentMount, A.FlintPage, A.FlintPageContext, A._FetchedFlintPage, A.BrowserStorage, A.Color, A.DartStyle, A.Gradient, A.Background, A.GradientPosition, A.GradientStop, A.ThemeTokens, A.TokenRef, A.FlintTheme, A.KeyframeStep, A.StyleKeyframes, A.RootDesign, A.EdgeInsets, A.SizeValue, A.GridTrack, A.GridTemplateColumns, A.Border, A.Shadow, A.StyleTransform, A.StyleFilter, A.FontFamily, A.BoxSizing, A.ScrollBehavior, A.Cursor, A.Overflow, A.TextDecorationStyle, A.FlexWrap, A.TransitionTiming, A.StyleTransition, A.StyleAnimation, A.IconData, A.IconShape, A.EventStreamProvider, A._EventStreamSubscription]);
+    _inheritMany(A.Object, [A.JS_CONST, J.Interceptor, A.SafeToStringHook, J.ArrayIterator, A.Iterable, A.CastIterator, A.MapBase, A.Closure, A.Error, A.ListBase, A.SentinelValue, A.ListIterator, A.MappedIterator, A.WhereIterator, A.TakeIterator, A.WhereTypeIterator, A.FixedLengthListMixin, A.UnmodifiableListMixin, A._Record, A.MapView, A.ConstantMap, A._KeysOrValuesOrElementsIterator, A.SetBase, A.TypeErrorDecoder, A.NullThrownFromJavaScriptException, A.ExceptionAndStackTrace, A._StackTrace, A.LinkedHashMapCell, A.LinkedHashMapKeyIterator, A.LinkedHashMapValueIterator, A.LinkedHashMapEntryIterator, A.JSSyntaxRegExp, A._MatchImplementation, A._AllMatchesIterator, A.StringMatch, A._StringAllMatchesIterator, A.Rti, A._FunctionParameters, A._Type, A._TimerImpl, A._AsyncAwaitCompleter, A._SyncStarIterator, A.AsyncError, A._Completer, A._FutureListener, A._Future, A._AsyncCallbackEntry, A.Stream, A._StreamIterator, A._Zone, A._HashMapKeyIterator, A._LinkedHashSetCell, A._LinkedHashSetIterator, A._MapBaseValueIterator, A._UnmodifiableMapMixin, A.Codec, A.Converter, A._JsonStringifier, A._Utf8Encoder, A._Utf8Decoder, A.DateTime, A.Duration, A._Enum, A.OutOfMemoryError, A.StackOverflowError, A._Exception, A.FormatException, A.MapEntry, A.Null, A._StringStackTrace, A.Stopwatch, A.StringBuffer, A._Uri, A.UriData, A._SimpleUri, A.NullRejectionException, A.StatusCodeConfig, A.FlintError, A.FlintResponse, A.FlintClient, A.FlintWebSocketClient, A._ParsedResponse, A.FlintNode, A.AuthSessionManager, A.FlintRoot, A._ComponentMount, A.ClientRouter, A.BrowserNavigation, A.ToastService, A.FlintPage, A.FlintPageContext, A._FetchedFlintPage, A.StateSignal, A.BrowserStorage, A.Cookies, A.Color, A.DartStyle, A.Gradient, A.Background, A.GradientPosition, A.GradientStop, A.ThemeTokens, A.TokenRef, A.FlintTheme, A.KeyframeStep, A.StyleKeyframes, A.RootDesign, A.EdgeInsets, A.SizeValue, A.Border, A.Shadow, A.StyleTransform, A.StyleFilter, A.FontFamily, A.BoxSizing, A.ScrollBehavior, A.Cursor, A.Overflow, A.TextDecorationStyle, A.FlexWrap, A.Resize, A.TransitionTiming, A.StyleTransition, A.AnimationDirection, A.AnimationFillMode, A.AnimationPlayState, A.AnimationIteration, A.StyleAnimation, A.WillChange, A.TextEditingController, A.FormController, A.FormErrors, A.IconData, A.IconShape, A.EventStreamProvider, A._EventStreamSubscription]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JavaScriptBigInt, J.JavaScriptSymbol, J.JSNumber, J.JSString]);
     _inheritMany(J.JavaScriptObject, [J.LegacyJavaScriptObject, J.JSArray, A.NativeByteBuffer, A.NativeTypedData]);
     _inheritMany(J.LegacyJavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction]);
     _inherit(J.JSArraySafeToStringHook, A.SafeToStringHook);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
     _inheritMany(J.JSNumber, [J.JSInt, J.JSNumNotInt]);
+    _inheritMany(A.Iterable, [A._CastIterableBase, A.EfficientLengthIterable, A.MappedIterable, A.WhereIterable, A.TakeIterable, A.WhereTypeIterable, A._KeysOrValues, A._AllMatchesIterable, A._StringAllMatchesIterable, A._SyncStarIterable]);
+    _inherit(A.CastIterable, A._CastIterableBase);
+    _inherit(A._EfficientLengthCastIterable, A.CastIterable);
+    _inheritMany(A.MapBase, [A.CastMap, A.JsLinkedHashMap, A._HashMap, A._JsonMap]);
+    _inheritMany(A.Closure, [A.Closure2Args, A.CastMap_entries_closure, A.Closure0Args, A.TearOffClosure, A.initHooks_closure, A.initHooks_closure1, A._AsyncRun__initializeScheduleImmediate_internalCallback, A._AsyncRun__initializeScheduleImmediate_closure, A._awaitOnObject_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure, A._Future_timeout_closure0, A.Stream_length_closure, A._RootZone_bindUnaryCallbackGuarded_closure, A._HashMap_values_closure, A.MapBase_entries_closure, A._JsonMap_values_closure, A.promiseToFuture_closure, A.promiseToFuture_closure0, A.dartify_convert, A.FlintClient__send_closure, A.FlintClient__send_closure0, A.FlintWebSocketClient_connect_closure, A.FlintWebSocketClient_connect_closure0, A.FlintWebSocketClient_connect_closure1, A.FlintWebSocketClient_connect_closure2, A.FlintWebSocketClient__startHeartbeat_closure, A.GuidesSidebar__sidebarItem_closure, A.GuidesSidebar__sidebarItem_closure0, A.QuestionDetailPage__initialAnswers_closure, A.QuestionDetailPage_build_closure, A.QuestionDetailPage__answerCard_closure, A.QuestionDetailPage__answerForm_closure, A.QuestionDetailPage__startAnswerRefresh_closure, A.QuestionDetailPage__connectAnswerSocket_closure, A.QuestionDetailPage__connectAnswerSocket_closure0, A.QuestionDetailPage__connectAnswerSocket_closure1, A.QuestionDetailPage__connectAnswerSocket_closure2, A.QuestionDetailPage__connectAnswerSocket_closure3, A.QuestionDetailPage__connectAnswerSocket_closure4, A.QuestionDetailPage__connectAnswerSocket_closure5, A.QuestionDetailPage__refreshAnswers_closure, A.QuestionDetailPage__addAnswer_closure, A.QuestionDetailPage__addAnswer_closure0, A.QuestionDetailPage__removeAnswer_closure, A.QuestionDetailPage__removeAnswer_closure0, A.QuestionDetailPage__removeAnswer__closure, A.AuthPanel_build_closure, A.AuthPanel_build_closure0, A.AuthPanel_build_closure1, A.NavBar__guideToggle_closure, A.NavBar__apiToggle_closure, A.NavBar__mobileActions_closure, A.NavBar__mobileDrawer_closure, A.NavBar__mobileDrawer_closure0, A.NavBar__guideDrawer_closure, A.NavBar__guideDrawer_closure0, A.NavBar__apiDrawer_closure, A.NavBar__apiDrawer_closure0, A.FlintRoot__applyStyle_closure, A.FlintRoot__applyStyle_closure0, A.FlintRoot__listen_closure, A.mergeComponentProps_closure, A.joinClassNames_closure, A.joinClassNames_closure0, A.styleToCss_closure, A.styleToCss_closure0, A._scopedCssBody_closure, A._scopedCssBody_closure0, A._styleToCssImportant_closure, A._styleToCssImportant_closure0, A.createFlintApp_closure, A.createFlintApp_closure0, A._fetchPageForCurrentLocation_closure, A._fetchPageForCurrentLocation_closure0, A.StateSignalListener__bindSignal_closure, A.StyleKeyframes_cssText_closure, A.StyleKeyframes_cssText_closure0, A.RootDesign_cssText_closure, A.rootStyleToCss_closure, A.rootStyleToCss_closure0, A.EdgeInsets_toCss_closure, A.StyleTransition_StyleTransition$combine_closure, A.StyleAnimation_StyleAnimation$named_closure, A.TextArea__controlledOnChanged_closure, A.TextField__controlledOnChanged_closure, A.Icon_closure, A._EventStreamSubscription_closure, A.main_closure]);
+    _inheritMany(A.Closure2Args, [A.CastMap_forEach_closure, A.ConstantMap_map_closure, A.JsLinkedHashMap_addAll_closure, A.initHooks_closure0, A._awaitOnObject_closure0, A._wrapJsFunctionForAsync_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure0, A._Future_timeout_closure1, A.LinkedHashMap_LinkedHashMap$from_closure, A.MapBase_mapToString_closure, A._JsonStringifier_writeMap_closure, A._Uri__makeQueryFromParameters_closure, A.Uri_splitQueryString_closure, A.Uri_parseIPv6Address_error, A._Uri__makeQueryFromParametersDefault_writeParameter, A._Uri__makeQueryFromParametersDefault_closure, A.QuestionDetailPage__errorData_closure, A.FlintRoot__applyProps_closure, A.createFlintApp_renderPage, A._asStringKeyedMap_closure, A.BrowserStorage_readMap_closure, A.FormErrors_without_closure]);
     _inheritMany(A.Error, [A.LateError, A.TypeError, A.JsNoSuchMethodError, A.UnknownJsTypeError, A.RuntimeError, A._Error, A.JsonUnsupportedObjectError, A.AssertionError, A.ArgumentError, A.UnsupportedError, A.UnimplementedError, A.StateError, A.ConcurrentModificationError]);
     _inherit(A.UnmodifiableListBase, A.ListBase);
     _inherit(A.CodeUnits, A.UnmodifiableListBase);
-    _inheritMany(A.Iterable, [A.EfficientLengthIterable, A.MappedIterable, A.WhereIterable, A._KeysOrValues, A._AllMatchesIterable, A._StringAllMatchesIterable, A._SyncStarIterable]);
-    _inheritMany(A.EfficientLengthIterable, [A.ListIterable, A.LinkedHashMapKeysIterable, A.LinkedHashMapValuesIterable, A.LinkedHashMapEntriesIterable]);
+    _inheritMany(A.EfficientLengthIterable, [A.ListIterable, A.LinkedHashMapKeysIterable, A.LinkedHashMapValuesIterable, A.LinkedHashMapEntriesIterable, A._HashMapKeyIterable, A._MapBaseValueIterable]);
     _inherit(A.EfficientLengthMappedIterable, A.MappedIterable);
     _inheritMany(A.ListIterable, [A.MappedListIterable, A._JsonMapKeyIterable]);
+    _inherit(A.EfficientLengthTakeIterable, A.TakeIterable);
     _inheritMany(A._Record, [A._Record2, A._Record3]);
     _inherit(A._Record_2, A._Record2);
     _inherit(A._Record_3, A._Record3);
-    _inheritMany(A.Closure, [A.Closure2Args, A.Closure0Args, A.TearOffClosure, A.initHooks_closure, A.initHooks_closure1, A._AsyncRun__initializeScheduleImmediate_internalCallback, A._AsyncRun__initializeScheduleImmediate_closure, A._awaitOnObject_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure, A.Stream_length_closure, A._RootZone_bindUnaryCallbackGuarded_closure, A.MapBase_entries_closure, A.GuidesSidebar__sidebarItem_closure, A.GuidesSidebar__sidebarItem_closure0, A.NavBar__guideToggle_closure, A.NavBar__apiToggle_closure, A.NavBar__mobileActions_closure, A.NavBar__mobileDrawer_closure, A.NavBar__mobileDrawer_closure0, A.NavBar__guideDrawer_closure, A.NavBar__guideDrawer_closure0, A.NavBar__apiDrawer_closure, A.NavBar__apiDrawer_closure0, A.FlintRoot__applyStyle_closure, A.FlintRoot__applyStyle_closure0, A.FlintRoot__listen_closure, A.mergeComponentProps_closure, A.joinClassNames_closure, A.joinClassNames_closure0, A.styleToCss_closure, A.styleToCss_closure0, A._scopedCssBody_closure, A._scopedCssBody_closure0, A._styleToCssImportant_closure, A._styleToCssImportant_closure0, A.createFlintApp_closure, A.createFlintApp_closure0, A._fetchPageForCurrentLocation_closure, A._fetchPageForCurrentLocation_closure0, A.StyleKeyframes_cssText_closure, A.StyleKeyframes_cssText_closure0, A.RootDesign_cssText_closure, A.rootStyleToCss_closure, A.rootStyleToCss_closure0, A.EdgeInsets_toCss_closure, A.StyleTransition_StyleTransition$combine_closure, A.Icon_closure, A._EventStreamSubscription_closure, A.main_closure]);
-    _inheritMany(A.Closure2Args, [A.ConstantMap_map_closure, A.JsLinkedHashMap_addAll_closure, A.initHooks_closure0, A._awaitOnObject_closure0, A._wrapJsFunctionForAsync_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure0, A.MapBase_mapToString_closure, A._JsonStringifier_writeMap_closure, A.FlintRoot__applyProps_closure, A.createFlintApp_renderPage, A._asStringKeyedMap_closure, A.BrowserStorage_readMap_closure]);
+    _inherit(A._UnmodifiableMapView_MapView__UnmodifiableMapMixin, A.MapView);
+    _inherit(A.UnmodifiableMapView, A._UnmodifiableMapView_MapView__UnmodifiableMapMixin);
+    _inherit(A.ConstantMapView, A.UnmodifiableMapView);
     _inherit(A.ConstantStringMap, A.ConstantMap);
     _inheritMany(A.SetBase, [A.ConstantSet, A._SetBase]);
-    _inherit(A.ConstantStringSet, A.ConstantSet);
+    _inheritMany(A.ConstantSet, [A.ConstantStringSet, A.GeneralConstantSet]);
+    _inheritMany(A.Closure0Args, [A.Primitives_initTicker_closure, A._AsyncRun__scheduleImmediateJsOverride_internalCallback, A._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, A._TimerImpl_internalCallback, A._TimerImpl$periodic_closure, A.Future_Future$delayed_closure, A._Future__addListener_closure, A._Future__prependListeners_closure, A._Future__chainCoreFuture_closure, A._Future__asyncCompleteWithValue_closure, A._Future__asyncCompleteErrorObject_closure, A._Future__propagateToListeners_handleWhenCompleteCallback, A._Future__propagateToListeners_handleValueCallback, A._Future__propagateToListeners_handleError, A._Future_timeout_closure, A.Stream_length_closure0, A._RootZone_bindCallbackGuarded_closure, A._rootHandleError_closure, A._Utf8Decoder__decoder_closure, A._Utf8Decoder__decoderNonfatal_closure, A.FlintClient__send_closure1, A.FlintClient__body_closure, A.FlintWebSocketClient_on_closure, A.FlintWebSocketClient__handleDisconnect_closure, A.GuidesSidebar__sidebarItem__closure, A.QuestionDetailPage__submitAnswer_closure, A.QuestionDetailPage__submitAnswer_closure0, A.QuestionDetailPage__submitAnswer_closure1, A.QuestionDetailPage__submitAnswer_closure2, A.QuestionDetailPage__submitAnswer_closure3, A.QuestionDetailPage__submitAnswer_closure4, A.QuestionDetailPage__connectAnswerSocket__closure3, A.QuestionDetailPage__connectAnswerSocket__closure2, A.QuestionDetailPage__connectAnswerSocket__closure1, A.QuestionDetailPage__connectAnswerSocket__closure0, A.QuestionDetailPage__connectAnswerSocket__closure, A.QuestionDetailPage__deleteAnswer_closure, A.QuestionDetailPage__deleteAnswer_closure0, A.AuthPanel_build__closure0, A.AuthPanel_build__closure, A.AuthPanel__submit_closure, A.AuthPanel__submit_closure0, A.AuthPanel__submit_closure1, A.NavBar__guideToggle__closure, A.NavBar__apiToggle__closure, A.NavBar__mobileActions__closure, A.NavBar__mobileDrawer__closure0, A.NavBar__mobileDrawer__closure, A.NavBar__guideDrawer__closure0, A.NavBar__guideDrawer__closure, A.NavBar__apiDrawer__closure0, A.NavBar__apiDrawer__closure, A.FlintRoot__scheduleRender_closure, A.FlintRoot__createComponent_closure, A.FlintRoot__scheduleComponentRender_closure, A.ToastService__show_closure, A.ToastService__show_closure0, A.ToastService__show__closure, A.createFlintApp_renderCurrentLocation, A.StateSignal_listen_closure, A.StateSignalListener__bindSignal__closure, A.FormController_controller_closure, A.FormController_controller__closure]);
     _inherit(A.NullError, A.TypeError);
     _inheritMany(A.TearOffClosure, [A.StaticClosure, A.BoundClosure]);
-    _inheritMany(A.MapBase, [A.JsLinkedHashMap, A._JsonMap]);
+    _inherit(A.JsConstantLinkedHashMap, A.JsLinkedHashMap);
     _inheritMany(A.NativeTypedData, [A.NativeByteData, A.NativeTypedArray]);
     _inheritMany(A.NativeTypedArray, [A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin]);
     _inherit(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin);
@@ -10117,35 +16965,38 @@
     _inheritMany(A.NativeTypedArrayOfDouble, [A.NativeFloat32List, A.NativeFloat64List]);
     _inheritMany(A.NativeTypedArrayOfInt, [A.NativeInt16List, A.NativeInt32List, A.NativeInt8List, A.NativeUint16List, A.NativeUint32List, A.NativeUint8ClampedList, A.NativeUint8List]);
     _inherit(A._TypeError, A._Error);
-    _inheritMany(A.Closure0Args, [A._AsyncRun__scheduleImmediateJsOverride_internalCallback, A._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, A._TimerImpl_internalCallback, A._Future__addListener_closure, A._Future__prependListeners_closure, A._Future__chainCoreFuture_closure, A._Future__asyncCompleteWithValue_closure, A._Future__asyncCompleteErrorObject_closure, A._Future__propagateToListeners_handleWhenCompleteCallback, A._Future__propagateToListeners_handleValueCallback, A._Future__propagateToListeners_handleError, A.Stream_length_closure0, A._RootZone_bindCallbackGuarded_closure, A._rootHandleError_closure, A.GuidesSidebar__sidebarItem__closure, A.NavBar__guideToggle__closure, A.NavBar__apiToggle__closure, A.NavBar__mobileActions__closure, A.NavBar__mobileDrawer__closure0, A.NavBar__mobileDrawer__closure, A.NavBar__guideDrawer__closure0, A.NavBar__guideDrawer__closure, A.NavBar__apiDrawer__closure0, A.NavBar__apiDrawer__closure, A.FlintRoot__scheduleRender_closure, A.FlintRoot__createComponent_closure, A.FlintRoot__scheduleComponentRender_closure, A.createFlintApp_renderCurrentLocation]);
     _inherit(A._AsyncCompleter, A._Completer);
     _inherit(A._RootZone, A._Zone);
+    _inherit(A._IdentityHashMap, A._HashMap);
     _inherit(A._LinkedHashSet, A._SetBase);
+    _inheritMany(A.Codec, [A.Base64Codec, A.Encoding, A.JsonCodec]);
+    _inheritMany(A.Converter, [A.Base64Encoder, A.JsonEncoder, A.JsonDecoder, A.Utf8Encoder, A.Utf8Decoder]);
     _inherit(A.JsonCyclicError, A.JsonUnsupportedObjectError);
-    _inherit(A.JsonCodec, A.Codec);
-    _inheritMany(A.Converter, [A.JsonEncoder, A.JsonDecoder]);
     _inherit(A._JsonStringStringifier, A._JsonStringifier);
+    _inherit(A.Utf8Codec, A.Encoding);
     _inheritMany(A.ArgumentError, [A.RangeError, A.IndexError]);
+    _inherit(A._DataUri, A._Uri);
+    _inheritMany(A._Enum, [A.WebSocketConnectionState, A.FlintErrorKind, A.FlintResponseType, A.ToastPlacement, A.CookieSameSite, A.Breakpoint, A.Display, A.AlignItems, A.JustifyContent, A.Position, A.Tone, A.ComponentSize, A.ButtonVariant, A.InputVariant]);
     _inheritMany(A.FlintNode, [A.FlintComponent, A.FlintText, A.FlintFragment, A.FlintElement, A.FlintComponentNode]);
     _inheritMany(A.FlintComponent, [A.StatefulComponent, A.FlashBanner, A.NavBar]);
-    _inheritMany(A.StatefulComponent, [A.ApiSidebar, A.GuidesSidebar, A.UiDocsPage, A.Footer, A.SiteLayout, A.HtmlContent]);
+    _inheritMany(A.StatefulComponent, [A.ApiSidebar, A.GuidesSidebar, A.QuestionDetailPage, A.AuthPanel, A.Footer, A.SiteLayout, A.StateSignalListener]);
     _inherit(A.WebStorageBackend, A.BrowserStorage);
     _inherit(A.LocalStorage, A.WebStorageBackend);
-    _inheritMany(A._Enum, [A.Breakpoint, A.Display, A.AlignItems, A.JustifyContent, A.Position, A.Tone, A.ComponentSize, A.ButtonVariant]);
-    _inheritMany(A.FlintElement, [A.Button, A.Spinner, A.Icon, A.Container, A.Link, A.Row]);
+    _inheritMany(A.FlintElement, [A.Button, A.Spinner, A.Form, A.TextArea, A.TextField, A.Icon, A.Container, A.Link, A.Row]);
     _inherit(A._EventStream, A.Stream);
     _mixin(A.UnmodifiableListBase, A.UnmodifiableListMixin);
     _mixin(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, A.ListBase);
     _mixin(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, A.FixedLengthListMixin);
     _mixin(A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin, A.ListBase);
     _mixin(A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin, A.FixedLengthListMixin);
+    _mixin(A._UnmodifiableMapView_MapView__UnmodifiableMapMixin, A._UnmodifiableMapMixin);
   })();
   var init = {
     G: typeof self != "undefined" ? self : globalThis,
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List", Object: "Object", Map: "Map", JSObject: "JSObject"},
     mangledNames: {},
-    types: ["~()", "~(Object)", "~(@)", "bool(MapEntry<String,Object?>)", "String(MapEntry<String,Object?>)", "bool(String)", "~(~())", "Null(JSObject)", "~(JSObject)", "Null()", "~(Object?,Object?)", "@(@)", "Null(@)", "MapEntry<String,@>(@,@)", "Null(Object,StackTrace)", "Null(~())", "~(String,Object?)", "@(@,String)", "@(String)", "bool(+(String,String))", "bool(String?)", "String(String?)", "String(MapEntry<String,DartStyle>)", "String(Object?{unitlessNumber:bool})", "Future<~>(FlintPage,int)", "Future<~>()", "Null(@,StackTrace)", "String(KeyframeStep)", "String(StyleTransition)", "FlintElement(IconShape)", "UiDocsPage(Map<String,@>)", "~(int,@)", "FlintNode(Object?)", "String(Object)", "String(MapEntry<Breakpoint,DartStyle>)"],
+    types: ["~()", "~(Object)", "Null(@)", "~(JSObject)", "~(@)", "bool(MapEntry<String,Object?>)", "bool(String)", "String(MapEntry<String,Object?>)", "Null()", "~(~())", "Null(JSObject)", "bool(Map<String,@>)", "MapEntry<String,@>(@,@)", "@(String)", "String(Object)", "Null(Object,StackTrace)", "~(Object?,Object?)", "@()", "~(String,@)", "List<Map<String,@>>(List<Map<String,@>>?)", "int()", "@(@)", "Map<String,@>(Map<@,@>)", "~(Timer)", "Future<~>()", "List<Function>()", "~(String,String?)", "Null(~())", "String()", "Object?(List<Map<String,@>>?)", "0&()", "Object?(Object?)", "0&(String,int?)", "~(String,Object?)", "String(Object?{unitlessNumber:bool})", "Map<String,String>(Map<String,String>,String)", "~(@,@)", "~(int,@)", "bool(String?)", "String(String?)", "String(MapEntry<String,DartStyle>)", "String(MapEntry<Breakpoint,DartStyle>)", "Future<~>(FlintPage,int)", "String(KeyframeStep)", "String(StyleTransition)", "Null(@,StackTrace)", "TextEditingController()", "bool(String,List<String>)", "FlintElement(IconShape)", "QuestionDetailPage(Map<String,@>)", "@(@,String)", "FlintNode(Object?)", "bool(+(String,String))"],
     interceptorsByTag: null,
     leafTags: null,
     arrayRti: Symbol("$ti"),
@@ -10154,9 +17005,10 @@
       "3;": (t1, t2, t3) => o => o instanceof A._Record_3 && t1._is(o._0) && t2._is(o._1) && t3._is(o._2)
     }
   };
-  A._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"LegacyJavaScriptObject","UnknownJavaScriptObject":"LegacyJavaScriptObject","JavaScriptFunction":"LegacyJavaScriptObject","NativeArrayBuffer":"NativeByteBuffer","JSBool":{"bool":[],"TrustedGetRuntimeType":[]},"JSNull":{"TrustedGetRuntimeType":[]},"JavaScriptObject":{"JSObject":[]},"LegacyJavaScriptObject":{"JSObject":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"],"JSObject":[],"Iterable":["1"]},"JSArraySafeToStringHook":{"SafeToStringHook":[]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"],"JSObject":[],"Iterable":["1"]},"ArrayIterator":{"Iterator":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[],"TrustedGetRuntimeType":[]},"JSNumNotInt":{"double":[],"num":[],"TrustedGetRuntimeType":[]},"JSString":{"String":[],"Pattern":[],"TrustedGetRuntimeType":[]},"LateError":{"Error":[]},"CodeUnits":{"ListBase":["int"],"UnmodifiableListMixin":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"],"ListBase.E":"int"},"EfficientLengthIterable":{"Iterable":["1"]},"ListIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"ListIterator":{"Iterator":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"MappedIterator":{"Iterator":["2"]},"MappedListIterable":{"ListIterable":["2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2","ListIterable.E":"2"},"WhereIterable":{"Iterable":["1"],"Iterable.E":"1"},"WhereIterator":{"Iterator":["1"]},"UnmodifiableListBase":{"ListBase":["1"],"UnmodifiableListMixin":["1"],"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_Record_2":{"_Record2":[],"_Record":[]},"_Record_3":{"_Record3":[],"_Record":[]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"ConstantMap":["1","2"],"Map":["1","2"]},"_KeysOrValues":{"Iterable":["1"],"Iterable.E":"1"},"_KeysOrValuesOrElementsIterator":{"Iterator":["1"]},"ConstantSet":{"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"ConstantStringSet":{"ConstantSet":["1"],"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"Closure":{"Function":[]},"Closure0Args":{"Function":[]},"Closure2Args":{"Function":[]},"TearOffClosure":{"Function":[]},"StaticClosure":{"Function":[]},"BoundClosure":{"Function":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapBase":["1","2"],"LinkedHashMap":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"LinkedHashMapKeysIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"LinkedHashMapKeyIterator":{"Iterator":["1"]},"LinkedHashMapValuesIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"LinkedHashMapValueIterator":{"Iterator":["1"]},"LinkedHashMapEntriesIterable":{"EfficientLengthIterable":["MapEntry<1,2>"],"Iterable":["MapEntry<1,2>"],"Iterable.E":"MapEntry<1,2>"},"LinkedHashMapEntryIterator":{"Iterator":["MapEntry<1,2>"]},"_Record2":{"_Record":[]},"_Record3":{"_Record":[]},"JSSyntaxRegExp":{"RegExp":[],"Pattern":[]},"_MatchImplementation":{"RegExpMatch":[],"Match":[]},"_AllMatchesIterable":{"Iterable":["RegExpMatch"],"Iterable.E":"RegExpMatch"},"_AllMatchesIterator":{"Iterator":["RegExpMatch"]},"StringMatch":{"Match":[]},"_StringAllMatchesIterable":{"Iterable":["Match"],"Iterable.E":"Match"},"_StringAllMatchesIterator":{"Iterator":["Match"]},"NativeByteBuffer":{"JSObject":[],"TrustedGetRuntimeType":[]},"NativeTypedData":{"JSObject":[]},"NativeByteData":{"JSObject":[],"TrustedGetRuntimeType":[]},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"],"JSObject":[]},"NativeTypedArrayOfDouble":{"ListBase":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"]},"NativeTypedArrayOfInt":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"]},"NativeFloat32List":{"ListBase":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"],"TrustedGetRuntimeType":[],"ListBase.E":"double"},"NativeFloat64List":{"ListBase":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"],"TrustedGetRuntimeType":[],"ListBase.E":"double"},"NativeInt16List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeInt32List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeInt8List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeUint16List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeUint32List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeUint8ClampedList":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeUint8List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"_SyncStarIterator":{"Iterator":["1"]},"_SyncStarIterable":{"Iterable":["1"],"Iterable.E":"1"},"AsyncError":{"Error":[]},"_AsyncCompleter":{"_Completer":["1"]},"_Future":{"Future":["1"]},"_Zone":{"Zone":[]},"_RootZone":{"_Zone":[],"Zone":[]},"_LinkedHashSet":{"SetBase":["1"],"LinkedHashSet":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_LinkedHashSetIterator":{"Iterator":["1"]},"ListBase":{"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"MapBase":{"Map":["1","2"]},"SetBase":{"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_SetBase":{"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_JsonMap":{"MapBase":["String","@"],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"_JsonMapKeyIterable":{"ListIterable":["String"],"EfficientLengthIterable":["String"],"Iterable":["String"],"Iterable.E":"String","ListIterable.E":"String"},"JsonUnsupportedObjectError":{"Error":[]},"JsonCyclicError":{"Error":[]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"RegExpMatch":{"Match":[]},"String":{"Pattern":[]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"OutOfMemoryError":{"Error":[]},"StackOverflowError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"StringBuffer":{"StringSink":[]},"ApiSidebar":{"FlintComponent":[],"FlintNode":[]},"GuidesSidebar":{"FlintComponent":[],"FlintNode":[]},"UiDocsPage":{"FlintComponent":[],"FlintNode":[]},"FlashBanner":{"FlintComponent":[],"FlintNode":[]},"Footer":{"FlintComponent":[],"FlintNode":[]},"NavBar":{"FlintComponent":[],"FlintNode":[]},"SiteLayout":{"FlintComponent":[],"FlintNode":[]},"FlintComponent":{"FlintNode":[]},"StatefulComponent":{"FlintComponent":[],"FlintNode":[]},"FlintElement":{"FlintNode":[]},"FlintText":{"FlintNode":[]},"FlintFragment":{"FlintNode":[]},"FlintComponentNode":{"FlintNode":[]},"Button":{"FlintNode":[]},"HtmlContent":{"FlintComponent":[],"FlintNode":[]},"Spinner":{"FlintNode":[]},"Icon":{"FlintNode":[]},"Container":{"FlintNode":[]},"Link":{"FlintNode":[]},"Row":{"FlintNode":[]},"_EventStream":{"Stream":["1"]},"_EventStreamSubscription":{"StreamSubscription":["1"]},"Int8List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint8List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint8ClampedList":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Int16List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint16List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Int32List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint32List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Float32List":{"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]},"Float64List":{"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]}}'));
-  A._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"EfficientLengthIterable":1,"UnmodifiableListBase":1,"NativeTypedArray":1,"_SetBase":1,"Codec":2,"Converter":2}'));
+  A._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"LegacyJavaScriptObject","UnknownJavaScriptObject":"LegacyJavaScriptObject","JavaScriptFunction":"LegacyJavaScriptObject","NativeArrayBuffer":"NativeByteBuffer","JSBool":{"bool":[],"TrustedGetRuntimeType":[]},"JSNull":{"Null":[],"TrustedGetRuntimeType":[]},"JavaScriptObject":{"JSObject":[]},"LegacyJavaScriptObject":{"JSObject":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"],"JSObject":[],"Iterable":["1"]},"JSArraySafeToStringHook":{"SafeToStringHook":[]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"],"JSObject":[],"Iterable":["1"]},"ArrayIterator":{"Iterator":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[],"TrustedGetRuntimeType":[]},"JSNumNotInt":{"double":[],"num":[],"TrustedGetRuntimeType":[]},"JSString":{"String":[],"Pattern":[],"TrustedGetRuntimeType":[]},"_CastIterableBase":{"Iterable":["2"]},"CastIterator":{"Iterator":["2"]},"CastIterable":{"_CastIterableBase":["1","2"],"Iterable":["2"],"Iterable.E":"2"},"_EfficientLengthCastIterable":{"CastIterable":["1","2"],"_CastIterableBase":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"CastMap":{"MapBase":["3","4"],"Map":["3","4"],"MapBase.K":"3","MapBase.V":"4"},"LateError":{"Error":[]},"CodeUnits":{"ListBase":["int"],"UnmodifiableListMixin":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"],"ListBase.E":"int","UnmodifiableListMixin.E":"int"},"EfficientLengthIterable":{"Iterable":["1"]},"ListIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"ListIterator":{"Iterator":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"MappedIterator":{"Iterator":["2"]},"MappedListIterable":{"ListIterable":["2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2","ListIterable.E":"2"},"WhereIterable":{"Iterable":["1"],"Iterable.E":"1"},"WhereIterator":{"Iterator":["1"]},"TakeIterable":{"Iterable":["1"],"Iterable.E":"1"},"EfficientLengthTakeIterable":{"TakeIterable":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"TakeIterator":{"Iterator":["1"]},"WhereTypeIterable":{"Iterable":["1"],"Iterable.E":"1"},"WhereTypeIterator":{"Iterator":["1"]},"UnmodifiableListBase":{"ListBase":["1"],"UnmodifiableListMixin":["1"],"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_Record_2":{"_Record2":[],"_Record":[]},"_Record_3":{"_Record3":[],"_Record":[]},"ConstantMapView":{"UnmodifiableMapView":["1","2"],"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":["1","2"],"MapView":["1","2"],"_UnmodifiableMapMixin":["1","2"],"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"ConstantMap":["1","2"],"Map":["1","2"]},"_KeysOrValues":{"Iterable":["1"],"Iterable.E":"1"},"_KeysOrValuesOrElementsIterator":{"Iterator":["1"]},"ConstantSet":{"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"ConstantStringSet":{"ConstantSet":["1"],"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"GeneralConstantSet":{"ConstantSet":["1"],"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"Closure":{"Function":[]},"Closure0Args":{"Function":[]},"Closure2Args":{"Function":[]},"TearOffClosure":{"Function":[]},"StaticClosure":{"Function":[]},"BoundClosure":{"Function":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapBase":["1","2"],"LinkedHashMap":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"LinkedHashMapKeysIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"LinkedHashMapKeyIterator":{"Iterator":["1"]},"LinkedHashMapValuesIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"LinkedHashMapValueIterator":{"Iterator":["1"]},"LinkedHashMapEntriesIterable":{"EfficientLengthIterable":["MapEntry<1,2>"],"Iterable":["MapEntry<1,2>"],"Iterable.E":"MapEntry<1,2>"},"LinkedHashMapEntryIterator":{"Iterator":["MapEntry<1,2>"]},"JsConstantLinkedHashMap":{"JsLinkedHashMap":["1","2"],"MapBase":["1","2"],"LinkedHashMap":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"_Record2":{"_Record":[]},"_Record3":{"_Record":[]},"JSSyntaxRegExp":{"RegExp":[],"Pattern":[]},"_MatchImplementation":{"RegExpMatch":[],"Match":[]},"_AllMatchesIterable":{"Iterable":["RegExpMatch"],"Iterable.E":"RegExpMatch"},"_AllMatchesIterator":{"Iterator":["RegExpMatch"]},"StringMatch":{"Match":[]},"_StringAllMatchesIterable":{"Iterable":["Match"],"Iterable.E":"Match"},"_StringAllMatchesIterator":{"Iterator":["Match"]},"NativeByteBuffer":{"JSObject":[],"TrustedGetRuntimeType":[]},"NativeTypedData":{"JSObject":[]},"NativeByteData":{"JSObject":[],"TrustedGetRuntimeType":[]},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"],"JSObject":[]},"NativeTypedArrayOfDouble":{"ListBase":["double"],"NativeTypedArray":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"]},"NativeTypedArrayOfInt":{"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"]},"NativeFloat32List":{"ListBase":["double"],"NativeTypedArray":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"],"TrustedGetRuntimeType":[],"ListBase.E":"double","FixedLengthListMixin.E":"double"},"NativeFloat64List":{"ListBase":["double"],"NativeTypedArray":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"],"TrustedGetRuntimeType":[],"ListBase.E":"double","FixedLengthListMixin.E":"double"},"NativeInt16List":{"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeInt32List":{"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeInt8List":{"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint16List":{"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint32List":{"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint8ClampedList":{"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint8List":{"Uint8List":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"_TimerImpl":{"Timer":[]},"_SyncStarIterator":{"Iterator":["1"]},"_SyncStarIterable":{"Iterable":["1"],"Iterable.E":"1"},"AsyncError":{"Error":[]},"_AsyncCompleter":{"_Completer":["1"]},"_Future":{"Future":["1"]},"_Zone":{"Zone":[]},"_RootZone":{"_Zone":[],"Zone":[]},"_HashMap":{"MapBase":["1","2"],"Map":["1","2"]},"_IdentityHashMap":{"_HashMap":["1","2"],"MapBase":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"_HashMapKeyIterator":{"Iterator":["1"]},"_LinkedHashSet":{"SetBase":["1"],"LinkedHashSet":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_LinkedHashSetIterator":{"Iterator":["1"]},"ListBase":{"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"MapBase":{"Map":["1","2"]},"_MapBaseValueIterable":{"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"_MapBaseValueIterator":{"Iterator":["2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":["1","2"],"MapView":["1","2"],"_UnmodifiableMapMixin":["1","2"],"Map":["1","2"]},"SetBase":{"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_SetBase":{"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_JsonMap":{"MapBase":["String","@"],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"_JsonMapKeyIterable":{"ListIterable":["String"],"EfficientLengthIterable":["String"],"Iterable":["String"],"Iterable.E":"String","ListIterable.E":"String"},"Base64Codec":{"Codec":["List<int>","String"]},"Encoding":{"Codec":["String","List<int>"]},"JsonUnsupportedObjectError":{"Error":[]},"JsonCyclicError":{"Error":[]},"JsonCodec":{"Codec":["Object?","String"]},"Utf8Codec":{"Codec":["String","List<int>"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"RegExpMatch":{"Match":[]},"String":{"Pattern":[]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"OutOfMemoryError":{"Error":[]},"StackOverflowError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"StringBuffer":{"StringSink":[]},"_Uri":{"Uri":[]},"_SimpleUri":{"Uri":[]},"_DataUri":{"Uri":[]},"ApiSidebar":{"FlintComponent":[],"FlintNode":[]},"GuidesSidebar":{"FlintComponent":[],"FlintNode":[]},"QuestionDetailPage":{"FlintComponent":[],"FlintNode":[]},"AuthPanel":{"FlintComponent":[],"FlintNode":[]},"FlashBanner":{"FlintComponent":[],"FlintNode":[]},"Footer":{"FlintComponent":[],"FlintNode":[]},"NavBar":{"FlintComponent":[],"FlintNode":[]},"SiteLayout":{"FlintComponent":[],"FlintNode":[]},"FlintComponent":{"FlintNode":[]},"StatefulComponent":{"FlintComponent":[],"FlintNode":[]},"FlintElement":{"FlintNode":[]},"FlintText":{"FlintNode":[]},"FlintFragment":{"FlintNode":[]},"FlintComponentNode":{"FlintNode":[]},"StateSignalListener":{"FlintComponent":[],"FlintNode":[]},"Button":{"FlintNode":[]},"Spinner":{"FlintNode":[]},"Form":{"FlintNode":[]},"TextArea":{"FlintNode":[]},"TextField":{"FlintNode":[]},"Icon":{"FlintNode":[]},"Container":{"FlintNode":[]},"Link":{"FlintNode":[]},"Row":{"FlintNode":[]},"_EventStream":{"Stream":["1"]},"_EventStreamSubscription":{"StreamSubscription":["1"]},"Int8List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint8List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint8ClampedList":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Int16List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint16List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Int32List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint32List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Float32List":{"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]},"Float64List":{"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]}}'));
+  A._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"UnmodifiableListBase":1,"NativeTypedArray":1,"_SetBase":1,"Converter":2}'));
   var string$ = {
+    ______: "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\u03f6\x00\u0404\u03f4 \u03f4\u03f6\u01f6\u01f6\u03f6\u03fc\u01f4\u03ff\u03ff\u0584\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u05d4\u01f4\x00\u01f4\x00\u0504\u05c4\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u0400\x00\u0400\u0200\u03f7\u0200\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u0200\u0200\u0200\u03f7\x00",
     Error_: "Error handler must accept one Object or one Object and a StackTrace as arguments, and return a value of the returned future's type"
   };
   var type$ = (function rtii() {
@@ -10165,6 +17017,7 @@
       AsyncError: findType("AsyncError"),
       Breakpoint: findType("Breakpoint"),
       CodeUnits: findType("CodeUnits"),
+      ConstantStringMap_String_Object: findType("ConstantStringMap<String,Object>"),
       ConstantStringMap_String_String: findType("ConstantStringMap<String,String>"),
       ConstantStringMap_of_String_and_nullable_Object: findType("ConstantStringMap<String,Object?>"),
       ConstantStringSet_String: findType("ConstantStringSet<String>"),
@@ -10175,33 +17028,46 @@
       FlintComponent_Function_Map_String_dynamic: findType("FlintComponent(Map<String,@>)"),
       FlintNode: findType("FlintNode"),
       Function: findType("Function"),
+      GeneralConstantSet_int: findType("GeneralConstantSet<int>"),
       IconShape: findType("IconShape"),
       Iterable_dynamic: findType("Iterable<@>"),
+      Iterable_int: findType("Iterable<int>"),
       JSArray_FlintNode: findType("JSArray<FlintNode>"),
+      JSArray_Function: findType("JSArray<Function>"),
       JSArray_IconShape: findType("JSArray<IconShape>"),
       JSArray_KeyframeStep: findType("JSArray<KeyframeStep>"),
+      JSArray_Map_String_dynamic: findType("JSArray<Map<String,@>>"),
       JSArray_Object: findType("JSArray<Object>"),
       JSArray_Record_2_String_and_String: findType("JSArray<+(String,String)>"),
       JSArray_String: findType("JSArray<String>"),
       JSArray_StyleKeyframes: findType("JSArray<StyleKeyframes>"),
+      JSArray_StyleTransition: findType("JSArray<StyleTransition>"),
       JSArray_dynamic: findType("JSArray<@>"),
+      JSArray_int: findType("JSArray<int>"),
       JSArray_nullable_String: findType("JSArray<String?>"),
+      JSArray_of_void_Function: findType("JSArray<~()>"),
       JSNull: findType("JSNull"),
       JSObject: findType("JSObject"),
       JavaScriptFunction: findType("JavaScriptFunction"),
       JavaScriptIndexingBehavior_dynamic: findType("JavaScriptIndexingBehavior<@>"),
       KeyframeStep: findType("KeyframeStep"),
       List_FlintNode: findType("List<FlintNode>"),
+      List_Function: findType("List<Function>"),
+      List_Map_String_dynamic: findType("List<Map<String,@>>"),
       List_Record_2_String_and_String: findType("List<+(String,String)>"),
+      List_String: findType("List<String>"),
       List_dynamic: findType("List<@>"),
+      List_int: findType("List<int>"),
       MapEntry_Breakpoint_DartStyle: findType("MapEntry<Breakpoint,DartStyle>"),
       MapEntry_String_DartStyle: findType("MapEntry<String,DartStyle>"),
       MapEntry_String_dynamic: findType("MapEntry<String,@>"),
       MapEntry_of_String_and_nullable_Object: findType("MapEntry<String,Object?>"),
+      Map_String_String: findType("Map<String,String>"),
       Map_String__ComponentMount: findType("Map<String,_ComponentMount>"),
       Map_String_dynamic: findType("Map<String,@>"),
       Map_dynamic_dynamic: findType("Map<@,@>"),
       Map_of_String_and_nullable_Object: findType("Map<String,Object?>"),
+      MappedListIterable_Object_String: findType("MappedListIterable<Object,String>"),
       Null: findType("Null"),
       Object: findType("Object"),
       Record: findType("Record"),
@@ -10211,18 +17077,25 @@
       RegExpMatch: findType("RegExpMatch"),
       Set_String: findType("Set<String>"),
       StackTrace: findType("StackTrace"),
+      StateSignalListener_nullable_List_Map_String_dynamic: findType("StateSignalListener<List<Map<String,@>>?>"),
+      StateSignal_nullable_List_Map_String_dynamic: findType("StateSignal<List<Map<String,@>>?>"),
       String: findType("String"),
+      String_Function_Object: findType("String(Object)"),
       StyleTransition: findType("StyleTransition"),
+      TextEditingController: findType("TextEditingController"),
+      Timer: findType("Timer"),
       TrustedGetRuntimeType: findType("TrustedGetRuntimeType"),
       TypeError: findType("TypeError"),
       UnknownJavaScriptObject: findType("UnknownJavaScriptObject"),
+      UnmodifiableMapView_String_String: findType("UnmodifiableMapView<String,String>"),
+      Uri: findType("Uri"),
       WhereIterable_String: findType("WhereIterable<String>"),
       _AsyncCompleter__FetchedFlintPage: findType("_AsyncCompleter<_FetchedFlintPage>"),
       _ComponentMount: findType("_ComponentMount"),
       _Future__FetchedFlintPage: findType("_Future<_FetchedFlintPage>"),
       _Future_dynamic: findType("_Future<@>"),
       _Future_int: findType("_Future<int>"),
-      _Future_of_nullable_FlintComponent_Function_Map_String_dynamic: findType("_Future<FlintComponent(Map<String,@>)?>"),
+      _IdentityHashMap_of_nullable_Object_and_nullable_Object: findType("_IdentityHashMap<Object?,Object?>"),
       bool: findType("bool"),
       bool_Function_Object: findType("bool(Object)"),
       bool_Function_String: findType("bool(String)"),
@@ -10231,10 +17104,16 @@
       dynamic_Function: findType("@()"),
       dynamic_Function_Object: findType("@(Object)"),
       dynamic_Function_Object_StackTrace: findType("@(Object,StackTrace)"),
+      dynamic_Function_dynamic: findType("@(@)"),
       int: findType("int"),
+      nullable_FlintComponent_Function_Map_String_dynamic: findType("FlintComponent(Map<String,@>)?"),
       nullable_Future_Null: findType("Future<Null>?"),
       nullable_JSObject: findType("JSObject?"),
+      nullable_List_Map_String_dynamic: findType("List<Map<String,@>>?"),
       nullable_List_dynamic: findType("List<@>?"),
+      nullable_Map_String_String: findType("Map<String,String>?"),
+      nullable_Map_String_dynamic: findType("Map<String,@>?"),
+      nullable_Map_dynamic_dynamic: findType("Map<@,@>?"),
       nullable_Object: findType("Object?"),
       nullable_String: findType("String?"),
       nullable__FutureListener_dynamic_dynamic: findType("_FutureListener<@,@>?"),
@@ -10248,7 +17127,9 @@
       num: findType("num"),
       void: findType("~"),
       void_Function: findType("~()"),
-      void_Function_String_dynamic: findType("~(String,@)")
+      void_Function_String_dynamic: findType("~(String,@)"),
+      void_Function_Timer: findType("~(Timer)"),
+      void_Function_nullable_List_Map_String_dynamic: findType("~(List<Map<String,@>>?)")
     };
   })();
   (function constants() {
@@ -10260,6 +17141,7 @@
     B.JSString_methods = J.JSString.prototype;
     B.JavaScriptFunction_methods = J.JavaScriptFunction.prototype;
     B.JavaScriptObject_methods = J.JavaScriptObject.prototype;
+    B.NativeUint8List_methods = A.NativeUint8List.prototype;
     B.PlainJavaScriptObject_methods = J.PlainJavaScriptObject.prototype;
     B.UnknownJavaScriptObject_methods = J.UnknownJavaScriptObject.prototype;
     B.AlignItems_1_center = new A.AlignItems(1, "center");
@@ -10267,15 +17149,22 @@
     B.Border_1_Color_transparent_solid = new A.Border(1, B.Color_transparent, "solid");
     B.Color_3WC = new A.Color("rgba(0, 0, 0, 0)");
     B.Border_Jpf = new A.Border(0, B.Color_3WC, "solid");
-    B.Color_OUv = new A.Color("rgba(30, 41, 59, 0.95)");
-    B.Border_LNh = new A.Border(1, B.Color_OUv, "solid");
     B.Breakpoint_1024_2_lg = new A.Breakpoint(1024, 2, "lg");
     B.Breakpoint_768_1_md = new A.Breakpoint(768, 1, "md");
     B.ButtonVariant_0 = new A.ButtonVariant(0, "solid");
+    B.ButtonVariant_1 = new A.ButtonVariant(1, "soft");
     B.ButtonVariant_2 = new A.ButtonVariant(2, "outline");
     B.ButtonVariant_3 = new A.ButtonVariant(3, "ghost");
+    B.C_AnimationDirection = new A.AnimationDirection();
+    B.C_AnimationFillMode = new A.AnimationFillMode();
+    B.C_AnimationIteration = new A.AnimationIteration();
+    B.C_AnimationPlayState = new A.AnimationPlayState();
     B.C_LocalStorage = new A.LocalStorage();
     B.C_AuthSessionManager = new A.AuthSessionManager();
+    B.C_Base64Encoder = new A.Base64Encoder();
+    B.C_Base64Codec = new A.Base64Codec();
+    B.C_BrowserNavigation = new A.BrowserNavigation();
+    B.C_Cookies = new A.Cookies();
     B.Object_PFX = {bg: 0, text: 1, muted: 2, panel: 3, panelStrong: 4, line: 5, primary: 6, accent: 7, warning: 8};
     B.Color_OhK = new A.Color("#05070d");
     B.Color_IyK = new A.Color("#ffffff");
@@ -10432,18 +17321,36 @@
     B.C_JsonCodec = new A.JsonCodec();
     B.C_OutOfMemoryError = new A.OutOfMemoryError();
     B.C_SentinelValue = new A.SentinelValue();
+    B.Set_m93Pc = new A.GeneralConstantSet([200, 201, 202, 204], type$.GeneralConstantSet_int);
+    B.Set_g2d42 = new A.GeneralConstantSet([400, 401, 402, 403, 404, 405, 408, 409, 410, 422, 429, 500, 501, 502, 503, 504], type$.GeneralConstantSet_int);
+    B.Set_3qK5q = new A.GeneralConstantSet([301, 302, 303, 304, 307, 308], type$.GeneralConstantSet_int);
+    B.Set_afD4g = new A.GeneralConstantSet([400, 401, 402, 403, 404, 405, 408, 409, 410, 422, 429], type$.GeneralConstantSet_int);
+    B.Set_CfDCg = new A.GeneralConstantSet([500, 501, 502, 503, 504], type$.GeneralConstantSet_int);
+    B.C_StatusCodeConfig = new A.StatusCodeConfig();
     B.C_TextDecorationStyle = new A.TextDecorationStyle();
+    B.C_ToastService = new A.ToastService();
+    B.C_Utf8Codec = new A.Utf8Codec();
+    B.C_Utf8Encoder = new A.Utf8Encoder();
+    B.C_WillChange = new A.WillChange();
     B.C__RootZone = new A._RootZone();
     B.C__StringStackTrace = new A._StringStackTrace();
-    B.Color_4Cx = new A.Color("#c4b5fd");
-    B.Color_9WD = new A.Color("rgba(15, 23, 42, 0.74)");
+    B.Color_1kp = new A.Color("#fde68a");
     B.Color_FUE = new A.Color("#a7f3d0");
     B.Color_FZY = new A.Color("#bae6fd");
+    B.Color_HYX0 = new A.Color("rgba(251, 191, 36, 0.08)");
+    B.Color_HYX = new A.Color("rgba(251, 191, 36, 0.32)");
+    B.Color_OOk = new A.Color("rgba(52, 211, 153, 0.1)");
+    B.Color_UWZ = new A.Color("#6ee7b7");
     B.Color_ZUt = new A.Color("#fbbf24");
-    B.Color_aMD = new A.Color("#7dd3fc");
     B.Color_fwH = new A.Color("#cbd5e1");
+    B.Color_wdu = new A.Color("rgba(52, 211, 153, 0.36)");
+    B.ComponentSize_0 = new A.ComponentSize(0, "xs");
+    B.ComponentSize_1 = new A.ComponentSize(1, "sm");
     B.ComponentSize_2 = new A.ComponentSize(2, "md");
+    B.CookieSameSite_0 = new A.CookieSameSite(0, "lax");
+    B.Cursor_Yvp = new A.Cursor("not-allowed");
     B.Cursor_pointer = new A.Cursor("pointer");
+    B.DartStyle_0hJ = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_ZUt, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Display_block_0_block = new A.Display("block", 0, "block");
     B.DartStyle_16H = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_block_0_block, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_0_12_0_12 = new A.EdgeInsets(0, 12, 0, 12);
@@ -10455,100 +17362,100 @@
     B.JustifyContent_P8D = new A.JustifyContent("space-between", 3, "between");
     B.C_FlexWrap = new A.FlexWrap();
     B.DartStyle_1vI = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 12, B.AlignItems_1_center, null, B.JustifyContent_P8D, null, null, B.C_FlexWrap, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_2I3 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, 800, null, null, B.Color_FUE, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_2ck = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, null, null, null, B.Color_ejg, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Display_grid_5_grid = new A.Display("grid", 5, "grid");
     B.DartStyle_3P2 = new A.DartStyle(null, null, null, null, 280, null, null, null, B.Display_grid_5_grid, 14, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_null_18_null_18 = new A.EdgeInsets(null, 18, null, 18);
     B.DartStyle_3Yk = new A.DartStyle(B.EdgeInsets_null_18_null_18, null, null, null, null, null, 46, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 15, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.EdgeInsets_18_18_18_18 = new A.EdgeInsets(18, 18, 18, 18);
-    B.Color_9WD0 = new A.Color("rgba(15, 23, 42, 0.58)");
+    B.DartStyle_4Jr = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 12, B.AlignItems_1_center, null, null, null, null, B.C_FlexWrap, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_0_0_0_0 = new A.EdgeInsets(0, 0, 0, 0);
+    B.DartStyle_4QH = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 22, null, null, null, B.Color_IyK, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_7Am = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_grid_5_grid, 2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_7DG = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Cursor_Yvp, null, null, null, null, null, null, null, null, null, 0.55, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.Color_H76 = new A.Color("rgba(2, 6, 23, 0.72)");
     B.Color_pd5 = new A.Color("rgba(30, 41, 59, 1)");
     B.Border_iBx = new A.Border(1, B.Color_pd5, "solid");
-    B.DartStyle_5wT = new A.DartStyle(B.EdgeInsets_18_18_18_18, null, null, null, null, null, null, null, B.Display_grid_5_grid, 12, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_9WD0, 16, B.Border_iBx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_7Am = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_grid_5_grid, 2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_80u = new A.DartStyle(null, null, null, null, null, null, 160, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_IyK, null, null, null, null, null, B.Color_H76, null, B.Border_iBx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_null_14_null_14 = new A.EdgeInsets(null, 14, null, 14);
     B.DartStyle_85X = new A.DartStyle(B.EdgeInsets_null_14_null_14, null, null, null, null, null, 40, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 14, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_8_12_8_12 = new A.EdgeInsets(8, 12, 8, 12);
     B.DartStyle_9jl = new A.DartStyle(B.EdgeInsets_8_12_8_12, null, null, null, null, null, null, null, B.Display_block_0_block, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13, null, null, null, B.Color_fwH, null, null, null, null, null, null, 8, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_9tR = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 8, B.AlignItems_1_center, null, null, null, null, B.C_FlexWrap, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.EdgeInsets_0_0_0_0 = new A.EdgeInsets(0, 0, 0, 0);
     B.SizeValue_lLc = new A.SizeValue("100%");
     B.DartStyle_AQA = new A.DartStyle(B.EdgeInsets_0_0_0_0, null, B.SizeValue_lLc, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.Color_3TO = new A.Color("#d1fae5");
-    B.DartStyle_EOR = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, 800, null, null, B.Color_3TO, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.EdgeInsets_9_13_9_13 = new A.EdgeInsets(9, 13, 9, 13);
-    B.Display_eAD = new A.Display("inline-flex", 4, "inlineFlex");
-    B.Color_OOk = new A.Color("rgba(52, 211, 153, 0.1)");
-    B.Color_wdu = new A.Color("rgba(52, 211, 153, 0.36)");
-    B.Border_yol = new A.Border(1, B.Color_wdu, "solid");
-    B.DartStyle_Hah = new A.DartStyle(B.EdgeInsets_9_13_9_13, null, null, null, null, null, null, null, B.Display_eAD, 7, B.AlignItems_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_OOk, 10, B.Border_yol, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_Dg7 = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 14, null, 1.7, null, B.Color_fwH, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_34_16_34_16 = new A.EdgeInsets(34, 16, 34, 16);
     B.SizeValue_auto = new A.SizeValue("auto");
     B.EdgeInsets_jJs = new A.EdgeInsets(null, B.SizeValue_auto, null, B.SizeValue_auto);
     B.Overflow_hidden = new A.Overflow("hidden");
-    B.Color_9WD1 = new A.Color("rgba(15, 23, 42, 0.54)");
-    B.EdgeInsets_26_26_26_26 = new A.EdgeInsets(26, 26, 26, 26);
-    B.DartStyle_uIK = new A.DartStyle(B.EdgeInsets_26_26_26_26, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_HoC = new A.DartStyle(B.EdgeInsets_18_18_18_18, B.EdgeInsets_jJs, B.SizeValue_lLc, null, null, 880, null, null, B.Display_grid_5_grid, 20, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Overflow_hidden, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_9WD1, 20, B.Border_iBx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_uIK, null, null);
-    B.DartStyle_Itj = new A.DartStyle(null, null, null, null, 0, 680, null, null, B.Display_grid_5_grid, 14, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_48_16_48_16 = new A.EdgeInsets(48, 16, 48, 16);
+    B.DartStyle_spd = new A.DartStyle(B.EdgeInsets_48_16_48_16, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_EJ2 = new A.DartStyle(B.EdgeInsets_34_16_34_16, B.EdgeInsets_jJs, B.SizeValue_lLc, null, null, 960, null, null, B.Display_grid_5_grid, 22, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Overflow_hidden, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_spd, null, null);
+    B.Color_3TO = new A.Color("#d1fae5");
+    B.DartStyle_EOR = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, 800, null, null, B.Color_3TO, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.C_Resize = new A.Resize();
+    B.DartStyle_ElM = new A.DartStyle(null, null, null, null, null, null, 96, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.C_Resize, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_14_14_14_14 = new A.EdgeInsets(14, 14, 14, 14);
     B.DartStyle_IuM = new A.DartStyle(B.EdgeInsets_14_14_14_14, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_5_10_5_10 = new A.EdgeInsets(5, 10, 5, 10);
+    B.Color_RiS = new A.Color("rgba(14, 165, 233, 0.1)");
+    B.Color_1v5 = new A.Color("rgba(125, 211, 252, 0.28)");
+    B.Border_D1N = new A.Border(1, B.Color_1v5, "solid");
+    B.DartStyle_JR3 = new A.DartStyle(B.EdgeInsets_5_10_5_10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_RiS, 999, B.Border_D1N, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_null_null_null_12 = new A.EdgeInsets(null, null, null, 12);
     B.DartStyle_KPa = new A.DartStyle(B.EdgeInsets_null_null_null_12, null, null, null, null, null, null, null, B.Display_grid_5_grid, 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_22_22_22_22 = new A.EdgeInsets(22, 22, 22, 22);
+    B.Color_9WD = new A.Color("rgba(15, 23, 42, 0.62)");
+    B.DartStyle_KeN = new A.DartStyle(B.EdgeInsets_22_22_22_22, null, null, null, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_9WD, 16, B.Border_iBx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_LAs = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 15, null, 1.75, null, B.Color_fwH, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_24_24_24_24 = new A.EdgeInsets(24, 24, 24, 24);
+    B.Color_9WD0 = new A.Color("rgba(15, 23, 42, 0.58)");
+    B.DartStyle_LTI = new A.DartStyle(B.EdgeInsets_24_24_24_24, null, null, null, null, null, null, null, B.Display_grid_5_grid, 18, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_9WD0, 16, B.Border_iBx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_Lve = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 8, B.AlignItems_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_null_12_null_12 = new A.EdgeInsets(null, 12, null, 12);
     B.DartStyle_MHW = new A.DartStyle(B.EdgeInsets_null_12_null_12, null, null, null, null, null, 34, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_6_12_6_12 = new A.EdgeInsets(6, 12, 6, 12);
     B.Color_wdu0 = new A.Color("rgba(52, 211, 153, 0.08)");
     B.DartStyle_Mb4 = new A.DartStyle(B.EdgeInsets_6_12_6_12, null, null, null, null, null, null, null, B.Display_block_0_block, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, 600, null, null, B.Color_FUE, null, null, null, null, null, B.Color_wdu0, 6, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_Mg8 = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_grid_5_grid, 14, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_OFK = new A.DartStyle(B.EdgeInsets_14_14_14_14, null, null, null, null, null, null, null, B.Display_flex_3_flex, 12, B.AlignItems_1_center, null, B.JustifyContent_P8D, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Border_iBx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_OKC = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 22, 700, null, null, B.Color_IyK, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_8_10_8_10 = new A.EdgeInsets(8, 10, 8, 10);
+    B.DartStyle_Pmf = new A.DartStyle(B.EdgeInsets_8_10_8_10, null, null, null, null, null, 40, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 14, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Position_fixed_3_fixed = new A.Position("fixed", 3, "fixed");
     B.Display_none_6_none = new A.Display("none", 6, "none");
     B.DartStyle_QHi = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_none_6_none, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_Po5 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Position_fixed_3_fixed, 0, 0, 0, 0, 100, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_QHi, null, null);
-    B.Color_dhn = new A.Color("rgba(2, 6, 23, 0.48)");
-    B.Color_wdu1 = new A.Color("rgba(52, 211, 153, 0.28)");
-    B.Border_yol0 = new A.Border(1, B.Color_wdu1, "solid");
-    B.DartStyle_Pre = new A.DartStyle(B.EdgeInsets_18_18_18_18, null, null, null, null, null, null, null, B.Display_grid_5_grid, 13, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_dhn, 16, B.Border_yol0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.Color_O59 = new A.Color("#94a3b8");
-    B.DartStyle_Pvi = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13, null, null, null, B.Color_O59, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_QnW = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 12, B.AlignItems_1_center, null, B.JustifyContent_P8D, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_0No = new A.DartStyle(null, null, 290, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_QzA = new A.DartStyle(null, null, B.SizeValue_lLc, null, 0, null, null, null, B.Display_grid_5_grid, 12, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_0No, null, null);
     B.DartStyle_RX8 = new A.DartStyle(null, null, null, null, 0, null, null, null, B.Display_grid_5_grid, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_OhK, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_null_null_3_null = new A.EdgeInsets(null, null, 3, null);
     B.Color_Om1 = new A.Color("#67e8f9");
     B.DartStyle_RXU = new A.DartStyle(null, B.EdgeInsets_null_null_3_null, null, null, null, null, null, null, B.Display_block_0_block, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 11, 900, null, null, B.Color_Om1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.EdgeInsets_9_14_9_14 = new A.EdgeInsets(9, 14, 9, 14);
-    B.Color_2nD = new A.Color("rgba(2, 6, 23, 0.34)");
-    B.Color_5DL0 = new A.Color("rgba(51, 65, 85, 0.92)");
-    B.Border_lub = new A.Border(1, B.Color_5DL0, "solid");
-    B.DartStyle_Rug = new A.DartStyle(B.EdgeInsets_9_14_9_14, null, null, null, null, null, null, null, B.Display_eAD, null, B.AlignItems_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13, 800, null, null, B.Color_fwH, null, null, null, null, null, B.Color_2nD, 10, B.Border_lub, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.EdgeInsets_34_14_34_14 = new A.EdgeInsets(34, 14, 34, 14);
-    B.EdgeInsets_48_18_48_18 = new A.EdgeInsets(48, 18, 48, 18);
-    B.DartStyle_kvQ = new A.DartStyle(B.EdgeInsets_48_18_48_18, null, null, null, null, null, null, null, null, 28, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_SsC = new A.DartStyle(B.EdgeInsets_34_14_34_14, B.EdgeInsets_jJs, B.SizeValue_lLc, null, null, 1040, null, null, B.Display_grid_5_grid, 22, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_kvQ, null, null);
-    B.DartStyle_UsC = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 17, null, 1.25, null, B.Color_IyK, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.Display_eAD = new A.Display("inline-flex", 4, "inlineFlex");
+    B.Color_O59 = new A.Color("#94a3b8");
+    B.DartStyle_SX2 = new A.DartStyle(B.EdgeInsets_8_12_8_12, null, null, null, null, null, null, null, B.Display_eAD, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_O59, null, null, null, null, null, null, 9, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_4uY = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 34, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_Su5 = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 29, null, 1.2, null, B.Color_IyK, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_4uY, null, null);
+    B.DartStyle_UN3 = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 14, null, 1.65, null, B.Color_fwH, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_VbX = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 11, 700, null, null, B.Color_O59, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_zS6 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 42, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_Vhg = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 34, 760, 1.08, null, B.Color_IyK, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_zS6, null, null);
-    B.Color_dhn0 = new A.Color("rgba(2, 6, 23, 0.88)");
-    B.DartStyle_WTJ = new A.DartStyle(B.EdgeInsets_14_14_14_14, null, null, null, null, null, null, null, B.Display_grid_5_grid, 8, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_dhn0, 12, B.Border_iBx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_16_16_16_16 = new A.EdgeInsets(16, 16, 16, 16);
     B.Color_Ur1 = new A.Color("rgba(15, 23, 42, 0.6)");
     B.DartStyle_WzA = new A.DartStyle(B.EdgeInsets_16_16_16_16, null, B.SizeValue_lLc, null, 0, null, null, null, null, 2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_Ur1, 12, B.Border_iBx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.EdgeInsets_5_10_5_10 = new A.EdgeInsets(5, 10, 5, 10);
     B.Color_Ur10 = new A.Color("rgba(15, 23, 42, 0.7)");
-    B.Color_5DL1 = new A.Color("rgba(51, 65, 85, 0.76)");
-    B.Border_lub0 = new A.Border(1, B.Color_5DL1, "solid");
-    B.DartStyle_X2k = new A.DartStyle(B.EdgeInsets_5_10_5_10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_Ur10, 9999, B.Border_lub0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.Color_5DL0 = new A.Color("rgba(51, 65, 85, 0.76)");
+    B.Border_lub = new A.Border(1, B.Color_5DL0, "solid");
+    B.DartStyle_X2k = new A.DartStyle(B.EdgeInsets_5_10_5_10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_Ur10, 9999, B.Border_lub, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_XBz = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 34, null, null, B.JustifyContent_P8D, null, null, B.C_FlexWrap, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_10_12_10_12 = new A.EdgeInsets(10, 12, 10, 12);
+    B.DartStyle_XN8 = new A.DartStyle(B.EdgeInsets_10_12_10_12, null, null, null, null, null, 46, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 15, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_7_9_7_9 = new A.EdgeInsets(7, 9, 7, 9);
+    B.DartStyle_XPR = new A.DartStyle(B.EdgeInsets_7_9_7_9, null, null, null, null, null, 36, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_XPh = new A.DartStyle(null, null, null, null, 150, null, null, null, B.Display_grid_5_grid, 9, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Color_Sdw = new A.Color("rgba(14, 165, 233, 0.18)");
     B.DartStyle_Xan = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_Sdw, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_XrS = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_block_0_block, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13, null, null, null, B.Color_jWp, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.C_ScrollBehavior = new A.ScrollBehavior();
     B.DartStyle_Y5k = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.C_ScrollBehavior, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_YC7 = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 24, B.AlignItems_1_center, null, B.JustifyContent_P8D, null, null, B.C_FlexWrap, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_YrT = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_O59, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_ZBv = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_grid_5_grid, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Color_OOk0 = new A.Color("rgba(52, 211, 153, 0.2)");
@@ -10563,44 +17470,54 @@
     B.Color_OOk1 = new A.Color("rgba(52, 211, 153, 0.4)");
     B.Border_YsG0 = new A.Border(1, B.Color_OOk1, "solid");
     B.DartStyle_bRo = new A.DartStyle(B.EdgeInsets_12_16_12_16, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_OOk, 12, B.Border_YsG0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.Color_2Oc = new A.Color("#dbeafe");
-    B.DartStyle_bv0 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, 800, null, null, B.Color_2Oc, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_cJM = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_eta = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_eAD, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_euP = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 24, null, null, null, B.Color_IyK, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_gH1 = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13, null, 1.65, null, B.Color_O59, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_12_12_12_12 = new A.EdgeInsets(12, 12, 12, 12);
+    B.Color_IfW = new A.Color("rgba(248, 113, 113, 0.08)");
+    B.Color_gLy = new A.Color("rgba(248, 113, 113, 0.35)");
+    B.Border_6W8 = new A.Border(1, B.Color_gLy, "solid");
+    B.DartStyle_hUX = new A.DartStyle(B.EdgeInsets_12_12_12_12, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_IfW, 10, B.Border_6W8, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_iae = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 8, null, null, null, null, null, B.C_FlexWrap, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_ibM = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Position_fixed_3_fixed, 0, 0, 0, 0, 100, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_18_18_18_18 = new A.EdgeInsets(18, 18, 18, 18);
+    B.DartStyle_vtm = new A.DartStyle(B.EdgeInsets_18_18_18_18, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_iim = new A.DartStyle(B.EdgeInsets_16_16_16_16, null, null, null, 0, null, null, null, B.Display_grid_5_grid, 10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_9WD0, 14, B.Border_iBx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_vtm, null, null);
     B.C_BoxSizing = new A.BoxSizing();
     B.DartStyle_jTt = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.C_BoxSizing, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_jdq = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, null, 1.6, null, B.Color_O59, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.Color_hLs = new A.Color("#fca5a5");
+    B.DartStyle_jnn = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13, null, null, null, B.Color_hLs, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_lYQ = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, null, null, null, B.Color_O59, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_6_8_6_8 = new A.EdgeInsets(6, 8, 6, 8);
+    B.DartStyle_nV3 = new A.DartStyle(B.EdgeInsets_6_8_6_8, null, null, null, null, null, 32, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_22_null_null_null = new A.EdgeInsets(22, null, null, null);
-    B.Color_OUv0 = new A.Color("rgba(30, 41, 59, 0.72)");
-    B.Border_LNh0 = new A.Border(1, B.Color_OUv0, "solid");
-    B.DartStyle_o2u = new A.DartStyle(B.EdgeInsets_22_null_null_null, B.EdgeInsets_jJs, B.SizeValue_lLc, null, null, 1152, null, null, B.Display_flex_3_flex, 12, B.AlignItems_1_center, null, B.JustifyContent_P8D, null, null, B.C_FlexWrap, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Border_LNh0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.Color_OUv = new A.Color("rgba(30, 41, 59, 0.72)");
+    B.Border_LNh = new A.Border(1, B.Color_OUv, "solid");
+    B.DartStyle_o2u = new A.DartStyle(B.EdgeInsets_22_null_null_null, B.EdgeInsets_jJs, B.SizeValue_lLc, null, null, 1152, null, null, B.Display_flex_3_flex, 12, B.AlignItems_1_center, null, B.JustifyContent_P8D, null, null, B.C_FlexWrap, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Border_LNh, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_oqj = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 10, B.AlignItems_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_p8N = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 18, 900, 1, null, B.Color_IyK, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_pAJ0 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_pAJ = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_null_8_null_8 = new A.EdgeInsets(null, 8, null, 8);
     B.DartStyle_pQ9 = new A.DartStyle(B.EdgeInsets_null_8_null_8, null, null, null, null, null, 28, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_pjl = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_grid_5_grid, 5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_20_20_20_20 = new A.EdgeInsets(20, 20, 20, 20);
+    B.Color_9WD1 = new A.Color("rgba(15, 23, 42, 0.72)");
+    B.Color_52A = new A.Color("rgba(30, 41, 59, 0.9)");
+    B.Border_FsU = new A.Border(1, B.Color_52A, "solid");
+    B.EdgeInsets_28_28_28_28 = new A.EdgeInsets(28, 28, 28, 28);
+    B.DartStyle_oDq = new A.DartStyle(B.EdgeInsets_28_28_28_28, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_pe2 = new A.DartStyle(B.EdgeInsets_20_20_20_20, null, null, null, 0, null, null, null, B.Display_grid_5_grid, 14, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_9WD1, 22, B.Border_FsU, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_oDq, null, null);
     B.DartStyle_quq = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_none_6_none, 6, B.AlignItems_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_cJM, null);
     B.DartStyle_rNU = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, 390, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13, null, 1.6, null, B.Color_O59, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.EdgeInsets_22_22_22_22 = new A.EdgeInsets(22, 22, 22, 22);
     B.Color_pco = new A.Color("rgba(2, 6, 23, 0.36)");
     B.Color_fZl0 = new A.Color("rgba(56, 189, 248, 0.16)");
     B.Border_RlB = new A.Border(1, B.Color_fZl0, "solid");
     B.DartStyle_rjK = new A.DartStyle(B.EdgeInsets_22_22_22_22, null, null, null, null, null, null, null, B.Display_grid_5_grid, 28, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_pco, null, B.Border_RlB, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Color_inherit = new A.Color("inherit");
     B.DartStyle_rqX = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_inherit, null, null, B.C_TextDecorationStyle, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.SizeValue_68m = new A.SizeValue("max-content");
-    B.DartStyle_s8L = new A.DartStyle(B.EdgeInsets_5_10_5_10, null, B.SizeValue_68m, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_wdu0, 999, B.Border_yol0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_tTc = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 16, 900, null, null, B.Color_IyK, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_18_null_null_null = new A.EdgeInsets(18, null, null, null);
     B.DartStyle_tvF = new A.DartStyle(null, B.EdgeInsets_18_null_null_null, null, null, null, null, null, null, B.Display_grid_5_grid, 6, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_uU4 = new A.DartStyle(B.EdgeInsets_6_12_6_12, null, null, null, null, null, null, null, B.Display_block_0_block, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, null, null, null, B.Color_O59, null, null, null, null, null, null, 6, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_unr = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, 660, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 16, null, 1.72, null, B.Color_fwH, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_vYX = new A.DartStyle(null, B.EdgeInsets_0_0_0_0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 14, null, null, null, B.Color_IyK, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Color_4hf = new A.Color("rgba(248, 113, 113, 0.1)");
     B.Color_4hf0 = new A.Color("rgba(248, 113, 113, 0.4)");
@@ -10609,18 +17526,35 @@
     B.DartStyle_w3w = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 12, B.AlignItems_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_xWV = new A.DartStyle(null, null, null, null, 0, null, null, null, B.Display_flex_3_flex, 10, B.AlignItems_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_yfD = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 10, null, null, null, null, null, B.C_FlexWrap, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.Color_UWZ = new A.Color("#6ee7b7");
     B.DartStyle_yw1 = new A.DartStyle(null, null, 8, 8, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_UWZ, 9999, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_zcd = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_IyK, null, null, null, null, null, B.Color_H76, null, B.Border_iBx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.Duration_0 = new A.Duration(0);
+    B.Duration_180000 = new A.Duration(180000);
+    B.Duration_25000000 = new A.Duration(25000000);
+    B.Duration_3000000 = new A.Duration(3000000);
+    B.Duration_30000000 = new A.Duration(30000000);
+    B.Duration_4000000 = new A.Duration(4000000);
+    B.Duration_5000000 = new A.Duration(5000000);
+    B.Duration_650000 = new A.Duration(650000);
     B.EdgeInsets_11_12_11_12 = new A.EdgeInsets(11, 12, 11, 12);
     B.EdgeInsets_14_null_14_null = new A.EdgeInsets(14, null, 14, null);
-    B.EdgeInsets_24_24_24_24 = new A.EdgeInsets(24, 24, 24, 24);
-    B.EdgeInsets_6_8_6_8 = new A.EdgeInsets(6, 8, 6, 8);
+    B.EdgeInsets_6_10_6_10 = new A.EdgeInsets(6, 10, 6, 10);
     B.EdgeInsets_7_10_7_10 = new A.EdgeInsets(7, 10, 7, 10);
-    B.EdgeInsets_8_10_8_10 = new A.EdgeInsets(8, 10, 8, 10);
+    B.FlintErrorKind_0 = new A.FlintErrorKind(0, "unknown");
+    B.FlintErrorKind_1 = new A.FlintErrorKind(1, "timeout");
+    B.FlintErrorKind_2 = new A.FlintErrorKind(2, "cancelled");
+    B.FlintErrorKind_3 = new A.FlintErrorKind(3, "network");
+    B.FlintErrorKind_4 = new A.FlintErrorKind(4, "http");
+    B.FlintErrorKind_5 = new A.FlintErrorKind(5, "parse");
+    B.FlintResponseType_0 = new A.FlintResponseType(0, "json");
+    B.FlintResponseType_1 = new A.FlintResponseType(1, "text");
+    B.FlintResponseType_3 = new A.FlintResponseType(3, "unknown");
+    B.FlintText_ED0 = new A.FlintText(" *");
+    B.Map_empty3 = new A.ConstantStringMap(B.Object_empty, [], A.findType("ConstantStringMap<String,List<String>>"));
+    B.FormErrors_Map_empty = new A.FormErrors(B.Map_empty3);
     B.GradientPosition_NyX = new A.GradientPosition("88% 8%");
     B.GradientPosition_Orq = new A.GradientPosition("18% 0%");
-    B.GridTemplateColumns_Boe = new A.GridTemplateColumns("1fr");
-    B.GridTrack_2Nt = new A.GridTrack("1fr");
+    B.InputVariant_0 = new A.InputVariant(0, "outline");
     B.JsonDecoder_null = new A.JsonDecoder(null);
     B.JsonEncoder_null = new A.JsonEncoder(null);
     B.JustifyContent_KKE = new A.JustifyContent("flex-start", 0, "start");
@@ -10700,8 +17634,11 @@
     B.List_authentication_security = makeConstList(["authentication", "security"], type$.JSArray_String);
     B.List_empty0 = makeConstList([], A.findType("JSArray<~(FlintPageContext)>"));
     B.List_empty3 = makeConstList([], type$.JSArray_FlintNode);
+    B.List_empty6 = makeConstList([], type$.JSArray_Map_String_dynamic);
+    B.List_empty4 = makeConstList([], type$.JSArray_String);
     B.List_empty1 = makeConstList([], type$.JSArray_StyleKeyframes);
     B.List_empty = makeConstList([], A.findType("JSArray<StyleSheet>"));
+    B.List_empty5 = makeConstList([], type$.JSArray_dynamic);
     B.List_empty2 = makeConstList([], A.findType("JSArray<Object?>"));
     B.GradientStop_Hp70 = new A.GradientStop(B.Color_fZl0, null);
     B.GradientStop_Color_transparent_32 = new A.GradientStop(B.Color_transparent, 32);
@@ -10709,24 +17646,30 @@
     B.List_middleware_validation = makeConstList(["middleware", "validation"], type$.JSArray_String);
     B.Color_fZl2 = new A.Color("rgba(56, 189, 248, 0.24)");
     B.GradientStop_Hp71 = new A.GradientStop(B.Color_fZl2, null);
-    B.Color_wdu2 = new A.Color("rgba(52, 211, 153, 0.18)");
-    B.GradientStop_wEz0 = new A.GradientStop(B.Color_wdu2, null);
+    B.Color_wdu1 = new A.Color("rgba(52, 211, 153, 0.18)");
+    B.GradientStop_wEz0 = new A.GradientStop(B.Color_wdu1, null);
     B.List_nIQ = makeConstList([B.GradientStop_Hp71, B.GradientStop_wEz0], type$.JSArray_Object);
     B.List_r3C = makeConstList(["routing", "route-params", "query-params", "request-response", "request-body", "file-uploads", "route-groups"], type$.JSArray_String);
-    B.Color_wdu3 = new A.Color("rgba(52, 211, 153, 0.12)");
-    B.GradientStop_wEz1 = new A.GradientStop(B.Color_wdu3, null);
+    B.Color_wdu2 = new A.Color("rgba(52, 211, 153, 0.12)");
+    B.GradientStop_wEz1 = new A.GradientStop(B.Color_wdu2, null);
     B.GradientStop_Color_transparent_28 = new A.GradientStop(B.Color_transparent, 28);
     B.List_zMT = makeConstList([B.GradientStop_wEz1, B.GradientStop_Color_transparent_28], type$.JSArray_Object);
+    B.Object_wWO = {margin: 0, "font-size": 1, color: 2};
+    B.Map_7LgLw = new A.ConstantStringMap(B.Object_wWO, [0, "13px", "#b42318"], type$.ConstantStringMap_String_Object);
+    B.Object_display_0_gap_1 = {display: 0, gap: 1};
+    B.Map_CKAM1 = new A.ConstantStringMap(B.Object_display_0_gap_1, ["grid", "6px"], type$.ConstantStringMap_String_String);
+    B.Map_CKyJ0 = new A.ConstantStringMap(B.Object_display_0_gap_1, ["grid", "16px"], type$.ConstantStringMap_of_String_and_nullable_Object);
     B.Object_Tjt = {display: 0, "flex-direction": 1};
     B.Map_IwAaL = new A.ConstantStringMap(B.Object_Tjt, ["flex", "row"], type$.ConstantStringMap_of_String_and_nullable_Object);
+    B.Object_type_0 = {type: 0};
+    B.Map_eXYEy = new A.ConstantStringMap(B.Object_type_0, ["submit"], type$.ConstantStringMap_of_String_and_nullable_Object);
     B.Map_empty0 = new A.ConstantStringMap(B.Object_empty, [], A.findType("ConstantStringMap<String,DartStyle>"));
+    B.Map_empty2 = new A.ConstantStringMap(B.Object_empty, [], type$.ConstantStringMap_String_String);
     B.Map_empty = new A.ConstantStringMap(B.Object_empty, [], A.findType("ConstantStringMap<String,@>"));
-    B.Object_style_0 = {style: 0};
-    B.Object_M2q = {"min-width": 0, "max-width": 1, "overflow-wrap": 2};
-    B.Map_LFj6s = new A.ConstantStringMap(B.Object_M2q, ["0", "100%", "break-word"], type$.ConstantStringMap_String_String);
-    B.Map_rqkln = new A.ConstantStringMap(B.Object_style_0, [B.Map_LFj6s], type$.ConstantStringMap_of_String_and_nullable_Object);
     B.Object_D9t = {position: 0, inset: 1, display: 2, width: 3, height: 4, padding: 5, margin: 6, border: 7, "border-radius": 8, background: 9, appearance: 10, cursor: 11};
     B.Map_sloGg = new A.ConstantStringMap(B.Object_D9t, ["absolute", "0", "block", "100%", "100%", "0", "0", "0", "0", "rgba(2, 6, 23, 0.78)", "none", "pointer"], type$.ConstantStringMap_String_String);
+    B.Object_UUe = {"font-size": 0, "font-weight": 1, color: 2};
+    B.Map_szNRN = new A.ConstantStringMap(B.Object_UUe, ["14px", 600, "#344054"], type$.ConstantStringMap_String_Object);
     B.Object_PRn = {"aria-label": 0};
     B.Map_yRm20 = new A.ConstantStringMap(B.Object_PRn, ["Close API navigation"], type$.ConstantStringMap_of_String_and_nullable_Object);
     B.Map_yRqVt = new A.ConstantStringMap(B.Object_PRn, ["Close guide navigation"], type$.ConstantStringMap_of_String_and_nullable_Object);
@@ -10752,10 +17695,13 @@
     B.Set_a02Zq = new A.ConstantStringSet(B.Object_tvd, 7, type$.ConstantStringSet_String);
     B.Object_edJ = {svg: 0, path: 1, line: 2, polyline: 3, polygon: 4, circle: 5, rect: 6, ellipse: 7, title: 8, g: 9};
     B.Set_ammpx = new A.ConstantStringSet(B.Object_edJ, 10, type$.ConstantStringSet_String);
+    B.ToastPlacement_0 = new A.ToastPlacement(0, "topRight");
     B.Tone_0 = new A.Tone(0, "neutral");
     B.Tone_1 = new A.Tone(1, "primary");
     B.Tone_3 = new A.Tone(3, "warning");
+    B.Tone_4 = new A.Tone(4, "danger");
     B.TransitionTiming_ease = new A.TransitionTiming("ease");
+    B.TransitionTiming_linear = new A.TransitionTiming("linear");
     B.Type_ByteBuffer_rqD = A.typeLiteral("ByteBuffer");
     B.Type_ByteData_9dB = A.typeLiteral("ByteData");
     B.Type_Float32List_9Kz = A.typeLiteral("Float32List");
@@ -10768,11 +17714,18 @@
     B.Type_Uint32List_kmP = A.typeLiteral("Uint32List");
     B.Type_Uint8ClampedList_04U = A.typeLiteral("Uint8ClampedList");
     B.Type_Uint8List_8Eb = A.typeLiteral("Uint8List");
+    B.Utf8Decoder_false = new A.Utf8Decoder(false);
+    B.WebSocketConnectionState_0 = new A.WebSocketConnectionState(0, "disconnected");
+    B.WebSocketConnectionState_1 = new A.WebSocketConnectionState(1, "connecting");
+    B.WebSocketConnectionState_2 = new A.WebSocketConnectionState(2, "connected");
+    B.WebSocketConnectionState_3 = new A.WebSocketConnectionState(3, "reconnecting");
   })();
   (function staticFields() {
     $._JS_INTEROP_INTERCEPTOR_TAG = null;
     $._toStringVisiting = A._setArrayType([], type$.JSArray_Object);
     $.Primitives__identityHashCodeProperty = null;
+    $.Primitives_timerFrequency = 0;
+    $.Primitives_timerTicks = A._js_helper_Primitives_dateNow$closure();
     $.BoundClosure__receiverFieldNameCache = null;
     $.BoundClosure__interceptorFieldNameCache = null;
     $.getTagFunction = null;
@@ -10839,32 +17792,36 @@
       }
     }()));
     _lazyFinal($, "_AsyncRun__scheduleImmediateClosure", "$get$_AsyncRun__scheduleImmediateClosure", () => A._AsyncRun__initializeScheduleImmediate());
+    _lazyFinal($, "_Utf8Decoder__reusableBuffer", "$get$_Utf8Decoder__reusableBuffer", () => A.NativeUint8List_NativeUint8List(4096));
+    _lazyFinal($, "_Utf8Decoder__decoder", "$get$_Utf8Decoder__decoder", () => new A._Utf8Decoder__decoder_closure().call$0());
+    _lazyFinal($, "_Utf8Decoder__decoderNonfatal", "$get$_Utf8Decoder__decoderNonfatal", () => new A._Utf8Decoder__decoderNonfatal_closure().call$0());
+    _lazyFinal($, "_Base64Decoder__inverseAlphabet", "$get$_Base64Decoder__inverseAlphabet", () => new Int8Array(A._ensureNativeList(A._setArrayType([-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -1, -2, -2, -2, -2, -2, 62, -2, 62, -2, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -2, -2, -2, -1, -2, -2, -2, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -2, -2, -2, -2, 63, -2, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -2, -2, -2, -2, -2], type$.JSArray_int))));
+    _lazyFinal($, "_Uri__needsNoEncoding", "$get$_Uri__needsNoEncoding", () => A.RegExp_RegExp("^[\\-\\.0-9A-Z_a-z~]*$", true, false));
+    _lazyFinal($, "_Uri__useURLSearchParams", "$get$_Uri__useURLSearchParams", () => typeof URLSearchParams == "function");
     _lazyFinal($, "_hashSeed", "$get$_hashSeed", () => A.objectHashCode(B.Type_Object_A4p));
+    _lazyFinal($, "Stopwatch__frequency", "$get$Stopwatch__frequency", () => {
+      A.Primitives_initTicker();
+      return $.Primitives_timerFrequency;
+    });
     _lazyFinal($, "docsRootDesign", "$get$docsRootDesign", () => {
       var _null = null;
       return A.RootDesign$(B.DartStyle_jTt, A.DartStyle$(_null, _null, _null, _null, _null, A.Background_Background$layers(A._setArrayType([A.Gradient_Gradient$radialCircle(B.GradientPosition_Orq, B.List_k4Z), A.Gradient_Gradient$radialCircle(B.GradientPosition_NyX, B.List_zMT), A.ThemeToken_color("bg", _null)], type$.JSArray_Object)), _null, _null, _null, _null, _null, _null, _null, _null, A.ThemeToken_color("text", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, A.TokenRef$("font.sans", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), B.DartStyle_Y5k, B.List_empty1, B.DartStyle_rqX, "flint-docs-root", B.C_FlintTheme);
     });
-    _lazyFinal($, "Icons_activity", "$get$Icons_activity", () => A.IconData$("activity", A._setArrayType([A._polyline("22 12 18 12 15 21 9 3 6 12 2 12")], type$.JSArray_IconShape)));
-    _lazyFinal($, "Icons_arrowRight", "$get$Icons_arrowRight", () => A.IconData$("arrowRight", A._setArrayType([A._path("M5 12h14"), A._polyline("12 5 19 12 12 19")], type$.JSArray_IconShape)));
-    _lazyFinal($, "Icons_book", "$get$Icons_book", () => A.IconData$("book", A._setArrayType([A._path("M4 19.5A2.5 2.5 0 0 1 6.5 17H20"), A._path("M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z")], type$.JSArray_IconShape)));
-    _lazyFinal($, "Icons_box", "$get$Icons_box", () => A.IconData$("box", A._setArrayType([A._path("M21 8 12 3 3 8l9 5 9-5z"), A._path("M3 8v8l9 5 9-5V8"), A._path("M12 13v8")], type$.JSArray_IconShape)));
-    _lazyFinal($, "Icons_chevronDown", "$get$Icons_chevronDown", () => A.IconData$("chevronDown", A._setArrayType([A._polyline("6 9 12 15 18 9")], type$.JSArray_IconShape)));
-    _lazyFinal($, "Icons_clipboard", "$get$Icons_clipboard", () => {
-      var t1 = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.nullable_Object);
-      t1.$indexSet(0, "x", 5);
-      t1.$indexSet(0, "y", 4);
-      t1.$indexSet(0, "width", 14);
-      t1.$indexSet(0, "height", 18);
-      t1.$indexSet(0, "rx", 2);
-      return A.IconData$("clipboard", A._setArrayType([A.IconShape$("rect", t1), A._path("M9 4a3 3 0 0 1 6 0"), A._path("M9 4h6")], type$.JSArray_IconShape));
+    _lazyFinal($, "clientRouter", "$get$clientRouter", () => {
+      var t1 = A._browserOrigin();
+      return new A.ClientRouter(new A.FlintClient(t1, B.Map_empty2, B.Map_empty, B.Duration_30000000, null, false, null, false, B.C_StatusCodeConfig));
     });
-    _lazyFinal($, "Icons_code", "$get$Icons_code", () => A.IconData$("code", A._setArrayType([A._polyline("8 9 4 12 8 15"), A._polyline("16 9 20 12 16 15"), A._path("M14 5l-4 14")], type$.JSArray_IconShape)));
+    _lazyFinal($, "Icons_book", "$get$Icons_book", () => A.IconData$("book", A._setArrayType([A._path("M4 19.5A2.5 2.5 0 0 1 6.5 17H20"), A._path("M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z")], type$.JSArray_IconShape)));
+    _lazyFinal($, "Icons_chevronDown", "$get$Icons_chevronDown", () => A.IconData$("chevronDown", A._setArrayType([A.IconShape$("polyline", A.LinkedHashMap_LinkedHashMap$_literal(["points", "6 9 12 15 18 9"], type$.String, type$.nullable_Object))], type$.JSArray_IconShape)));
     _lazyFinal($, "Icons_document", "$get$Icons_document", () => A.IconData$("document", A._setArrayType([A._path("M6 2h8l4 4v16H6V2z"), A._path("M14 2v5h5"), A._path("M9 13h6"), A._path("M9 17h6")], type$.JSArray_IconShape)));
-    _lazyFinal($, "Icons_sparkles", "$get$Icons_sparkles", () => A.IconData$("sparkles", A._setArrayType([A._path("M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z"), A._path("M5 14l1 2.2L8 17l-2 .8L5 20l-1-2.2L2 17l2-.8L5 14z"), A._path("M19 13l1 2.2 2 .8-2 .8L19 19l-1-2.2-2-.8 2-.8L19 13z")], type$.JSArray_IconShape)));
+    _lazyFinal($, "Icons_logIn", "$get$Icons_logIn", () => A.IconData$("logIn", A._setArrayType([A._path("M15 3h4v18h-4"), A._path("M10 17l5-5-5-5"), A._path("M15 12H3")], type$.JSArray_IconShape)));
+    _lazyFinal($, "Icons_plus", "$get$Icons_plus", () => A.IconData$("plus", A._setArrayType([A._line(12, 5, 12, 19), A._line(5, 12, 19, 12)], type$.JSArray_IconShape)));
+    _lazyFinal($, "Icons_send", "$get$Icons_send", () => A.IconData$("send", A._setArrayType([A._path("M22 2 11 13"), A._path("M22 2 15 22l-4-9-9-4 20-7z")], type$.JSArray_IconShape)));
+    _lazyFinal($, "Icons_trash", "$get$Icons_trash", () => A.IconData$("trash", A._setArrayType([A._path("M3 6h18"), A._path("M8 6V4h8v2"), A._path("M6 6l1 16h10l1-16"), A._line(10, 11, 10, 18), A._line(14, 11, 14, 18)], type$.JSArray_IconShape)));
     _lazyFinal($, "Icons_x", "$get$Icons_x", () => A.IconData$("x", A._setArrayType([A._line(18, 6, 6, 18), A._line(6, 6, 18, 18)], type$.JSArray_IconShape)));
     _lazyFinal($, "buttonBaseStyle", "$get$buttonBaseStyle", () => {
       var _null = null;
-      return A.DartStyle$(_null, B.AlignItems_1_center, _null, _null, _null, _null, A.Border$all(B.Color_transparent), _null, _null, _null, _null, _null, _null, _null, _null, B.Cursor_pointer, _null, B.Display_eAD, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 600, 8, _null, _null, _null, _null, _null, B.JustifyContent_center_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 8, _null, _null, _null, _null, _null, _null, _null, B.C_TextDecorationStyle, _null, _null, _null, A.StyleTransition_StyleTransition$combine(A._setArrayType([A.StyleTransition_StyleTransition$property("color", 120, B.TransitionTiming_ease), A.StyleTransition_StyleTransition$property("background", 120, B.TransitionTiming_ease), A.StyleTransition_StyleTransition$property("border-color", 120, B.TransitionTiming_ease)], A.findType("JSArray<StyleTransition>"))), _null, _null, _null, _null);
+      return A.DartStyle$(_null, B.AlignItems_1_center, _null, _null, _null, _null, A.Border$all(B.Color_transparent), _null, _null, _null, _null, _null, _null, _null, _null, B.Cursor_pointer, _null, B.Display_eAD, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 600, 8, _null, _null, _null, _null, _null, B.JustifyContent_center_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 8, _null, _null, _null, _null, _null, _null, _null, B.C_TextDecorationStyle, _null, _null, _null, A.StyleTransition_StyleTransition$colors(120), _null, _null, _null, _null);
     });
   })();
   (function nativeSupport() {
@@ -10921,6 +17878,12 @@
   Function.prototype.call$2$1 = function(a) {
     return this(a);
   };
+  Function.prototype.call$2$0 = function() {
+    return this();
+  };
+  Function.prototype.call$1$0 = function() {
+    return this();
+  };
   convertAllToFastObject(holders);
   convertToFastObject($);
   (function(callback) {
@@ -10953,4 +17916,4 @@
   });
 })();
 
-//# sourceMappingURL=ui_docs.4f64860f8a6f.dart.js.map
+//# sourceMappingURL=question_detail.11603bfbd964.dart.js.map

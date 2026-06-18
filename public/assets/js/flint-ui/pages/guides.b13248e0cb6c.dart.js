@@ -11972,7 +11972,7 @@
       t8 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_aMR, B.Map_empty1, B.Map_empty1);
       t6 = A.normalizeChildren(_null, [t6]);
       t4 = A.Text_span("Copyright 2024 Flint Dart. Maintained by Eulogia Technologies.", B.DartStyle_aye);
-      t5 = A.Text_span("v 1.1.12", B.DartStyle_VbX);
+      t5 = A.Text_span("v 1.1.13", B.DartStyle_VbX);
       t7 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_X2k, B.Map_empty1, B.Map_empty1);
       t5 = A.normalizeChildren(_null, [t5]);
       t3 = A.Text_span("MIT License", B.DartStyle_VbX);

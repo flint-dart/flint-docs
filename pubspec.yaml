@@ -7,6 +7,6 @@ environment:
   sdk: ^3.0.0
 
 dependencies:
-  flint_dart: ^1.1.12
+  flint_dart: ^1.1.13
   flint_ui: ^0.1.10
 
