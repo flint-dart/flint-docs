@@ -206,6 +206,7 @@ const _sidebarItems = [
   ('helpers', 'Helpers & Utils', null),
   ('architecture', 'Controllers & Services', null),
   ('mail', 'Mail', null),
+  ('ai', 'AI Runtime', null),
   ('isolate', 'Isolate', null),
   ('swagger-docs', 'Swagger Docs', null),
   ('database', 'Database', null),

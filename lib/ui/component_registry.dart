@@ -5,6 +5,7 @@ import 'pages/whats_new_page.dart';
 import 'pages/changelog_page.dart';
 import 'pages/content_page.dart';
 import 'pages/client_page.dart';
+import 'pages/ai_page.dart';
 import 'pages/ui_docs_page.dart';
 import 'pages/examples_page.dart';
 import 'pages/guides_page.dart';
@@ -19,11 +20,12 @@ import 'pages/showcase_detail_page.dart';
 import 'pages/showcase_page.dart';
 import 'pages/submit_build_page.dart';
 
-final componentRegistry = FlintComponentRegistry({
+final componentRegistry = PageRegistry({
   'Home': (props) => HomePage(props),
   'WhatsNew': (props) => WhatsNewPage(props),
   'Changelog': (props) => ChangelogPage(props),
   'Client': (props) => ClientPage(props),
+  'Ai': (props) => AiPage(props),
   'UiDocs': (props) => UiDocsPage(props),
   'Examples': (props) => ExamplesPage(props),
   'Guides': (props) => GuidesPage(props),

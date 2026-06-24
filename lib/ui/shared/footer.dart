@@ -59,6 +59,7 @@ class Footer extends Component {
                             ('/api', 'API'),
                             ('/examples', 'Examples'),
                             ('/client', 'Client'),
+                            ('/ai', 'AI'),
                             ('/dart', 'Dart lessons'),
                           ],
                         ),

@@ -35,6 +35,7 @@ class DocsSupport {
     'helpers',
     'architecture',
     'mail',
+    'ai',
     'isolate',
     'swagger-docs',
     'database',
@@ -1206,6 +1207,12 @@ Sitemap: $sitemapUrl
         'lastmod': nowIso,
       },
       {
+        'loc': absoluteUrl('/ai'),
+        'changefreq': 'weekly',
+        'priority': '0.9',
+        'lastmod': nowIso,
+      },
+      {
         'loc': absoluteUrl('/dart'),
         'changefreq': 'weekly',
         'priority': '0.9',
@@ -1332,6 +1339,7 @@ Sitemap: $sitemapUrl
     final guides = absoluteUrl('/guides');
     final ui = absoluteUrl('/ui');
     final client = absoluteUrl('/client');
+    final ai = absoluteUrl('/ai');
     final dart = absoluteUrl('/dart');
     final api = absoluteUrl('/api');
     final blog = absoluteUrl('/blog');
@@ -1359,6 +1367,7 @@ Sitemap: $sitemapUrl
       '- Guides: $guides',
       '- Flint UI Guide: $ui',
       '- FlintClient Guide: $client',
+      '- Flint AI Guide: $ai',
       '- Dart Lessons: $dart',
       '- API Reference: $api',
       '- Blog: $blog',

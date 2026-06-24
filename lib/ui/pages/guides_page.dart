@@ -28,6 +28,7 @@ const _sectionPartial = {
   'helpers': 'helpers',
   'architecture': 'architecture',
   'mail': 'mail',
+  'ai': 'ai',
   'isolate': 'isolate',
   'swagger-docs': 'swagger-docs',
   'database': 'database',

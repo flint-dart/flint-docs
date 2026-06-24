@@ -13,6 +13,7 @@ class DocsRoutes extends RouteGroup {
     docs.get('/guides/:topic', (c) => c.guidesTopic());
     docs.get('/ui', (c) => c.ui());
     docs.get('/client', (c) => c.client());
+    docs.get('/ai', (c) => c.ai());
     docs.get('/dart', (c) => c.dartLessons());
     docs.get('/api', (c) => c.apiIndex());
     docs.get('/api/:topic', (c) => c.apiTopic());

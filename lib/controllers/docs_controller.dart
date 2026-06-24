@@ -48,6 +48,27 @@ class DocsController extends Controller {
     );
   }
 
+  Future<Response> ai() async {
+    return res.page(
+      'Ai',
+      title: 'Flint AI Guide - Agents, Tools, and Workflows',
+      meta: docs.pageMeta(
+        title: 'Flint AI Guide - Agents, Tools, and Workflows',
+        description:
+            'Build AI agents in Flint Dart with providers, tools, workflows, streaming chat, memory, persistence, and production tool policies.',
+        canonicalPath: '/ai',
+      ),
+      props: {
+        ...await docs.baseData(req),
+        'contentHtml':
+            await docs.readMarkdownContent('lib/content/pages/ai.md'),
+        'title': 'Flint AI Guide - Agents, Tools, and Workflows',
+        'description':
+            'Official Flint AI guide: providers, agents, tools, workflows, streaming chat, memory, persistence, and production safety.',
+      },
+    );
+  }
+
   Future<Response> ui() async {
     return res.page(
       'UiDocs',
