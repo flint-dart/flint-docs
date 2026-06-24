@@ -127,7 +127,7 @@ class Footer extends Component {
                         gap: 8,
                       ),
                       children: [
-                        _pill('v 1.1.13'),
+                        _pill('v 1.1.14'),
                         _pill('MIT License'),
                         _pill('Built with Dart'),
                       ],

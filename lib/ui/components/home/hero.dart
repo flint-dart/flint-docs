@@ -115,7 +115,7 @@ class HomeHero extends FlintComponent {
             gap: 8,
           ),
           children: [
-            _badge(Icons.sparkles, 'Flint Dart v 1.1.13', _mint),
+            _badge(Icons.sparkles, 'Flint Dart v 1.1.14', _mint),
             _badge(Icons.zap, 'Hot reload ready', _sky),
             _badge(Icons.shield, 'Typed by default', _violet),
           ],
