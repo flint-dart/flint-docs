@@ -177,31 +177,46 @@ final users = await query.get();
 
 ### ORM Relations
 
-Relations are how models "connect" to each other (like users and posts).
-
-Think of it like friends: a **User** can have many **Posts**, and a **Post** belongs to one **User**. You declare that in the model's `relations` getter.
+Relations are how models connect to each other. A `User` can have many `Post` records, and each `Post` belongs to one `User`. Declare those links once in the model's `relations` getter, then use the relation name everywhere else.
 
 ```dart
 import 'package:flint_dart/model.dart';
 import 'package:flint_dart/relations.dart';
 
 class User extends Model {
+  User() : super(() => User());
+
   @override
-  Map get relations => {
-        'posts': Relations.hasMany('posts', () => Post()),
+  Map<String, RelationDefinition> get relations => {
+        'posts': Relations.hasMany<Post>(
+          'posts',
+          () => Post(),
+          foreignKey: 'user_id',
+        ),
       };
 }
 
-class Post extends Model
+class Post extends Model {
+  Post() : super(() => Post());
 
-{ @override Map get relations => { 'author': Relations.belongsTo('author', () => User()), }; } ``` The keys (`'posts'`, `'author'`) are the names you will use when loading relations.
+  @override
+  Map<String, RelationDefinition> get relations => {
+        'author': Relations.belongsTo<User>(
+          'author',
+          () => User(),
+          foreignKey: 'user_id',
+        ),
+      };
+}
+```
+
+The keys, such as `posts` and `author`, are the names you use when loading, counting, or querying relations.
 
 ```dart
 // Load relations when querying
 final posts = await Post()
-  .withRelation('author')
-  .withRelation('comments')
-  .get();
+    .withRelation('author')
+    .get();
 
 // Load relations on a single model
 final user = await User().find(1);
@@ -209,3 +224,126 @@ if (user != null) {
   await user.load('posts');
 }
 ```
+
+Use `withRelations` when a page needs several relations at once:
+
+```dart
+final user = await User()
+    .withRelations(['posts', 'activities', 'invoices'])
+    .find(userId);
+```
+
+Use `loadMany` when you already have the model:
+
+```dart
+final invoice = await Invoice().find(invoiceId);
+if (invoice != null) {
+  await invoice.loadMany(['user', 'items']);
+}
+```
+
+#### Relation Queries
+
+Use `relationQuery` when you want to start from the relation metadata but still build a custom query.
+
+```dart
+final latestPosts = await user
+    .relationQuery(
+      'posts',
+      constrain: (query) => query
+          .where('status', '=', 'published')
+          .orderBy('created_at', desc: true)
+          .limit(5),
+    )
+    .get();
+```
+
+This keeps the foreign key and relation rules in the model. The page or service only describes the extra filter it needs.
+
+#### Relation Counts
+
+Use `countRelation` for one count:
+
+```dart
+final postCount = await user.countRelation('posts');
+```
+
+Use `hasRelated` when you only need a yes/no answer:
+
+```dart
+final hasPublishedPosts = await user.hasRelated(
+  'posts',
+  constrain: (query) => query.where('status', '=', 'published'),
+);
+```
+
+Use `relationCounts` when you need several counts from the same relation. This is useful for sidebars, dashboards, and admin/customer summaries.
+
+```dart
+final counts = await user.relationCounts('hostings', {
+  'total': null,
+  'shared': (query) => query.where('hostingType', '=', 'shared'),
+  'vps': (query) => query.where('hostingType', '=', 'vps'),
+  'vds': (query) => query.where('hostingType', '=', 'vds'),
+});
+
+final hasVps = (counts['vps'] ?? 0) > 0;
+```
+
+Use `loadRelationCount` when the count should live on the model payload:
+
+```dart
+await user.loadRelationCount('posts', as: 'postCount');
+
+return user.toMap(); // includes postCount
+```
+
+#### Relation-First Detail Pages
+
+For detail pages, prefer a small service or presenter that loads relations and shapes the payload. This keeps controllers thin and prevents the API response and Flint UI page from drifting apart.
+
+```dart
+class AdminInvoicePresenter {
+  const AdminInvoicePresenter();
+
+  Future<Map<String, dynamic>> detail(Invoice invoice) async {
+    await invoice.load('user');
+    await invoice.load('items');
+
+    final user = invoice.getRelation<User>('user');
+    final items = (invoice.getRelation<List>('items') ?? const [])
+        .whereType<InvoiceItem>()
+        .toList();
+
+    for (final item in items) {
+      await item.loadMany(['product', 'hosting', 'domain', 'requestedTld']);
+    }
+
+    return {
+      ...invoice.toMap(),
+      'user': user?.toMap(),
+      'items': [
+        for (final item in items)
+          {
+            ...item.toMap(),
+            'product': item.getRelation<Product>('product')?.toMap(),
+            'hosting': item.getRelation<Hosting>('hosting')?.toMap(),
+            'domain': item.getRelation<Domain>('domain')?.toMap(),
+          },
+      ],
+    };
+  }
+}
+```
+
+Then both API controllers and Flint page controllers can use the same payload:
+
+```dart
+final invoice = await Invoice().find(id);
+if (invoice == null) return res.status(404).json({'error': 'Not found'});
+
+final data = await const AdminInvoicePresenter().detail(invoice);
+return res.json({'success': true, 'data': data});
+```
+
+The rule of thumb is simple: put relation knowledge on the model, put detail payload composition in a service, and keep controllers focused on authentication, routing, and responses.
