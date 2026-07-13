@@ -8,9 +8,11 @@ void add(String method, String path, Handler handler, {List<Middleware> middlewa
 
 Low-level route registration used by the framework and builders.
 
-RouteBuilder get/post/put/delete/patch(...)
+RouteBuilder get/post/put/delete/patch/query(...)
 
 Use the app-level helpers to register routes and attach middleware.
+
+`query(...)` registers safe, idempotent HTTP QUERY routes with request content support.
 
 Path params: `/users/:id` or `/users/:id(\d+)`
 

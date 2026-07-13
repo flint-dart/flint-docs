@@ -1,5 +1,7 @@
 import 'package:flint_ui/flint_ui.dart';
 
+import '../../support/product_versions.dart';
+
 class Footer extends Component {
   @override
   View build() {
@@ -127,7 +129,7 @@ class Footer extends Component {
                         gap: 8,
                       ),
                       children: [
-                        _pill('v 1.1.14'),
+                        _pill(ProductVersions.flintDartVersionLabel),
                         _pill('MIT License'),
                         _pill('Built with Dart'),
                       ],

@@ -8,13 +8,15 @@ Flint({String rootPath = "lib", String? viewPath, bool autoConnectDb = true, boo
 
 Create a new app instance with optional defaults for middleware, DB, mail, and Swagger docs.
 
-RouteBuilder get/post/put/delete/patch(String path, Object handler)
+RouteBuilder get/post/put/delete/patch/query(String path, Object handler)
 
 Register HTTP routes using Context handlers (or legacy handlers) with optional route-level middleware via `RouteBuilder.useMiddleware`.
 
+`query(...)` registers an HTTP QUERY route. QUERY is safe and idempotent like GET, but can carry request content for complex search or filter expressions.
+
 RouteBuilder route(String method, String path, Handler handler)
 
-Register a custom HTTP method (e.g. `OPTIONS`, `HEAD`).
+Register a custom HTTP method (e.g. `OPTIONS`, `HEAD`, `QUERY`).
 
 void use(Middleware middleware)
 

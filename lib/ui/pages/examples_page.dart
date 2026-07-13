@@ -1,5 +1,6 @@
 import 'package:flint_ui/flint_ui.dart';
 
+import '../../support/product_versions.dart';
 import '../shared/page_shell.dart';
 
 const _htmlContent = r'''
@@ -21,7 +22,7 @@ const _htmlContent = r'''
   <div class="examples-hero" style="padding:40px;border-radius:24px;border:1px solid rgba(30,41,59,0.7);background:rgba(15,23,42,0.7);">
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:20px;">
       <span style="padding:4px 12px;border-radius:9999px;border:1px solid rgba(52,211,153,0.3);background:rgba(52,211,153,0.1);font-size:11px;font-weight:600;color:#a7f3d0;">Examples</span>
-      <span style="padding:4px 12px;border-radius:9999px;border:1px solid rgba(52,211,153,0.4);background:rgba(52,211,153,0.1);font-size:11px;font-weight:600;color:#d1fae5;">v 1.1.14</span>
+      <span style="padding:4px 12px;border-radius:9999px;border:1px solid rgba(52,211,153,0.4);background:rgba(52,211,153,0.1);font-size:11px;font-weight:600;color:#d1fae5;">{{FLINT_DART_VERSION}}</span>
       <span style="font-size:12px;color:#64748b;">Hands-on tutorials</span>
     </div>
     <h1 class="examples-title" style="font-size:36px;font-weight:600;color:#fff;margin:0 0 12px;">Examples &amp; Tutorials</h1>
@@ -193,13 +194,18 @@ class ExamplesPage extends FlintComponent {
   final Map<String, dynamic> props;
   ExamplesPage(this.props);
 
+  String get htmlContent => _htmlContent.replaceAll(
+        '{{FLINT_DART_VERSION}}',
+        ProductVersions.flintDartVersionLabel,
+      );
+
   @override
   FlintNode build() {
     return SiteLayout(
       props: props,
       body: HtmlContent(
         id: 'examples-root',
-        html: _htmlContent,
+        html: htmlContent,
         props: const {
           'style': {
             'width': '100%',

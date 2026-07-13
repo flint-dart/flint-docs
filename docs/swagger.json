@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Flint API",
-    "version": "1.0.0"
+    "version": "1.2.0"
   },
   "servers": [
     {
@@ -341,7 +341,7 @@
         }
       }
     },
-    "/api": {
+    "/dart": {
       "get": {
         "summary": "",
         "tags": [
@@ -354,7 +354,7 @@
         }
       }
     },
-    "/examples": {
+    "/api/{topic}": {
       "get": {
         "summary": "",
         "tags": [
@@ -364,10 +364,21 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: topic"
+          }
+        ]
       }
     },
-    "/whats-new": {
+    "/changelog": {
       "get": {
         "summary": "",
         "tags": [
@@ -478,6 +489,72 @@
               "type": "string"
             },
             "description": "Path parameter: slug"
+          }
+        ]
+      }
+    },
+    "/questions/{slug}/answers/{id}/delete": {
+      "post": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: slug"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: id"
+          }
+        ]
+      }
+    },
+    "/questions/{slug}/answers/{id}/update": {
+      "post": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: slug"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: id"
           }
         ]
       }

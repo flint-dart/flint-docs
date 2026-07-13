@@ -80,6 +80,7 @@ class CounterProof extends Component {
                   ],
                 ),
                 _counterControls(),
+                _themeModeControls(),
               ],
             ),
             CodeBoard(
@@ -152,6 +153,66 @@ class CounterProof extends Component {
         ),
       ],
     );
+  }
+
+  View _themeModeControls() {
+    return StateSignalListener(flintTheme.mode, (mode) {
+      final isDark = mode == FlintThemeMode.dark;
+
+      return Container(
+        dartStyle: DartStyle(
+          display: Display.flex,
+          flexWrap: FlexWrap.wrap,
+          alignItems: AlignItems.center,
+          justifyContent: JustifyContent.between,
+          gap: 12,
+          padding: const EdgeInsets.all(14),
+          radius: ThemeToken.radius('md'),
+          background: ThemeToken.color('panel'),
+          color: ThemeToken.color('text'),
+          light: DartStyle(
+            border: Border.all(color: ThemeToken.color('line')),
+            shadow: const Shadow(
+              y: 12,
+              blur: 32,
+              spread: -24,
+              color: Color.rgba(15, 23, 42, 0.22),
+            ),
+          ),
+          dark: DartStyle(
+            border: Border.all(color: Color.rgba(52, 211, 153, 0.24)),
+            shadow: ThemeToken.shadow('glow'),
+          ),
+        ),
+        children: [
+          Column(
+            dartStyle: const DartStyle(
+              display: Display.grid,
+              gap: 4,
+            ),
+            children: [
+              Text.strong(
+                'Theme state',
+                dartStyle: const DartStyle(fontSize: 13),
+              ),
+              Text.span(
+                isDark ? 'Dark mode is active' : 'Light mode is active',
+                dartStyle: DartStyle(
+                  fontSize: 12,
+                  color: ThemeToken.color('muted'),
+                ),
+              ),
+            ],
+          ),
+          Button(
+            child: isDark ? 'Switch to light' : 'Switch to dark',
+            variant: ButtonVariant.soft,
+            tone: Tone.primary,
+            onPressed: (_) => flintTheme.toggle(),
+          ),
+        ],
+      );
+    });
   }
 }
 

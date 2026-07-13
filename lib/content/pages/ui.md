@@ -116,6 +116,87 @@ Container(
 
 For docs and learning examples, inline `DartStyle` is useful because the reader can see the component and its visual design together.
 
+## Opt into theme mode
+
+Theme mode is opt-in. If an app does not configure a theme, Flint UI does not set `data-theme`, does not read local storage, and does not use the system color scheme. The app simply uses its normal/default design.
+
+To opt in with the built-in light and dark tokens, pass `themeMode` at startup.
+
+```dart
+void main() {
+  createFlintApp(
+    '#app',
+    registry: componentRegistry,
+    themeMode: FlintThemeMode.dark,
+  );
+}
+```
+
+For a custom app design, put a `FlintThemeProvider` on your `RootDesign`.
+
+```dart
+final appRootDesign = RootDesign(
+  name: 'app-root',
+  themeProvider: const FlintThemeProvider(
+    light: appLightTheme,
+    dark: appDarkTheme,
+    initialMode: FlintThemeMode.dark,
+  ),
+  body: DartStyle(
+    background: ThemeToken.color('bg'),
+    color: ThemeToken.color('text'),
+  ),
+);
+```
+
+Then mount with that root design.
+
+```dart
+void main() {
+  createFlintApp(
+    '#app',
+    registry: componentRegistry,
+    rootDesign: appRootDesign,
+  );
+}
+```
+
+When theme mode is enabled, Flint resolves the mode in this order:
+
+```text
+local storage -> system color scheme -> app default
+```
+
+Use `flintTheme` to switch mode from a component.
+
+```dart
+StateSignalListener(flintTheme.mode, (mode) {
+  final isDark = mode == FlintThemeMode.dark;
+
+  return Button(
+    child: isDark ? 'Switch to light' : 'Switch to dark',
+    onPressed: (_) => flintTheme.toggle(),
+  );
+});
+```
+
+Use `light` and `dark` in `DartStyle` for mode-specific overrides.
+
+```dart
+Container(
+  dartStyle: DartStyle(
+    background: ThemeToken.color('panel'),
+    color: ThemeToken.color('text'),
+    light: DartStyle(
+      border: Border.all(color: ThemeToken.color('line')),
+    ),
+    dark: DartStyle(
+      shadow: ThemeToken.shadow('glow'),
+    ),
+  ),
+);
+```
+
 ## Register pages
 
 The browser entrypoint registers page names with component constructors.

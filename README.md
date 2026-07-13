@@ -25,22 +25,10 @@ dart run lib/main.dart
 
 Open: `http://localhost:3000`
 
-## Use Latest Flint Packages
+## Flint Package Versions
 
-For docs deployments that should track the current Flint page-bundle work,
-keep these overrides in `pubspec.yaml` until the next pub.dev release is ready:
-
-```yaml
-dependency_overrides:
-  flint_dart:
-    git:
-      url: https://github.com/flint-dart/flint_dart
-      ref: dev
-  flint_ui:
-    git:
-      url: https://github.com/flint-dart/flint-ui.git
-      ref: codex/fix-navigation-rerender
-```
+Docs deployments resolve Flint packages from pub.dev. The current docs app
+targets `flint_dart: ^1.2.0` and `flint_ui: ^0.1.14`.
 
 ## Hosted Install Scripts
 

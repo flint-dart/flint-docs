@@ -20,7 +20,7 @@ A production-ready Dart HTTP client with retries, caching, cancellation, structu
 
 ## What Is FlintClient Used For?
 
-FlintClient is used to call APIs from Dart/Flutter apps: GET data, send POST/PUT/PATCH/DELETE requests, upload files, handle timeouts, retry failures, cache responses, and cancel in-flight requests.
+FlintClient is used to call APIs from Dart/Flutter apps: GET data, send POST/PUT/PATCH/QUERY/DELETE requests, upload files, handle timeouts, retry failures, cache responses, and cancel in-flight requests.
 
 - Mobile app calling backend endpoints
 
@@ -105,9 +105,40 @@ final patched = await client.patch>(
   body: {'role': 'owner'},
 );
 
+final searched = await client.query>(
+  '/products/search',
+  body: {'category': 'electronics'},
+);
+
 final removed = await client.delete('/users/42');
 print(removed.statusCode);
 ```
+
+## HTTP QUERY
+
+HTTP `QUERY` is defined by RFC 10008. It is safe and idempotent like `GET`, but
+it can include request content like `POST`. Use it for complex searches and
+filters that should not mutate server state.
+
+```dart
+final response = await client.query<Map<String, dynamic>>(
+  '/products/search',
+  queryParameters: {'page': 1},
+  body: {
+    'category': 'electronics',
+    'minimumPrice': 50000,
+    'inStock': true,
+  },
+);
+```
+
+`queryParameters` are URI query string values. `body` is QUERY request content
+and uses FlintClient's normal JSON, text, form, timeout, interceptor, retry,
+cache, and response parsing pipeline. QUERY is treated as idempotent for retry
+configuration.
+
+Compatibility warning: some proxies, browsers, servers, and API tools may not
+support `QUERY` yet. RFC: https://www.rfc-editor.org/rfc/rfc10008.html.
 
 ## File Download + Upload
 

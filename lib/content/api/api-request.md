@@ -10,7 +10,7 @@ HTTP request wrapper with parsing, auth, session, and file helpers.
 
 String
 
-                HTTP method (GET, POST, PUT, ...).
+                HTTP method (GET, POST, PUT, QUERY, ...).
 
                 `path`
 

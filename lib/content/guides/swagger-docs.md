@@ -45,6 +45,29 @@ app.post('/users', controller.create);
 
 - `@server` - add server URLs for docs.
 
+### HTTP QUERY Docs
+
+Flint recognizes `app.query(...)` routes during docs generation. OpenAPI 3.0
+does not define a standard `query` operation key, so Flint keeps the document
+valid by preserving QUERY operations as vendor extensions instead of mapping
+them incorrectly to `GET` or `POST`.
+
+Generated QUERY operations include `x-http-method: QUERY`, a path-level
+`x-flint-query` entry, and a top-level `x-flint-query-routes` section.
+
+```dart
+/// @summary Search products
+/// @body {"category": "string", "inStock": true}
+app.query('/products/search', (Context ctx) async {
+  final filters = await ctx.req.json();
+  return ctx.res?.json({'filters': filters});
+});
+```
+
+Some OpenAPI viewers may not render these operations as normal method rows.
+Use the Flint extensions when integrating with tooling that needs QUERY route
+metadata.
+
 ### WebSocket Handshake Docs
 
 Flint now includes `app.websocket(...)` routes in generated docs. They are emitted as Swagger-friendly `GET` operations with a `101 Switching Protocols` response plus Flint-specific metadata such as `x-websocket`, `x-flint-transport`, and a top-level `x-websockets` block.

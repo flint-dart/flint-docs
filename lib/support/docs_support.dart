@@ -5,6 +5,7 @@ import 'package:flint_dart/flint_dart.dart';
 import 'package:flint_dart/helper.dart';
 import 'package:flint_docs/models/blog_post_model.dart';
 import 'package:flint_docs/models/showcase_project_model.dart';
+import 'package:flint_docs/support/product_versions.dart';
 
 class DocsSupport {
   static const String browserEntrypoint =
@@ -1445,6 +1446,10 @@ Sitemap: $sitemapUrl
       'canComment': canComment,
       'currentUserId': user?['id']?.toString(),
       'currentUserLabel': currentUserLabel,
+      'flintDartVersion': ProductVersions.flintDartVersion,
+      'flintDartVersionLabel': ProductVersions.flintDartVersionLabel,
+      'flintUiVersion': ProductVersions.flintUiVersion,
+      'flintClientVersion': ProductVersions.flintClientVersion,
     };
   }
 

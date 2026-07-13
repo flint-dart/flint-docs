@@ -26,6 +26,11 @@ void main() {
     return ctx.res?.json({'created': true, 'data': data});
   });
 
+  app.query('/products/search', (Context ctx) async {
+    final filters = await ctx.req.json();
+    return ctx.res?.json({'filters': filters});
+  });
+
   app.listen(port: 3000);
 }
 ```
@@ -59,6 +64,32 @@ app.get('/users', (Context ctx) async {
   return ctx.res?.json({'page': page, 'limit': limit});
 });
 ```
+
+### HTTP QUERY
+
+`QUERY` is an HTTP method from RFC 10008. It is safe and idempotent like `GET`,
+but it can carry request content like `POST`. Use it when a search or filter
+operation should not change server state, but the query expression is too large
+or structured for a URL query string.
+
+```dart
+app.query('/products/search', (Context ctx) async {
+  final filters = await ctx.req.json();
+  final page = ctx.req.queryParam('page') ?? '1';
+
+  return ctx.res?.json({
+    'filters': filters,
+    'page': page,
+  });
+});
+```
+
+`ctx.req.queryParam()` reads URI query string values such as `?page=2`.
+`ctx.req.json()`, `ctx.req.body()`, and `ctx.req.form()` read the QUERY request
+content. Keep those two concepts separate when naming filters and parameters.
+
+Compatibility warning: some proxies, browsers, servers, and API tools may not
+support `QUERY` yet. RFC: https://www.rfc-editor.org/rfc/rfc10008.html.
 
 ### Unified Context
 

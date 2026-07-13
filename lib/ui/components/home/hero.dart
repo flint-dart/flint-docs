@@ -1,5 +1,7 @@
 import 'package:flint_ui/flint_ui.dart';
 
+import '../../../support/product_versions.dart';
+
 class HomeHero extends FlintComponent {
   @override
   FlintNode build() {
@@ -8,29 +10,56 @@ class HomeHero extends FlintComponent {
         position: Position.relative,
         overflow: Overflow.hidden,
         minHeight: SizeValue('calc(100vh - 68px)'),
-        borderBottom: Border(color: Color.rgba(51, 65, 85, 0.72), width: 1),
+        borderBottom: Border(color: Color.rgba(15, 23, 42, 0.08), width: 1),
         background: Background.layers([
-          Gradient.linear(
-            115,
-            const [
-              GradientStop(Color.rgba(5, 7, 13, 0.82), 0),
-              GradientStop(Color.rgba(12, 30, 45, 0.96), 44),
-              GradientStop(Color.rgba(4, 8, 18, 1), 100),
+          Gradient.radialCircle(
+            at: const GradientPosition.percent(10, 0),
+            stops: const [
+              GradientStop(Color.rgba(52, 211, 153, 0.24), 0),
+              GradientStop(Colors.transparent, 42),
             ],
           ),
-          Color('#05070d'),
+          Gradient.radialCircle(
+            at: const GradientPosition.percent(92, 6),
+            stops: const [
+              GradientStop(Color.rgba(56, 189, 248, 0.24), 0),
+              GradientStop(Colors.transparent, 44),
+            ],
+          ),
+          Gradient.linear(
+            160,
+            const [
+              GradientStop(Color('#f8fff9'), 0),
+              GradientStop(Color('#eefaf3'), 52),
+              GradientStop(Color('#e8f8fd'), 100),
+            ],
+          ),
         ]),
       ),
       children: [
-        _gridOverlay(),
+        _meshOverlay(),
+        _ambientGlass(
+          left: '4%',
+          top: '16%',
+          width: 190,
+          height: 88,
+          delayMilliseconds: 0,
+        ),
+        _ambientGlass(
+          right: '7%',
+          bottom: '16%',
+          width: 240,
+          height: 108,
+          delayMilliseconds: 850,
+        ),
         Container(
           dartStyle: DartStyle(
             position: Position.relative,
             zIndex: 1,
             width: ThemeToken.space('pageX'),
             margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
-            padding: const EdgeInsets.symmetric(vertical: 48),
-            lg: const DartStyle(padding: EdgeInsets.symmetric(vertical: 72)),
+            padding: const EdgeInsets.symmetric(vertical: 42),
+            lg: const DartStyle(padding: EdgeInsets.symmetric(vertical: 64)),
           ),
           children: [
             _statusBar(),
@@ -38,14 +67,14 @@ class HomeHero extends FlintComponent {
               dartStyle: DartStyle(
                 display: Display.grid,
                 gridTemplateColumns: GridTemplateColumns.one,
-                gap: 34,
+                gap: 36,
                 alignItems: AlignItems.center,
                 lg: DartStyle(
                   gridTemplateColumns: GridTemplateColumns.tracks([
-                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(0.96)),
-                    GridTrack.minmax(420, GridTrack.oneFr),
+                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.04)),
+                    GridTrack.minmax(430, GridTrack.oneFr),
                   ]),
-                  gap: 48,
+                  gap: 52,
                 ),
               ),
               children: [
@@ -60,7 +89,7 @@ class HomeHero extends FlintComponent {
     );
   }
 
-  FlintNode _gridOverlay() {
+  FlintNode _meshOverlay() {
     return Container(
       props: const {'aria-hidden': 'true'},
       dartStyle: DartStyle(
@@ -69,25 +98,85 @@ class HomeHero extends FlintComponent {
         right: 0,
         bottom: 0,
         left: 0,
-        opacity: 0.56,
+        opacity: 0.5,
         maskImage: Gradient.linearTo(GradientDirection.bottom, const [
-          GradientStop(Colors.transparent, 0),
-          GradientStop(Colors.black, 15),
-          GradientStop(Colors.black, 82),
+          GradientStop(Colors.black, 0),
+          GradientStop(Colors.black, 72),
           GradientStop(Colors.transparent, 100),
         ]),
-        background: Background.layers([
-          const Color(
-            'linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px)',
-          ),
-          const Color(
-            'linear-gradient(90deg, rgba(148, 163, 184, 0.055) 1px, transparent 1px)',
-          ),
-        ]),
+        background: Gradient.linear(
+          135,
+          const [
+            GradientStop(Color.rgba(15, 23, 42, 0.08), 0),
+            GradientStop(Colors.transparent, 48),
+            GradientStop(Color.rgba(16, 185, 129, 0.08), 100),
+          ],
+        ),
       ),
-      style: const {
-        'background-size': '56px 56px',
-      },
+    );
+  }
+
+  FlintNode _ambientGlass({
+    String? left,
+    String? right,
+    String? top,
+    String? bottom,
+    required double width,
+    required double height,
+    required int delayMilliseconds,
+  }) {
+    return Container(
+      props: const {'aria-hidden': 'true'},
+      dartStyle: DartStyle(
+        position: Position.absolute,
+        left: left,
+        right: right,
+        top: top,
+        bottom: bottom,
+        width: width,
+        height: height,
+        radius: 8,
+        border: Border.all(color: Color.rgba(255, 255, 255, 0.72)),
+        background: Color.rgba(255, 255, 255, 0.36),
+        backdropFilter: StyleFilter.blur(16),
+        shadow: const Shadow(
+          y: 28,
+          blur: 70,
+          spread: -46,
+          color: Color.rgba(15, 23, 42, 0.28),
+        ),
+        animation: StyleAnimation.named(
+          'flint-docs-float',
+          milliseconds: 7000,
+          timing: TransitionTiming.easeInOut,
+          delayMilliseconds: delayMilliseconds,
+          iteration: AnimationIteration.infinite,
+        ),
+      ),
+      children: [
+        Container(
+          dartStyle: DartStyle(
+            position: Position.absolute,
+            left: 18,
+            right: 18,
+            top: 18,
+            height: 9,
+            radius: 999,
+            background: Color.rgba(52, 211, 153, 0.28),
+          ),
+        ),
+        Container(
+          dartStyle: DartStyle(
+            position: Position.absolute,
+            left: 18,
+            right: 58,
+            bottom: 22,
+            height: 9,
+            radius: 999,
+            background: Color.rgba(56, 189, 248, 0.24),
+          ),
+        ),
+      ],
     );
   }
 
@@ -99,12 +188,24 @@ class HomeHero extends FlintComponent {
         alignItems: AlignItems.center,
         justifyContent: JustifyContent.between,
         gap: 14,
-        margin: const EdgeInsets.only(bottom: 42),
+        margin: const EdgeInsets.only(bottom: 40),
         padding: const EdgeInsets.all(10),
-        radius: ThemeToken.radius('md'),
-        border: Border.all(color: Color.rgba(148, 163, 184, 0.16)),
-        background: Color.rgba(15, 23, 42, 0.42),
+        radius: 8,
+        border: Border.all(color: Color.rgba(16, 185, 129, 0.2)),
+        background: Color.rgba(255, 255, 255, 0.74),
         backdropFilter: StyleFilter.blur(18),
+        shadow: const Shadow(
+          y: 18,
+          blur: 54,
+          spread: -42,
+          color: Color.rgba(15, 23, 42, 0.2),
+        ),
+        animation: StyleAnimation.named(
+          'flint-docs-rise',
+          milliseconds: 620,
+          timing: TransitionTiming.easeOut,
+          fillMode: AnimationFillMode.both,
+        ),
       ),
       children: [
         Row(
@@ -115,7 +216,11 @@ class HomeHero extends FlintComponent {
             gap: 8,
           ),
           children: [
-            _badge(Icons.sparkles, 'Flint Dart v 1.1.14', _mint),
+            _badge(
+              Icons.sparkles,
+              'Flint Dart ${ProductVersions.flintDartVersionLabel}',
+              _mint,
+            ),
             _badge(Icons.zap, 'Hot reload ready', _sky),
             _badge(Icons.shield, 'Typed by default', _violet),
           ],
@@ -127,13 +232,13 @@ class HomeHero extends FlintComponent {
             gap: 8,
           ),
           children: [
-            Icon(Icons.activity, size: 16, color: _mint),
+            Icon(Icons.activity, size: 16, color: _mintStrong),
             Text.span(
               'Production docs, APIs, and UI in one Dart stack',
               dartStyle: const DartStyle(
-                color: Color('#cbd5e1'),
+                color: Color('#475569'),
                 fontSize: 12,
-                fontWeight: 700,
+                fontWeight: 800,
               ),
             ),
           ],
@@ -146,40 +251,103 @@ class HomeHero extends FlintComponent {
     return Container(
       dartStyle: const DartStyle(display: Display.grid, gap: 0),
       children: [
+        Container(
+          dartStyle: DartStyle(
+            display: Display.inlineFlex,
+            alignItems: AlignItems.center,
+            gap: 8,
+            width: SizeValue('fit-content'),
+            padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
+            radius: 999,
+            border: Border(color: Color.rgba(16, 185, 129, 0.2), width: 1),
+            background: Color.rgba(236, 253, 245, 0.82),
+            animation: StyleAnimation.named(
+              'flint-docs-rise',
+              milliseconds: 660,
+              timing: TransitionTiming.easeOut,
+              delayMilliseconds: 70,
+              fillMode: AnimationFillMode.both,
+            ),
+          ),
+          children: [
+            Icon(Icons.cloud, size: 15, color: _mintStrong),
+            Text.span(
+              'Dart-first full-stack apps',
+              dartStyle: const DartStyle(
+                color: Color('#047857'),
+                fontSize: 12,
+                fontWeight: 900,
+                textTransform: 'uppercase',
+                letterSpacing: 0,
+              ),
+            ),
+          ],
+        ),
         Text.h1(
           'Flint Dart',
           dartStyle: DartStyle(
-            margin: EdgeInsets.all(0),
+            margin: const EdgeInsets.only(top: 20, bottom: 0),
             maxWidth: 760,
-            color: Colors.white,
-            fontSize: 58,
-            lineHeight: 0.9,
+            color: Color('transparent'),
+            fontSize: 56,
+            lineHeight: 0.92,
             fontWeight: 900,
-            letterSpacing: SizeValue('-0.04em'),
-            lg: DartStyle(fontSize: 104),
+            letterSpacing: 0,
+            background: Gradient.linear(
+              90,
+              const [
+                GradientStop(Color('#0f172a'), 0),
+                GradientStop(Color('#047857'), 48),
+                GradientStop(Color('#0284c7'), 100),
+              ],
+            ),
+            backgroundClip: BackgroundClip.text,
+            webkitBackgroundClip: BackgroundClip.text,
+            animation: StyleAnimation.named(
+              'flint-docs-rise',
+              milliseconds: 700,
+              timing: TransitionTiming.easeOut,
+              delayMilliseconds: 130,
+              fillMode: AnimationFillMode.both,
+            ),
+            lg: const DartStyle(fontSize: 100),
           ),
         ),
         Text.h2(
-          'The full-stack framework that feels designed, fast, and finished.',
+          'A modern backend, UI layer, and shipping loop in one expressive Dart stack.',
           dartStyle: DartStyle(
-            margin: EdgeInsets.only(top: 18, bottom: 0),
+            margin: const EdgeInsets.only(top: 18, bottom: 0),
             maxWidth: 760,
-            color: Color('#d7e2f1'),
+            color: Color('#162033'),
             fontSize: 25,
-            lineHeight: 1.08,
-            fontWeight: 800,
-            letterSpacing: SizeValue('-0.025em'),
-            lg: DartStyle(fontSize: 40),
+            lineHeight: 1.12,
+            fontWeight: 850,
+            letterSpacing: 0,
+            animation: StyleAnimation.named(
+              'flint-docs-rise',
+              milliseconds: 720,
+              timing: TransitionTiming.easeOut,
+              delayMilliseconds: 190,
+              fillMode: AnimationFillMode.both,
+            ),
+            lg: const DartStyle(fontSize: 40),
           ),
         ),
         Text.p(
-          'Ship routes, controllers, auth, models, OpenAPI docs, server-rendered views, and Dart-first web UI without stitching together half a stack.',
-          dartStyle: const DartStyle(
-            margin: EdgeInsets.only(top: 22, bottom: 0),
+          'Ship routes, controllers, auth, models, generated API docs, server-rendered views, and reactive Flint UI screens without stitching together half a stack.',
+          dartStyle: DartStyle(
+            margin: const EdgeInsets.only(top: 22, bottom: 0),
             maxWidth: 690,
-            color: Color('#aebbd0'),
+            color: Color('#516178'),
             fontSize: 18,
             lineHeight: 1.72,
+            animation: StyleAnimation.named(
+              'flint-docs-rise',
+              milliseconds: 760,
+              timing: TransitionTiming.easeOut,
+              delayMilliseconds: 250,
+              fillMode: AnimationFillMode.both,
+            ),
           ),
         ),
         Row(
@@ -187,7 +355,14 @@ class HomeHero extends FlintComponent {
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 12,
-            margin: EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 30),
+            animation: StyleAnimation.named(
+              'flint-docs-rise',
+              milliseconds: 780,
+              timing: TransitionTiming.easeOut,
+              delayMilliseconds: 310,
+              fillMode: AnimationFillMode.both,
+            ),
           ),
           children: [
             Link(
@@ -199,8 +374,17 @@ class HomeHero extends FlintComponent {
               ],
             ),
             Link(
-              href: '/api',
+              href: '/ui',
               variant: ButtonVariant.outline,
+              tone: Tone.neutral,
+              children: [
+                Icon(Icons.palette, size: 17),
+                Text.span('Explore Flint UI'),
+              ],
+            ),
+            Link(
+              href: '/api',
+              variant: ButtonVariant.ghost,
               tone: Tone.neutral,
               children: [
                 Icon(Icons.book, size: 17),
@@ -214,7 +398,14 @@ class HomeHero extends FlintComponent {
             display: Display.grid,
             gridTemplateColumns: GridTemplateColumns.one,
             gap: 12,
-            margin: EdgeInsets.only(top: 34),
+            margin: const EdgeInsets.only(top: 34),
+            animation: StyleAnimation.named(
+              'flint-docs-rise',
+              milliseconds: 820,
+              timing: TransitionTiming.easeOut,
+              delayMilliseconds: 380,
+              fillMode: AnimationFillMode.both,
+            ),
             sm: DartStyle(
               gridTemplateColumns: GridTemplateColumns.repeat(
                 3,
@@ -235,50 +426,160 @@ class HomeHero extends FlintComponent {
   FlintNode _productPreview() {
     return Container(
       dartStyle: DartStyle(
+        position: Position.relative,
+        minHeight: 510,
         display: Display.grid,
-        gap: 14,
-        padding: const EdgeInsets.all(14),
-        radius: 8,
-        border: Border.all(color: Color.rgba(148, 163, 184, 0.18)),
-        background: Background.layers([
-          Gradient.linear(
-            135,
-            const [
-              GradientStop(Color.rgba(56, 189, 248, 0.18), 0),
-              GradientStop(Color.rgba(52, 211, 153, 0.08), 45),
-              GradientStop(Color.rgba(15, 23, 42, 0.92), 100),
-            ],
-          ),
-          const Color.rgba(2, 6, 23, 0.94),
-        ]),
-        shadow: const Shadow(
-          y: 32,
-          blur: 90,
-          spread: -42,
-          color: Color.rgba(56, 189, 248, 0.5),
+        alignItems: AlignItems.center,
+        animation: StyleAnimation.named(
+          'flint-docs-rise',
+          milliseconds: 780,
+          timing: TransitionTiming.easeOut,
+          delayMilliseconds: 260,
+          fillMode: AnimationFillMode.both,
         ),
       ),
       children: [
-        _previewHeader(),
-        Row(
+        _orbitalVisual(),
+        Container(
           dartStyle: DartStyle(
+            position: Position.relative,
+            zIndex: 2,
             display: Display.grid,
-            gridTemplateColumns: GridTemplateColumns.one,
             gap: 14,
-            md: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.tracks(const [
-                GridTrack.oneFr,
-                const GridTrack.fr(0.74),
-              ]),
+            padding: const EdgeInsets.all(14),
+            radius: 8,
+            border: Border.all(color: Color.rgba(255, 255, 255, 0.78)),
+            background: Color.rgba(255, 255, 255, 0.78),
+            backdropFilter: StyleFilter.blur(18),
+            shadow: const Shadow(
+              y: 32,
+              blur: 92,
+              spread: -44,
+              color: Color.rgba(15, 23, 42, 0.28),
             ),
+            transition: StyleTransition.transform(milliseconds: 220),
+            hover: DartStyle(transform: StyleTransform.translateY(-6)),
           ),
           children: [
-            _codePanel(),
-            _pipelinePanel(),
+            _previewHeader(),
+            Row(
+              dartStyle: DartStyle(
+                display: Display.grid,
+                gridTemplateColumns: GridTemplateColumns.one,
+                gap: 14,
+                md: DartStyle(
+                  gridTemplateColumns: GridTemplateColumns.tracks(const [
+                    GridTrack.oneFr,
+                    GridTrack.fr(0.74),
+                  ]),
+                ),
+              ),
+              children: [
+                _codePanel(),
+                _pipelinePanel(),
+              ],
+            ),
+            _metricsBar(),
           ],
         ),
-        _metricsBar(),
       ],
+    );
+  }
+
+  FlintNode _orbitalVisual() {
+    return Container(
+      props: const {'aria-hidden': 'true'},
+      dartStyle: const DartStyle(
+        position: Position.absolute,
+        top: 10,
+        right: 20,
+        bottom: 10,
+        left: 20,
+        zIndex: 1,
+      ),
+      children: [
+        Container(
+          dartStyle: DartStyle(
+            position: Position.absolute,
+            top: 42,
+            right: 52,
+            width: 300,
+            height: 300,
+            radius: 999,
+            border: Border(color: Color.rgba(16, 185, 129, 0.22), width: 1),
+            animation: StyleAnimation.infinite(
+              'flint-docs-orbit',
+              milliseconds: 18000,
+            ),
+          ),
+          children: [_orbitDot(top: 18, right: 42, color: _mintStrong)],
+        ),
+        Container(
+          dartStyle: DartStyle(
+            position: Position.absolute,
+            right: 0,
+            top: 88,
+            width: 220,
+            height: 220,
+            radius: 999,
+            border: Border(color: Color.rgba(14, 165, 233, 0.2), width: 1),
+            animation: StyleAnimation.named(
+              'flint-docs-orbit',
+              milliseconds: 12000,
+              timing: TransitionTiming.linear,
+              iteration: AnimationIteration.infinite,
+              direction: AnimationDirection.reverse,
+            ),
+          ),
+          children: [_orbitDot(bottom: 26, left: 26, color: _skyStrong)],
+        ),
+        Container(
+          dartStyle: DartStyle(
+            position: Position.absolute,
+            right: 86,
+            top: 134,
+            width: 132,
+            height: 132,
+            radius: 999,
+            background: Color.rgba(52, 211, 153, 0.28),
+            shadow: Shadow(
+              y: 18,
+              blur: 80,
+              spread: -24,
+              color: Color.rgba(20, 184, 166, 0.5),
+            ),
+            animation: StyleAnimation.named(
+              'flint-docs-pulse',
+              milliseconds: 4000,
+              timing: TransitionTiming.easeInOut,
+              iteration: AnimationIteration.infinite,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  FlintNode _orbitDot({
+    Object? top,
+    Object? right,
+    Object? bottom,
+    Object? left,
+    required Color color,
+  }) {
+    return Container(
+      dartStyle: DartStyle(
+        position: Position.absolute,
+        top: top,
+        right: right,
+        bottom: bottom,
+        left: left,
+        width: 12,
+        height: 12,
+        radius: 999,
+        background: color,
+        shadow: Shadow(y: 0, blur: 28, spread: 3, color: color),
+      ),
     );
   }
 
@@ -292,12 +593,12 @@ class HomeHero extends FlintComponent {
         gap: 14,
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         radius: 8,
-        border: Border.all(color: Color.rgba(148, 163, 184, 0.14)),
-        background: Color.rgba(15, 23, 42, 0.74),
+        border: Border.all(color: Color.rgba(226, 232, 240, 0.95)),
+        background: Color.rgba(248, 250, 252, 0.86),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             gap: 10,
@@ -307,14 +608,14 @@ class HomeHero extends FlintComponent {
             Text.span(
               'flint_workspace',
               dartStyle: const DartStyle(
-                color: Color('#e2e8f0'),
+                color: Color('#0f172a'),
                 fontSize: 13,
-                fontWeight: 800,
+                fontWeight: 900,
               ),
             ),
           ],
         ),
-        _badge(Icons.cloud, 'Live build', _sky),
+        _badge(Icons.cloud, 'Live build', _skyStrong),
       ],
     );
   }
@@ -324,12 +625,18 @@ class HomeHero extends FlintComponent {
       dartStyle: DartStyle(
         overflow: Overflow.hidden,
         radius: 8,
-        border: Border.all(color: Color.rgba(30, 41, 59, 1)),
+        border: Border.all(color: Color.rgba(15, 23, 42, 0.9)),
         background: const Color('#050814'),
+        shadow: const Shadow(
+          y: 16,
+          blur: 42,
+          spread: -30,
+          color: Color.rgba(15, 23, 42, 0.64),
+        ),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
@@ -378,8 +685,8 @@ class HomeHero extends FlintComponent {
                 fontFamily: FontFamily.monospace,
                 fontSize: 12,
                 lineHeight: 1.72,
+                whiteSpace: WhiteSpace.preWrap,
               ),
-              style: const {'white-space': 'pre-wrap'},
             ),
           ],
         ),
@@ -395,14 +702,14 @@ class HomeHero extends FlintComponent {
         alignItems: AlignItems.center,
         padding: const EdgeInsets.all(14),
         radius: 8,
-        border: Border.all(color: Color.rgba(148, 163, 184, 0.15)),
-        background: Color.rgba(15, 23, 42, 0.66),
+        border: Border.all(color: Color.rgba(226, 232, 240, 0.95)),
+        background: Color.rgba(248, 250, 252, 0.88),
       ),
       children: [
         Text.span(
           'Ship loop',
           dartStyle: const DartStyle(
-            color: Colors.white,
+            color: Color('#0f172a'),
             fontSize: 14,
             fontWeight: 900,
           ),
@@ -439,11 +746,19 @@ class HomeHero extends FlintComponent {
         display: Display.grid,
         gridTemplateColumns: GridTemplateColumns.one,
         gap: 12,
-        margin: const EdgeInsets.only(top: 44),
+        margin: const EdgeInsets.only(top: 36),
         padding: const EdgeInsets.all(12),
         radius: 8,
-        border: Border.all(color: Color.rgba(148, 163, 184, 0.14)),
-        background: Color.rgba(15, 23, 42, 0.36),
+        border: Border.all(color: Color.rgba(255, 255, 255, 0.76)),
+        background: Color.rgba(255, 255, 255, 0.62),
+        backdropFilter: StyleFilter.blur(18),
+        animation: StyleAnimation.named(
+          'flint-docs-rise',
+          milliseconds: 840,
+          timing: TransitionTiming.easeOut,
+          delayMilliseconds: 430,
+          fillMode: AnimationFillMode.both,
+        ),
         sm: DartStyle(
           gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.fluid),
         ),
@@ -464,15 +779,15 @@ class HomeHero extends FlintComponent {
         gap: 7,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         radius: ThemeToken.radius('pill'),
-        border: Border.all(color: Color.rgba(148, 163, 184, 0.16)),
-        background: Color.rgba(15, 23, 42, 0.68),
+        border: Border.all(color: Color.rgba(148, 163, 184, 0.18)),
+        background: Color.rgba(255, 255, 255, 0.76),
       ),
       children: [
         Icon(icon, size: 14, color: color),
         Text.span(
           label,
           dartStyle: const DartStyle(
-            color: Color('#dbeafe'),
+            color: Color('#334155'),
             fontSize: 12,
             fontWeight: 800,
             lineHeight: 1,
@@ -490,25 +805,28 @@ class HomeHero extends FlintComponent {
         gap: 12,
         padding: const EdgeInsets.all(12),
         radius: 8,
-        border: Border.all(color: Color.rgba(148, 163, 184, 0.14)),
-        background: Color.rgba(15, 23, 42, 0.42),
+        border: Border.all(color: Color.rgba(226, 232, 240, 0.92)),
+        background: Color.rgba(255, 255, 255, 0.72),
+        backdropFilter: StyleFilter.blur(12),
+        transition: StyleTransition.transform(milliseconds: 180),
+        hover: DartStyle(transform: StyleTransform.translateY(-4)),
       ),
       children: [
-        Icon(icon, size: 20, color: _sky),
+        Icon(icon, size: 20, color: _skyStrong),
         Container(
           dartStyle: const DartStyle(display: Display.grid, gap: 2),
           children: [
             Text.span(
               title,
               dartStyle: const DartStyle(
-                color: Colors.white,
+                color: Color('#0f172a'),
                 fontSize: 13,
                 fontWeight: 900,
               ),
             ),
             Text.span(
               label,
-              dartStyle: const DartStyle(color: Color('#94a3b8'), fontSize: 12),
+              dartStyle: const DartStyle(color: Color('#64748b'), fontSize: 12),
             ),
           ],
         ),
@@ -528,21 +846,21 @@ class HomeHero extends FlintComponent {
         alignItems: AlignItems.center,
       ),
       children: [
-        Icon(icon, size: 18, color: _mint),
+        Icon(icon, size: 18, color: _mintStrong),
         Container(
           dartStyle: const DartStyle(display: Display.grid, gap: 2),
           children: [
             Text.span(
               title,
               dartStyle: const DartStyle(
-                color: Color('#e2e8f0'),
+                color: Color('#0f172a'),
                 fontSize: 12,
                 fontWeight: 900,
               ),
             ),
             Text.span(
               label,
-              dartStyle: const DartStyle(color: Color('#94a3b8'), fontSize: 11),
+              dartStyle: const DartStyle(color: Color('#64748b'), fontSize: 11),
             ),
           ],
         ),
@@ -553,23 +871,46 @@ class HomeHero extends FlintComponent {
   FlintNode _metric(String value, String label) {
     return Container(
       dartStyle: DartStyle(
+        position: Position.relative,
+        overflow: Overflow.hidden,
         padding: const EdgeInsets.all(12),
         radius: 8,
-        border: Border.all(color: Color.rgba(148, 163, 184, 0.12)),
-        background: Color.rgba(2, 6, 23, 0.42),
+        border: Border.all(color: Color.rgba(226, 232, 240, 0.9)),
+        background: Color.rgba(248, 250, 252, 0.86),
       ),
       children: [
+        Container(
+          props: const {'aria-hidden': 'true'},
+          dartStyle: DartStyle(
+            position: Position.absolute,
+            top: 0,
+            bottom: 0,
+            width: SizeValue('55%'),
+            background: Color.rgba(52, 211, 153, 0.14),
+            animation: StyleAnimation.named(
+              'flint-docs-scan',
+              milliseconds: 4200,
+              timing: TransitionTiming.easeInOut,
+              iteration: AnimationIteration.infinite,
+            ),
+          ),
+        ),
         Text.span(
           value,
           dartStyle: const DartStyle(
-            color: Colors.white,
+            position: Position.relative,
+            color: Color('#0f172a'),
             fontSize: 18,
             fontWeight: 900,
           ),
         ),
         Text.span(
           label,
-          dartStyle: const DartStyle(color: Color('#94a3b8'), fontSize: 12),
+          dartStyle: const DartStyle(
+            position: Position.relative,
+            color: Color('#64748b'),
+            fontSize: 12,
+          ),
         ),
       ],
     );
@@ -584,13 +925,13 @@ class HomeHero extends FlintComponent {
         padding: EdgeInsets.all(8),
       ),
       children: [
-        Icon(icon, size: 18, color: _mint),
+        Icon(icon, size: 18, color: _mintStrong),
         Text.span(
           label,
           dartStyle: const DartStyle(
-            color: Color('#cbd5e1'),
+            color: Color('#334155'),
             fontSize: 13,
-            fontWeight: 700,
+            fontWeight: 800,
           ),
         ),
       ],
@@ -622,8 +963,10 @@ class HomeHero extends FlintComponent {
 }
 
 const _mint = Color('#34d399');
+const _mintStrong = Color('#059669');
+const _skyStrong = Color('#0284c7');
 const _sky = Color('#38bdf8');
-const _violet = Color('#a78bfa');
+const _violet = Color('#8b5cf6');
 
 const _heroCode = "import 'package:flint_dart/flint_dart.dart';\n"
     "import 'package:flint_ui/flint_ui.dart';\n\n"

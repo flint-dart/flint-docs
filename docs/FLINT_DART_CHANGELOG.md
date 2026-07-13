@@ -2,6 +2,183 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.2.0] - 2026-07-13
+
+### Added
+- Added first-class HTTP `QUERY` route registration with `app.query(...)` and controller route builder support.
+- Added QUERY support to route matching, middleware, automatic OPTIONS/Allow responses, CORS defaults, cache middleware, route discovery, and generated Swagger vendor extensions.
+- Preserved explicit `null` values in ORM update data maps so apps can intentionally clear nullable columns.
+
+### Changed
+- Updated Flint UI dependency to `flint_ui: ^0.1.14`.
+- Updated Flint Client dependency to `flint_client: ^0.0.5`.
+- Made ORM `where(...).orWhere(...)` chains compile in chain order, so `orWhere` now combines with the previous condition using `OR` instead of being grouped behind an `AND`.
+
+
+### Added
+- Added response cache helpers: `cachePublic`, `cachePrivate`, `revalidate`, `noStore`, `etag`, `lastModified`, and `header`.
+- Added `CacheMiddleware` for route-level browser/CDN cache headers and `ETagMiddleware` for simple conditional GET handling.
+
+## [1.1.19] - 2026-07-08
+
+### Changed
+- Made page-bundle production builds write `manifest.json` progressively after each successful page compile, so interrupted large builds keep a valid manifest and can fall back to the global bundle for unfinished pages.
+
+## [1.1.18] - 2026-07-08
+
+### Changed
+- Restored page-level Flint UI bundles as the default for `flint web` and production `flint build` web asset generation.
+- Kept the shared runtime available through `flint web --shared-runtime` for projects that prefer one deferred runtime bundle.
+- Made static asset caching production-aware: fingerprinted or query-versioned assets now use one-year immutable caching, while HTML, `manifest.json`, and service workers revalidate on every request.
+
+## [1.1.17] - 2026-07-08
+
+### Changed
+- Changed `flint web --build-only` and default `flint web` production-style builds to use the shared runtime bundle by default instead of compiling every registered page one by one.
+- Kept page-level bundle compilation available through `--page-bundles` and single-page compilation through `--page <name>`.
+- Updated `flint web --help` to make shared runtime the documented default and page bundles opt-in.
+
+## [1.1.16] - 2026-07-08
+
+### Added
+- Added `relationQuery()` so model relation metadata can be reused as the starting point for constrained relation queries.
+- Added `countRelation()` and `hasRelated()` for common relation count and existence checks.
+- Added `relationCounts()` for grouped counts from the same relation, useful for dashboards, sidebars, and product ownership checks.
+- Added `loadRelationCount()` to store a related record count directly on a model attribute.
+- Added ORM pagination metadata helpers for page/per-page list responses.
+
+### Changed
+- Updated the Flint UI dependency to `flint_ui: ^0.1.13` for media/device APIs, server-safe media stubs, and canvas editor primitives.
+
+## [1.1.15] - 2026-07-06
+
+### Added
+- Added framework-level startup migrations through `Flint(autoMigrate: true)` and the `FLINT_AUTO_MIGRATE` environment flag.
+- Added public `FlintMigrations.ensure()` helpers for apps that want explicit deployment-time migration control.
+- Added dev-only on-demand Flint UI page bundle builds when a requested page bundle is missing during hot reload.
+- Added automatic page registry discovery for `lib/ui/registry.dart` and `lib/ui/page_registry.dart` in addition to `lib/ui/component_registry.dart`.
+
+### Changed
+- Updated the Flint UI dependency to `flint_ui: ^0.1.12` for built-in light/dark theme provider support, global theme state, and theme-scoped styles.
+- Quieted default hot-reload startup logging so watcher paths, debounce details, endpoint URLs, and duplicate restart messages are only shown when verbose hot reload logging is enabled.
+- Made the Dart VM service for hot reload opt-in through `FLINT_DEBUG_VM_SERVICE=true` instead of enabling it by default.
+- Quieted Flint UI build output so normal builds show a single `Building Flint UI...` message and save-triggered hot reload shows `Rebuilding Flint UI...`; detailed asset/compiler logs are now opt-in with `FLINT_WEB_UI_VERBOSE=true`.
+- Added completion messages after successful Flint UI builds and rebuilds.
+- Serialized save-triggered Flint UI rebuilds so repeated file events queue one follow-up rebuild instead of launching overlapping compilers.
+- Changed the default console log level to `info` while keeping Flint UI build/rebuild start and completion messages visible.
+- Changed hot reload startup to silently compile only the main Flint UI bundle after the server starts; page bundles are rebuilt on page/source saves or by `flint web --build-only`.
+- Changed save-triggered Flint UI rebuilds to rebuild only the directly changed page bundle when the changed source maps to a page registry entry.
+
+## [1.1.14] - 2026-06-24
+
+### Added
+- Added `flint_ai: ^0.1.0` as the first-party AI runtime dependency for Flint Dart applications.
+- Added `package:flint_dart/ai.dart` as the public AI entrypoint, re-exporting the standalone `flint_ai` runtime plus Flint-specific adapters.
+- Added `app.ai` on `Flint` so every app has a shared AI runtime instance.
+- Added `ctx.ai` on request `Context` so controllers and route handlers can run agents, chat providers, workflows, tools, memory, and repository operations from the current request.
+- Added Flint-backed AI memory and repository adapters:
+  - `FlintDbAiMemoryStore`
+  - `FlintAutoAiMemoryStore`
+  - `FlintDbAiRunStore`
+  - `FlintDbAiThreadStore`
+  - `FlintDbAiTraceStore`
+  - `FlintDbAiArtifactStore`
+  - `FlintAutoAiRepository`
+- Added database fallback behavior for AI stores so development apps can keep running with in-memory storage when the database is not connected.
+- Added canonical AI table definitions through `flintAiTables`, covering AI runs, threads, traces, artifacts, run events, and thread messages.
+- Added `.env` provider setup helpers:
+  - `useOpenAiFromEnv()`
+  - `useGeminiFromEnv()`
+  - `useAnthropicFromEnv()`
+  - `useChatProvidersFromEnv()`
+- Added `.env` production policy setup through `useProductionToolPolicyFromEnv()`.
+- Added sample AI table registration in the example app.
+- Added AI example endpoints for support, reporting, and content-email workflows.
+- Added tests for environment provider setup, `app.ai`, `ctx.ai`, Flint AI persistence fallback, route execution, workflow metadata, and streaming HTTP client compatibility.
+
+### Changed
+- Changed `package:flint_dart/ai.dart` to delegate to the standalone `flint_ai` package instead of carrying a duplicated AI runtime inside `flint_dart`.
+- Changed the default `Flint` AI runtime to use Flint auto adapters for memory and repository persistence.
+- Updated the example Flint UI component registry to use `PageRegistry`.
+- Updated README guidance to show `.env` provider setup, production AI policy setup, Flint-backed AI persistence, and the sample AI endpoints.
+- Updated `.pubignore` and the example package ignore file so local `pubspec_overrides.yaml` files are not included in published packages.
+
+### Removed
+- Removed the duplicated internal `lib/src/ai/*` runtime implementation from `flint_dart`.
+- Removed internal Flint Dart copies of AI providers, tools, workflows, memory stores, repository stores, and the basic agent example because these now live in `flint_ai`.
+
+### Fixed
+- Fixed route parenthesis counting in Swagger route extraction so static analysis no longer reports unrelated int/string equality checks.
+
+## [1.1.13] - 2026-06-18
+
+### Added
+- Added `RichTextUpload` middleware to handle secure rich text image/media uploads, featuring strict file extension whitelisting (blocking executables/scripts) and double-extension bypass mitigation (sanitizing intermediate dots).
+- Added `onUploadSuccess` callback hook to `RichTextUpload` middleware to allow custom actions (like saving file metadata to a database) when uploads complete successfully.
+
+### Changed
+- Updated the Flint UI dependency to `flint_ui: ^0.1.11`.
+
+## [1.1.12] - 2026-06-16
+
+### Changed
+- Updated the Flint UI dependency to `flint_ui: ^0.1.10`.
+
+## [1.1.11] - 2026-06-12
+
+### Fixed
+- `flint run` now uses `PORT` from `.env` as its default port before falling back to `8080`, so the hot-reload launcher and app server agree without requiring `--port`.
+
+## [1.1.10] - 2026-06-12
+
+### Fixed
+- Hot reload now updates its watcher port when the worker announces a different listening port, preventing false restart failures such as checking port `8080` after the app starts on `3030`.
+- Hot reload worker processes now receive the selected port through the `PORT` environment variable as well as the positional CLI argument.
+
+## [1.1.9] - 2026-06-12
+
+### Fixed
+- Hot reload now serializes overlapping restarts so rapid save events cannot start multiple workers at the same time.
+- Hot reload now waits for the old worker to release the configured port before starting the next worker.
+- Hot reload now force-stops stale listeners on the configured port before startup, using `taskkill` on Windows and `lsof`, `ss`, or `netstat` plus process signals on Linux and macOS.
+- Restarted hot reload workers now inherit `FLINT_HOT=1`, keeping worker processes from launching nested hot-reload parents.
+- Browser reload notifications now recover by restarting the server when the internal hot-reload endpoint is unavailable.
+- `flint run` now accepts `--port=<port>` and `--port <port>` in addition to a positional port argument.
+
+### Changed
+- Flint Web UI builds are deferred to the hot-reload watcher during development so the server can start first.
+- Default Flint Web UI compilation now builds both the main bundle and page-level bundles when available.
+- Flint Web UI output cleanup now removes stale bundle, manifest, compressed, and deferred-part files more safely.
+- Updated the Flint UI dependency to `flint_ui: ^0.1.9`.
+
+## [1.1.7] - 2026-05-31
+
+### Added
+- Flint Web UI builds now generate `/flint-sw.js`, a service worker that caches the Flint UI manifest, fallback bundle, and page-level bundles in the browser.
+- `res.page(...)` now automatically registers the generated service worker during browser idle time when it exists and hot reload is disabled.
+
+### Fixed
+- Service worker files now bypass immutable static caching so clients can pick up updated background caching behavior promptly.
+
+## [1.1.6] - 2026-05-31
+
+### Fixed
+- `StaticFileMiddleware` now serves JavaScript, CSS, and source map assets with production cache headers unless hot reload is enabled.
+- `StaticFileMiddleware` now honors its gzip compression option for text-like assets when clients send `Accept-Encoding: gzip`.
+
+## [1.1.5] - 2026-05-31
+
+### Changed
+- `flint build` now builds Flint Web UI assets first, generates page-level bundles by default when a component registry is detected, copies resources into `build/`, and then compiles the server executable.
+- `flint web` now treats page-level bundles as the default build mode and adds `--no-page-bundles` for projects that only want a single global JavaScript bundle.
+
+## [1.1.4] - 2026-05-31
+
+### Added
+- Added manifest-aware Flint UI script selection for `res.page(...)` so pages can automatically use page-level JavaScript bundles when `public/assets/js/flint-ui/manifest.json` is present.
+- Added opt-in `flint web --page-bundles`, `--pages-config`, and `--page <name>` CLI support for generating page-level Flint UI bundles and a manifest.
+- Added automatic page bundle discovery from `lib/ui/component_registry.dart`, including direct imports for each registered page so generated page bundles do not import the full registry.
+
 ## [1.1.3] - 2026-05-31
 
 ### Release Status

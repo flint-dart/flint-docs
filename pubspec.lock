@@ -117,26 +117,26 @@ packages:
     dependency: transitive
     description:
       name: flint_client
-      sha256: a5218dc6510eabe724d986c412b4c9a108bc6b479258a1cc5b79225dc440c447
+      sha256: "9b49b74f37d0c2ba79a1be48ecdf49dfa725ec94be6cb80c6f220e279491e64a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.4"
+    version: "0.0.5"
   flint_dart:
     dependency: "direct main"
     description:
       name: flint_dart
-      sha256: d68c0a50e949e7e026ead35c8c60ac527d1fda00823e8e6daecf9a2ea02ed117
+      sha256: "57ce130e64c07631c6a23d79f1bae2c23ce79f921ec5e932141e37be2a8bf349"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.14"
+    version: "1.2.0"
   flint_ui:
     dependency: "direct main"
     description:
       name: flint_ui
-      sha256: "9fe9c0e83d279221734d0bece34eb898cd7a8dc4f9f107651fbb02bd760b5d74"
+      sha256: "34b45bf108ec3bba6961911c93bc15f70d481528b5d26074d5f667fc50173ba7"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.11"
+    version: "0.1.14"
   intl:
     dependency: transitive
     description:
@@ -181,10 +181,10 @@ packages:
     dependency: transitive
     description:
       name: mysql_dart
-      sha256: "6461cee301496809362a63b792124b107aceadf26df6cd4d35e7ce7ab5a9a9fb"
+      sha256: "7796f958c1860014e28cc3bcb1490a6e08c11ff1e7e79945aacf753bffe464ba"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "3.0.0"
   package_config:
     dependency: transitive
     description:
@@ -249,14 +249,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  tuple:
-    dependency: transitive
-    description:
-      name: tuple
-      sha256: a97ce2013f240b2f3807bcbaf218765b6f301c3eff91092bcfa23a039e7dd151
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   typed_data:
     dependency: transitive
     description:
