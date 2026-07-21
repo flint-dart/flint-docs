@@ -4,7 +4,7 @@ class FinalCta extends Component {
   @override
   View build() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         width: SizeValue.percent(100),
         maxWidth: 1152,
         margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -12,45 +12,50 @@ class FinalCta extends Component {
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.grid,
             gap: 12,
             padding: EdgeInsets.all(28),
             radius: 8,
-            border: Border(color: Color.rgba(52, 211, 153, 0.38), width: 1),
-            background: Color.rgba(8, 47, 73, 0.25),
+            border: Border(color: ThemeToken.color('line'), width: 1),
+            background: ThemeToken.color('panel'),
+            shadow: ThemeToken.shadow('sm'),
+            dark: const DartStyle(
+              border: Border(color: Color.rgba(52, 211, 153, 0.38), width: 1),
+              background: Color.rgba(8, 47, 73, 0.25),
+            ),
           ),
           children: [
             Text.span(
               'Ready path',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.block,
                 fontSize: 12,
                 fontWeight: 800,
-                color: Color('#67e8f9'),
+                color: ThemeToken.color('primary'),
               ),
             ),
             Text.h2(
               'Start with the guide, then jump into the API.',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 28,
                 fontWeight: 700,
                 lineHeight: 1.18,
-                color: Colors.white,
+                color: ThemeToken.color('text'),
               ),
             ),
             Text.p(
               'The docs now point users into Markdown-backed guides and Dart-powered pages, with no old view templates in the way.',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 15,
                 lineHeight: 1.65,
-                color: Color('#a8b3c5'),
+                color: ThemeToken.color('muted'),
               ),
             ),
             Row(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.flex,
                 flexWrap: FlexWrap.wrap,
                 gap: 12,

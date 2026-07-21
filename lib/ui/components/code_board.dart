@@ -19,18 +19,18 @@ class CodeBoard extends Component {
   @override
   View build() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 10,
         minWidth: 0,
-        padding: EdgeInsets.all(14),
+        padding: const EdgeInsets.all(14),
         radius: 8,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(3, 7, 18, 0.78),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
@@ -39,15 +39,15 @@ class CodeBoard extends Component {
           children: [
             Text.span(
               filename,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 12,
                 fontWeight: 800,
-                color: Color('#cbd5e1'),
+                color: ThemeToken.color('text'),
               ),
             ),
             Text.span(
               label,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 11,
                 fontWeight: 800,
                 color: Color('#a7f3d0'),

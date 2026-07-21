@@ -8,7 +8,7 @@ class CounterProof extends Component {
   @override
   View build() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         width: SizeValue.percent(100),
         maxWidth: 1152,
         margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -24,7 +24,7 @@ class CounterProof extends Component {
             padding: EdgeInsets.all(20),
             radius: 8,
             border: Border(color: Color.rgba(52, 211, 153, 0.28), width: 1),
-            background: Color.rgba(2, 6, 23, 0.5),
+            background: ThemeToken.color('panelStrong'),
             lg: DartStyle(
               gridTemplateColumns: GridTemplateColumns.tracks([
                 GridTrack.minmax(SizeValue.zero, SizeValue.fr(0.9)),
@@ -35,21 +35,21 @@ class CounterProof extends Component {
           ),
           children: [
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 18,
                 minWidth: 280,
               ),
               children: [
                 Container(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.grid,
                     gap: 9,
                   ),
                   children: [
                     Text.span(
                       'Live proof',
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         display: Display.block,
                         fontSize: 12,
                         fontWeight: 800,
@@ -58,18 +58,18 @@ class CounterProof extends Component {
                     ),
                     Text.h2(
                       'This counter is a real Flint component.',
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         margin: EdgeInsets.all(0),
                         maxWidth: 560,
                         fontSize: 24,
                         fontWeight: 800,
                         lineHeight: 1.16,
-                        color: Colors.white,
+                        color: ThemeToken.color('text'),
                       ),
                     ),
                     Text.p(
                       'Click it and the state updates through Dart in the browser, inside the same docs page.',
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         margin: EdgeInsets.all(0),
                         maxWidth: 620,
                         fontSize: 14,
@@ -95,7 +95,7 @@ class CounterProof extends Component {
 
   View _counterControls() {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         flexWrap: FlexWrap.wrap,
         alignItems: AlignItems.center,
@@ -103,7 +103,7 @@ class CounterProof extends Component {
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.center,
@@ -111,12 +111,12 @@ class CounterProof extends Component {
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
             radius: 8,
             border: Border(color: Color.rgba(148, 163, 184, 0.18), width: 1),
-            background: Color.rgba(15, 23, 42, 0.76),
+            background: ThemeToken.color('panel'),
           ),
           children: [
             Text.span(
               count,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 34,
                 fontWeight: 900,
                 lineHeight: 1,
@@ -126,7 +126,7 @@ class CounterProof extends Component {
           ],
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 8,
@@ -186,14 +186,14 @@ class CounterProof extends Component {
         ),
         children: [
           Column(
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.grid,
               gap: 4,
             ),
             children: [
               Text.strong(
                 'Theme state',
-                dartStyle: const DartStyle(fontSize: 13),
+                dartStyle: DartStyle(fontSize: 13),
               ),
               Text.span(
                 isDark ? 'Dark mode is active' : 'Light mode is active',

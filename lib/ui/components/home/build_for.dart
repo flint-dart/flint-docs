@@ -4,7 +4,7 @@ class BuildFor extends FlintComponent {
   @override
   FlintNode build() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         width: SizeValue.percent(100),
         maxWidth: 1152,
         margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -12,7 +12,7 @@ class BuildFor extends FlintComponent {
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.grid,
             gap: 10,
             maxWidth: 720,
@@ -20,27 +20,27 @@ class BuildFor extends FlintComponent {
           children: [
             Text.h2(
               'Built for real full-stack work',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 32,
                 fontWeight: 700,
                 lineHeight: 1.15,
-                color: Colors.white,
+                color: ThemeToken.color('text'),
               ),
             ),
             Text.p(
               'The home page should show the framework, not a demo toy. These are the pieces teams reach for first.',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 15,
                 lineHeight: 1.65,
-                color: Color('#a8b3c5'),
+                color: ThemeToken.color('muted'),
               ),
             ),
           ],
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 14,
@@ -56,19 +56,19 @@ class BuildFor extends FlintComponent {
 
   FlintNode _capability(String label, String title, String body) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 10,
         minWidth: 320,
         padding: EdgeInsets.all(20),
         radius: 8,
         border: Border(color: Color.rgba(51, 65, 85, 0.82), width: 1),
-        background: Color.rgba(15, 23, 42, 0.62),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Text.span(
           label,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 800,
             color: Color('#fbbf24'),
@@ -76,16 +76,16 @@ class BuildFor extends FlintComponent {
         ),
         Text.h3(
           title,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 16,
             fontWeight: 700,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
           ),
         ),
         Text.p(
           body,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 13,
             lineHeight: 1.6,

@@ -1,6 +1,7 @@
 import 'package:flint_ui/flint_ui.dart';
 
 import '../../support/product_versions.dart';
+import 'brand_logo.dart';
 
 class Footer extends Component {
   @override
@@ -23,29 +24,29 @@ class Footer extends Component {
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             width: SizeValue.percent(100),
             padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
           ),
           children: [
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 28,
                 padding: EdgeInsets.all(22),
                 border: Border(color: Color.rgba(56, 189, 248, 0.16), width: 1),
-                background: Color.rgba(2, 6, 23, 0.36),
+                background: ThemeToken.color('panelStrong'),
               ),
               children: [
                 Container(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     width: SizeValue.percent(100),
                     maxWidth: 1152,
                     margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
                   ),
                   children: [
                     Row(
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         display: Display.flex,
                         flexWrap: FlexWrap.wrap,
                         justifyContent: JustifyContent.between,
@@ -98,7 +99,7 @@ class Footer extends Component {
                   ],
                 ),
                 Row(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     width: SizeValue.percent(100),
                     maxWidth: 1152,
                     margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -116,13 +117,13 @@ class Footer extends Component {
                   children: [
                     Text.span(
                       'Copyright 2024 Flint Dart. Maintained by Eulogia Technologies.',
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         fontSize: 11,
-                        color: Color('#64748b'),
+                        color: ThemeToken.color('muted'),
                       ),
                     ),
                     Row(
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         display: Display.flex,
                         flexWrap: FlexWrap.wrap,
                         alignItems: AlignItems.center,
@@ -146,14 +147,14 @@ class Footer extends Component {
 
   View _brand() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 14,
         minWidth: 280,
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             gap: 12,
@@ -180,34 +181,26 @@ class Footer extends Component {
                 ]),
               ),
               children: [
-                Text.span(
-                  'F',
-                  dartStyle: const DartStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: 900,
-                    lineHeight: 1,
-                  ),
-                ),
+                brandLogoMark(size: 30),
               ],
             ),
             Container(
-              dartStyle: const DartStyle(display: Display.grid, gap: 2),
+              dartStyle: DartStyle(display: Display.grid, gap: 2),
               children: [
                 Text.span(
                   'Flint Dart',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     fontSize: 16,
                     fontWeight: 900,
-                    color: Colors.white,
+                    color: ThemeToken.color('text'),
                   ),
                 ),
                 Text.span(
                   'Backend framework and Dart UI docs',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     fontSize: 11,
                     fontWeight: 700,
-                    color: Color('#94a3b8'),
+                    color: ThemeToken.color('muted'),
                   ),
                 ),
               ],
@@ -216,16 +209,16 @@ class Footer extends Component {
         ),
         Text.p(
           'Build routes, controllers, APIs, docs, and browser UI from one Dart-shaped stack.',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             maxWidth: 390,
             margin: EdgeInsets.all(0),
             fontSize: 13,
             lineHeight: 1.6,
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
           ),
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 8,
@@ -242,7 +235,7 @@ class Footer extends Component {
 
   View _linkColumn(String title, List<(String, String)> links) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 9,
         minWidth: 150,
@@ -250,7 +243,7 @@ class Footer extends Component {
       children: [
         Text.span(
           title,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.block,
             margin: EdgeInsets.only(bottom: 3),
             fontSize: 11,
@@ -262,7 +255,7 @@ class Footer extends Component {
           Link(
             href: href,
             child: label,
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.block,
               fontSize: 13,
               color: Color('#a8b3c5'),
@@ -274,19 +267,19 @@ class Footer extends Component {
 
   View _pill(String label) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 9999,
         border: Border(color: Color.rgba(51, 65, 85, 0.76), width: 1),
-        background: Color.rgba(15, 23, 42, 0.7),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Text.span(
           label,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 700,
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
           ),
         ),
       ],

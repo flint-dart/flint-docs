@@ -20,7 +20,8 @@ class QuickStart extends Component {
   @override
   View build() {
     final installCommand = _installCommand(_selectedOs);
-    final shellLabel = _selectedOs == 'windows' ? 'cmd / powershell' : 'terminal';
+    final shellLabel =
+        _selectedOs == 'windows' ? 'cmd / powershell' : 'terminal';
 
     return Container(
       dartStyle: DartStyle(
@@ -28,17 +29,6 @@ class QuickStart extends Component {
         maxWidth: 1152,
         margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 44),
-        background: Background.layers([
-          Gradient.linear(
-            135,
-            [
-              GradientStop(Color.rgba(14, 116, 144, 0.16), 0),
-              GradientStop(Color.rgba(15, 23, 42, 0.28), 48),
-              GradientStop(Color.rgba(52, 211, 153, 0.1), 100),
-            ],
-          ),
-          Color.rgba(15, 23, 42, 0.2),
-        ]),
         sm: DartStyle(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 64),
         ),
@@ -52,17 +42,22 @@ class QuickStart extends Component {
             gap: 20,
             padding: EdgeInsets.all(14),
             radius: 8,
-            border: Border(color: Color.rgba(56, 189, 248, 0.18), width: 1),
-            background: Background.layers([
-              Gradient.linear(
-                145,
-                [
-                  GradientStop(Color.rgba(2, 6, 23, 0.16), 0),
-                  GradientStop(Color.rgba(8, 47, 73, 0.34), 100),
-                ],
-              ),
-              Color.rgba(2, 6, 23, 0.48),
-            ]),
+            border: Border(color: ThemeToken.color('line'), width: 1),
+            background: ThemeToken.color('panel'),
+            shadow: ThemeToken.shadow('sm'),
+            dark: DartStyle(
+              border: Border(color: Color.rgba(56, 189, 248, 0.18), width: 1),
+              background: Background.layers([
+                Gradient.linear(
+                  145,
+                  [
+                    GradientStop(Color.rgba(2, 6, 23, 0.16), 0),
+                    GradientStop(Color.rgba(8, 47, 73, 0.34), 100),
+                  ],
+                ),
+                Color.rgba(2, 6, 23, 0.48),
+              ]),
+            ),
             lg: DartStyle(
               gridTemplateColumns: GridTemplateColumns.tracks([
                 GridTrack.minmax(SizeValue.zero, SizeValue.fr(0.78)),
@@ -74,40 +69,41 @@ class QuickStart extends Component {
           ),
           children: [
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 14,
                 minWidth: 0,
               ),
               children: [
                 Row(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.flex,
                     flexWrap: FlexWrap.wrap,
                     alignItems: AlignItems.center,
                     gap: 8,
                   ),
                   children: [
-                    Icon(Icons.zap, size: 16, color: Color('#67e8f9')),
+                    Icon(Icons.zap,
+                        size: 16, color: ThemeToken.color('primary')),
                     Text.span(
                       'Quick start',
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         display: Display.block,
                         fontSize: 12,
                         fontWeight: 800,
-                        color: Color('#67e8f9'),
+                        color: ThemeToken.color('primary'),
                       ),
                     ),
                   ],
                 ),
                 Text.h2(
                   'Three commands from empty folder to running app.',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     margin: EdgeInsets.all(0),
                     fontSize: 25,
                     fontWeight: 700,
                     lineHeight: 1.18,
-                    color: Colors.white,
+                    color: ThemeToken.color('text'),
                     sm: DartStyle(
                       fontSize: 32,
                       lineHeight: 1.15,
@@ -116,12 +112,12 @@ class QuickStart extends Component {
                 ),
                 Text.p(
                   'Copy each step as you go. Flint keeps the first path short, then the guides can fill in the details when you need them.',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     margin: EdgeInsets.all(0),
                     maxWidth: 560,
                     fontSize: 14,
                     lineHeight: 1.6,
-                    color: Color('#a8b3c5'),
+                    color: ThemeToken.color('muted'),
                     sm: DartStyle(
                       fontSize: 15,
                       lineHeight: 1.65,
@@ -130,7 +126,7 @@ class QuickStart extends Component {
                 ),
                 _osSwitch(),
                 Row(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.flex,
                     flexWrap: FlexWrap.wrap,
                     gap: 12,
@@ -149,7 +145,7 @@ class QuickStart extends Component {
               ],
             ),
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 12,
                 width: SizeValue.percent(100),
@@ -158,7 +154,7 @@ class QuickStart extends Component {
                 boxSizing: 'border-box',
                 padding: EdgeInsets.all(12),
                 radius: 8,
-                border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
+                border: Border(color: ThemeToken.color('line'), width: 1),
                 background: Color.rgba(3, 7, 18, 0.62),
                 sm: DartStyle(
                   padding: EdgeInsets.all(14),
@@ -166,7 +162,7 @@ class QuickStart extends Component {
               ),
               children: [
                 Row(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.flex,
                     alignItems: AlignItems.center,
                     justifyContent: JustifyContent.between,
@@ -174,7 +170,7 @@ class QuickStart extends Component {
                   ),
                   children: [
                     Row(
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         display: Display.flex,
                         alignItems: AlignItems.center,
                         gap: 7,
@@ -183,20 +179,20 @@ class QuickStart extends Component {
                         Icon(Icons.terminal, size: 15, color: Color('#a7f3d0')),
                         Text.span(
                           'terminal',
-                          dartStyle: const DartStyle(
+                          dartStyle: DartStyle(
                             fontSize: 12,
                             fontWeight: 800,
-                            color: Color('#cbd5e1'),
+                            color: ThemeToken.color('muted'),
                           ),
                         ),
                       ],
                     ),
                     Text.span(
                       shellLabel,
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         fontSize: 11,
                         fontWeight: 800,
-                        color: Color('#64748b'),
+                        color: ThemeToken.color('muted'),
                       ),
                     ),
                   ],
@@ -218,7 +214,7 @@ class QuickStart extends Component {
 
   View _osSwitch() {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         flexWrap: FlexWrap.wrap,
         alignItems: AlignItems.center,
@@ -251,16 +247,13 @@ class QuickStart extends Component {
         minHeight: 30,
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         radius: 8,
-        border: Border(
-          color: active
-              ? const Color.rgba(103, 232, 249, 0.52)
-              : const Color.rgba(51, 65, 85, 0.72),
-          width: 1,
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background:
+            active ? Color.rgba(14, 165, 233, 0.14) : ThemeToken.color('panel'),
+        color: active ? ThemeToken.color('text') : ThemeToken.color('muted'),
+        dark: const DartStyle(
+          border: Border(color: Color.rgba(51, 65, 85, 0.72), width: 1),
         ),
-        background: active
-            ? Color.rgba(14, 165, 233, 0.2)
-            : Color.rgba(15, 23, 42, 0.44),
-        color: active ? const Color('#e0f2fe') : const Color('#94a3b8'),
       ),
       onPressed: (_) => setState(() => _selectedOs = value),
     );
@@ -270,7 +263,7 @@ class QuickStart extends Component {
     final copied = _copiedStep == number;
 
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         position: Position.relative,
         display: Display.flex,
         alignItems: AlignItems.start,
@@ -280,8 +273,11 @@ class QuickStart extends Component {
         gap: 10,
         padding: EdgeInsets.only(top: 14, right: 46, bottom: 14, left: 12),
         radius: 8,
-        border: Border(color: Color.rgba(51, 65, 85, 0.72), width: 1),
-        background: Color.rgba(15, 23, 42, 0.52),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
+        dark: const DartStyle(
+          border: Border(color: Color.rgba(51, 65, 85, 0.72), width: 1),
+        ),
         sm: DartStyle(
           gap: 14,
           padding: EdgeInsets.only(top: 16, right: 54, bottom: 16, left: 16),
@@ -289,7 +285,7 @@ class QuickStart extends Component {
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.center,
@@ -305,7 +301,7 @@ class QuickStart extends Component {
           children: [
             Text.span(
               number,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 12,
                 fontWeight: 800,
                 color: Color('#bae6fd'),
@@ -314,7 +310,7 @@ class QuickStart extends Component {
           ],
         ),
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.grid,
             gap: 6,
             minWidth: 0,
@@ -324,23 +320,23 @@ class QuickStart extends Component {
           children: [
             Text.h3(
               title,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 16,
                 fontWeight: 700,
-                color: Colors.white,
+                color: ThemeToken.color('text'),
               ),
             ),
             Text.p(
               command,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontFamily: FontFamily.monospace,
                 fontSize: 11,
                 lineHeight: 1.5,
                 maxWidth: SizeValue.percent(100),
                 overflow: 'auto',
-                color: Color('#cbd5e1'),
+                color: ThemeToken.color('muted'),
                 sm: DartStyle(
                   fontSize: 12,
                 ),
@@ -349,7 +345,7 @@ class QuickStart extends Component {
           ],
         ),
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             position: Position.absolute,
             top: 10,
             right: 10,
@@ -363,7 +359,7 @@ class QuickStart extends Component {
               size: ComponentSize.sm,
               variant: ButtonVariant.soft,
               tone: copied ? Tone.success : Tone.neutral,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.flex,
                 alignItems: AlignItems.center,
                 justifyContent: JustifyContent.center,

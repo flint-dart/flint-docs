@@ -264,7 +264,7 @@ class AuthModal extends FlintComponent {
   }
 }
 
-const _backdrop = DartStyle(
+final _backdrop = DartStyle(
   position: Position.fixed,
   top: 0,
   right: 0,
@@ -274,64 +274,79 @@ const _backdrop = DartStyle(
   display: Display.flex,
   alignItems: AlignItems.center,
   justifyContent: JustifyContent.center,
-  background: Color.rgba(2, 6, 23, 0.8),
+  background: ThemeToken.color('panelStrong'),
   padding: EdgeInsets.all(16),
 );
 
-const _panel = DartStyle(
+final _panel = DartStyle(
   position: Position.relative,
   display: Display.grid,
   gap: 20,
   width: SizeValue.percent(100),
   padding: EdgeInsets.all(24),
   radius: 20,
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  background: Color.rgba(15, 23, 42, 0.98),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  background: ThemeToken.color('panel'),
   maxWidth: 420,
-  shadow: Shadow(y: 24, blur: 48, spread: -12, color: Color.rgba(0, 0, 0, 0.5)),
+  light: DartStyle(
+    shadow: Shadow(
+      y: 24,
+      blur: 52,
+      spread: -22,
+      color: Color.rgba(15, 23, 42, 0.28),
+    ),
+  ),
+  dark: DartStyle(
+    shadow: Shadow(
+      y: 24,
+      blur: 48,
+      spread: -12,
+      color: Color.rgba(0, 0, 0, 0.5),
+    ),
+  ),
 );
 
-const _headerRow = DartStyle(
+final _headerRow = DartStyle(
   display: Display.flex,
   alignItems: AlignItems.center,
   justifyContent: JustifyContent.between,
   gap: 12,
 );
 
-const _headerTitle = DartStyle(
+final _headerTitle = DartStyle(
   fontSize: 18,
   fontWeight: 600,
-  color: Colors.white,
+  color: ThemeToken.color('text'),
   margin: EdgeInsets.all(0),
 );
 
-const _tabsRow = DartStyle(
+final _tabsRow = DartStyle(
   display: Display.flex,
   flexWrap: FlexWrap.wrap,
   gap: 8,
 );
 
-const _errorBox = DartStyle(
+final _errorBox = DartStyle(
   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
   radius: 10,
   border: Border(color: Color.rgba(248, 113, 113, 0.4), width: 1),
   background: Color.rgba(248, 113, 113, 0.1),
 );
 
-const _errorText = DartStyle(
+final _errorText = DartStyle(
   fontSize: 13,
   color: Color('#fca5a5'),
   margin: EdgeInsets.all(0),
 );
 
-const _formGrid = DartStyle(
+final _formGrid = DartStyle(
   display: Display.grid,
   gap: 16,
 );
 
-const _input = DartStyle(
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  background: Color.rgba(2, 6, 23, 0.6),
+final _input = DartStyle(
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  background: ThemeToken.color('panelStrong'),
   fontSize: 14,
-  color: Colors.white,
+  color: ThemeToken.color('text'),
 );

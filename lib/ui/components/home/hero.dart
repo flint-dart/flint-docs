@@ -10,31 +10,60 @@ class HomeHero extends FlintComponent {
         position: Position.relative,
         overflow: Overflow.hidden,
         minHeight: SizeValue('calc(100vh - 68px)'),
-        borderBottom: Border(color: Color.rgba(15, 23, 42, 0.08), width: 1),
-        background: Background.layers([
-          Gradient.radialCircle(
-            at: const GradientPosition.percent(10, 0),
-            stops: const [
-              GradientStop(Color.rgba(52, 211, 153, 0.24), 0),
-              GradientStop(Colors.transparent, 42),
-            ],
-          ),
-          Gradient.radialCircle(
-            at: const GradientPosition.percent(92, 6),
-            stops: const [
-              GradientStop(Color.rgba(56, 189, 248, 0.24), 0),
-              GradientStop(Colors.transparent, 44),
-            ],
-          ),
-          Gradient.linear(
-            160,
-            const [
-              GradientStop(Color('#f8fff9'), 0),
-              GradientStop(Color('#eefaf3'), 52),
-              GradientStop(Color('#e8f8fd'), 100),
-            ],
-          ),
-        ]),
+        borderBottom: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('bg'),
+        light: DartStyle(
+          background: Background.layers([
+            Gradient.radialCircle(
+              at: const GradientPosition.percent(10, 0),
+              stops: const [
+                GradientStop(Color.rgba(52, 211, 153, 0.24), 0),
+                GradientStop(Colors.transparent, 42),
+              ],
+            ),
+            Gradient.radialCircle(
+              at: const GradientPosition.percent(92, 6),
+              stops: const [
+                GradientStop(Color.rgba(56, 189, 248, 0.24), 0),
+                GradientStop(Colors.transparent, 44),
+              ],
+            ),
+            Gradient.linear(
+              160,
+              const [
+                GradientStop(Color('#f8fff9'), 0),
+                GradientStop(Color('#eefaf3'), 52),
+                GradientStop(Color('#e8f8fd'), 100),
+              ],
+            ),
+          ]),
+        ),
+        dark: DartStyle(
+          background: Background.layers([
+            Gradient.radialCircle(
+              at: const GradientPosition.percent(12, 0),
+              stops: const [
+                GradientStop(Color.rgba(52, 211, 153, 0.18), 0),
+                GradientStop(Colors.transparent, 38),
+              ],
+            ),
+            Gradient.radialCircle(
+              at: const GradientPosition.percent(90, 8),
+              stops: const [
+                GradientStop(Color.rgba(56, 189, 248, 0.2), 0),
+                GradientStop(Colors.transparent, 42),
+              ],
+            ),
+            Gradient.linear(
+              160,
+              [
+                GradientStop(ThemeToken.color('bg'), 0),
+                GradientStop(ThemeToken.color('panel'), 58),
+                GradientStop(ThemeToken.color('panelStrong'), 100),
+              ],
+            ),
+          ]),
+        ),
       ),
       children: [
         _meshOverlay(),
@@ -59,7 +88,7 @@ class HomeHero extends FlintComponent {
             width: ThemeToken.space('pageX'),
             margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
             padding: const EdgeInsets.symmetric(vertical: 42),
-            lg: const DartStyle(padding: EdgeInsets.symmetric(vertical: 64)),
+            lg: DartStyle(padding: EdgeInsets.symmetric(vertical: 64)),
           ),
           children: [
             _statusBar(),
@@ -104,14 +133,11 @@ class HomeHero extends FlintComponent {
           GradientStop(Colors.black, 72),
           GradientStop(Colors.transparent, 100),
         ]),
-        background: Gradient.linear(
-          135,
-          const [
-            GradientStop(Color.rgba(15, 23, 42, 0.08), 0),
-            GradientStop(Colors.transparent, 48),
-            GradientStop(Color.rgba(16, 185, 129, 0.08), 100),
-          ],
-        ),
+        background: Gradient.linear(135, [
+          GradientStop(ThemeToken.color('line'), 0),
+          const GradientStop(Colors.transparent, 48),
+          const GradientStop(Color.rgba(16, 185, 129, 0.08), 100),
+        ]),
       ),
     );
   }
@@ -136,14 +162,21 @@ class HomeHero extends FlintComponent {
         width: width,
         height: height,
         radius: 8,
-        border: Border.all(color: Color.rgba(255, 255, 255, 0.72)),
-        background: Color.rgba(255, 255, 255, 0.36),
+        border: Border.all(color: ThemeToken.color('line')),
+        background: ThemeToken.color('panel'),
         backdropFilter: StyleFilter.blur(16),
-        shadow: const Shadow(
-          y: 28,
-          blur: 70,
-          spread: -46,
-          color: Color.rgba(15, 23, 42, 0.28),
+        light: const DartStyle(
+          background: Color.rgba(255, 255, 255, 0.36),
+          shadow: Shadow(
+            y: 28,
+            blur: 70,
+            spread: -46,
+            color: Color.rgba(15, 23, 42, 0.28),
+          ),
+        ),
+        dark: DartStyle(
+          background: Color.rgba(15, 23, 42, 0.48),
+          shadow: ThemeToken.shadow('glow'),
         ),
         animation: StyleAnimation.named(
           'flint-docs-float',
@@ -191,14 +224,21 @@ class HomeHero extends FlintComponent {
         margin: const EdgeInsets.only(bottom: 40),
         padding: const EdgeInsets.all(10),
         radius: 8,
-        border: Border.all(color: Color.rgba(16, 185, 129, 0.2)),
-        background: Color.rgba(255, 255, 255, 0.74),
+        border: Border.all(color: ThemeToken.color('line')),
+        background: ThemeToken.color('panel'),
         backdropFilter: StyleFilter.blur(18),
-        shadow: const Shadow(
-          y: 18,
-          blur: 54,
-          spread: -42,
-          color: Color.rgba(15, 23, 42, 0.2),
+        light: const DartStyle(
+          background: Color.rgba(255, 255, 255, 0.74),
+          shadow: Shadow(
+            y: 18,
+            blur: 54,
+            spread: -42,
+            color: Color.rgba(15, 23, 42, 0.2),
+          ),
+        ),
+        dark: DartStyle(
+          background: Color.rgba(15, 23, 42, 0.72),
+          shadow: ThemeToken.shadow('glow'),
         ),
         animation: StyleAnimation.named(
           'flint-docs-rise',
@@ -235,8 +275,8 @@ class HomeHero extends FlintComponent {
             Icon(Icons.activity, size: 16, color: _mintStrong),
             Text.span(
               'Production docs, APIs, and UI in one Dart stack',
-              dartStyle: const DartStyle(
-                color: Color('#475569'),
+              dartStyle: DartStyle(
+                color: ThemeToken.color('muted'),
                 fontSize: 12,
                 fontWeight: 800,
               ),
@@ -249,7 +289,7 @@ class HomeHero extends FlintComponent {
 
   FlintNode _copy() {
     return Container(
-      dartStyle: const DartStyle(display: Display.grid, gap: 0),
+      dartStyle: DartStyle(display: Display.grid, gap: 0),
       children: [
         Container(
           dartStyle: DartStyle(
@@ -260,7 +300,13 @@ class HomeHero extends FlintComponent {
             padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
             radius: 999,
             border: Border(color: Color.rgba(16, 185, 129, 0.2), width: 1),
-            background: Color.rgba(236, 253, 245, 0.82),
+            background: ThemeToken.color('panel'),
+            light: const DartStyle(
+              background: Color.rgba(236, 253, 245, 0.82),
+            ),
+            dark: const DartStyle(
+              background: Color.rgba(52, 211, 153, 0.12),
+            ),
             animation: StyleAnimation.named(
               'flint-docs-rise',
               milliseconds: 660,
@@ -273,8 +319,8 @@ class HomeHero extends FlintComponent {
             Icon(Icons.cloud, size: 15, color: _mintStrong),
             Text.span(
               'Dart-first full-stack apps',
-              dartStyle: const DartStyle(
-                color: Color('#047857'),
+              dartStyle: DartStyle(
+                color: ThemeToken.color('primary'),
                 fontSize: 12,
                 fontWeight: 900,
                 textTransform: 'uppercase',
@@ -295,10 +341,10 @@ class HomeHero extends FlintComponent {
             letterSpacing: 0,
             background: Gradient.linear(
               90,
-              const [
-                GradientStop(Color('#0f172a'), 0),
-                GradientStop(Color('#047857'), 48),
-                GradientStop(Color('#0284c7'), 100),
+              [
+                GradientStop(ThemeToken.color('text'), 0),
+                GradientStop(ThemeToken.color('primary'), 48),
+                GradientStop(ThemeToken.color('accent'), 100),
               ],
             ),
             backgroundClip: BackgroundClip.text,
@@ -310,7 +356,7 @@ class HomeHero extends FlintComponent {
               delayMilliseconds: 130,
               fillMode: AnimationFillMode.both,
             ),
-            lg: const DartStyle(fontSize: 100),
+            lg: DartStyle(fontSize: 100),
           ),
         ),
         Text.h2(
@@ -318,7 +364,7 @@ class HomeHero extends FlintComponent {
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 18, bottom: 0),
             maxWidth: 760,
-            color: Color('#162033'),
+            color: ThemeToken.color('text'),
             fontSize: 25,
             lineHeight: 1.12,
             fontWeight: 850,
@@ -330,7 +376,7 @@ class HomeHero extends FlintComponent {
               delayMilliseconds: 190,
               fillMode: AnimationFillMode.both,
             ),
-            lg: const DartStyle(fontSize: 40),
+            lg: DartStyle(fontSize: 40),
           ),
         ),
         Text.p(
@@ -338,7 +384,7 @@ class HomeHero extends FlintComponent {
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 22, bottom: 0),
             maxWidth: 690,
-            color: Color('#516178'),
+            color: ThemeToken.color('muted'),
             fontSize: 18,
             lineHeight: 1.72,
             animation: StyleAnimation.named(
@@ -448,14 +494,21 @@ class HomeHero extends FlintComponent {
             gap: 14,
             padding: const EdgeInsets.all(14),
             radius: 8,
-            border: Border.all(color: Color.rgba(255, 255, 255, 0.78)),
-            background: Color.rgba(255, 255, 255, 0.78),
+            border: Border.all(color: ThemeToken.color('line')),
+            background: ThemeToken.color('panel'),
             backdropFilter: StyleFilter.blur(18),
-            shadow: const Shadow(
-              y: 32,
-              blur: 92,
-              spread: -44,
-              color: Color.rgba(15, 23, 42, 0.28),
+            light: const DartStyle(
+              background: Color.rgba(255, 255, 255, 0.78),
+              shadow: Shadow(
+                y: 32,
+                blur: 92,
+                spread: -44,
+                color: Color.rgba(15, 23, 42, 0.28),
+              ),
+            ),
+            dark: DartStyle(
+              background: Color.rgba(15, 23, 42, 0.72),
+              shadow: ThemeToken.shadow('glow'),
             ),
             transition: StyleTransition.transform(milliseconds: 220),
             hover: DartStyle(transform: StyleTransform.translateY(-6)),
@@ -489,7 +542,7 @@ class HomeHero extends FlintComponent {
   FlintNode _orbitalVisual() {
     return Container(
       props: const {'aria-hidden': 'true'},
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         position: Position.absolute,
         top: 10,
         right: 20,
@@ -593,8 +646,11 @@ class HomeHero extends FlintComponent {
         gap: 14,
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         radius: 8,
-        border: Border.all(color: Color.rgba(226, 232, 240, 0.95)),
-        background: Color.rgba(248, 250, 252, 0.86),
+        border: Border.all(color: ThemeToken.color('line')),
+        background: ThemeToken.color('panelStrong'),
+        light: const DartStyle(
+          background: Color.rgba(248, 250, 252, 0.86),
+        ),
       ),
       children: [
         Row(
@@ -607,8 +663,8 @@ class HomeHero extends FlintComponent {
             _trafficLights(),
             Text.span(
               'flint_workspace',
-              dartStyle: const DartStyle(
-                color: Color('#0f172a'),
+              dartStyle: DartStyle(
+                color: ThemeToken.color('text'),
                 fontSize: 13,
                 fontWeight: 900,
               ),
@@ -647,7 +703,7 @@ class HomeHero extends FlintComponent {
           ),
           children: [
             Row(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.flex,
                 alignItems: AlignItems.center,
                 gap: 8,
@@ -656,7 +712,7 @@ class HomeHero extends FlintComponent {
                 Icon(Icons.terminal, size: 16, color: _mint),
                 Text.span(
                   'lib/main.dart',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     color: Color('#dbeafe'),
                     fontSize: 12,
                     fontWeight: 800,
@@ -666,7 +722,7 @@ class HomeHero extends FlintComponent {
             ),
             Text.span(
               '12ms reload',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 color: _mint,
                 fontSize: 11,
                 fontWeight: 800,
@@ -675,11 +731,11 @@ class HomeHero extends FlintComponent {
           ],
         ),
         Container(
-          dartStyle: const DartStyle(padding: EdgeInsets.all(18)),
+          dartStyle: DartStyle(padding: EdgeInsets.all(18)),
           children: [
             Text.p(
               _heroCode,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 color: Color('#d7e5ff'),
                 fontFamily: FontFamily.monospace,
@@ -702,14 +758,17 @@ class HomeHero extends FlintComponent {
         alignItems: AlignItems.center,
         padding: const EdgeInsets.all(14),
         radius: 8,
-        border: Border.all(color: Color.rgba(226, 232, 240, 0.95)),
-        background: Color.rgba(248, 250, 252, 0.88),
+        border: Border.all(color: ThemeToken.color('line')),
+        background: ThemeToken.color('panelStrong'),
+        light: const DartStyle(
+          background: Color.rgba(248, 250, 252, 0.88),
+        ),
       ),
       children: [
         Text.span(
           'Ship loop',
-          dartStyle: const DartStyle(
-            color: Color('#0f172a'),
+          dartStyle: DartStyle(
+            color: ThemeToken.color('text'),
             fontSize: 14,
             fontWeight: 900,
           ),
@@ -749,8 +808,14 @@ class HomeHero extends FlintComponent {
         margin: const EdgeInsets.only(top: 36),
         padding: const EdgeInsets.all(12),
         radius: 8,
-        border: Border.all(color: Color.rgba(255, 255, 255, 0.76)),
-        background: Color.rgba(255, 255, 255, 0.62),
+        border: Border.all(color: ThemeToken.color('line')),
+        background: ThemeToken.color('panel'),
+        light: const DartStyle(
+          background: Color.rgba(255, 255, 255, 0.62),
+        ),
+        dark: const DartStyle(
+          background: Color.rgba(15, 23, 42, 0.62),
+        ),
         backdropFilter: StyleFilter.blur(18),
         animation: StyleAnimation.named(
           'flint-docs-rise',
@@ -779,15 +844,18 @@ class HomeHero extends FlintComponent {
         gap: 7,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         radius: ThemeToken.radius('pill'),
-        border: Border.all(color: Color.rgba(148, 163, 184, 0.18)),
-        background: Color.rgba(255, 255, 255, 0.76),
+        border: Border.all(color: ThemeToken.color('line')),
+        background: ThemeToken.color('panelStrong'),
+        light: const DartStyle(
+          background: Color.rgba(255, 255, 255, 0.76),
+        ),
       ),
       children: [
         Icon(icon, size: 14, color: color),
         Text.span(
           label,
-          dartStyle: const DartStyle(
-            color: Color('#334155'),
+          dartStyle: DartStyle(
+            color: ThemeToken.color('text'),
             fontSize: 12,
             fontWeight: 800,
             lineHeight: 1,
@@ -805,8 +873,11 @@ class HomeHero extends FlintComponent {
         gap: 12,
         padding: const EdgeInsets.all(12),
         radius: 8,
-        border: Border.all(color: Color.rgba(226, 232, 240, 0.92)),
-        background: Color.rgba(255, 255, 255, 0.72),
+        border: Border.all(color: ThemeToken.color('line')),
+        background: ThemeToken.color('panel'),
+        light: const DartStyle(
+          background: Color.rgba(255, 255, 255, 0.72),
+        ),
         backdropFilter: StyleFilter.blur(12),
         transition: StyleTransition.transform(milliseconds: 180),
         hover: DartStyle(transform: StyleTransform.translateY(-4)),
@@ -814,19 +885,20 @@ class HomeHero extends FlintComponent {
       children: [
         Icon(icon, size: 20, color: _skyStrong),
         Container(
-          dartStyle: const DartStyle(display: Display.grid, gap: 2),
+          dartStyle: DartStyle(display: Display.grid, gap: 2),
           children: [
             Text.span(
               title,
-              dartStyle: const DartStyle(
-                color: Color('#0f172a'),
+              dartStyle: DartStyle(
+                color: ThemeToken.color('text'),
                 fontSize: 13,
                 fontWeight: 900,
               ),
             ),
             Text.span(
               label,
-              dartStyle: const DartStyle(color: Color('#64748b'), fontSize: 12),
+              dartStyle:
+                  DartStyle(color: ThemeToken.color('muted'), fontSize: 12),
             ),
           ],
         ),
@@ -848,19 +920,20 @@ class HomeHero extends FlintComponent {
       children: [
         Icon(icon, size: 18, color: _mintStrong),
         Container(
-          dartStyle: const DartStyle(display: Display.grid, gap: 2),
+          dartStyle: DartStyle(display: Display.grid, gap: 2),
           children: [
             Text.span(
               title,
-              dartStyle: const DartStyle(
-                color: Color('#0f172a'),
+              dartStyle: DartStyle(
+                color: ThemeToken.color('text'),
                 fontSize: 12,
                 fontWeight: 900,
               ),
             ),
             Text.span(
               label,
-              dartStyle: const DartStyle(color: Color('#64748b'), fontSize: 11),
+              dartStyle:
+                  DartStyle(color: ThemeToken.color('muted'), fontSize: 11),
             ),
           ],
         ),
@@ -875,8 +948,11 @@ class HomeHero extends FlintComponent {
         overflow: Overflow.hidden,
         padding: const EdgeInsets.all(12),
         radius: 8,
-        border: Border.all(color: Color.rgba(226, 232, 240, 0.9)),
-        background: Color.rgba(248, 250, 252, 0.86),
+        border: Border.all(color: ThemeToken.color('line')),
+        background: ThemeToken.color('panelStrong'),
+        light: const DartStyle(
+          background: Color.rgba(248, 250, 252, 0.86),
+        ),
       ),
       children: [
         Container(
@@ -897,18 +973,18 @@ class HomeHero extends FlintComponent {
         ),
         Text.span(
           value,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             position: Position.relative,
-            color: Color('#0f172a'),
+            color: ThemeToken.color('text'),
             fontSize: 18,
             fontWeight: 900,
           ),
         ),
         Text.span(
           label,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             position: Position.relative,
-            color: Color('#64748b'),
+            color: ThemeToken.color('muted'),
             fontSize: 12,
           ),
         ),
@@ -918,7 +994,7 @@ class HomeHero extends FlintComponent {
 
   FlintNode _proof(IconData icon, String label) {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         alignItems: AlignItems.center,
         gap: 10,
@@ -928,8 +1004,8 @@ class HomeHero extends FlintComponent {
         Icon(icon, size: 18, color: _mintStrong),
         Text.span(
           label,
-          dartStyle: const DartStyle(
-            color: Color('#334155'),
+          dartStyle: DartStyle(
+            color: ThemeToken.color('text'),
             fontSize: 13,
             fontWeight: 800,
           ),
@@ -940,7 +1016,7 @@ class HomeHero extends FlintComponent {
 
   FlintNode _trafficLights() {
     return Row(
-      dartStyle: const DartStyle(display: Display.flex, gap: 6),
+      dartStyle: DartStyle(display: Display.flex, gap: 6),
       children: [
         _dot(const Color('#fb7185')),
         _dot(const Color('#fbbf24')),

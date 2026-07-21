@@ -32,7 +32,7 @@ class BlogWritePage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 960,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -65,19 +65,19 @@ class BlogWritePage extends Component {
 
   View _hero() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 12,
         padding: EdgeInsets.all(24),
         radius: 22,
-        border: Border(color: Color.rgba(30, 41, 59, 0.9), width: 1),
-        background: Color.rgba(15, 23, 42, 0.72),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
         md: DartStyle(padding: EdgeInsets.all(34)),
       ),
       children: [
         Text.p(
           'Blog',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 12,
             fontWeight: 800,
@@ -86,22 +86,22 @@ class BlogWritePage extends Component {
         ),
         Text.h1(
           'Write a Flint post',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 31,
             fontWeight: 750,
             lineHeight: 1.12,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             margin: EdgeInsets.all(0),
             md: DartStyle(fontSize: 38),
           ),
         ),
         Text.p(
           'Publish framework updates, tutorials, architecture notes, and practical lessons for the Flint community.',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             maxWidth: 760,
             fontSize: 15,
             lineHeight: 1.7,
-            color: Color('#cbd5e1'),
+            color: ThemeToken.color('muted'),
             margin: EdgeInsets.all(0),
           ),
         ),
@@ -111,7 +111,7 @@ class BlogWritePage extends Component {
 
   View _permissionPanel() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.all(24),
         radius: 16,
         border: Border(color: Color.rgba(251, 191, 36, 0.32), width: 1),
@@ -120,15 +120,15 @@ class BlogWritePage extends Component {
       children: [
         Text.h2(
           'Writer access required',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 22,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
           ),
         ),
         Text.p(
           'Your account is signed in, but it does not currently have permission to publish blog posts.',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.only(top: 8, bottom: 0),
             color: Color('#fde68a'),
             lineHeight: 1.6,
@@ -140,18 +140,18 @@ class BlogWritePage extends Component {
 
   View _writeForm() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.all(18),
         minWidth: 0,
         radius: 18,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.62),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
         md: DartStyle(padding: EdgeInsets.all(24)),
       ),
       children: [
         Form(
           onSubmit: _submit,
-          dartStyle: const DartStyle(display: Display.grid, gap: 18),
+          dartStyle: DartStyle(display: Display.grid, gap: 18),
           children: [
             if (_message != null) _messageBox(),
             TextField(
@@ -199,7 +199,7 @@ class BlogWritePage extends Component {
 
   View _messageBox() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.all(12),
         radius: 10,
         border: Border(color: Color.rgba(248, 113, 113, 0.35), width: 1),
@@ -207,7 +207,7 @@ class BlogWritePage extends Component {
       ),
       child: Text.p(
         _message!,
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           margin: EdgeInsets.all(0),
           fontSize: 13,
           color: Color('#fca5a5'),
@@ -332,15 +332,15 @@ class BlogWritePage extends Component {
   }
 }
 
-const _inputStyle = DartStyle(
-  background: Color.rgba(2, 6, 23, 0.72),
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  color: Colors.white,
+final _inputStyle = DartStyle(
+  background: ThemeToken.color('panelStrong'),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  color: ThemeToken.color('text'),
 );
 
-const _textAreaStyle = DartStyle(
+final _textAreaStyle = DartStyle(
   minHeight: 260,
-  background: Color.rgba(2, 6, 23, 0.72),
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  color: Colors.white,
+  background: ThemeToken.color('panelStrong'),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  color: ThemeToken.color('text'),
 );

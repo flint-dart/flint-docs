@@ -43,9 +43,10 @@ class PostCard extends FlintComponent {
           Container(
             dartStyle: accent == PostCardAccent.emerald ? _tagEmerald : _tagSky,
             children: [
-              Text.span(tag!, dartStyle: accent == PostCardAccent.emerald
-                  ? _tagTextEmerald
-                  : _tagTextSky),
+              Text.span(tag!,
+                  dartStyle: accent == PostCardAccent.emerald
+                      ? _tagTextEmerald
+                      : _tagTextSky),
             ],
           ),
         if (date != null) Text.span(date!, dartStyle: _dateText),
@@ -66,13 +67,29 @@ class PostCard extends FlintComponent {
 
 // ── Styles ───────────────────────────────────────────────────────────────────
 
-const _card = DartStyle(
+final _card = DartStyle(
   display: Display.grid,
   gap: 10,
-  padding: EdgeInsets.all(20),
+  padding: const EdgeInsets.all(20),
   radius: 16,
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  background: Color.rgba(15, 23, 42, 0.6),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  background: ThemeToken.color('panel'),
+  light: DartStyle(
+    shadow: Shadow(
+      y: 10,
+      blur: 28,
+      spread: -24,
+      color: Color.rgba(15, 23, 42, 0.16),
+    ),
+  ),
+  dark: DartStyle(
+    shadow: Shadow(
+      y: 14,
+      blur: 36,
+      spread: -30,
+      color: Color.rgba(52, 211, 153, 0.16),
+    ),
+  ),
 );
 
 const _metaRow = DartStyle(
@@ -108,24 +125,24 @@ const _tagTextSky = DartStyle(
   color: Color('#bae6fd'),
 );
 
-const _dateText = DartStyle(
+final _dateText = DartStyle(
   fontSize: 12,
-  color: Color('#64748b'),
+  color: ThemeToken.color('muted'),
 );
 
-const _cardTitle = DartStyle(
+final _cardTitle = DartStyle(
   fontSize: 16,
   fontWeight: 600,
-  color: Colors.white,
+  color: ThemeToken.color('text'),
   lineHeight: 1.4,
-  margin: EdgeInsets.all(0),
+  margin: const EdgeInsets.all(0),
 );
 
-const _cardExcerpt = DartStyle(
+final _cardExcerpt = DartStyle(
   fontSize: 13,
   lineHeight: 1.55,
-  color: Color('#94a3b8'),
-  margin: EdgeInsets.all(0),
+  color: ThemeToken.color('muted'),
+  margin: const EdgeInsets.all(0),
 );
 
 const _authorRow = DartStyle(
@@ -142,7 +159,7 @@ const _authorDot = DartStyle(
   background: Color('#34d399'),
 );
 
-const _authorText = DartStyle(
+final _authorText = DartStyle(
   fontSize: 12,
-  color: Color('#64748b'),
+  color: ThemeToken.color('muted'),
 );

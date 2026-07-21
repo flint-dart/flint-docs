@@ -43,6 +43,7 @@ class DocsSupport {
     'websockets',
     'route-groups',
     'views',
+    'theme-mode',
     'models',
     'orm',
     'orm-query',
@@ -256,6 +257,10 @@ class DocsSupport {
         RegExp(r'\[(\d+\.\d+\.\d+(?:\+\d+)?)\]').firstMatch(line);
     if (bracketMatch != null) return bracketMatch.group(1);
 
+    final plainHeaderMatch =
+        RegExp(r'^#+\s*(\d+\.\d+\.\d+(?:\+\d+)?)\b').firstMatch(line);
+    if (plainHeaderMatch != null) return plainHeaderMatch.group(1);
+
     final versionTextMatch =
         RegExp(r'Version\s+(\d+\.\d+\.\d+(?:\+\d+)?)', caseSensitive: false)
             .firstMatch(line);
@@ -271,10 +276,15 @@ class DocsSupport {
     if (bracketMatch != null) {
       cleaned = cleaned.substring(bracketMatch.end);
     } else {
-      cleaned = cleaned.replaceAll(
-        RegExp('Version\\s+$escapedVersion', caseSensitive: false),
-        '',
-      );
+      cleaned = cleaned
+          .replaceAll(
+            RegExp('^#+\\s*$escapedVersion\\b', caseSensitive: false),
+            '',
+          )
+          .replaceAll(
+            RegExp('Version\\s+$escapedVersion', caseSensitive: false),
+            '',
+          );
     }
     cleaned = cleaned.replaceAll(RegExp(r'^[\s#\-\–—:]+'), '').trim();
     return cleaned;

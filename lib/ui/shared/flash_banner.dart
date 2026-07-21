@@ -30,7 +30,7 @@ class FlashBanner extends FlintComponent {
   }
 }
 
-const _wrap = DartStyle(
+final _wrap = DartStyle(
   maxWidth: 1152,
   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
   margin: EdgeInsets.only(top: 16, bottom: 0),
@@ -38,22 +38,22 @@ const _wrap = DartStyle(
   gap: 8,
 );
 
-const _successBanner = DartStyle(
+final _successBanner = DartStyle(
   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
   radius: 12,
   border: Border(color: Color.rgba(52, 211, 153, 0.4), width: 1),
   background: Color.rgba(52, 211, 153, 0.1),
 );
 
-const _errorBanner = DartStyle(
+final _errorBanner = DartStyle(
   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
   radius: 12,
   border: Border(color: Color.rgba(248, 113, 113, 0.4), width: 1),
   background: Color.rgba(248, 113, 113, 0.1),
 );
 
-const _bannerText = DartStyle(
+final _bannerText = DartStyle(
   fontSize: 14,
-  color: Colors.white,
+  color: ThemeToken.color('text'),
   margin: EdgeInsets.all(0),
 );

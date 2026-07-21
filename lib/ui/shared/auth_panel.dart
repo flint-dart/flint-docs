@@ -28,35 +28,35 @@ class AuthPanel extends Component {
   @override
   View build() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 18,
         padding: EdgeInsets.all(24),
         radius: 16,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.58),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Text.h2(
           title,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 22,
             fontWeight: 700,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             margin: EdgeInsets.all(0),
           ),
         ),
         Text.p(
           body,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 14,
             lineHeight: 1.65,
-            color: Color('#cbd5e1'),
+            color: ThemeToken.color('muted'),
             margin: EdgeInsets.all(0),
           ),
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 10,
@@ -84,7 +84,7 @@ class AuthPanel extends Component {
         ),
         if (_error != null)
           Container(
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               padding: EdgeInsets.all(12),
               radius: 10,
               border: Border(color: Color.rgba(248, 113, 113, 0.35), width: 1),
@@ -93,7 +93,7 @@ class AuthPanel extends Component {
             children: [
               Text.p(
                 _error!,
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 13,
                   color: Color('#fca5a5'),
                   margin: EdgeInsets.all(0),
@@ -102,7 +102,7 @@ class AuthPanel extends Component {
             ],
           ),
         Form(
-          dartStyle: const DartStyle(display: Display.grid, gap: 14),
+          dartStyle: DartStyle(display: Display.grid, gap: 14),
           children: [
             if (_showRegister)
               TextField(
@@ -128,7 +128,7 @@ class AuthPanel extends Component {
               inputDartStyle: _inputStyle,
             ),
             Row(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.flex,
                 flexWrap: FlexWrap.wrap,
                 alignItems: AlignItems.center,
@@ -146,11 +146,11 @@ class AuthPanel extends Component {
                 ),
                 Link(
                   href: backHref,
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.inlineFlex,
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     radius: 9,
-                    color: Color('#94a3b8'),
+                    color: ThemeToken.color('muted'),
                   ),
                   child: backLabel,
                 ),
@@ -238,8 +238,8 @@ class AuthPanel extends Component {
   }
 }
 
-const _inputStyle = DartStyle(
-  background: Color.rgba(2, 6, 23, 0.72),
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  color: Colors.white,
+final _inputStyle = DartStyle(
+  background: ThemeToken.color('panelStrong'),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  color: ThemeToken.color('text'),
 );

@@ -15,12 +15,12 @@ class ApiSidebar extends Component {
         items.add(
           Text.p(
             group,
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               fontSize: 10,
               fontWeight: 700,
-              color: Color('#64748b'),
-              margin: EdgeInsets.only(top: 12, bottom: 4),
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+              color: ThemeToken.color('muted'),
+              margin: const EdgeInsets.only(top: 12, bottom: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
             ),
           ),
         );
@@ -30,7 +30,7 @@ class ApiSidebar extends Component {
         Link(
           href: '/api/$slug',
           dartStyle: slug == active
-              ? const DartStyle(
+              ? DartStyle(
                   display: Display.block,
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   radius: 8,
@@ -41,12 +41,13 @@ class ApiSidebar extends Component {
                   border:
                       Border(color: Color.rgba(52, 211, 153, 0.2), width: 1),
                 )
-              : const DartStyle(
+              : DartStyle(
                   display: Display.block,
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   radius: 8,
                   fontSize: 13,
-                  color: Color('#cbd5e1'),
+                  color: ThemeToken.color('muted'),
                 ),
           child: label,
         ),
@@ -54,18 +55,18 @@ class ApiSidebar extends Component {
     }
 
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         width: SizeValue.percent(100),
         minWidth: 0,
         gap: 2,
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         radius: 12,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.6),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ).merge(
         mobileDrawer
-            ? const DartStyle(display: Display.grid)
-            : const DartStyle(
+            ? DartStyle(display: Display.grid)
+            : DartStyle(
                 display: Display.none,
                 md: DartStyle(
                   display: Display.grid,

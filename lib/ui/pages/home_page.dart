@@ -21,7 +21,6 @@ class HomePage extends Component {
       body: Container(
         dartStyle: DartStyle(
           display: Display.grid,
-          background: ThemeToken.color('bg'),
         ),
         children: [
           HomeHero(),

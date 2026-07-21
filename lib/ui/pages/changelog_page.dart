@@ -23,7 +23,7 @@ class ChangelogPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 1152,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -39,17 +39,17 @@ class ChangelogPage extends Component {
 
   View _header() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 18,
         padding: EdgeInsets.all(40),
         radius: 24,
-        border: Border(color: Color.rgba(30, 41, 59, 0.7), width: 1),
-        background: Color.rgba(15, 23, 42, 0.72),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             alignItems: AlignItems.center,
@@ -62,20 +62,20 @@ class ChangelogPage extends Component {
         ),
         Text.h1(
           'Flint Dart Changelog',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 38,
             fontWeight: 700,
             lineHeight: 1.12,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             margin: EdgeInsets.all(0),
           ),
         ),
         Text.p(
           'A version-by-version history of features, fixes, and behavior changes across the Flint ecosystem.',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 15,
             lineHeight: 1.7,
-            color: Color('#cbd5e1'),
+            color: ThemeToken.color('muted'),
             margin: EdgeInsets.all(0),
             maxWidth: 720,
           ),
@@ -86,7 +86,7 @@ class ChangelogPage extends Component {
 
   View _pill(String label, Color color) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         radius: 9999,
         border: Border(color: Color.rgba(52, 211, 153, 0.32), width: 1),
@@ -107,18 +107,18 @@ class ChangelogPage extends Component {
 
   View _emptyState() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         margin: EdgeInsets.only(top: 28),
         padding: EdgeInsets.all(24),
         radius: 14,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.52),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Text.p(
           'No changelog entries are available yet.',
-          dartStyle: const DartStyle(
-            color: Color('#94a3b8'),
+          dartStyle: DartStyle(
+            color: ThemeToken.color('muted'),
             margin: EdgeInsets.all(0),
           ),
         ),
@@ -128,7 +128,7 @@ class ChangelogPage extends Component {
 
   View _list() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 20,
         margin: EdgeInsets.only(top: 32),
@@ -159,7 +159,7 @@ class ChangelogPage extends Component {
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             alignItems: AlignItems.center,
@@ -168,16 +168,16 @@ class ChangelogPage extends Component {
           children: [
             Text.h2(
               'v${entry['version'] ?? ''}',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 21,
                 fontWeight: 700,
-                color: Colors.white,
+                color: ThemeToken.color('text'),
                 margin: EdgeInsets.all(0),
               ),
             ),
             if (isLatest)
               Container(
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   radius: 9999,
                   border:
@@ -187,7 +187,7 @@ class ChangelogPage extends Component {
                 children: [
                   Text.span(
                     'Latest',
-                    dartStyle: const DartStyle(
+                    dartStyle: DartStyle(
                       fontSize: 10,
                       fontWeight: 700,
                       color: Color('#a7f3d0'),

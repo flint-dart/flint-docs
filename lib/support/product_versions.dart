@@ -1,6 +1,6 @@
-const String flintDartProductVersion = '1.2.0';
-const String flintUiProductVersion = '0.1.14';
-const String flintClientProductVersion = '0.0.5';
+const String flintDartProductVersion = '1.2.2';
+const String flintUiProductVersion = '0.1.15';
+const String flintClientProductVersion = '0.0.6';
 const String flintDartProductVersionLabel = 'v $flintDartProductVersion';
 
 class ProductVersions {

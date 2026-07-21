@@ -36,7 +36,7 @@ class BlogPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 1152,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -80,11 +80,11 @@ class BlogPage extends Component {
           ),
           const Color.rgba(15, 23, 42, 0.72),
         ]),
-        md: const DartStyle(padding: EdgeInsets.all(40)),
+        md: DartStyle(padding: EdgeInsets.all(40)),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             justifyContent: JustifyContent.between,
@@ -93,7 +93,7 @@ class BlogPage extends Component {
           ),
           children: [
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 14,
                 maxWidth: 720,
@@ -101,7 +101,7 @@ class BlogPage extends Component {
               ),
               children: [
                 Row(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.flex,
                     flexWrap: FlexWrap.wrap,
                     alignItems: AlignItems.center,
@@ -114,29 +114,29 @@ class BlogPage extends Component {
                 ),
                 Text.h1(
                   'Ideas, releases, and practical Flint engineering.',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     margin: EdgeInsets.all(0),
                     fontSize: 32,
                     fontWeight: 760,
                     lineHeight: 1.08,
-                    color: Colors.white,
+                    color: ThemeToken.color('text'),
                     md: DartStyle(fontSize: 42),
                   ),
                 ),
                 Text.p(
                   'Read framework updates, backend patterns, UI notes, deployment lessons, and production guidance from the Flint ecosystem.',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     margin: EdgeInsets.all(0),
                     maxWidth: 680,
                     fontSize: 16,
                     lineHeight: 1.7,
-                    color: Color('#cbd5e1'),
+                    color: ThemeToken.color('muted'),
                   ),
                 ),
               ],
             ),
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 12,
                 width: SizeValue.percent(100),
@@ -151,7 +151,7 @@ class BlogPage extends Component {
           ],
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             alignItems: AlignItems.center,
@@ -160,7 +160,7 @@ class BlogPage extends Component {
           children: [
             Link(
               href: '/blog/create',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.inlineFlex,
                 alignItems: AlignItems.center,
                 gap: 8,
@@ -173,7 +173,7 @@ class BlogPage extends Component {
                 Icon(_canWriteBlog ? Icons.edit : Icons.logIn, size: 16),
                 Text.span(
                   _canWriteBlog ? 'Write a Post' : 'Sign in to Write',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     fontSize: 13,
                     fontWeight: 800,
                     color: Color('#a7f3d0'),
@@ -184,7 +184,7 @@ class BlogPage extends Component {
             if (!_isAuthenticated)
               Link(
                 href: '/blog/create?mode=register',
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   display: Display.inlineFlex,
                   alignItems: AlignItems.center,
                   gap: 8,
@@ -198,7 +198,7 @@ class BlogPage extends Component {
                   Icon(Icons.plus, size: 16),
                   Text.span(
                     'Create account',
-                    dartStyle: const DartStyle(
+                    dartStyle: DartStyle(
                       fontSize: 13,
                       fontWeight: 800,
                       color: Color('#bae6fd'),
@@ -214,7 +214,7 @@ class BlogPage extends Component {
 
   View _topicRail(List<String> tags) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         flexWrap: FlexWrap.wrap,
         gap: 10,
@@ -222,23 +222,23 @@ class BlogPage extends Component {
       children: [
         for (final tag in tags.take(10))
           Container(
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.inlineFlex,
               alignItems: AlignItems.center,
               gap: 8,
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
               radius: 999,
-              border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-              background: Color.rgba(15, 23, 42, 0.58),
+              border: Border(color: ThemeToken.color('line'), width: 1),
+              background: ThemeToken.color('panel'),
             ),
             children: [
-              Icon(Icons.bookmark, size: 13, color: const Color('#94a3b8')),
+              Icon(Icons.bookmark, size: 13, color: ThemeToken.color('muted')),
               Text.span(
                 tag,
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 12,
                   fontWeight: 750,
-                  color: Color('#cbd5e1'),
+                  color: ThemeToken.color('muted'),
                 ),
               ),
             ],
@@ -275,7 +275,7 @@ class BlogPage extends Component {
           ),
           const Color.rgba(15, 23, 42, 0.68),
         ]),
-        md: const DartStyle(padding: EdgeInsets.all(26)),
+        md: DartStyle(padding: EdgeInsets.all(26)),
         lg: DartStyle(
           gridTemplateColumns: GridTemplateColumns.tracks([
             GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.35)),
@@ -286,7 +286,7 @@ class BlogPage extends Component {
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.grid,
             gap: 16,
           ),
@@ -294,27 +294,27 @@ class BlogPage extends Component {
             _meta(tag, date),
             Text.h2(
               title,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 26,
                 fontWeight: 750,
                 lineHeight: 1.14,
-                color: Colors.white,
+                color: ThemeToken.color('text'),
                 md: DartStyle(fontSize: 32),
               ),
             ),
             Text.p(
               excerpt,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 maxWidth: 720,
                 fontSize: 15,
                 lineHeight: 1.72,
-                color: Color('#cbd5e1'),
+                color: ThemeToken.color('muted'),
               ),
             ),
             Row(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.flex,
                 flexWrap: FlexWrap.wrap,
                 alignItems: AlignItems.center,
@@ -323,7 +323,7 @@ class BlogPage extends Component {
               children: [
                 _byline(author),
                 Row(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.inlineFlex,
                     alignItems: AlignItems.center,
                     gap: 7,
@@ -331,7 +331,7 @@ class BlogPage extends Component {
                   children: [
                     Text.span(
                       'Read featured post',
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         fontSize: 13,
                         fontWeight: 800,
                         color: Color('#a7f3d0'),
@@ -346,31 +346,31 @@ class BlogPage extends Component {
           ],
         ),
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.grid,
             gap: 14,
             padding: EdgeInsets.all(22),
             radius: 18,
             border: Border(color: Color.rgba(51, 65, 85, 0.82), width: 1),
-            background: Color.rgba(2, 6, 23, 0.54),
+            background: ThemeToken.color('panelStrong'),
           ),
           children: [
             Icon(Icons.sparkles, size: 24, color: const Color('#7dd3fc')),
             Text.h3(
               'Latest insight',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 20,
-                color: Colors.white,
+                color: ThemeToken.color('text'),
               ),
             ),
             Text.p(
               'A short, readable article from the Flint team and community.',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 13,
                 lineHeight: 1.65,
-                color: Color('#94a3b8'),
+                color: ThemeToken.color('muted'),
               ),
             ),
           ],
@@ -405,31 +405,31 @@ class BlogPage extends Component {
 
     return Link(
       href: href,
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 14,
         padding: EdgeInsets.all(20),
         minWidth: 0,
         radius: 16,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.58),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         _meta(tag, date),
         Text.h2(
           title,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 21,
             fontWeight: 750,
             lineHeight: 1.25,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             maxWidth: SizeValue.percent(100),
           ),
         ),
         Text.p(
           excerpt,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 13,
             lineHeight: 1.68,
@@ -437,7 +437,7 @@ class BlogPage extends Component {
           ),
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             justifyContent: JustifyContent.between,
@@ -446,7 +446,7 @@ class BlogPage extends Component {
           ),
           children: [
             _byline(author),
-            Icon(Icons.arrowRight, size: 15, color: const Color('#94a3b8')),
+            Icon(Icons.arrowRight, size: 15, color: ThemeToken.color('muted')),
           ],
         ),
       ],
@@ -455,28 +455,28 @@ class BlogPage extends Component {
 
   View _emptyState() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 12,
         padding: EdgeInsets.all(28),
         radius: 18,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.58),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Text.h2(
           'No posts yet',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 24,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
           ),
         ),
         Text.p(
           'Once the first Flint post is published, it will appear here.',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
           ),
         ),
       ],
@@ -485,7 +485,7 @@ class BlogPage extends Component {
 
   View _meta(String tag, String date) {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         flexWrap: FlexWrap.wrap,
         alignItems: AlignItems.center,
@@ -495,19 +495,19 @@ class BlogPage extends Component {
         _pill(tag, const Color('#a7f3d0')),
         if (date.isNotEmpty)
           Row(
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.inlineFlex,
               alignItems: AlignItems.center,
               gap: 6,
             ),
             children: [
-              Icon(Icons.calendar, size: 13, color: const Color('#94a3b8')),
+              Icon(Icons.calendar, size: 13, color: ThemeToken.color('muted')),
               Text.span(
                 date,
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 12,
                   fontWeight: 650,
-                  color: Color('#94a3b8'),
+                  color: ThemeToken.color('muted'),
                 ),
               ),
             ],
@@ -518,19 +518,19 @@ class BlogPage extends Component {
 
   View _byline(String author) {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.inlineFlex,
         alignItems: AlignItems.center,
         gap: 7,
       ),
       children: [
-        Icon(Icons.user, size: 14, color: const Color('#94a3b8')),
+        Icon(Icons.user, size: 14, color: ThemeToken.color('muted')),
         Text.span(
           author,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 12,
             fontWeight: 700,
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
           ),
         ),
       ],
@@ -561,29 +561,29 @@ class BlogPage extends Component {
 
   View _stat(String value, String label) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 3,
         padding: EdgeInsets.all(16),
         radius: 14,
         border: Border(color: Color.rgba(51, 65, 85, 0.82), width: 1),
-        background: Color.rgba(2, 6, 23, 0.42),
+        background: ThemeToken.color('panelStrong'),
       ),
       children: [
         Text.span(
           value,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 24,
             fontWeight: 800,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
           ),
         ),
         Text.span(
           label,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 12,
             fontWeight: 700,
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
           ),
         ),
       ],

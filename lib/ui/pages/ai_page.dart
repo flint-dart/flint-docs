@@ -14,7 +14,7 @@ class AiPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 1040,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -42,22 +42,22 @@ class AiPage extends Component {
         gap: 26,
         padding: const EdgeInsets.all(24),
         radius: 24,
-        border: const Border(color: Color.rgba(30, 41, 59, 0.95), width: 1),
+        border: Border(color: ThemeToken.color('line'), width: 1),
         background: Background.layers([
           Gradient.linear(
             135,
             [
               GradientStop(Color.rgba(125, 211, 252, 0.16), 0),
               GradientStop(Color.rgba(52, 211, 153, 0.13), 50),
-              GradientStop(Color.rgba(15, 23, 42, 0.86), 100),
+              GradientStop(ThemeToken.color('panel'), 100),
             ],
           ),
-          const Color.rgba(15, 23, 42, 0.74),
+          ThemeToken.color('panel'),
         ]),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             justifyContent: JustifyContent.between,
@@ -66,7 +66,7 @@ class AiPage extends Component {
           ),
           children: [
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 14,
                 maxWidth: 680,
@@ -74,7 +74,7 @@ class AiPage extends Component {
               ),
               children: [
                 Row(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.flex,
                     flexWrap: FlexWrap.wrap,
                     gap: 10,
@@ -86,29 +86,29 @@ class AiPage extends Component {
                 ),
                 Text.h1(
                   'Build AI agents inside Flint Dart.',
-                  dartStyle: const DartStyle(
-                    margin: EdgeInsets.all(0),
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
                     fontSize: 34,
                     fontWeight: 760,
                     lineHeight: 1.08,
-                    color: Colors.white,
+                    color: ThemeToken.color('text'),
                     md: DartStyle(fontSize: 42),
                   ),
                 ),
                 Text.p(
                   'Flint AI adds providers, agents, tools, workflows, streaming chat, memory, persistence, and production tool policies to real Flint applications.',
-                  dartStyle: const DartStyle(
-                    margin: EdgeInsets.all(0),
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
                     maxWidth: 660,
                     fontSize: 16,
                     lineHeight: 1.72,
-                    color: Color('#cbd5e1'),
+                    color: ThemeToken.color('muted'),
                   ),
                 ),
               ],
             ),
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 12,
                 width: SizeValue.percent(100),
@@ -122,7 +122,7 @@ class AiPage extends Component {
           ],
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 10,
@@ -139,17 +139,17 @@ class AiPage extends Component {
 
   View _runtimeCard() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 12,
-        padding: EdgeInsets.all(18),
+        padding: const EdgeInsets.all(18),
         radius: 16,
-        border: Border(color: Color.rgba(125, 211, 252, 0.28), width: 1),
-        background: Color.rgba(2, 6, 23, 0.48),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             gap: 8,
@@ -158,7 +158,7 @@ class AiPage extends Component {
             Icon(Icons.sparkles, size: 16, color: const Color('#7dd3fc')),
             Text.span(
               'Runtime layers',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 12,
                 fontWeight: 800,
                 color: Color('#7dd3fc'),
@@ -167,18 +167,18 @@ class AiPage extends Component {
           ],
         ),
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.grid,
             gap: 8,
-            padding: EdgeInsets.all(14),
+            padding: const EdgeInsets.all(14),
             radius: 12,
-            background: Color.rgba(2, 6, 23, 0.88),
-            border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
+            background: ThemeToken.color('panelStrong'),
+            border: Border(color: ThemeToken.color('line'), width: 1),
           ),
           children: [
             Text.span(
               'app.ai.useChatProvidersFromEnv()',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 12,
                 fontWeight: 800,
                 color: Color('#dbeafe'),
@@ -186,20 +186,20 @@ class AiPage extends Component {
             ),
             Text.span(
               'ctx.ai.run(agent, input: request)',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 12,
-                color: Color('#94a3b8'),
+                color: ThemeToken.color('muted'),
               ),
             ),
           ],
         ),
         Text.p(
           'Use AI from controllers, API routes, dashboards, queues, and internal automation.',
-          dartStyle: const DartStyle(
-            margin: EdgeInsets.all(0),
+          dartStyle: DartStyle(
+            margin: const EdgeInsets.all(0),
             fontSize: 12,
             lineHeight: 1.6,
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
           ),
         ),
       ],
@@ -247,32 +247,32 @@ class AiPage extends Component {
 
   View _featureCard(IconData icon, String title, String body, Color color) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 12,
-        padding: EdgeInsets.all(18),
+        padding: const EdgeInsets.all(18),
         radius: 16,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.58),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Icon(icon, size: 20, color: color),
         Text.h3(
           title,
-          dartStyle: const DartStyle(
-            margin: EdgeInsets.all(0),
+          dartStyle: DartStyle(
+            margin: const EdgeInsets.all(0),
             fontSize: 17,
             lineHeight: 1.25,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
           ),
         ),
         Text.p(
           body,
-          dartStyle: const DartStyle(
-            margin: EdgeInsets.all(0),
+          dartStyle: DartStyle(
+            margin: const EdgeInsets.all(0),
             fontSize: 13,
             lineHeight: 1.65,
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
           ),
         ),
       ],
@@ -281,22 +281,22 @@ class AiPage extends Component {
 
   View _articleShell() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 20,
         width: SizeValue.percent(100),
         maxWidth: 880,
-        margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
-        padding: EdgeInsets.all(18),
+        margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
+        padding: const EdgeInsets.all(18),
         radius: 20,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.54),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
         overflow: Overflow.hidden,
         md: DartStyle(padding: EdgeInsets.all(26)),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             justifyContent: JustifyContent.between,
@@ -305,29 +305,29 @@ class AiPage extends Component {
           ),
           children: [
             Container(
-              dartStyle: const DartStyle(display: Display.grid, gap: 5),
+              dartStyle: DartStyle(display: Display.grid, gap: 5),
               children: [
                 Text.h2(
                   'AI documentation',
-                  dartStyle: const DartStyle(
-                    margin: EdgeInsets.all(0),
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
                     fontSize: 24,
-                    color: Colors.white,
+                    color: ThemeToken.color('text'),
                   ),
                 ),
                 Text.p(
                   'Providers, agents, tools, workflows, streaming, persistence, and production safety.',
-                  dartStyle: const DartStyle(
-                    margin: EdgeInsets.all(0),
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
                     fontSize: 13,
-                    color: Color('#94a3b8'),
+                    color: ThemeToken.color('muted'),
                   ),
                 ),
               ],
             ),
             Link(
               href: '#install-and-setup',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.inlineFlex,
                 alignItems: AlignItems.center,
                 gap: 7,
@@ -339,7 +339,7 @@ class AiPage extends Component {
               children: [
                 Text.span(
                   'Start reading',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     fontSize: 12,
                     fontWeight: 800,
                     color: Color('#a7f3d0'),
@@ -353,7 +353,7 @@ class AiPage extends Component {
         if (_contentHtml.isEmpty)
           Text.p(
             'The Flint AI guide is being written.',
-            dartStyle: const DartStyle(color: Color('#94a3b8')),
+            dartStyle: DartStyle(color: ThemeToken.color('muted')),
           )
         else
           HtmlContent(
@@ -375,14 +375,14 @@ class AiPage extends Component {
   View _heroLink(String label, String href) {
     return Link(
       href: href,
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.inlineFlex,
         alignItems: AlignItems.center,
-        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
         radius: 10,
-        border: Border(color: Color.rgba(51, 65, 85, 0.92), width: 1),
-        background: Color.rgba(2, 6, 23, 0.34),
-        color: Color('#cbd5e1'),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
+        color: ThemeToken.color('muted'),
         fontSize: 13,
         fontWeight: 800,
       ),
@@ -392,7 +392,7 @@ class AiPage extends Component {
 
   View _pill(String label, Color color) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         width: SizeValue('max-content'),
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,

@@ -38,7 +38,7 @@ class BlogDetailPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 960,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -94,28 +94,28 @@ class BlogDetailPage extends Component {
           ),
           const Color.rgba(15, 23, 42, 0.72),
         ]),
-        md: const DartStyle(padding: EdgeInsets.all(32)),
+        md: DartStyle(padding: EdgeInsets.all(32)),
       ),
       children: [
         Link(
           href: '/blog',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.inlineFlex,
             alignItems: AlignItems.center,
             gap: 7,
             width: SizeValue('max-content'),
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
           ),
           children: [
             Icon(Icons.arrowLeft, size: 15),
             Text.span(
               'Back to Blog',
-              dartStyle: const DartStyle(fontSize: 13, fontWeight: 700),
+              dartStyle: DartStyle(fontSize: 13, fontWeight: 700),
             ),
           ],
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             alignItems: AlignItems.center,
@@ -125,19 +125,20 @@ class BlogDetailPage extends Component {
             _pill(tag),
             if (date.isNotEmpty)
               Row(
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   display: Display.inlineFlex,
                   alignItems: AlignItems.center,
                   gap: 6,
                 ),
                 children: [
-                  Icon(Icons.calendar, size: 13, color: const Color('#94a3b8')),
+                  Icon(Icons.calendar,
+                      size: 13, color: ThemeToken.color('muted')),
                   Text.span(
                     date,
-                    dartStyle: const DartStyle(
+                    dartStyle: DartStyle(
                       fontSize: 12,
                       fontWeight: 650,
-                      color: Color('#94a3b8'),
+                      color: ThemeToken.color('muted'),
                     ),
                   ),
                 ],
@@ -146,47 +147,47 @@ class BlogDetailPage extends Component {
         ),
         Text.h1(
           title,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 31,
             fontWeight: 760,
             lineHeight: 1.12,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             md: DartStyle(fontSize: 40),
           ),
         ),
         if (excerpt.isNotEmpty)
           Text.p(
             excerpt,
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               margin: EdgeInsets.all(0),
               fontSize: 16,
               lineHeight: 1.72,
-              color: Color('#cbd5e1'),
+              color: ThemeToken.color('muted'),
             ),
           ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.inlineFlex,
             alignItems: AlignItems.center,
             gap: 8,
           ),
           children: [
-            Icon(Icons.user, size: 15, color: const Color('#94a3b8')),
+            Icon(Icons.user, size: 15, color: ThemeToken.color('muted')),
             Text.span(
               'By $author',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 13,
                 fontWeight: 700,
-                color: Color('#94a3b8'),
+                color: ThemeToken.color('muted'),
               ),
             ),
           ],
         ),
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             padding: EdgeInsets.only(top: 8),
-            border: Border(color: Color.rgba(30, 41, 59, 0.72), width: 0),
+            border: Border(color: ThemeToken.color('line'), width: 0),
           ),
           children: [
             HtmlContent(
@@ -210,18 +211,18 @@ class BlogDetailPage extends Component {
   View _commentsSection() {
     final comments = _comments;
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 14,
         padding: EdgeInsets.all(18),
         radius: 18,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.58),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
         md: DartStyle(padding: EdgeInsets.all(24)),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             justifyContent: JustifyContent.between,
             alignItems: AlignItems.center,
@@ -230,15 +231,15 @@ class BlogDetailPage extends Component {
           children: [
             Text.h2(
               'Comments',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 22,
-                color: Colors.white,
+                color: ThemeToken.color('text'),
               ),
             ),
             Text.span(
               '${comments.length}',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 13,
                 fontWeight: 800,
                 color: Color('#a7f3d0'),
@@ -249,9 +250,9 @@ class BlogDetailPage extends Component {
         if (comments.isEmpty)
           Text.p(
             'No comments yet. Start the conversation.',
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               margin: EdgeInsets.all(0),
-              color: Color('#94a3b8'),
+              color: ThemeToken.color('muted'),
             ),
           )
         else
@@ -262,17 +263,17 @@ class BlogDetailPage extends Component {
 
   View _commentCard(Map<String, dynamic> comment) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 8,
         padding: EdgeInsets.all(16),
         radius: 14,
         border: Border(color: Color.rgba(51, 65, 85, 0.78), width: 1),
-        background: Color.rgba(2, 6, 23, 0.35),
+        background: ThemeToken.color('panelStrong'),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             alignItems: AlignItems.center,
@@ -281,25 +282,26 @@ class BlogDetailPage extends Component {
           children: [
             Text.span(
               comment['author']?.toString() ?? 'Community',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 13,
                 fontWeight: 800,
-                color: Colors.white,
+                color: ThemeToken.color('text'),
               ),
             ),
             Text.span(
               comment['date']?.toString() ?? '',
-              dartStyle: const DartStyle(fontSize: 12, color: Color('#64748b')),
+              dartStyle:
+                  DartStyle(fontSize: 12, color: ThemeToken.color('muted')),
             ),
           ],
         ),
         Text.p(
           comment['body']?.toString() ?? '',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 14,
             lineHeight: 1.7,
-            color: Color('#cbd5e1'),
+            color: ThemeToken.color('muted'),
           ),
         ),
       ],
@@ -309,17 +311,17 @@ class BlogDetailPage extends Component {
   View _commentForm() {
     final slug = _post['slug']?.toString() ?? '';
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.all(22),
         minWidth: 0,
         radius: 16,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.62),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Form(
           onSubmit: (event) => _submitComment(event, slug),
-          dartStyle: const DartStyle(display: Display.grid, gap: 14),
+          dartStyle: DartStyle(display: Display.grid, gap: 14),
           children: [
             if (_commentMessage != null) _commentMessageBox(),
             TextArea(
@@ -349,7 +351,7 @@ class BlogDetailPage extends Component {
 
   View _commentMessageBox() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.all(12),
         radius: 10,
         border: Border(color: Color.rgba(248, 113, 113, 0.35), width: 1),
@@ -357,7 +359,7 @@ class BlogDetailPage extends Component {
       ),
       child: Text.p(
         _commentMessage!,
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           margin: EdgeInsets.all(0),
           fontSize: 13,
           color: Color('#fca5a5'),
@@ -468,7 +470,7 @@ class BlogDetailPage extends Component {
 
   View _pill(String label) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         width: SizeValue('max-content'),
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
@@ -478,7 +480,7 @@ class BlogDetailPage extends Component {
       children: [
         Text.span(
           label,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 800,
             color: Color('#a7f3d0'),
@@ -489,9 +491,9 @@ class BlogDetailPage extends Component {
   }
 }
 
-const _textAreaStyle = DartStyle(
+final _textAreaStyle = DartStyle(
   minHeight: 150,
-  background: Color.rgba(2, 6, 23, 0.72),
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  color: Colors.white,
+  background: ThemeToken.color('panelStrong'),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  color: ThemeToken.color('text'),
 );

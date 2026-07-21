@@ -12,7 +12,7 @@ class CounterDemo extends FlintComponent {
           dartStyle: _headerStyle,
           children: [
             Container(
-              dartStyle: const DartStyle(minWidth: 0),
+              dartStyle: DartStyle(minWidth: 0),
               children: [
                 Text.span(
                   'Interactive Flint UI island',
@@ -63,13 +63,13 @@ class CounterDemo extends FlintComponent {
   }
 }
 
-const _cardStyle = DartStyle(
+final _cardStyle = DartStyle(
   display: Display.grid,
   gap: 20,
   padding: EdgeInsets.all(24),
   radius: 18,
   border: Border(color: Color.rgba(52, 211, 153, 0.34), width: 1),
-  background: Color.rgba(15, 23, 42, 0.78),
+  background: ThemeToken.color('panel'),
   shadow: Shadow(
     y: 20,
     blur: 44,
@@ -78,7 +78,7 @@ const _cardStyle = DartStyle(
   ),
 );
 
-const _headerStyle = DartStyle(
+final _headerStyle = DartStyle(
   display: Display.flex,
   flexWrap: FlexWrap.wrap,
   alignItems: AlignItems.center,
@@ -86,47 +86,47 @@ const _headerStyle = DartStyle(
   gap: 20,
 );
 
-const _eyebrowStyle = DartStyle(
+final _eyebrowStyle = DartStyle(
   display: Display.block,
   color: Color('#a7f3d0'),
   fontSize: 12,
   fontWeight: 800,
 );
 
-const _titleStyle = DartStyle(
+final _titleStyle = DartStyle(
   margin: EdgeInsets.only(top: 8, bottom: 0),
-  color: Colors.white,
+  color: ThemeToken.color('text'),
   fontSize: SizeValue.rem(1.75),
   lineHeight: 1.16,
 );
 
-const _bodyStyle = DartStyle(
+final _bodyStyle = DartStyle(
   maxWidth: 640,
   margin: EdgeInsets.only(top: 8, bottom: 0),
-  color: Color('#94a3b8'),
+  color: ThemeToken.color('muted'),
   fontSize: 14,
   lineHeight: 1.6,
 );
 
-const _countShellStyle = DartStyle(
+final _countShellStyle = DartStyle(
   display: Display.flex,
   alignItems: AlignItems.center,
   justifyContent: JustifyContent.center,
   minWidth: 120,
   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
   radius: 18,
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  background: Color.rgba(2, 6, 23, 0.72),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  background: ThemeToken.color('panelStrong'),
 );
 
-const _countStyle = DartStyle(
+final _countStyle = DartStyle(
   color: Color('#a7f3d0'),
   fontSize: 44,
   fontWeight: 800,
   lineHeight: 1,
 );
 
-const _actionsStyle = DartStyle(
+final _actionsStyle = DartStyle(
   display: Display.flex,
   flexWrap: FlexWrap.wrap,
   gap: 12,

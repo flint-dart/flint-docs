@@ -73,7 +73,7 @@ class QuestionDetailPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 960,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -109,19 +109,19 @@ class QuestionDetailPage extends Component {
 
   View _questionCard() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 14,
         padding: EdgeInsets.all(20),
         minWidth: 0,
         radius: 22,
-        border: Border(color: Color.rgba(30, 41, 59, 0.9), width: 1),
-        background: Color.rgba(15, 23, 42, 0.72),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
         md: DartStyle(padding: EdgeInsets.all(28)),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 10,
@@ -130,32 +130,33 @@ class QuestionDetailPage extends Component {
             _pill(_question['tag']?.toString() ?? 'Question'),
             Text.span(
               _question['date']?.toString() ?? '',
-              dartStyle: const DartStyle(fontSize: 12, color: Color('#64748b')),
+              dartStyle:
+                  DartStyle(fontSize: 12, color: ThemeToken.color('muted')),
             ),
           ],
         ),
         Text.h1(
           _question['title']?.toString() ?? 'Question',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 29,
             lineHeight: 1.2,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             md: DartStyle(fontSize: 34),
           ),
         ),
         Text.p(
           _question['body']?.toString() ?? '',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 15,
             lineHeight: 1.75,
-            color: Color('#cbd5e1'),
+            color: ThemeToken.color('muted'),
           ),
         ),
         Text.span(
           'By ${_question['author']?.toString() ?? 'Community'}',
-          dartStyle: const DartStyle(fontSize: 12, color: Color('#94a3b8')),
+          dartStyle: DartStyle(fontSize: 12, color: ThemeToken.color('muted')),
         ),
       ],
     );
@@ -163,10 +164,10 @@ class QuestionDetailPage extends Component {
 
   View _answersList(List<Map<String, dynamic>> answers) {
     return Container(
-      dartStyle: const DartStyle(display: Display.grid, gap: 14),
+      dartStyle: DartStyle(display: Display.grid, gap: 14),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
@@ -176,9 +177,9 @@ class QuestionDetailPage extends Component {
           children: [
             Text.h2(
               'Answers',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 22,
-                color: Colors.white,
+                color: ThemeToken.color('text'),
                 margin: EdgeInsets.all(0),
               ),
             ),
@@ -188,7 +189,7 @@ class QuestionDetailPage extends Component {
         if (answers.isEmpty)
           Text.p(
             'No answers yet. Be the first to help.',
-            dartStyle: const DartStyle(color: Color('#94a3b8')),
+            dartStyle: DartStyle(color: ThemeToken.color('muted')),
           )
         else
           for (final answer in answers) _answerCard(answer),
@@ -243,28 +244,28 @@ class QuestionDetailPage extends Component {
     final deleting = answerId != null && _deletingAnswerIds.contains(answerId);
 
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 10,
         padding: EdgeInsets.all(16),
         minWidth: 0,
         radius: 14,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.58),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
         md: DartStyle(padding: EdgeInsets.all(18)),
       ),
       children: [
         Text.p(
           answer['body']?.toString() ?? '',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 14,
             lineHeight: 1.7,
-            color: Color('#cbd5e1'),
+            color: ThemeToken.color('muted'),
           ),
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
@@ -274,7 +275,8 @@ class QuestionDetailPage extends Component {
           children: [
             Text.span(
               'By ${answer['author']?.toString() ?? 'Community'}',
-              dartStyle: const DartStyle(fontSize: 12, color: Color('#94a3b8')),
+              dartStyle:
+                  DartStyle(fontSize: 12, color: ThemeToken.color('muted')),
             ),
             if (canDelete)
               Button(
@@ -297,17 +299,17 @@ class QuestionDetailPage extends Component {
   View _answerForm() {
     final slug = _question['slug']?.toString() ?? '';
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.all(22),
         minWidth: 0,
         radius: 16,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.62),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ),
       children: [
         Form(
           onSubmit: (event) => _submitAnswer(event, slug),
-          dartStyle: const DartStyle(display: Display.grid, gap: 14),
+          dartStyle: DartStyle(display: Display.grid, gap: 14),
           children: [
             if (_answerMessage != null) _answerMessageBox(),
             TextArea(
@@ -334,7 +336,7 @@ class QuestionDetailPage extends Component {
 
   View _answerMessageBox() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.all(12),
         radius: 10,
         border: Border(color: Color.rgba(248, 113, 113, 0.35), width: 1),
@@ -342,7 +344,7 @@ class QuestionDetailPage extends Component {
       ),
       child: Text.p(
         _answerMessage!,
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           margin: EdgeInsets.all(0),
           fontSize: 13,
           color: Color('#fca5a5'),
@@ -605,13 +607,13 @@ class QuestionDetailPage extends Component {
   View _permissionPanel() {
     return Text.p(
       'Your account can read answers but cannot post yet.',
-      dartStyle: const DartStyle(color: Color('#fbbf24')),
+      dartStyle: DartStyle(color: Color('#fbbf24')),
     );
   }
 
   View _pill(String label) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
         border: Border(color: Color.rgba(125, 211, 252, 0.28), width: 1),
@@ -622,9 +624,9 @@ class QuestionDetailPage extends Component {
   }
 }
 
-const _textAreaStyle = DartStyle(
+final _textAreaStyle = DartStyle(
   minHeight: 160,
-  background: Color.rgba(2, 6, 23, 0.72),
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  color: Colors.white,
+  background: ThemeToken.color('panelStrong'),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  color: ThemeToken.color('text'),
 );

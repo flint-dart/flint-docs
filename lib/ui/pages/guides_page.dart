@@ -87,7 +87,7 @@ class GuidesPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 1152,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -95,7 +95,7 @@ class GuidesPage extends Component {
         ),
         children: [
           Row(
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.flex,
               flexDirection: FlexDirection.column,
               alignItems: AlignItems.start,

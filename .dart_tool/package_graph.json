@@ -14,7 +14,7 @@
     },
     {
       "name": "flint_ui",
-      "version": "0.1.11",
+      "version": "0.1.15",
       "dependencies": [
         "flint_client",
         "universal_web"
@@ -22,7 +22,7 @@
     },
     {
       "name": "flint_dart",
-      "version": "1.1.14",
+      "version": "1.2.2",
       "dependencies": [
         "args",
         "bcrypt",
@@ -51,7 +51,7 @@
     },
     {
       "name": "flint_client",
-      "version": "0.0.4",
+      "version": "0.0.6",
       "dependencies": [
         "clock",
         "path",
@@ -73,7 +73,7 @@
     },
     {
       "name": "worker_manager",
-      "version": "7.2.7",
+      "version": "7.2.9",
       "dependencies": [
         "async",
         "collection",
@@ -93,14 +93,14 @@
     },
     {
       "name": "package_config",
-      "version": "2.2.0",
+      "version": "3.0.0",
       "dependencies": [
-        "path"
+        "meta"
       ]
     },
     {
       "name": "mailer",
-      "version": "7.1.0",
+      "version": "7.2.0",
       "dependencies": [
         "async",
         "crypto",
@@ -115,11 +115,10 @@
     },
     {
       "name": "uuid",
-      "version": "4.5.2",
+      "version": "4.6.0",
       "dependencies": [
         "crypto",
-        "fixnum",
-        "meta"
+        "fixnum"
       ]
     },
     {
@@ -129,7 +128,7 @@
     },
     {
       "name": "postgres",
-      "version": "3.5.9",
+      "version": "3.5.12",
       "dependencies": [
         "async",
         "buffer",
@@ -144,20 +143,15 @@
     },
     {
       "name": "mysql_dart",
-      "version": "1.2.1",
-      "dependencies": [
-        "buffer",
-        "crypto",
-        "tuple"
-      ]
+      "version": "3.0.0",
+      "dependencies": []
     },
     {
       "name": "dart_jsonwebtoken",
-      "version": "3.3.1",
+      "version": "3.4.1",
       "dependencies": [
         "clock",
         "convert",
-        "ed25519_edwards",
         "pointycastle"
       ]
     },
@@ -185,7 +179,7 @@
     },
     {
       "name": "async",
-      "version": "2.13.0",
+      "version": "2.13.1",
       "dependencies": [
         "collection",
         "meta"
@@ -193,7 +187,7 @@
     },
     {
       "name": "meta",
-      "version": "1.18.1",
+      "version": "1.19.0",
       "dependencies": []
     },
     {
@@ -208,12 +202,12 @@
     },
     {
       "name": "punycoder",
-      "version": "0.2.2",
+      "version": "0.3.0",
       "dependencies": []
     },
     {
       "name": "intl",
-      "version": "0.20.2",
+      "version": "0.20.3",
       "dependencies": [
         "clock",
         "meta",
@@ -263,18 +257,11 @@
       "dependencies": []
     },
     {
-      "name": "tuple",
-      "version": "2.0.2",
-      "dependencies": []
-    },
-    {
-      "name": "ed25519_edwards",
-      "version": "0.3.1",
+      "name": "pointycastle",
+      "version": "4.0.0",
       "dependencies": [
-        "adaptive_number",
         "collection",
-        "convert",
-        "crypto"
+        "convert"
       ]
     },
     {
@@ -285,25 +272,10 @@
       ]
     },
     {
-      "name": "pointycastle",
-      "version": "4.0.0",
-      "dependencies": [
-        "collection",
-        "convert"
-      ]
-    },
-    {
       "name": "typed_data",
       "version": "1.4.0",
       "dependencies": [
         "collection"
-      ]
-    },
-    {
-      "name": "adaptive_number",
-      "version": "1.0.0",
-      "dependencies": [
-        "fixnum"
       ]
     }
   ],

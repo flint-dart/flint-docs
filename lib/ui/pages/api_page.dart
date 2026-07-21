@@ -20,7 +20,7 @@ class ApiPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 1152,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -28,7 +28,7 @@ class ApiPage extends Component {
         ),
         children: [
           Row(
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.flex,
               flexDirection: FlexDirection.column,
               alignItems: AlignItems.start,
@@ -41,7 +41,7 @@ class ApiPage extends Component {
             children: [
               ApiSidebar(active: _active),
               Container(
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   display: Display.grid,
                   gap: 28,
                   width: SizeValue.percent(100),
@@ -64,17 +64,17 @@ class ApiPage extends Component {
 
   View _header() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 8,
         padding: EdgeInsets.only(bottom: 8),
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
+        border: Border(color: ThemeToken.color('line'), width: 1),
         radius: 12,
       ),
       children: [
         Text.p(
           'API Reference',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 12,
             fontWeight: 800,
@@ -83,7 +83,7 @@ class ApiPage extends Component {
         ),
         Text.h1(
           _titleFor(_active),
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 34,
             lineHeight: 1.12,
@@ -92,12 +92,12 @@ class ApiPage extends Component {
         ),
         Text.p(
           'Focused reference for Flint Dart and Flint UI APIs, with copyable examples and practical notes.',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             maxWidth: 720,
             margin: EdgeInsets.all(0),
             fontSize: 15,
             lineHeight: 1.7,
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
           ),
         ),
       ],
@@ -107,7 +107,7 @@ class ApiPage extends Component {
   View _content() {
     if (_contentHtml.isEmpty) {
       return Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           padding: EdgeInsets.symmetric(vertical: 48),
           display: Display.flex,
           justifyContent: JustifyContent.center,
@@ -115,8 +115,8 @@ class ApiPage extends Component {
         children: [
           Text.p(
             'This API page is being written.',
-            dartStyle: const DartStyle(
-              color: Color('#64748b'),
+            dartStyle: DartStyle(
+              color: ThemeToken.color('muted'),
               margin: EdgeInsets.all(0),
             ),
           ),
@@ -145,7 +145,7 @@ class ApiPage extends Component {
     }
 
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         flexWrap: FlexWrap.wrap,
         gap: 16,
@@ -156,27 +156,27 @@ class ApiPage extends Component {
             _previousUrl != null)
           Link(
             href: _previousUrl!,
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.flex,
               flex: '1 1 240px',
               gap: 4,
               padding: EdgeInsets.all(16),
               radius: 12,
-              border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-              background: Color.rgba(15, 23, 42, 0.5),
+              border: Border(color: ThemeToken.color('line'), width: 1),
+              background: ThemeToken.color('panel'),
             ),
             children: [
               Text.p(
                 'Previous API',
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 11,
-                  color: Color('#64748b'),
+                  color: ThemeToken.color('muted'),
                   margin: EdgeInsets.all(0),
                 ),
               ),
               Text.p(
                 _previousTitle!,
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 13,
                   fontWeight: 600,
                   color: Color('#e2e8f0'),
@@ -190,27 +190,27 @@ class ApiPage extends Component {
         if (_nextTitle != null && _nextTitle!.isNotEmpty && _nextUrl != null)
           Link(
             href: _nextUrl!,
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.flex,
               flex: '1 1 240px',
               gap: 4,
               padding: EdgeInsets.all(16),
               radius: 12,
-              border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-              background: Color.rgba(15, 23, 42, 0.5),
+              border: Border(color: ThemeToken.color('line'), width: 1),
+              background: ThemeToken.color('panel'),
             ),
             children: [
               Text.p(
                 'Next API',
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 11,
-                  color: Color('#64748b'),
+                  color: ThemeToken.color('muted'),
                   margin: EdgeInsets.all(0),
                 ),
               ),
               Text.p(
                 _nextTitle!,
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 13,
                   fontWeight: 600,
                   color: Color('#e2e8f0'),

@@ -61,13 +61,24 @@ class ContentHeader extends FlintComponent {
 
 // ── Styles ───────────────────────────────────────────────────────────────────
 
-const _wrap = DartStyle(
+final _wrap = DartStyle(
   display: Display.grid,
   gap: 12,
-  padding: EdgeInsets.all(24),
+  padding: const EdgeInsets.all(24),
   radius: 16,
-  border: Border(color: Color.rgba(30, 41, 59, 0.7), width: 1),
-  background: Color.rgba(15, 23, 42, 0.7),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  background: ThemeToken.color('panel'),
+  light: DartStyle(
+    shadow: Shadow(
+      y: 14,
+      blur: 36,
+      spread: -28,
+      color: Color.rgba(15, 23, 42, 0.18),
+    ),
+  ),
+  dark: DartStyle(
+    shadow: ThemeToken.shadow('glow'),
+  ),
 );
 
 const _badgeRow = DartStyle(
@@ -103,19 +114,19 @@ const _versionText = DartStyle(
   color: Color('#d1fae5'),
 );
 
-const _title = DartStyle(
+final _title = DartStyle(
   fontSize: 36,
   fontWeight: 600,
   lineHeight: 1.2,
-  color: Colors.white,
-  margin: EdgeInsets.all(0),
+  color: ThemeToken.color('text'),
+  margin: const EdgeInsets.all(0),
 );
 
-const _subtitle = DartStyle(
+final _subtitle = DartStyle(
   fontSize: 15,
   lineHeight: 1.6,
-  color: Color('#94a3b8'),
-  margin: EdgeInsets.all(0),
+  color: ThemeToken.color('muted'),
+  margin: const EdgeInsets.all(0),
 );
 
 const _tagsRow = DartStyle(
@@ -124,14 +135,14 @@ const _tagsRow = DartStyle(
   gap: 8,
 );
 
-const _tagPill = DartStyle(
-  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+final _tagPill = DartStyle(
+  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
   radius: 9999,
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  background: Color.rgba(15, 23, 42, 0.6),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  background: ThemeToken.color('panelStrong'),
 );
 
-const _tagText = DartStyle(
+final _tagText = DartStyle(
   fontSize: 11,
-  color: Color('#64748b'),
+  color: ThemeToken.color('muted'),
 );

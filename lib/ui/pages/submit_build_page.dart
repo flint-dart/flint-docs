@@ -40,7 +40,7 @@ class SubmitBuildPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 980,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -61,18 +61,18 @@ class SubmitBuildPage extends Component {
 
   View _hero() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 14,
         padding: EdgeInsets.all(24),
         radius: 22,
-        border: Border(color: Color.rgba(30, 41, 59, 0.9), width: 1),
-        background: Color.rgba(15, 23, 42, 0.72),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
         md: DartStyle(padding: EdgeInsets.all(34)),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 10,
@@ -84,22 +84,22 @@ class SubmitBuildPage extends Component {
         ),
         Text.h1(
           'Submit what you built with Flint',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 31,
             fontWeight: 800,
             lineHeight: 1.12,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             margin: EdgeInsets.all(0),
             md: DartStyle(fontSize: 38),
           ),
         ),
         Text.p(
           'Add the app name, screenshots, useful links, and a clear explanation of what the product does. The page is rendered by Flint for SEO so other developers can discover it.',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             maxWidth: 760,
             fontSize: 15,
             lineHeight: 1.7,
-            color: Color('#cbd5e1'),
+            color: ThemeToken.color('muted'),
             margin: EdgeInsets.all(0),
           ),
         ),
@@ -120,7 +120,7 @@ class SubmitBuildPage extends Component {
 
   View _formPanel() {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         flexDirection: FlexDirection.column,
         alignItems: AlignItems.start,
@@ -129,20 +129,20 @@ class SubmitBuildPage extends Component {
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             flex: Flex.fill(),
             width: SizeValue.percent(100),
             minWidth: 0,
             padding: EdgeInsets.all(18),
             radius: 18,
-            border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-            background: Color.rgba(15, 23, 42, 0.62),
+            border: Border(color: ThemeToken.color('line'), width: 1),
+            background: ThemeToken.color('panel'),
             md: DartStyle(padding: EdgeInsets.all(24)),
           ),
           children: [
             Form(
               onSubmit: _submit,
-              dartStyle: const DartStyle(display: Display.grid, gap: 18),
+              dartStyle: DartStyle(display: Display.grid, gap: 18),
               children: [
                 if (_message != null) _messageBox(),
                 TextField(
@@ -222,7 +222,7 @@ class SubmitBuildPage extends Component {
 
   View _linkFields(int index) {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         flexDirection: FlexDirection.column,
         gap: 10,
@@ -230,7 +230,7 @@ class SubmitBuildPage extends Component {
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(flex: Flex.fill(), minWidth: 0),
+          dartStyle: DartStyle(flex: Flex.fill(), minWidth: 0),
           children: [
             TextField(
               label: 'Link $index label',
@@ -243,7 +243,7 @@ class SubmitBuildPage extends Component {
           ],
         ),
         Container(
-          dartStyle: const DartStyle(flex: Flex.fill(), minWidth: 0),
+          dartStyle: DartStyle(flex: Flex.fill(), minWidth: 0),
           children: [
             TextField(
               label: 'Link $index URL',
@@ -386,17 +386,17 @@ class SubmitBuildPage extends Component {
   View _groupTitle(String label) {
     return Text.h2(
       label,
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         margin: EdgeInsets.only(top: 4, bottom: 0),
         fontSize: 15,
-        color: Colors.white,
+        color: ThemeToken.color('text'),
       ),
     );
   }
 
   View _messageBox() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.all(12),
         radius: 10,
         border: Border(color: Color.rgba(248, 113, 113, 0.35), width: 1),
@@ -404,7 +404,7 @@ class SubmitBuildPage extends Component {
       ),
       child: Text.p(
         _message!,
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           margin: EdgeInsets.all(0),
           fontSize: 13,
           color: Color('#fca5a5'),
@@ -415,37 +415,37 @@ class SubmitBuildPage extends Component {
 
   View _sideGuide() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         width: SizeValue.percent(100),
         display: Display.grid,
         gap: 14,
         padding: EdgeInsets.all(18),
         radius: 16,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(2, 6, 23, 0.38),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panelStrong'),
         md: DartStyle(width: SizeValue('min(280px, 100%)')),
       ),
       children: [
         Text.h2(
           'What to include',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 16,
             fontWeight: 800,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             margin: EdgeInsets.all(0),
           ),
         ),
         Text.p(
           'Use real screenshots and practical links. Short, specific descriptions work best for search and for developers scanning the gallery.',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 13,
             lineHeight: 1.6,
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
             margin: EdgeInsets.all(0),
           ),
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 8,
@@ -463,7 +463,7 @@ class SubmitBuildPage extends Component {
 
   View _pill(String label, Color color) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
         border: Border(color: Color.rgba(52, 211, 153, 0.24), width: 1),
@@ -483,15 +483,15 @@ class SubmitBuildPage extends Component {
   }
 }
 
-const _inputStyle = DartStyle(
-  background: Color.rgba(2, 6, 23, 0.72),
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  color: Colors.white,
+final _inputStyle = DartStyle(
+  background: ThemeToken.color('panelStrong'),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  color: ThemeToken.color('text'),
 );
 
-const _textAreaStyle = DartStyle(
+final _textAreaStyle = DartStyle(
   minHeight: 140,
-  background: Color.rgba(2, 6, 23, 0.72),
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  color: Colors.white,
+  background: ThemeToken.color('panelStrong'),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  color: ThemeToken.color('text'),
 );

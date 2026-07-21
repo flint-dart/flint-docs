@@ -32,7 +32,7 @@ class AskQuestionPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 960,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -53,18 +53,18 @@ class AskQuestionPage extends Component {
 
   View _hero() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 14,
         padding: EdgeInsets.all(24),
         radius: 22,
-        border: Border(color: Color.rgba(30, 41, 59, 0.9), width: 1),
-        background: Color.rgba(15, 23, 42, 0.72),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
         md: DartStyle(padding: EdgeInsets.all(34)),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 10,
@@ -76,22 +76,22 @@ class AskQuestionPage extends Component {
         ),
         Text.h1(
           'Ask a Flint question',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 31,
             fontWeight: 750,
             lineHeight: 1.12,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             margin: EdgeInsets.all(0),
             md: DartStyle(fontSize: 38),
           ),
         ),
         Text.p(
           'Share the route, model, component, error message, or behavior you are working with. Good questions become useful docs for the whole community.',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             maxWidth: 760,
             fontSize: 15,
             lineHeight: 1.7,
-            color: Color('#cbd5e1'),
+            color: ThemeToken.color('muted'),
             margin: EdgeInsets.all(0),
           ),
         ),
@@ -112,7 +112,7 @@ class AskQuestionPage extends Component {
 
   View _formPanel() {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         flexDirection: FlexDirection.column,
         alignItems: AlignItems.start,
@@ -121,20 +121,20 @@ class AskQuestionPage extends Component {
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             flex: Flex.fill(),
             width: SizeValue.percent(100),
             minWidth: 0,
             padding: EdgeInsets.all(18),
             radius: 18,
-            border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-            background: Color.rgba(15, 23, 42, 0.62),
+            border: Border(color: ThemeToken.color('line'), width: 1),
+            background: ThemeToken.color('panel'),
             md: DartStyle(padding: EdgeInsets.all(24)),
           ),
           children: [
             Form(
               onSubmit: _submit,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 18,
               ),
@@ -192,7 +192,7 @@ class AskQuestionPage extends Component {
 
   View _messageBox() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.all(12),
         radius: 10,
         border: Border(color: Color.rgba(248, 113, 113, 0.35), width: 1),
@@ -201,7 +201,7 @@ class AskQuestionPage extends Component {
       children: [
         Text.p(
           _message!,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             margin: EdgeInsets.all(0),
             fontSize: 13,
             color: Color('#fca5a5'),
@@ -333,37 +333,37 @@ class AskQuestionPage extends Component {
 
   View _sideGuide() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         width: SizeValue.percent(100),
         display: Display.grid,
         gap: 14,
         padding: EdgeInsets.all(18),
         radius: 16,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(2, 6, 23, 0.38),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panelStrong'),
         md: DartStyle(width: SizeValue('min(280px, 100%)')),
       ),
       children: [
         Text.h2(
           'Good topics',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 16,
             fontWeight: 700,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             margin: EdgeInsets.all(0),
           ),
         ),
         Text.p(
           'Use a short topic so other developers can find your question later.',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 13,
             lineHeight: 1.6,
-            color: Color('#94a3b8'),
+            color: ThemeToken.color('muted'),
             margin: EdgeInsets.all(0),
           ),
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 8,
@@ -378,7 +378,7 @@ class AskQuestionPage extends Component {
 
   View _pill(String label, Color color) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
         border: Border(color: Color.rgba(52, 211, 153, 0.24), width: 1),
@@ -409,15 +409,15 @@ const _topics = [
   'Deployment',
 ];
 
-const _inputStyle = DartStyle(
-  background: Color.rgba(2, 6, 23, 0.72),
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  color: Colors.white,
+final _inputStyle = DartStyle(
+  background: ThemeToken.color('panelStrong'),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  color: ThemeToken.color('text'),
 );
 
-const _textAreaStyle = DartStyle(
+final _textAreaStyle = DartStyle(
   minHeight: 190,
-  background: Color.rgba(2, 6, 23, 0.72),
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  color: Colors.white,
+  background: ThemeToken.color('panelStrong'),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  color: ThemeToken.color('text'),
 );

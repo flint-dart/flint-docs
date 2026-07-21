@@ -12,18 +12,18 @@ class GuidesSidebar extends Component {
   @override
   View build() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         width: SizeValue.percent(100),
         minWidth: 0,
         gap: 2,
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         radius: 12,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(15, 23, 42, 0.6),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
       ).merge(
         mobileDrawer
-            ? const DartStyle(display: Display.grid)
-            : const DartStyle(
+            ? DartStyle(display: Display.grid)
+            : DartStyle(
                 display: Display.none,
                 md: DartStyle(
                   display: Display.grid,
@@ -65,7 +65,7 @@ class GuidesSidebar extends Component {
       return Link(
         href: '/guides/$slug',
         dartStyle: slug == active
-            ? const DartStyle(
+            ? DartStyle(
                 display: Display.block,
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 radius: 8,
@@ -75,12 +75,13 @@ class GuidesSidebar extends Component {
                 background: Color.rgba(52, 211, 153, 0.1),
                 border: Border(color: Color.rgba(52, 211, 153, 0.2), width: 1),
               )
-            : const DartStyle(
+            : DartStyle(
                 display: Display.block,
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 radius: 8,
                 fontSize: 13,
-                color: Color('#cbd5e1'),
+                color: ThemeToken.color('muted'),
               ),
         child: label,
       );
@@ -91,7 +92,7 @@ class GuidesSidebar extends Component {
     final groupActive = children.any((c) => c.$1 == active);
 
     return Container(
-      dartStyle: const DartStyle(display: Display.grid, gap: 2),
+      dartStyle: DartStyle(display: Display.grid, gap: 2),
       children: [
         Button(
           variant: ButtonVariant.ghost,
@@ -109,24 +110,25 @@ class GuidesSidebar extends Component {
             background: Color.rgba(0, 0, 0, 0),
             fontSize: 13,
             fontWeight: groupActive ? 600 : 500,
-            color:
-                groupActive ? const Color('#a7f3d0') : const Color('#cbd5e1'),
+            color: groupActive
+                ? const Color('#a7f3d0')
+                : ThemeToken.color('muted'),
           ),
           children: [
             Text.span(
               label,
-              dartStyle: const DartStyle(display: Display.block),
+              dartStyle: DartStyle(display: Display.block),
             ),
             Icon(
               Icons.chevronDown,
               size: 14,
-              color: groupActive ? Color('#a7f3d0') : Color('#94a3b8'),
+              color: groupActive ? Color('#a7f3d0') : ThemeToken.color('muted'),
             ),
           ],
         ),
         if (isOpen)
           Container(
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.grid,
               gap: 1,
               padding: EdgeInsets.only(left: 12),
@@ -136,7 +138,7 @@ class GuidesSidebar extends Component {
                 Link(
                   href: '/guides/${child.$1}',
                   dartStyle: child.$1 == active
-                      ? const DartStyle(
+                      ? DartStyle(
                           display: Display.block,
                           padding:
                               EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -146,13 +148,13 @@ class GuidesSidebar extends Component {
                           color: Color('#a7f3d0'),
                           background: Color.rgba(52, 211, 153, 0.08),
                         )
-                      : const DartStyle(
+                      : DartStyle(
                           display: Display.block,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
                           radius: 6,
                           fontSize: 12,
-                          color: Color('#94a3b8'),
+                          color: ThemeToken.color('muted'),
                         ),
                   child: child.$2,
                 ),
@@ -212,6 +214,7 @@ const _sidebarItems = [
   ('database', 'Database', null),
   ('websockets', 'WebSockets', null),
   ('views', 'Views', null),
+  ('theme-mode', 'Light & Dark Mode', null),
   (
     'models',
     'Models & Tables',

@@ -189,11 +189,11 @@ const _page = DartStyle(
   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 48),
 );
 
-const _headerWrap = DartStyle(
+final _headerWrap = DartStyle(
   padding: EdgeInsets.all(40),
   radius: 24,
   border: Border(color: Color.rgba(56, 189, 248, 0.3), width: 1),
-  background: Color.rgba(15, 23, 42, 0.7),
+  background: ThemeToken.color('panel'),
 );
 
 const _badgeRow = DartStyle(
@@ -229,16 +229,16 @@ const _badgeText2 = DartStyle(
   color: Color('#e0f2fe'),
 );
 
-const _h1 = DartStyle(
+final _h1 = DartStyle(
   fontSize: 36,
   fontWeight: 600,
-  color: Colors.white,
+  color: ThemeToken.color('text'),
   margin: EdgeInsets.only(top: 20, bottom: 0),
 );
 
-const _subtitle = DartStyle(
+final _subtitle = DartStyle(
   fontSize: 15,
-  color: Color('#cbd5e1'),
+  color: ThemeToken.color('muted'),
   margin: EdgeInsets.only(top: 12, bottom: 0),
   maxWidth: 720,
 );
@@ -249,45 +249,45 @@ const _gridWrap = DartStyle(
   margin: EdgeInsets.only(top: 32),
 );
 
-const _card = DartStyle(
+final _card = DartStyle(
   padding: EdgeInsets.all(20),
   radius: 16,
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  background: Color.rgba(15, 23, 42, 0.6),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  background: ThemeToken.color('panel'),
 );
 
-const _cardTitle = DartStyle(
+final _cardTitle = DartStyle(
   fontSize: 16,
   fontWeight: 600,
-  color: Colors.white,
+  color: ThemeToken.color('text'),
   margin: EdgeInsets.all(0),
 );
 
-const _cardBody = DartStyle(
+final _cardBody = DartStyle(
   fontSize: 13,
   lineHeight: 1.55,
-  color: Color('#cbd5e1'),
+  color: ThemeToken.color('muted'),
   margin: EdgeInsets.only(top: 8, bottom: 0),
 );
 
-const _ctaBox = DartStyle(
+final _ctaBox = DartStyle(
   padding: EdgeInsets.all(24),
   radius: 16,
-  border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-  background: Color.rgba(15, 23, 42, 0.5),
+  border: Border(color: ThemeToken.color('line'), width: 1),
+  background: ThemeToken.color('panel'),
   margin: EdgeInsets.only(top: 32),
 );
 
-const _ctaTitle = DartStyle(
+final _ctaTitle = DartStyle(
   fontSize: 18,
   fontWeight: 600,
-  color: Colors.white,
+  color: ThemeToken.color('text'),
   margin: EdgeInsets.all(0),
 );
 
-const _ctaBody = DartStyle(
+final _ctaBody = DartStyle(
   fontSize: 14,
-  color: Color('#cbd5e1'),
+  color: ThemeToken.color('muted'),
   margin: EdgeInsets.only(top: 8, bottom: 0),
 );
 

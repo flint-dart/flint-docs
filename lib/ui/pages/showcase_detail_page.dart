@@ -21,7 +21,7 @@ class ShowcaseDetailPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
           maxWidth: 1050,
           margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
@@ -48,18 +48,18 @@ class ShowcaseDetailPage extends Component {
     List<Map<String, dynamic>> links,
   ) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 18,
         padding: EdgeInsets.all(24),
         radius: 24,
-        border: Border(color: Color.rgba(30, 41, 59, 0.9), width: 1),
-        background: Color.rgba(15, 23, 42, 0.72),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
         md: DartStyle(padding: EdgeInsets.all(40)),
       ),
       children: [
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 10,
@@ -71,27 +71,27 @@ class ShowcaseDetailPage extends Component {
         ),
         Text.h1(
           title,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             fontSize: 32,
             fontWeight: 800,
             lineHeight: 1.12,
-            color: Colors.white,
+            color: ThemeToken.color('text'),
             margin: EdgeInsets.all(0),
             md: DartStyle(fontSize: 44),
           ),
         ),
         Text.p(
           project['description']?.toString() ?? '',
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             maxWidth: 780,
             fontSize: 16,
             lineHeight: 1.75,
-            color: Color('#cbd5e1'),
+            color: ThemeToken.color('muted'),
             margin: EdgeInsets.all(0),
           ),
         ),
         Row(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             alignItems: AlignItems.center,
@@ -101,10 +101,11 @@ class ShowcaseDetailPage extends Component {
           children: [
             Text.span(
               'By ${project['author']?.toString() ?? 'Flint developer'}',
-              dartStyle: const DartStyle(fontSize: 13, color: Color('#94a3b8')),
+              dartStyle:
+                  DartStyle(fontSize: 13, color: ThemeToken.color('muted')),
             ),
             Row(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.flex,
                 flexWrap: FlexWrap.wrap,
                 gap: 10,
@@ -121,7 +122,7 @@ class ShowcaseDetailPage extends Component {
 
   View _imageGrid(String title, List<String> images) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gridTemplateColumns: '1fr',
         gap: 14,
@@ -135,12 +136,12 @@ class ShowcaseDetailPage extends Component {
 
   View _image(String title, String src, int index) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         overflow: Overflow.hidden,
         minHeight: 210,
         radius: 18,
-        border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-        background: Color.rgba(2, 6, 23, 0.74),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panelStrong'),
       ),
       children: [
         h(
@@ -167,7 +168,7 @@ class ShowcaseDetailPage extends Component {
     List<Map<String, dynamic>> links,
   ) {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         flexDirection: FlexDirection.column,
         alignItems: AlignItems.start,
@@ -176,28 +177,28 @@ class ShowcaseDetailPage extends Component {
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             flex: Flex.fill(),
             display: Display.grid,
             gap: 14,
             padding: EdgeInsets.all(22),
             radius: 18,
-            border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-            background: Color.rgba(15, 23, 42, 0.62),
+            border: Border(color: ThemeToken.color('line'), width: 1),
+            background: ThemeToken.color('panel'),
           ),
           children: [
             Text.h2(
               'What the app does',
-              dartStyle: const DartStyle(
-                color: Colors.white,
+              dartStyle: DartStyle(
+                color: ThemeToken.color('text'),
                 fontSize: 22,
                 margin: EdgeInsets.all(0),
               ),
             ),
             Text.p(
               project['what_it_does']?.toString() ?? '',
-              dartStyle: const DartStyle(
-                color: Color('#cbd5e1'),
+              dartStyle: DartStyle(
+                color: ThemeToken.color('muted'),
                 fontSize: 15,
                 lineHeight: 1.75,
                 margin: EdgeInsets.all(0),
@@ -206,21 +207,21 @@ class ShowcaseDetailPage extends Component {
           ],
         ),
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             width: SizeValue.percent(100),
             display: Display.grid,
             gap: 12,
             padding: EdgeInsets.all(18),
             radius: 16,
-            border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-            background: Color.rgba(2, 6, 23, 0.38),
+            border: Border(color: ThemeToken.color('line'), width: 1),
+            background: ThemeToken.color('panelStrong'),
             md: DartStyle(width: SizeValue('min(300px, 100%)')),
           ),
           children: [
             Text.h2(
               'Project links',
-              dartStyle: const DartStyle(
-                color: Colors.white,
+              dartStyle: DartStyle(
+                color: ThemeToken.color('text'),
                 fontSize: 16,
                 margin: EdgeInsets.all(0),
               ),
@@ -228,8 +229,8 @@ class ShowcaseDetailPage extends Component {
             if (links.isEmpty)
               Text.p(
                 'No external links were added.',
-                dartStyle: const DartStyle(
-                  color: Color('#94a3b8'),
+                dartStyle: DartStyle(
+                  color: ThemeToken.color('muted'),
                   fontSize: 13,
                   margin: EdgeInsets.all(0),
                 ),
@@ -238,7 +239,7 @@ class ShowcaseDetailPage extends Component {
               for (final link in links) _sideLink(link),
             Link(
               href: '/showcase',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.inlineFlex,
                 alignItems: AlignItems.center,
                 gap: 8,
@@ -263,7 +264,7 @@ class ShowcaseDetailPage extends Component {
     return Link(
       href: link['url']?.toString() ?? '#',
       target: '_blank',
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.inlineFlex,
         alignItems: AlignItems.center,
         gap: 8,
@@ -285,7 +286,7 @@ class ShowcaseDetailPage extends Component {
 
   View _pill(String label, Color color) {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
         border: Border(color: Color.rgba(52, 211, 153, 0.24), width: 1),

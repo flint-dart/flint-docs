@@ -2,6 +2,7 @@ import 'package:flint_ui/flint_ui.dart';
 
 import '../components/api/sidebar.dart';
 import '../components/guides/sidebar.dart';
+import 'brand_logo.dart';
 
 class NavBar extends FlintComponent {
   final Map<String, dynamic> props;
@@ -38,19 +39,25 @@ class NavBar extends FlintComponent {
         position: Position.sticky,
         top: 0,
         zIndex: 50,
-        borderBottom: Border(color: Color.rgba(51, 65, 85, 0.74), width: 1),
-        background: Background.layers([
-          Gradient.linear(
-            90,
-            const [
-              GradientStop(Color.rgba(56, 189, 248, 0.08)),
-              GradientStop(Color.rgba(52, 211, 153, 0.08)),
-              GradientStop(Color.rgba(5, 7, 13, 0.94)),
-            ],
-          ),
-          Color.rgba(5, 7, 13, 0.94),
-        ]),
+        borderBottom: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
         backdropFilter: StyleFilter.blur(18),
+        light: DartStyle(
+          background: Color.rgba(255, 255, 255, 0.9),
+        ),
+        dark: DartStyle(
+          background: Background.layers([
+            Gradient.linear(
+              90,
+              const [
+                GradientStop(Color.rgba(56, 189, 248, 0.08)),
+                GradientStop(Color.rgba(52, 211, 153, 0.08)),
+                GradientStop(Color.rgba(5, 7, 13, 0.94)),
+              ],
+            ),
+            const Color.rgba(5, 7, 13, 0.94),
+          ]),
+        ),
       ),
       children: [
         Container(
@@ -78,7 +85,7 @@ class NavBar extends FlintComponent {
 
   FlintNode _brandCluster() {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         alignItems: AlignItems.center,
         gap: 10,
@@ -123,19 +130,11 @@ class NavBar extends FlintComponent {
             shadow: ThemeToken.shadow('glow'),
           ),
           children: [
-            Text.span(
-              'F',
-              dartStyle: DartStyle(
-                color: ThemeToken.color('text'),
-                fontSize: 18,
-                fontWeight: 900,
-                lineHeight: 1,
-              ),
-            ),
+            brandLogoMark(size: 30),
           ],
         ),
         Container(
-          dartStyle: const DartStyle(display: Display.grid, gap: 2),
+          dartStyle: DartStyle(display: Display.grid, gap: 2),
           children: [
             Text.span(
               'Flint Dart',
@@ -181,7 +180,7 @@ class NavBar extends FlintComponent {
             ? Color.rgba(52, 211, 153, 0.16)
             : Color.rgba(15, 23, 42, 0.72),
         color: const Color('#a7f3d0'),
-        md: const DartStyle(display: Display.none),
+        md: DartStyle(display: Display.none),
       ),
       onPressed: (_) => setState(() {
         _drawerOpen = false;
@@ -212,7 +211,7 @@ class NavBar extends FlintComponent {
             ? Color.rgba(14, 165, 233, 0.18)
             : Color.rgba(15, 23, 42, 0.72),
         color: const Color('#bae6fd'),
-        md: const DartStyle(display: Display.none),
+        md: DartStyle(display: Display.none),
       ),
       onPressed: (_) => setState(() {
         _drawerOpen = false;
@@ -225,7 +224,7 @@ class NavBar extends FlintComponent {
 
   FlintNode _desktopLinks() {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.none,
         alignItems: AlignItems.center,
         gap: 6,
@@ -275,7 +274,7 @@ class NavBar extends FlintComponent {
 
   FlintNode _mobileActions() {
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         alignItems: AlignItems.center,
         gap: 10,
@@ -294,9 +293,10 @@ class NavBar extends FlintComponent {
               color: Color('#bbf7d0'),
               fontSize: 13,
               fontWeight: 800,
-              md: const DartStyle(display: Display.inlineFlex),
+              md: DartStyle(display: Display.inlineFlex),
             ),
           ),
+        _themeToggle(),
         if (_isAuth) _userBadge(),
         Link(
           href: 'https://github.com/flint-dart/flint_dart',
@@ -311,7 +311,7 @@ class NavBar extends FlintComponent {
             fontSize: 13,
             fontWeight: 800,
             transition: StyleTransition.all(milliseconds: 160),
-            hover: const DartStyle(
+            hover: DartStyle(
               background: Color.rgba(14, 165, 233, 0.18),
             ),
           ),
@@ -325,11 +325,11 @@ class NavBar extends FlintComponent {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
             radius: ThemeToken.radius('md'),
             border: Border.all(color: Color.rgba(51, 65, 85, 0.95)),
-            background: Color.rgba(15, 23, 42, 0.72),
-            color: Color('#cbd5e1'),
+            background: ThemeToken.color('panel'),
+            color: ThemeToken.color('muted'),
             fontSize: 12,
             fontWeight: 800,
-            lg: const DartStyle(display: Display.none),
+            lg: DartStyle(display: Display.none),
           ),
           onPressed: (_) => setState(() {
             _guideDrawerOpen = false;
@@ -339,6 +339,54 @@ class NavBar extends FlintComponent {
         ),
       ],
     );
+  }
+
+  FlintNode _themeToggle({bool withLabel = false}) {
+    return StateSignalListener(flintTheme.mode, (mode) {
+      final isDark = mode == FlintThemeMode.dark;
+      final label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+
+      return Button(
+        variant: ButtonVariant.outline,
+        tone: Tone.neutral,
+        props: {
+          'aria-label': label,
+          'title': label,
+        },
+        dartStyle: DartStyle(
+          display: Display.inlineFlex,
+          alignItems: AlignItems.center,
+          justifyContent: JustifyContent.center,
+          width: withLabel ? SizeValue.auto : 38,
+          height: 38,
+          padding: withLabel
+              ? const EdgeInsets.symmetric(horizontal: 12, vertical: 0)
+              : const EdgeInsets.all(0),
+          radius: ThemeToken.radius('md'),
+          border: Border.all(color: ThemeToken.color('line')),
+          background: ThemeToken.color('panel'),
+          color: ThemeToken.color('text'),
+          gap: withLabel ? 8 : null,
+          transition: StyleTransition.all(milliseconds: 160),
+          hover: DartStyle(
+            background: ThemeToken.color('panelStrong'),
+            color: ThemeToken.color('primary'),
+          ),
+        ),
+        onPressed: (_) => flintTheme.toggle(),
+        children: [
+          Icon(isDark ? Icons.sun : Icons.moon, size: 17),
+          if (withLabel)
+            Text.span(
+              isDark ? 'Light mode' : 'Dark mode',
+              dartStyle: DartStyle(
+                fontSize: 12,
+                fontWeight: 800,
+              ),
+            ),
+        ],
+      );
+    });
   }
 
   FlintNode _userBadge() {
@@ -351,11 +399,11 @@ class NavBar extends FlintComponent {
         radius: ThemeToken.radius('pill'),
         border: Border.all(color: Color.rgba(52, 211, 153, 0.34)),
         background: Color.rgba(52, 211, 153, 0.1),
-        md: const DartStyle(display: Display.flex),
+        md: DartStyle(display: Display.flex),
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             width: 8,
             height: 8,
             radius: 9999,
@@ -364,7 +412,7 @@ class NavBar extends FlintComponent {
         ),
         Text.span(
           _label,
-          dartStyle: const DartStyle(
+          dartStyle: DartStyle(
             color: Color('#d1fae5'),
             fontSize: 12,
             fontWeight: 800,
@@ -376,7 +424,7 @@ class NavBar extends FlintComponent {
 
   FlintNode _mobileDrawer() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         position: Position.fixed,
         top: 0,
         right: 0,
@@ -416,17 +464,27 @@ class NavBar extends FlintComponent {
             padding: const EdgeInsets.all(18),
             radius: ThemeToken.radius('md'),
             border: Border.all(color: Color.rgba(71, 85, 105, 0.8)),
-            background: Color.rgba(5, 7, 13, 0.98),
-            shadow: Shadow(
-              y: 18,
-              blur: 54,
-              spread: -24,
-              color: Color.rgba(0, 0, 0, 0.58),
+            background: ThemeToken.color('panel'),
+            light: DartStyle(
+              shadow: Shadow(
+                y: 18,
+                blur: 44,
+                spread: -28,
+                color: Color.rgba(15, 23, 42, 0.22),
+              ),
+            ),
+            dark: DartStyle(
+              shadow: Shadow(
+                y: 18,
+                blur: 54,
+                spread: -24,
+                color: Color.rgba(0, 0, 0, 0.58),
+              ),
             ),
           ),
           children: [
             Row(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.flex,
                 alignItems: AlignItems.center,
                 justifyContent: JustifyContent.between,
@@ -441,27 +499,39 @@ class NavBar extends FlintComponent {
                     fontWeight: 900,
                   ),
                 ),
-                Button(
-                  child: 'Close',
-                  variant: ButtonVariant.outline,
-                  tone: Tone.neutral,
+                Row(
                   dartStyle: DartStyle(
-                    minWidth: 58,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                    radius: ThemeToken.radius('md'),
-                    border: Border.all(color: Color.rgba(51, 65, 85, 0.95)),
-                    background: Color.rgba(15, 23, 42, 0.76),
-                    color: ThemeToken.color('muted'),
-                    fontSize: 12,
-                    fontWeight: 800,
+                    display: Display.flex,
+                    alignItems: AlignItems.center,
+                    gap: 8,
                   ),
-                  onPressed: (_) => setState(() => _drawerOpen = false),
+                  children: [
+                    _themeToggle(withLabel: true),
+                    Button(
+                      child: 'Close',
+                      variant: ButtonVariant.outline,
+                      tone: Tone.neutral,
+                      dartStyle: DartStyle(
+                        minWidth: 58,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 6,
+                        ),
+                        radius: ThemeToken.radius('md'),
+                        border: Border.all(color: Color.rgba(51, 65, 85, 0.95)),
+                        background: ThemeToken.color('panel'),
+                        color: ThemeToken.color('muted'),
+                        fontSize: 12,
+                        fontWeight: 800,
+                      ),
+                      onPressed: (_) => setState(() => _drawerOpen = false),
+                    ),
+                  ],
                 ),
               ],
             ),
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 6,
                 margin: EdgeInsets.only(top: 18),
@@ -488,7 +558,7 @@ class NavBar extends FlintComponent {
 
   FlintNode _guideDrawer() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         position: Position.fixed,
         top: 0,
         right: 0,
@@ -531,17 +601,27 @@ class NavBar extends FlintComponent {
             padding: const EdgeInsets.all(0),
             radius: ThemeToken.radius('md'),
             border: Border.all(color: Color.rgba(71, 85, 105, 0.8)),
-            background: Color.rgba(5, 7, 13, 0.98),
-            shadow: Shadow(
-              y: 18,
-              blur: 54,
-              spread: -24,
-              color: Color.rgba(0, 0, 0, 0.58),
+            background: ThemeToken.color('panel'),
+            light: DartStyle(
+              shadow: Shadow(
+                y: 18,
+                blur: 44,
+                spread: -28,
+                color: Color.rgba(15, 23, 42, 0.22),
+              ),
+            ),
+            dark: DartStyle(
+              shadow: Shadow(
+                y: 18,
+                blur: 54,
+                spread: -24,
+                color: Color.rgba(0, 0, 0, 0.58),
+              ),
             ),
           ),
           children: [
             Row(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.flex,
                 alignItems: AlignItems.center,
                 justifyContent: JustifyContent.between,
@@ -552,7 +632,7 @@ class NavBar extends FlintComponent {
               ),
               children: [
                 Row(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.flex,
                     alignItems: AlignItems.center,
                     gap: 8,
@@ -582,7 +662,7 @@ class NavBar extends FlintComponent {
                     padding: const EdgeInsets.all(0),
                     radius: ThemeToken.radius('md'),
                     border: Border.all(color: Color.rgba(51, 65, 85, 0.95)),
-                    background: Color.rgba(15, 23, 42, 0.76),
+                    background: ThemeToken.color('panel'),
                     color: ThemeToken.color('muted'),
                   ),
                   onPressed: (_) => setState(() => _guideDrawerOpen = false),
@@ -591,7 +671,7 @@ class NavBar extends FlintComponent {
               ],
             ),
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 padding: EdgeInsets.all(14),
               ),
               children: [
@@ -606,7 +686,7 @@ class NavBar extends FlintComponent {
 
   FlintNode _apiDrawer() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         position: Position.fixed,
         top: 0,
         right: 0,
@@ -649,17 +729,27 @@ class NavBar extends FlintComponent {
             padding: const EdgeInsets.all(0),
             radius: ThemeToken.radius('md'),
             border: Border.all(color: Color.rgba(71, 85, 105, 0.8)),
-            background: Color.rgba(5, 7, 13, 0.98),
-            shadow: Shadow(
-              y: 18,
-              blur: 54,
-              spread: -24,
-              color: Color.rgba(0, 0, 0, 0.58),
+            background: ThemeToken.color('panel'),
+            light: DartStyle(
+              shadow: Shadow(
+                y: 18,
+                blur: 44,
+                spread: -28,
+                color: Color.rgba(15, 23, 42, 0.22),
+              ),
+            ),
+            dark: DartStyle(
+              shadow: Shadow(
+                y: 18,
+                blur: 54,
+                spread: -24,
+                color: Color.rgba(0, 0, 0, 0.58),
+              ),
             ),
           ),
           children: [
             Row(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.flex,
                 alignItems: AlignItems.center,
                 justifyContent: JustifyContent.between,
@@ -670,7 +760,7 @@ class NavBar extends FlintComponent {
               ),
               children: [
                 Row(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.flex,
                     alignItems: AlignItems.center,
                     gap: 8,
@@ -704,7 +794,7 @@ class NavBar extends FlintComponent {
                     padding: const EdgeInsets.all(0),
                     radius: ThemeToken.radius('md'),
                     border: Border.all(color: Color.rgba(51, 65, 85, 0.95)),
-                    background: Color.rgba(15, 23, 42, 0.76),
+                    background: ThemeToken.color('panel'),
                     color: ThemeToken.color('muted'),
                   ),
                   onPressed: (_) => setState(() => _apiDrawerOpen = false),
@@ -713,7 +803,7 @@ class NavBar extends FlintComponent {
               ],
             ),
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 padding: EdgeInsets.all(14),
               ),
               children: [
@@ -737,7 +827,7 @@ class NavBar extends FlintComponent {
         color: ThemeToken.color('muted'),
         fontSize: 14,
         fontWeight: 800,
-        background: Color.rgba(15, 23, 42, 0.54),
+        background: ThemeToken.color('panel'),
         hover: DartStyle(
           color: ThemeToken.color('text'),
           background: Color.rgba(255, 255, 255, 0.07),

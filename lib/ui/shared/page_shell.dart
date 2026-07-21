@@ -29,8 +29,9 @@ class SiteLayout extends Component {
   }
 }
 
-const _shell = DartStyle(
+final _shell = DartStyle(
   display: Display.grid,
   minWidth: 0,
-  background: Color('#05070d'),
+  background: ThemeToken.color('bg'),
+  color: ThemeToken.color('text'),
 );

@@ -11,16 +11,6 @@ class WorkflowSection extends Component {
         maxWidth: 1152,
         margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 64),
-        background: Background.layers([
-          Gradient.linear(
-            135,
-            [
-              GradientStop(Color.rgba(15, 23, 42, 0.28), 0),
-              GradientStop(Color.rgba(8, 47, 73, 0.16), 100),
-            ],
-          ),
-          Color.rgba(15, 23, 42, 0.18),
-        ]),
       ),
       children: [
         Container(
@@ -44,49 +34,50 @@ class WorkflowSection extends Component {
               code: _routeCode,
             ),
             Container(
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 12,
                 minWidth: 300,
               ),
               children: [
                 Row(
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     display: Display.flex,
                     flexWrap: FlexWrap.wrap,
                     alignItems: AlignItems.center,
                     gap: 8,
                   ),
                   children: [
-                    Icon(Icons.route, size: 16, color: Color('#67e8f9')),
+                    Icon(Icons.route,
+                        size: 16, color: ThemeToken.color('primary')),
                     Text.span(
                       'FlintDart standard',
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         display: Display.block,
                         fontSize: 12,
                         fontWeight: 800,
-                        color: Color('#67e8f9'),
+                        color: ThemeToken.color('primary'),
                       ),
                     ),
                   ],
                 ),
                 Text.h2(
                   'Full-stack features stay organized.',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     margin: EdgeInsets.all(0),
                     fontSize: 32,
                     fontWeight: 700,
                     lineHeight: 1.15,
-                    color: Colors.white,
+                    color: ThemeToken.color('text'),
                   ),
                 ),
                 Text.p(
                   'Composed route groups handle API endpoints and render browser pages seamlessly. Controllers manage backend actions and return type-safe page structures directly to Flint UI components, keeping the entire lifecycle structured.',
-                  dartStyle: const DartStyle(
+                  dartStyle: DartStyle(
                     margin: EdgeInsets.all(0),
                     fontSize: 15,
                     lineHeight: 1.65,
-                    color: Color('#a8b3c5'),
+                    color: ThemeToken.color('muted'),
                   ),
                 ),
               ],

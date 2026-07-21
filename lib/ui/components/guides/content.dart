@@ -20,7 +20,7 @@ class GuidesContent extends Component {
   @override
   View build() {
     return Container(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.grid,
         gap: 32,
         width: SizeValue.percent(100),
@@ -31,7 +31,7 @@ class GuidesContent extends Component {
       children: [
         if (loading)
           Container(
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               padding: EdgeInsets.symmetric(vertical: 48),
               display: Display.flex,
               justifyContent: JustifyContent.center,
@@ -39,8 +39,8 @@ class GuidesContent extends Component {
             children: [
               Text.p(
                 'Loading...',
-                dartStyle: const DartStyle(
-                  color: Color('#64748b'),
+                dartStyle: DartStyle(
+                  color: ThemeToken.color('muted'),
                   margin: EdgeInsets.all(0),
                 ),
               ),
@@ -71,7 +71,7 @@ class GuidesContent extends Component {
     }
 
     return Row(
-      dartStyle: const DartStyle(
+      dartStyle: DartStyle(
         display: Display.flex,
         flexWrap: FlexWrap.wrap,
         gap: 16,
@@ -82,27 +82,27 @@ class GuidesContent extends Component {
             previousUrl != null)
           Link(
             href: previousUrl!,
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.flex,
               flex: '1 1 240px',
               gap: 4,
               padding: EdgeInsets.all(16),
               radius: 12,
-              border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-              background: Color.rgba(15, 23, 42, 0.5),
+              border: Border(color: ThemeToken.color('line'), width: 1),
+              background: ThemeToken.color('panel'),
             ),
             children: [
               Text.p(
                 'Previous Topic',
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 11,
-                  color: Color('#64748b'),
+                  color: ThemeToken.color('muted'),
                   margin: EdgeInsets.all(0),
                 ),
               ),
               Text.p(
                 previousTitle!,
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 13,
                   fontWeight: 600,
                   color: Color('#e2e8f0'),
@@ -116,27 +116,27 @@ class GuidesContent extends Component {
         if (nextTitle != null && nextTitle!.isNotEmpty && nextUrl != null)
           Link(
             href: nextUrl!,
-            dartStyle: const DartStyle(
+            dartStyle: DartStyle(
               display: Display.flex,
               flex: '1 1 240px',
               gap: 4,
               padding: EdgeInsets.all(16),
               radius: 12,
-              border: Border(color: Color.rgba(30, 41, 59, 1), width: 1),
-              background: Color.rgba(15, 23, 42, 0.5),
+              border: Border(color: ThemeToken.color('line'), width: 1),
+              background: ThemeToken.color('panel'),
             ),
             children: [
               Text.p(
                 'Next Topic',
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 11,
-                  color: Color('#64748b'),
+                  color: ThemeToken.color('muted'),
                   margin: EdgeInsets.all(0),
                 ),
               ),
               Text.p(
                 nextTitle!,
-                dartStyle: const DartStyle(
+                dartStyle: DartStyle(
                   fontSize: 13,
                   fontWeight: 600,
                   color: Color('#e2e8f0'),

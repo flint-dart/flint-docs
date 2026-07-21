@@ -22,6 +22,12 @@ const docsLightTheme = FlintTheme(
     'pill': 9999,
   },
   shadows: {
+    'sm': Shadow(
+      y: 14,
+      blur: 34,
+      spread: -24,
+      color: Color.rgba(15, 23, 42, 0.18),
+    ),
     'glow': Shadow(
       y: 18,
       blur: 54,
@@ -57,6 +63,12 @@ const docsDarkTheme = FlintTheme(
     'pill': 9999,
   },
   shadows: {
+    'sm': Shadow(
+      y: 14,
+      blur: 34,
+      spread: -24,
+      color: Color.rgba(2, 6, 23, 0.42),
+    ),
     'glow': Shadow(
       y: 18,
       blur: 54,
@@ -77,31 +89,53 @@ final docsRootDesign = RootDesign(
     dark: docsDarkTheme,
     initialMode: FlintThemeMode.dark,
   ),
-  all: const DartStyle(boxSizing: BoxSizing.borderBox),
-  html: const DartStyle(scrollBehavior: ScrollBehavior.smooth),
+  all: DartStyle(boxSizing: BoxSizing.borderBox),
+  html: DartStyle(scrollBehavior: ScrollBehavior.smooth),
   body: DartStyle(
     margin: const EdgeInsets.all(0),
-    background: Background.layers([
-      Gradient.radialCircle(
-        at: const GradientPosition.percent(18, 0),
-        stops: const [
-          GradientStop(Color.rgba(56, 189, 248, 0.16)),
-          GradientStop(Colors.transparent, 32),
-        ],
-      ),
-      Gradient.radialCircle(
-        at: const GradientPosition.percent(88, 8),
-        stops: const [
-          GradientStop(Color.rgba(52, 211, 153, 0.12)),
-          GradientStop(Colors.transparent, 28),
-        ],
-      ),
-      ThemeToken.color('bg'),
-    ]),
+    background: ThemeToken.color('bg'),
+    light: DartStyle(
+      background: Background.layers([
+        Gradient.radialCircle(
+          at: const GradientPosition.percent(18, 0),
+          stops: const [
+            GradientStop(Color.rgba(14, 165, 233, 0.14)),
+            GradientStop(Colors.transparent, 34),
+          ],
+        ),
+        Gradient.radialCircle(
+          at: const GradientPosition.percent(88, 8),
+          stops: const [
+            GradientStop(Color.rgba(16, 185, 129, 0.12)),
+            GradientStop(Colors.transparent, 30),
+          ],
+        ),
+        Color('#f8fafc'),
+      ]),
+    ),
+    dark: DartStyle(
+      background: Background.layers([
+        Gradient.radialCircle(
+          at: const GradientPosition.percent(18, 0),
+          stops: const [
+            GradientStop(Color.rgba(56, 189, 248, 0.16)),
+            GradientStop(Colors.transparent, 32),
+          ],
+        ),
+        Gradient.radialCircle(
+          at: const GradientPosition.percent(88, 8),
+          stops: const [
+            GradientStop(Color.rgba(52, 211, 153, 0.12)),
+            GradientStop(Colors.transparent, 28),
+          ],
+        ),
+        Color('#05070d'),
+      ]),
+    ),
     color: ThemeToken.color('text'),
     fontFamily: ThemeToken.font('sans'),
   ),
-  links: const DartStyle(
+  links: DartStyle(
     color: Color('inherit'),
     textDecoration: TextDecorationStyle.none,
   ),
