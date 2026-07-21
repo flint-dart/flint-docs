@@ -203,30 +203,38 @@ const _badgeRow = DartStyle(
   gap: 12,
 );
 
-const _badgeBlue = DartStyle(
+final _badgeBlue = DartStyle(
   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
   radius: 9999,
-  border: Border(color: Color.rgba(56, 189, 248, 0.3), width: 1),
-  background: Color.rgba(56, 189, 248, 0.1),
+  border: Border(color: Color.rgba(2, 132, 199, 0.3), width: 1),
+  background: Color.rgba(2, 132, 199, 0.08),
+  dark: const DartStyle(
+    border: Border(color: Color.rgba(56, 189, 248, 0.3), width: 1),
+    background: Color.rgba(56, 189, 248, 0.1),
+  ),
 );
 
-const _badgeBlue2 = DartStyle(
+final _badgeBlue2 = DartStyle(
   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
   radius: 9999,
-  border: Border(color: Color.rgba(56, 189, 248, 0.4), width: 1),
-  background: Color.rgba(56, 189, 248, 0.1),
+  border: Border(color: Color.rgba(5, 150, 105, 0.3), width: 1),
+  background: Color.rgba(5, 150, 105, 0.08),
+  dark: const DartStyle(
+    border: Border(color: Color.rgba(56, 189, 248, 0.4), width: 1),
+    background: Color.rgba(56, 189, 248, 0.1),
+  ),
 );
 
-const _badgeText = DartStyle(
+final _badgeText = DartStyle(
   fontSize: 11,
   fontWeight: 600,
-  color: Color('#bae6fd'),
+  color: ThemeToken.color('accent'),
 );
 
-const _badgeText2 = DartStyle(
+final _badgeText2 = DartStyle(
   fontSize: 11,
   fontWeight: 600,
-  color: Color('#e0f2fe'),
+  color: ThemeToken.color('primary'),
 );
 
 final _h1 = DartStyle(
@@ -291,17 +299,21 @@ final _ctaBody = DartStyle(
   margin: EdgeInsets.only(top: 8, bottom: 0),
 );
 
-const _ctaLink = DartStyle(
+final _ctaLink = DartStyle(
   display: Display.inlineFlex,
   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
   radius: 8,
-  border: Border(color: Color.rgba(52, 211, 153, 0.4), width: 1),
-  background: Color.rgba(52, 211, 153, 0.1),
+  border: Border(color: Color.rgba(5, 150, 105, 0.34), width: 1),
+  background: Color.rgba(5, 150, 105, 0.08),
   margin: EdgeInsets.only(top: 16),
+  dark: const DartStyle(
+    border: Border(color: Color.rgba(52, 211, 153, 0.4), width: 1),
+    background: Color.rgba(52, 211, 153, 0.1),
+  ),
 );
 
-const _ctaLinkText = DartStyle(
+final _ctaLinkText = DartStyle(
   fontSize: 13,
   fontWeight: 600,
-  color: Color('#a7f3d0'),
+  color: ThemeToken.color('primary'),
 );

@@ -81,7 +81,7 @@ class BlogWritePage extends Component {
             margin: EdgeInsets.all(0),
             fontSize: 12,
             fontWeight: 800,
-            color: Color('#a7f3d0'),
+            color: ThemeToken.color('primary'),
           ),
         ),
         Text.h1(
@@ -130,7 +130,7 @@ class BlogWritePage extends Component {
           'Your account is signed in, but it does not currently have permission to publish blog posts.',
           dartStyle: DartStyle(
             margin: EdgeInsets.only(top: 8, bottom: 0),
-            color: Color('#fde68a'),
+            color: ThemeToken.color('warning'),
             lineHeight: 1.6,
           ),
         ),

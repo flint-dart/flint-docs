@@ -36,10 +36,15 @@ class ApiSidebar extends Component {
                   radius: 8,
                   fontSize: 13,
                   fontWeight: 600,
-                  color: Color('#a7f3d0'),
-                  background: Color.rgba(52, 211, 153, 0.1),
-                  border:
-                      Border(color: Color.rgba(52, 211, 153, 0.2), width: 1),
+                  color: ThemeToken.color('primary'),
+                  background: Color.rgba(5, 150, 105, 0.08),
+                  border: Border(color: Color.rgba(5, 150, 105, 0.2), width: 1),
+                  dark: const DartStyle(
+                    color: Color('#a7f3d0'),
+                    background: Color.rgba(52, 211, 153, 0.1),
+                    border:
+                        Border(color: Color.rgba(52, 211, 153, 0.2), width: 1),
+                  ),
                 )
               : DartStyle(
                   display: Display.block,

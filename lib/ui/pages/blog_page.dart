@@ -108,8 +108,8 @@ class BlogPage extends Component {
                     gap: 10,
                   ),
                   children: [
-                    _pill('Flint Blog', const Color('#a7f3d0')),
-                    _pill('Engineering notes', const Color('#bae6fd')),
+                    _pill('Flint Blog'),
+                    _pill('Engineering notes'),
                   ],
                 ),
                 Text.h1(
@@ -176,7 +176,7 @@ class BlogPage extends Component {
                   dartStyle: DartStyle(
                     fontSize: 13,
                     fontWeight: 800,
-                    color: Color('#a7f3d0'),
+                    color: ThemeToken.color('primary'),
                   ),
                 ),
               ],
@@ -201,7 +201,7 @@ class BlogPage extends Component {
                     dartStyle: DartStyle(
                       fontSize: 13,
                       fontWeight: 800,
-                      color: Color('#bae6fd'),
+                      color: ThemeToken.color('accent'),
                     ),
                   ),
                 ],
@@ -334,11 +334,11 @@ class BlogPage extends Component {
                       dartStyle: DartStyle(
                         fontSize: 13,
                         fontWeight: 800,
-                        color: Color('#a7f3d0'),
+                        color: ThemeToken.color('primary'),
                       ),
                     ),
                     Icon(Icons.arrowRight,
-                        size: 15, color: const Color('#a7f3d0')),
+                        size: 15, color: ThemeToken.color('primary')),
                   ],
                 ),
               ],
@@ -433,7 +433,7 @@ class BlogPage extends Component {
             margin: EdgeInsets.all(0),
             fontSize: 13,
             lineHeight: 1.68,
-            color: Color('#a8b3c5'),
+            color: ThemeToken.color('muted'),
           ),
         ),
         Row(
@@ -492,7 +492,7 @@ class BlogPage extends Component {
         gap: 8,
       ),
       children: [
-        _pill(tag, const Color('#a7f3d0')),
+        _pill(tag),
         if (date.isNotEmpty)
           Row(
             dartStyle: DartStyle(
@@ -537,14 +537,18 @@ class BlogPage extends Component {
     );
   }
 
-  View _pill(String label, Color color) {
+  View _pill(String label) {
     return Container(
       dartStyle: DartStyle(
         width: const SizeValue('max-content'),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
-        border: const Border(color: Color.rgba(52, 211, 153, 0.28), width: 1),
-        background: const Color.rgba(52, 211, 153, 0.08),
+        border: const Border(color: Color.rgba(5, 150, 105, 0.28), width: 1),
+        background: const Color.rgba(5, 150, 105, 0.08),
+        dark: const DartStyle(
+          border: Border(color: Color.rgba(52, 211, 153, 0.28), width: 1),
+          background: Color.rgba(52, 211, 153, 0.08),
+        ),
       ),
       children: [
         Text.span(
@@ -552,7 +556,7 @@ class BlogPage extends Component {
           dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 800,
-            color: color,
+            color: ThemeToken.color('primary'),
           ),
         ),
       ],

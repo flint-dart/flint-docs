@@ -80,8 +80,8 @@ class AiPage extends Component {
                     gap: 10,
                   ),
                   children: [
-                    _pill('Flint AI', const Color('#bae6fd')),
-                    _pill('Agents & tools', const Color('#a7f3d0')),
+                    _pill('Flint AI'),
+                    _pill('Agents & tools'),
                   ],
                 ),
                 Text.h1(
@@ -161,7 +161,7 @@ class AiPage extends Component {
               dartStyle: DartStyle(
                 fontSize: 12,
                 fontWeight: 800,
-                color: Color('#7dd3fc'),
+                color: ThemeToken.color('accent'),
               ),
             ),
           ],
@@ -181,7 +181,7 @@ class AiPage extends Component {
               dartStyle: DartStyle(
                 fontSize: 12,
                 fontWeight: 800,
-                color: Color('#dbeafe'),
+                color: ThemeToken.color('text'),
               ),
             ),
             Text.span(
@@ -342,10 +342,11 @@ class AiPage extends Component {
                   dartStyle: DartStyle(
                     fontSize: 12,
                     fontWeight: 800,
-                    color: Color('#a7f3d0'),
+                    color: ThemeToken.color('primary'),
                   ),
                 ),
-                Icon(Icons.arrowRight, size: 14, color: const Color('#a7f3d0')),
+                Icon(Icons.arrowRight,
+                    size: 14, color: ThemeToken.color('primary')),
               ],
             ),
           ],
@@ -390,14 +391,18 @@ class AiPage extends Component {
     );
   }
 
-  View _pill(String label, Color color) {
+  View _pill(String label) {
     return Container(
       dartStyle: DartStyle(
         width: SizeValue('max-content'),
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
-        border: Border(color: Color.rgba(52, 211, 153, 0.28), width: 1),
-        background: Color.rgba(52, 211, 153, 0.08),
+        border: Border(color: Color.rgba(5, 150, 105, 0.28), width: 1),
+        background: Color.rgba(5, 150, 105, 0.08),
+        dark: const DartStyle(
+          border: Border(color: Color.rgba(52, 211, 153, 0.28), width: 1),
+          background: Color.rgba(52, 211, 153, 0.08),
+        ),
       ),
       children: [
         Text.span(
@@ -405,7 +410,7 @@ class AiPage extends Component {
           dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 800,
-            color: color,
+            color: ThemeToken.color('primary'),
           ),
         ),
       ],

@@ -105,7 +105,7 @@ class GuidesContent extends Component {
                 dartStyle: DartStyle(
                   fontSize: 13,
                   fontWeight: 600,
-                  color: Color('#e2e8f0'),
+                  color: ThemeToken.color('text'),
                   margin: EdgeInsets.all(0),
                 ),
               ),
@@ -139,7 +139,7 @@ class GuidesContent extends Component {
                 dartStyle: DartStyle(
                   fontSize: 13,
                   fontWeight: 600,
-                  color: Color('#e2e8f0'),
+                  color: ThemeToken.color('text'),
                   margin: EdgeInsets.all(0),
                 ),
               ),

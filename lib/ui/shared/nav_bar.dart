@@ -178,8 +178,12 @@ class NavBar extends FlintComponent {
         border: Border.all(color: Color.rgba(52, 211, 153, 0.34)),
         background: _guideDrawerOpen
             ? Color.rgba(52, 211, 153, 0.16)
-            : Color.rgba(15, 23, 42, 0.72),
-        color: const Color('#a7f3d0'),
+            : ThemeToken.color('panel'),
+        color: ThemeToken.color('primary'),
+        dark: const DartStyle(
+          background: Color.rgba(15, 23, 42, 0.72),
+          color: Color('#a7f3d0'),
+        ),
         md: DartStyle(display: Display.none),
       ),
       onPressed: (_) => setState(() {
@@ -209,8 +213,12 @@ class NavBar extends FlintComponent {
         border: Border.all(color: Color.rgba(56, 189, 248, 0.34)),
         background: _apiDrawerOpen
             ? Color.rgba(14, 165, 233, 0.18)
-            : Color.rgba(15, 23, 42, 0.72),
-        color: const Color('#bae6fd'),
+            : ThemeToken.color('panel'),
+        color: ThemeToken.color('accent'),
+        dark: const DartStyle(
+          background: Color.rgba(15, 23, 42, 0.72),
+          color: Color('#bae6fd'),
+        ),
         md: DartStyle(display: Display.none),
       ),
       onPressed: (_) => setState(() {
@@ -290,7 +298,7 @@ class NavBar extends FlintComponent {
               radius: ThemeToken.radius('md'),
               border: Border.all(color: Color.rgba(52, 211, 153, 0.34)),
               background: Color.rgba(52, 211, 153, 0.1),
-              color: Color('#bbf7d0'),
+              color: ThemeToken.color('primary'),
               fontSize: 13,
               fontWeight: 800,
               md: DartStyle(display: Display.inlineFlex),
@@ -305,14 +313,19 @@ class NavBar extends FlintComponent {
           dartStyle: DartStyle(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             radius: ThemeToken.radius('md'),
-            border: Border.all(color: Color.rgba(56, 189, 248, 0.32)),
-            background: Color.rgba(14, 165, 233, 0.1),
-            color: Color('#bae6fd'),
+            border: Border.all(color: Color.rgba(2, 132, 199, 0.28)),
+            background: Color.rgba(2, 132, 199, 0.08),
+            color: ThemeToken.color('accent'),
             fontSize: 13,
             fontWeight: 800,
             transition: StyleTransition.all(milliseconds: 160),
             hover: DartStyle(
-              background: Color.rgba(14, 165, 233, 0.18),
+              background: Color.rgba(2, 132, 199, 0.14),
+            ),
+            dark: const DartStyle(
+              border: Border(color: Color.rgba(56, 189, 248, 0.32), width: 1),
+              background: Color.rgba(14, 165, 233, 0.1),
+              color: Color('#bae6fd'),
             ),
           ),
         ),
@@ -413,7 +426,7 @@ class NavBar extends FlintComponent {
         Text.span(
           _label,
           dartStyle: DartStyle(
-            color: Color('#d1fae5'),
+            color: ThemeToken.color('primary'),
             fontSize: 12,
             fontWeight: 800,
           ),

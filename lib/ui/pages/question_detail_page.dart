@@ -231,7 +231,9 @@ class QuestionDetailPage extends Component {
           dartStyle: DartStyle(
             fontSize: 12,
             fontWeight: 800,
-            color: connected ? const Color('#a7f3d0') : const Color('#fde68a'),
+            color: connected
+                ? ThemeToken.color('primary')
+                : ThemeToken.color('warning'),
           ),
         ),
       ],
@@ -607,7 +609,7 @@ class QuestionDetailPage extends Component {
   View _permissionPanel() {
     return Text.p(
       'Your account can read answers but cannot post yet.',
-      dartStyle: DartStyle(color: Color('#fbbf24')),
+      dartStyle: DartStyle(color: ThemeToken.color('warning')),
     );
   }
 
@@ -616,8 +618,14 @@ class QuestionDetailPage extends Component {
       dartStyle: DartStyle(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
-        border: Border(color: Color.rgba(125, 211, 252, 0.28), width: 1),
-        background: Color.rgba(14, 165, 233, 0.1),
+        border: Border(color: Color.rgba(2, 132, 199, 0.28), width: 1),
+        background: Color.rgba(2, 132, 199, 0.08),
+        color: ThemeToken.color('accent'),
+        dark: const DartStyle(
+          border: Border(color: Color.rgba(125, 211, 252, 0.28), width: 1),
+          background: Color.rgba(14, 165, 233, 0.1),
+          color: Color('#bae6fd'),
+        ),
       ),
       child: label,
     );

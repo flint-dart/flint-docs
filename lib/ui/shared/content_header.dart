@@ -88,30 +88,38 @@ const _badgeRow = DartStyle(
   gap: 8,
 );
 
-const _eyebrowPill = DartStyle(
+final _eyebrowPill = DartStyle(
   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
   radius: 9999,
-  border: Border(color: Color.rgba(52, 211, 153, 0.3), width: 1),
-  background: Color.rgba(52, 211, 153, 0.1),
+  border: Border(color: Color.rgba(5, 150, 105, 0.3), width: 1),
+  background: Color.rgba(5, 150, 105, 0.08),
+  dark: const DartStyle(
+    border: Border(color: Color.rgba(52, 211, 153, 0.3), width: 1),
+    background: Color.rgba(52, 211, 153, 0.1),
+  ),
 );
 
-const _eyebrowText = DartStyle(
+final _eyebrowText = DartStyle(
   fontSize: 11,
   fontWeight: 600,
-  color: Color('#a7f3d0'),
+  color: ThemeToken.color('primary'),
 );
 
-const _versionPill = DartStyle(
+final _versionPill = DartStyle(
   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
   radius: 9999,
-  border: Border(color: Color.rgba(52, 211, 153, 0.3), width: 1),
-  background: Color.rgba(52, 211, 153, 0.08),
+  border: Border(color: Color.rgba(5, 150, 105, 0.3), width: 1),
+  background: Color.rgba(5, 150, 105, 0.08),
+  dark: const DartStyle(
+    border: Border(color: Color.rgba(52, 211, 153, 0.3), width: 1),
+    background: Color.rgba(52, 211, 153, 0.08),
+  ),
 );
 
-const _versionText = DartStyle(
+final _versionText = DartStyle(
   fontSize: 11,
   fontWeight: 600,
-  color: Color('#d1fae5'),
+  color: ThemeToken.color('primary'),
 );
 
 final _title = DartStyle(

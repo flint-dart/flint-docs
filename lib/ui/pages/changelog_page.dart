@@ -56,8 +56,8 @@ class ChangelogPage extends Component {
             gap: 12,
           ),
           children: [
-            _pill('Release Notes', const Color('#a7f3d0')),
-            _pill('Changelog', const Color('#d1fae5')),
+            _pill('Release Notes'),
+            _pill('Changelog'),
           ],
         ),
         Text.h1(
@@ -84,13 +84,17 @@ class ChangelogPage extends Component {
     );
   }
 
-  View _pill(String label, Color color) {
+  View _pill(String label) {
     return Container(
       dartStyle: DartStyle(
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         radius: 9999,
-        border: Border(color: Color.rgba(52, 211, 153, 0.32), width: 1),
-        background: Color.rgba(52, 211, 153, 0.1),
+        border: Border(color: Color.rgba(5, 150, 105, 0.32), width: 1),
+        background: Color.rgba(5, 150, 105, 0.08),
+        dark: const DartStyle(
+          border: Border(color: Color.rgba(52, 211, 153, 0.32), width: 1),
+          background: Color.rgba(52, 211, 153, 0.1),
+        ),
       ),
       children: [
         Text.span(
@@ -98,7 +102,7 @@ class ChangelogPage extends Component {
           dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 700,
-            color: color,
+            color: ThemeToken.color('primary'),
           ),
         ),
       ],
@@ -190,7 +194,7 @@ class ChangelogPage extends Component {
                     dartStyle: DartStyle(
                       fontSize: 10,
                       fontWeight: 700,
-                      color: Color('#a7f3d0'),
+                      color: ThemeToken.color('primary'),
                     ),
                   ),
                 ],

@@ -78,8 +78,8 @@ class SubmitBuildPage extends Component {
             gap: 10,
           ),
           children: [
-            _pill('Community showcase', const Color('#a7f3d0')),
-            _pill('3 images · 2 links', const Color('#bae6fd')),
+            _pill('Community showcase'),
+            _pill('3 images · 2 links'),
           ],
         ),
         Text.h1(
@@ -451,23 +451,27 @@ class SubmitBuildPage extends Component {
             gap: 8,
           ),
           children: [
-            _pill('Screenshots', const Color('#7dd3fc')),
-            _pill('Live URL', const Color('#d1fae5')),
-            _pill('GitHub', const Color('#bae6fd')),
-            _pill('Use case', const Color('#fef3c7')),
+            _pill('Screenshots'),
+            _pill('Live URL'),
+            _pill('GitHub'),
+            _pill('Use case'),
           ],
         ),
       ],
     );
   }
 
-  View _pill(String label, Color color) {
+  View _pill(String label) {
     return Container(
       dartStyle: DartStyle(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
-        border: Border(color: Color.rgba(52, 211, 153, 0.24), width: 1),
-        background: Color.rgba(52, 211, 153, 0.08),
+        border: Border(color: Color.rgba(5, 150, 105, 0.24), width: 1),
+        background: Color.rgba(5, 150, 105, 0.08),
+        dark: const DartStyle(
+          border: Border(color: Color.rgba(52, 211, 153, 0.24), width: 1),
+          background: Color.rgba(52, 211, 153, 0.08),
+        ),
       ),
       children: [
         Text.span(
@@ -475,7 +479,7 @@ class SubmitBuildPage extends Component {
           dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 800,
-            color: color,
+            color: ThemeToken.color('primary'),
           ),
         ),
       ],

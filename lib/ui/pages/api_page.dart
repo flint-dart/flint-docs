@@ -78,7 +78,7 @@ class ApiPage extends Component {
             margin: EdgeInsets.all(0),
             fontSize: 12,
             fontWeight: 800,
-            color: Color('#a7f3d0'),
+            color: ThemeToken.color('primary'),
           ),
         ),
         Text.h1(
@@ -87,7 +87,7 @@ class ApiPage extends Component {
             margin: EdgeInsets.all(0),
             fontSize: 34,
             lineHeight: 1.12,
-            color: Color('#f8fafc'),
+            color: ThemeToken.color('text'),
           ),
         ),
         Text.p(
@@ -179,7 +179,7 @@ class ApiPage extends Component {
                 dartStyle: DartStyle(
                   fontSize: 13,
                   fontWeight: 600,
-                  color: Color('#e2e8f0'),
+                  color: ThemeToken.color('text'),
                   margin: EdgeInsets.all(0),
                 ),
               ),
@@ -213,7 +213,7 @@ class ApiPage extends Component {
                 dartStyle: DartStyle(
                   fontSize: 13,
                   fontWeight: 600,
-                  color: Color('#e2e8f0'),
+                  color: ThemeToken.color('text'),
                   margin: EdgeInsets.all(0),
                 ),
               ),

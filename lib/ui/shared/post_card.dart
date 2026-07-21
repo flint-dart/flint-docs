@@ -99,30 +99,38 @@ const _metaRow = DartStyle(
   gap: 8,
 );
 
-const _tagEmerald = DartStyle(
+final _tagEmerald = DartStyle(
   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
   radius: 9999,
-  border: Border(color: Color.rgba(52, 211, 153, 0.3), width: 1),
-  background: Color.rgba(52, 211, 153, 0.1),
+  border: Border(color: Color.rgba(5, 150, 105, 0.3), width: 1),
+  background: Color.rgba(5, 150, 105, 0.08),
+  dark: const DartStyle(
+    border: Border(color: Color.rgba(52, 211, 153, 0.3), width: 1),
+    background: Color.rgba(52, 211, 153, 0.1),
+  ),
 );
 
-const _tagSky = DartStyle(
+final _tagSky = DartStyle(
   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
   radius: 9999,
-  border: Border(color: Color.rgba(56, 189, 248, 0.3), width: 1),
-  background: Color.rgba(56, 189, 248, 0.1),
+  border: Border(color: Color.rgba(2, 132, 199, 0.3), width: 1),
+  background: Color.rgba(2, 132, 199, 0.08),
+  dark: const DartStyle(
+    border: Border(color: Color.rgba(56, 189, 248, 0.3), width: 1),
+    background: Color.rgba(56, 189, 248, 0.1),
+  ),
 );
 
-const _tagTextEmerald = DartStyle(
+final _tagTextEmerald = DartStyle(
   fontSize: 11,
   fontWeight: 600,
-  color: Color('#a7f3d0'),
+  color: ThemeToken.color('primary'),
 );
 
-const _tagTextSky = DartStyle(
+final _tagTextSky = DartStyle(
   fontSize: 11,
   fontWeight: 600,
-  color: Color('#bae6fd'),
+  color: ThemeToken.color('accent'),
 );
 
 final _dateText = DartStyle(

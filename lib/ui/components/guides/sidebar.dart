@@ -71,9 +71,15 @@ class GuidesSidebar extends Component {
                 radius: 8,
                 fontSize: 13,
                 fontWeight: 600,
-                color: Color('#a7f3d0'),
-                background: Color.rgba(52, 211, 153, 0.1),
-                border: Border(color: Color.rgba(52, 211, 153, 0.2), width: 1),
+                color: ThemeToken.color('primary'),
+                background: Color.rgba(5, 150, 105, 0.08),
+                border: Border(color: Color.rgba(5, 150, 105, 0.2), width: 1),
+                dark: const DartStyle(
+                  color: Color('#a7f3d0'),
+                  background: Color.rgba(52, 211, 153, 0.1),
+                  border:
+                      Border(color: Color.rgba(52, 211, 153, 0.2), width: 1),
+                ),
               )
             : DartStyle(
                 display: Display.block,
@@ -111,7 +117,7 @@ class GuidesSidebar extends Component {
             fontSize: 13,
             fontWeight: groupActive ? 600 : 500,
             color: groupActive
-                ? const Color('#a7f3d0')
+                ? ThemeToken.color('primary')
                 : ThemeToken.color('muted'),
           ),
           children: [
@@ -122,7 +128,9 @@ class GuidesSidebar extends Component {
             Icon(
               Icons.chevronDown,
               size: 14,
-              color: groupActive ? Color('#a7f3d0') : ThemeToken.color('muted'),
+              color: groupActive
+                  ? ThemeToken.color('primary')
+                  : ThemeToken.color('muted'),
             ),
           ],
         ),
@@ -145,8 +153,12 @@ class GuidesSidebar extends Component {
                           radius: 6,
                           fontSize: 12,
                           fontWeight: 600,
-                          color: Color('#a7f3d0'),
-                          background: Color.rgba(52, 211, 153, 0.08),
+                          color: ThemeToken.color('primary'),
+                          background: Color.rgba(5, 150, 105, 0.08),
+                          dark: const DartStyle(
+                            color: Color('#a7f3d0'),
+                            background: Color.rgba(52, 211, 153, 0.08),
+                          ),
                         )
                       : DartStyle(
                           display: Display.block,

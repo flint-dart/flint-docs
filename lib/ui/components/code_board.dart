@@ -50,7 +50,7 @@ class CodeBoard extends Component {
               dartStyle: DartStyle(
                 fontSize: 11,
                 fontWeight: 800,
-                color: Color('#a7f3d0'),
+                color: ThemeToken.color('primary'),
               ),
             ),
             Button(

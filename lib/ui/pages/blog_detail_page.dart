@@ -242,7 +242,7 @@ class BlogDetailPage extends Component {
               dartStyle: DartStyle(
                 fontSize: 13,
                 fontWeight: 800,
-                color: Color('#a7f3d0'),
+                color: ThemeToken.color('primary'),
               ),
             ),
           ],
@@ -474,8 +474,12 @@ class BlogDetailPage extends Component {
         width: SizeValue('max-content'),
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
-        border: Border(color: Color.rgba(52, 211, 153, 0.28), width: 1),
-        background: Color.rgba(52, 211, 153, 0.08),
+        border: Border(color: Color.rgba(5, 150, 105, 0.28), width: 1),
+        background: Color.rgba(5, 150, 105, 0.08),
+        dark: const DartStyle(
+          border: Border(color: Color.rgba(52, 211, 153, 0.28), width: 1),
+          background: Color.rgba(52, 211, 153, 0.08),
+        ),
       ),
       children: [
         Text.span(
@@ -483,7 +487,7 @@ class BlogDetailPage extends Component {
           dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 800,
-            color: Color('#a7f3d0'),
+            color: ThemeToken.color('primary'),
           ),
         ),
       ],

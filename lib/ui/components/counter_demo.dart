@@ -88,7 +88,7 @@ final _headerStyle = DartStyle(
 
 final _eyebrowStyle = DartStyle(
   display: Display.block,
-  color: Color('#a7f3d0'),
+  color: ThemeToken.color('primary'),
   fontSize: 12,
   fontWeight: 800,
 );
@@ -120,7 +120,7 @@ final _countShellStyle = DartStyle(
 );
 
 final _countStyle = DartStyle(
-  color: Color('#a7f3d0'),
+  color: ThemeToken.color('primary'),
   fontSize: 44,
   fontWeight: 800,
   lineHeight: 1,

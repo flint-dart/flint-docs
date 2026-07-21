@@ -65,8 +65,8 @@ class ShowcaseDetailPage extends Component {
             gap: 10,
           ),
           children: [
-            _pill('Built with Flint', const Color('#a7f3d0')),
-            if (builtWith.isNotEmpty) _pill(builtWith, const Color('#7dd3fc')),
+            _pill('Built with Flint'),
+            if (builtWith.isNotEmpty) _pill(builtWith),
           ],
         ),
         Text.h1(
@@ -284,13 +284,17 @@ class ShowcaseDetailPage extends Component {
     return _externalLink(link);
   }
 
-  View _pill(String label, Color color) {
+  View _pill(String label) {
     return Container(
       dartStyle: DartStyle(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         radius: 999,
-        border: Border(color: Color.rgba(52, 211, 153, 0.24), width: 1),
-        background: Color.rgba(52, 211, 153, 0.08),
+        border: Border(color: Color.rgba(5, 150, 105, 0.24), width: 1),
+        background: Color.rgba(5, 150, 105, 0.08),
+        dark: const DartStyle(
+          border: Border(color: Color.rgba(52, 211, 153, 0.24), width: 1),
+          background: Color.rgba(52, 211, 153, 0.08),
+        ),
       ),
       children: [
         Text.span(
@@ -298,7 +302,7 @@ class ShowcaseDetailPage extends Component {
           dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 800,
-            color: color,
+            color: ThemeToken.color('primary'),
           ),
         ),
       ],
