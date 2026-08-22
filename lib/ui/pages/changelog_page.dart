@@ -23,15 +23,25 @@ class ChangelogPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: DartStyle(
+        dartStyle: const DartStyle(
           width: SizeValue.percent(100),
-          maxWidth: 1152,
-          margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+          display: Display.flex,
+          justifyContent: JustifyContent.center,
         ),
         children: [
-          _header(),
-          if (_entries.isEmpty) _emptyState() else _list(),
+          Container(
+            dartStyle: const DartStyle(
+              width: SizeValue.percent(100),
+              maxWidth: 1152,
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+              display: Display.grid,
+              gap: 32,
+            ),
+            children: [
+              _header(),
+              if (_entries.isEmpty) _emptyState() else _list(),
+            ],
+          ),
         ],
       ),
     );

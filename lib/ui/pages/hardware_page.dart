@@ -14,22 +14,30 @@ class HardwarePage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: DartStyle(
+        dartStyle: const DartStyle(
           width: SizeValue.percent(100),
-          maxWidth: 1040,
-          margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 34),
-          display: Display.grid,
-          gap: 22,
-          md: const DartStyle(
-            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 48),
-            gap: 28,
-          ),
+          display: Display.flex,
+          justifyContent: JustifyContent.center,
         ),
         children: [
-          _hero(),
-          _quickGrid(),
-          _articleShell(),
+          Container(
+            dartStyle: DartStyle(
+              width: SizeValue.percent(100),
+              maxWidth: 1040,
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 34),
+              display: Display.grid,
+              gap: 22,
+              md: const DartStyle(
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 48),
+                gap: 28,
+              ),
+            ),
+            children: [
+              _hero(),
+              _quickGrid(),
+              _articleShell(),
+            ],
+          ),
         ],
       ),
     );

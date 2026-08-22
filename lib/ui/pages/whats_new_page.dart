@@ -109,11 +109,20 @@ class WhatsNewPage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: _page,
+        dartStyle: const DartStyle(
+          width: SizeValue.percent(100),
+          display: Display.flex,
+          justifyContent: JustifyContent.center,
+        ),
         children: [
-          _header(),
-          _grid(),
-          _cta(),
+          Container(
+            dartStyle: _page,
+            children: [
+              _header(),
+              _grid(),
+              _cta(),
+            ],
+          ),
         ],
       ),
     );
