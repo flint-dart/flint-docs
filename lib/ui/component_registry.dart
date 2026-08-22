@@ -6,6 +6,7 @@ import 'pages/changelog_page.dart';
 import 'pages/content_page.dart';
 import 'pages/client_page.dart';
 import 'pages/ai_page.dart';
+import 'pages/hardware_page.dart';
 import 'pages/ui_docs_page.dart';
 import 'pages/examples_page.dart';
 import 'pages/guides_page.dart';
@@ -26,6 +27,7 @@ final componentRegistry = PageRegistry({
   'Changelog': (props) => ChangelogPage(props),
   'Client': (props) => ClientPage(props),
   'Ai': (props) => AiPage(props),
+  'Hardware': (props) => HardwarePage(props),
   'UiDocs': (props) => UiDocsPage(props),
   'Examples': (props) => ExamplesPage(props),
   'Guides': (props) => GuidesPage(props),

@@ -69,6 +69,27 @@ class DocsController extends Controller {
     );
   }
 
+  Future<Response> hardware() async {
+    return res.page(
+      'Hardware',
+      title: 'Flint Hardware Guide - Embedded Systems & Robotics in Dart',
+      meta: docs.pageMeta(
+        title: 'Flint Hardware Guide - Embedded Systems & Robotics in Dart',
+        description:
+            'Build embedded firmware, robotics state machines, sensor drivers, and Wokwi simulation circuits in pure Dart with Flint Hardware.',
+        canonicalPath: '/hardware',
+      ),
+      props: {
+        ...await docs.baseData(req),
+        'contentHtml':
+            await docs.readMarkdownContent('lib/content/pages/hardware.md'),
+        'title': 'Flint Hardware Guide - Embedded Systems & Robotics in Dart',
+        'description':
+            'Build embedded firmware, robotics state machines, sensor drivers, and Wokwi simulation circuits in pure Dart with Flint Hardware.',
+      },
+    );
+  }
+
   Future<Response> ui() async {
     return res.page(
       'UiDocs',
