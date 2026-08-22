@@ -7,31 +7,55 @@ class BuildFor extends FlintComponent {
       dartStyle: DartStyle(
         width: SizeValue.percent(100),
         maxWidth: 1152,
-        margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 64),
+        margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 64),
       ),
       children: [
         Container(
           dartStyle: DartStyle(
             display: Display.grid,
             gap: 10,
-            maxWidth: 720,
+            maxWidth: 760,
           ),
           children: [
-            Text.h2(
-              'Built for real full-stack work',
+            Row(
               dartStyle: DartStyle(
-                margin: EdgeInsets.all(0),
+                display: Display.inlineFlex,
+                alignItems: AlignItems.center,
+                gap: 8,
+                width: SizeValue('fit-content'),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                radius: 999,
+                background: const Color.rgba(52, 211, 153, 0.12),
+                border: Border.all(color: const Color.rgba(52, 211, 153, 0.3)),
+              ),
+              children: [
+                Icon(Icons.layers, size: 13, color: const Color('#34d399')),
+                Text.span(
+                  'End-to-End Capabilities',
+                  dartStyle: const DartStyle(
+                    color: Color('#34d399'),
+                    fontSize: 11,
+                    fontWeight: 800,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+            Text.h2(
+              'Built for Complete Modern Applications',
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
                 fontSize: 32,
-                fontWeight: 700,
+                fontWeight: 800,
                 lineHeight: 1.15,
                 color: ThemeToken.color('text'),
               ),
             ),
             Text.p(
-              'The home page should show the framework, not a demo toy. These are the pieces teams reach for first.',
+              'The Flint Ecosystem eliminates fragmentation across your entire technology stack. Every layer speaks the same expressive language.',
               dartStyle: DartStyle(
-                margin: EdgeInsets.all(0),
+                margin: const EdgeInsets.all(0),
                 fontSize: 15,
                 lineHeight: 1.65,
                 color: ThemeToken.color('muted'),
@@ -41,29 +65,33 @@ class BuildFor extends FlintComponent {
         ),
         Row(
           dartStyle: DartStyle(
-            display: Display.flex,
-            flexWrap: FlexWrap.wrap,
-            gap: 14,
-            margin: EdgeInsets.only(top: 26, bottom: 0),
+            display: Display.grid,
+            gridTemplateColumns: GridTemplateColumns.one,
+            gap: 16,
+            margin: const EdgeInsets.only(top: 32, bottom: 0),
+            md: DartStyle(gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr)),
+            lg: DartStyle(gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.oneFr)),
           ),
           children: _capabilities
-              .map((item) => _capability(item.$1, item.$2, item.$3))
+              .map((item) => _capability(item.$1, item.$2, item.$3, item.$4))
               .toList(),
         ),
       ],
     );
   }
 
-  FlintNode _capability(String label, String title, String body) {
+  FlintNode _capability(String label, String title, String body, String color) {
     return Container(
       dartStyle: DartStyle(
         display: Display.grid,
         gap: 10,
-        minWidth: 320,
-        padding: EdgeInsets.all(20),
-        radius: 8,
-        border: Border(color: Color.rgba(51, 65, 85, 0.82), width: 1),
+        padding: const EdgeInsets.all(22),
+        radius: 14,
+        border: Border(color: ThemeToken.color('line'), width: 1),
         background: ThemeToken.color('panel'),
+        hover: DartStyle(
+          border: Border(color: Color(color), width: 1),
+        ),
       ),
       children: [
         Text.span(
@@ -71,25 +99,26 @@ class BuildFor extends FlintComponent {
           dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 800,
-            color: Color('#fbbf24'),
+            color: Color(color),
+            letterSpacing: 0.5,
           ),
         ),
         Text.h3(
           title,
           dartStyle: DartStyle(
-            margin: EdgeInsets.all(0),
-            fontSize: 16,
-            fontWeight: 700,
+            margin: const EdgeInsets.all(0),
+            fontSize: 17,
+            fontWeight: 800,
             color: ThemeToken.color('text'),
           ),
         ),
         Text.p(
           body,
           dartStyle: DartStyle(
-            margin: EdgeInsets.all(0),
+            margin: const EdgeInsets.all(0),
             fontSize: 13,
             lineHeight: 1.6,
-            color: Color('#9ca8ba'),
+            color: ThemeToken.color('muted'),
           ),
         ),
       ],
@@ -99,33 +128,39 @@ class BuildFor extends FlintComponent {
 
 const _capabilities = [
   (
-    'HTTP',
-    'Routing and controllers',
-    'Define feature routes and keep request logic in plain Dart controllers.'
+    'FULL-STACK WEB',
+    'Server, SSR & Declarative UI',
+    'High-performance HTTP server, SEO-first server-side rendering, and declarative Web UI without client bloat.',
+    '#34d399',
   ),
   (
-    'DATA',
-    'Models and QueryBuilder',
-    'Use the active-record style model layer when your docs app needs persistent content.'
+    'CROSS-PLATFORM CLIENT',
+    'Universal SDK & Sync',
+    'Multi-tier caching, offline mutation replay, streaming WebSocket channels, and seamless database queries.',
+    '#38bdf8',
   ),
   (
-    'AUTH',
-    'Guards and sessions',
-    'Protect write flows for blog posts, questions, comments, and admin actions.'
+    'AI AGENT MESH',
+    'Multimodal Inference & Tools',
+    'Autonomous agents with tool policies, memory persistence, streaming responses, and vector embeddings.',
+    '#a78bfa',
   ),
   (
-    'DOCS',
-    'Swagger and Markdown',
-    'Serve API references, guides, changelog pages, and AI-friendly docs from clean content.'
+    'ROBOTICS & HARDWARE',
+    'Edge Firmware & Sensors',
+    'Sonar distance sensors, IMU motion trackers, motor drivers, and instant Wokwi browser simulation.',
+    '#f97316',
   ),
   (
-    'OPS',
-    'Cache, storage, mail',
-    'Reach for production utilities without pulling in a pile of unrelated packages.'
+    'SECURE DATA GATEWAY',
+    'Row-Level Security & Wire Protocol',
+    'Owner-isolated CRUD policies, concealed fields, query AST compilers, and relational data hydration.',
+    '#ec4899',
   ),
   (
-    'UI',
-    'Flint UI browser pages',
-    'Hydrate modern Dart components on server-rendered pages when interaction matters.'
+    'DEVELOPER EXPERIENCE',
+    '100% Type-Safe Pure Dart',
+    'Shared data models, end-to-end type checking, instant worker hot reload, and streamlined CLI tooling.',
+    '#f59e0b',
   ),
 ];

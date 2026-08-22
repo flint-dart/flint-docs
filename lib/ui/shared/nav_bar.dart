@@ -137,7 +137,7 @@ class NavBar extends FlintComponent {
           dartStyle: DartStyle(display: Display.grid, gap: 2),
           children: [
             Text.span(
-              'Flint Dart',
+              'Flint',
               dartStyle: DartStyle(
                 color: ThemeToken.color('text'),
                 fontSize: 15,
@@ -145,7 +145,7 @@ class NavBar extends FlintComponent {
               ),
             ),
             Text.span(
-              'Docs',
+              'Ecosystem',
               dartStyle: DartStyle(
                 color: ThemeToken.color('muted'),
                 fontSize: 11,

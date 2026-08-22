@@ -7,16 +7,16 @@ class TrustedBar extends FlintComponent {
       dartStyle: DartStyle(
         width: SizeValue.percent(100),
         maxWidth: 1152,
-        margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 28),
+        margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 28),
       ),
       children: [
         Container(
           dartStyle: DartStyle(
             display: Display.grid,
             gap: 20,
-            padding: EdgeInsets.all(18),
-            radius: 8,
+            padding: const EdgeInsets.all(22),
+            radius: 16,
             border: Border(color: ThemeToken.color('line'), width: 1),
             background: ThemeToken.color('panel'),
             shadow: ThemeToken.shadow('sm'),
@@ -53,7 +53,7 @@ class TrustedBar extends FlintComponent {
                   ),
                   children: [
                     Text.span(
-                      'Why it feels different',
+                      'Unified Dart Power',
                       dartStyle: DartStyle(
                         display: Display.block,
                         fontSize: 12,
@@ -62,9 +62,9 @@ class TrustedBar extends FlintComponent {
                       ),
                     ),
                     Text.h2(
-                      'Framework pieces that stay close together.',
+                      'Four official pillars engineered to work together.',
                       dartStyle: DartStyle(
-                        margin: EdgeInsets.all(0),
+                        margin: const EdgeInsets.all(0),
                         maxWidth: 560,
                         fontSize: 24,
                         fontWeight: 800,
@@ -81,9 +81,9 @@ class TrustedBar extends FlintComponent {
                     gap: 8,
                   ),
                   children: [
-                    _trustPill('1 app', 'routes, docs, UI'),
-                    _trustPill('0 templates', 'when Dart can render it'),
-                    _trustPill('3 steps', 'install, create, run'),
+                    _trustPill('4 Pillars', 'Web, Client, AI, Robotics'),
+                    _trustPill('0 Context Switch', 'pure Dart across all layers'),
+                    _trustPill('100% Type-Safe', 'shared schemas and models'),
                   ],
                 ),
               ],
@@ -97,22 +97,32 @@ class TrustedBar extends FlintComponent {
               ),
               children: [
                 _signal(
-                  Icons.route,
-                  'Controllers',
-                  'Route logic stays small and readable.',
+                  Icons.layers,
+                  'Full-Stack Web',
+                  'High-performance backend routes, SSR & Web UI.',
+                  _accentMint,
+                  '/fullstack',
+                ),
+                _signal(
+                  Icons.globe,
+                  'Universal Client',
+                  'Cross-platform caching, offline sync & channels.',
                   _accentSky,
+                  '/client',
                 ),
                 _signal(
-                  Icons.document,
-                  'Markdown content',
-                  'Docs stay editable without touching templates.',
-                  _accentAmber,
+                  Icons.sparkles,
+                  'Autonomous AI',
+                  'Agent workflows, tool execution & embeddings.',
+                  _accentViolet,
+                  '/ai',
                 ),
                 _signal(
-                  Icons.palette,
-                  'Browser UI',
-                  'Interactive pages hydrate from Dart components.',
-                  _accentRose,
+                  Icons.zap,
+                  'Robotics & Hardware',
+                  'Sensors, motor telemetry & virtual simulation.',
+                  _accentOrange,
+                  '/hardware',
                 ),
               ],
             ),
@@ -127,14 +137,16 @@ class TrustedBar extends FlintComponent {
     String title,
     String body,
     DartStyle accent,
+    String href,
   ) {
-    return Container(
+    return Link(
+      href: href,
       dartStyle: DartStyle(
         display: Display.grid,
         gap: 10,
-        minWidth: 280,
-        padding: EdgeInsets.all(18),
-        radius: 8,
+        minWidth: 240,
+        padding: const EdgeInsets.all(16),
+        radius: 12,
         border: Border(color: ThemeToken.color('line'), width: 1),
         background: ThemeToken.color('panelStrong'),
         light: const DartStyle(
@@ -142,6 +154,9 @@ class TrustedBar extends FlintComponent {
         ),
         dark: const DartStyle(
           border: Border(color: Color.rgba(148, 163, 184, 0.18), width: 1),
+        ),
+        hover: DartStyle(
+          border: Border.all(color: ThemeToken.color('primary')),
         ),
       ),
       children: [
@@ -176,17 +191,17 @@ class TrustedBar extends FlintComponent {
         Text.h3(
           title,
           dartStyle: DartStyle(
-            margin: EdgeInsets.all(0),
+            margin: const EdgeInsets.all(0),
             fontSize: 14,
-            fontWeight: 700,
+            fontWeight: 800,
             color: ThemeToken.color('text'),
           ),
         ),
         Text.p(
           body,
           dartStyle: DartStyle(
-            margin: EdgeInsets.all(0),
-            fontSize: 13,
+            margin: const EdgeInsets.all(0),
+            fontSize: 12,
             lineHeight: 1.5,
             color: ThemeToken.color('muted'),
           ),
@@ -201,7 +216,7 @@ class TrustedBar extends FlintComponent {
         display: Display.grid,
         gap: 2,
         minWidth: 130,
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         radius: 8,
         border: Border(color: ThemeToken.color('line'), width: 1),
         background: ThemeToken.color('panelStrong'),
@@ -234,23 +249,30 @@ class TrustedBar extends FlintComponent {
   }
 }
 
+const _accentMint = DartStyle(
+  minWidth: 44,
+  padding: EdgeInsets.all(2),
+  radius: 9999,
+  background: Color('#34d399'),
+);
+
 const _accentSky = DartStyle(
-  minWidth: 56,
+  minWidth: 44,
   padding: EdgeInsets.all(2),
   radius: 9999,
   background: Color('#38bdf8'),
 );
 
-const _accentAmber = DartStyle(
-  minWidth: 56,
+const _accentViolet = DartStyle(
+  minWidth: 44,
   padding: EdgeInsets.all(2),
   radius: 9999,
-  background: Color('#f59e0b'),
+  background: Color('#a78bfa'),
 );
 
-const _accentRose = DartStyle(
-  minWidth: 56,
+const _accentOrange = DartStyle(
+  minWidth: 44,
   padding: EdgeInsets.all(2),
   radius: 9999,
-  background: Color('#fb7185'),
+  background: Color('#f97316'),
 );
