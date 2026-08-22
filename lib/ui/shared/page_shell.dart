@@ -22,7 +22,15 @@ class SiteLayout extends Component {
       children: [
         NavBar(props),
         FlashBanner(props),
-        body,
+        Container(
+          dartStyle: const DartStyle(
+            width: SizeValue.percent(100),
+            display: Display.flex,
+            flexDirection: FlexDirection.column,
+            alignItems: AlignItems.center,
+          ),
+          children: [body],
+        ),
         Footer(),
       ],
     );
@@ -30,7 +38,10 @@ class SiteLayout extends Component {
 }
 
 final _shell = DartStyle(
-  display: Display.grid,
+  display: Display.flex,
+  flexDirection: FlexDirection.column,
+  minHeight: const SizeValue('100vh'),
+  width: const SizeValue.percent(100),
   minWidth: 0,
   background: ThemeToken.color('bg'),
   color: ThemeToken.color('text'),

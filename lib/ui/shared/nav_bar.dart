@@ -61,10 +61,11 @@ class NavBar extends FlintComponent {
       ),
       children: [
         Container(
-          dartStyle: DartStyle(
-            width: ThemeToken.space('pageX'),
-            margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
-            padding: const EdgeInsets.symmetric(vertical: 14),
+          dartStyle: const DartStyle(
+            width: SizeValue.percent(100),
+            maxWidth: 1152,
+            margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,

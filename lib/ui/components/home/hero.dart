@@ -82,12 +82,13 @@ class HomeHero extends FlintComponent {
           delayMilliseconds: 850,
         ),
         Container(
-          dartStyle: DartStyle(
+          dartStyle: const DartStyle(
             position: Position.relative,
             zIndex: 1,
-            width: ThemeToken.space('pageX'),
-            margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
-            padding: const EdgeInsets.symmetric(vertical: 42),
+            width: SizeValue.percent(100),
+            maxWidth: 1152,
+            margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 42),
             lg: DartStyle(padding: EdgeInsets.symmetric(vertical: 64)),
           ),
           children: [
