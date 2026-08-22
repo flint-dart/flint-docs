@@ -15,21 +15,45 @@ class PlatformSection extends Component {
           dartStyle: DartStyle(
             display: Display.grid,
             gap: 10,
-            maxWidth: 720,
+            maxWidth: 760,
           ),
           children: [
+            Row(
+              dartStyle: DartStyle(
+                display: Display.inlineFlex,
+                alignItems: AlignItems.center,
+                gap: 8,
+                width: SizeValue('fit-content'),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                radius: 999,
+                background: const Color.rgba(56, 189, 248, 0.12),
+                border: Border.all(color: const Color.rgba(56, 189, 248, 0.3)),
+              ),
+              children: [
+                Icon(Icons.layers, size: 13, color: const Color('#38bdf8')),
+                Text.span(
+                  'Four Ecosystem Pillars',
+                  dartStyle: const DartStyle(
+                    color: Color('#38bdf8'),
+                    fontSize: 11,
+                    fontWeight: 800,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
             Text.h2(
-              'One framework, one structure',
+              'The Complete Dart Technology Stack',
               dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 32,
-                fontWeight: 700,
+                fontWeight: 800,
                 lineHeight: 1.15,
                 color: ThemeToken.color('text'),
               ),
             ),
             Text.p(
-              'Routes, controllers, content, and browser UI each get their own place.',
+              'From server routes and browser UI to cross-platform client SDKs, AI agent mesh, and hardware robotics — everything runs in Dart.',
               dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
                 fontSize: 15,
@@ -41,51 +65,49 @@ class PlatformSection extends Component {
         ),
         Row(
           dartStyle: DartStyle(
-            display: Display.flex,
-            flexWrap: FlexWrap.wrap,
-            gap: 14,
-            margin: EdgeInsets.only(top: 26, bottom: 0),
+            display: Display.grid,
+            gridTemplateColumns: GridTemplateColumns.one,
+            gap: 16,
+            margin: EdgeInsets.only(top: 32, bottom: 0),
+            md: DartStyle(gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr)),
+            lg: DartStyle(gridTemplateColumns: GridTemplateColumns.repeat(4, GridTrack.oneFr)),
           ),
           children: [
-            _feature(
-              'Routes',
-              'Group routes by feature and register controllers with app.controller().',
-              DartStyle(
-                minWidth: 56,
-                padding: EdgeInsets.all(2),
-                radius: 9999,
-                background: Color('#38bdf8'),
-              ),
+            _pillarCard(
+              title: 'Flint Dart',
+              subtitle: 'Full-Stack Web Framework',
+              body: 'Server HTTP routes, SSR, declarative Web UI, Row-Level Security database API gateway, and migrations.',
+              linkHref: '/fullstack',
+              linkLabel: 'Explore Fullstack',
+              accentColor: '#34d399',
+              icon: Icons.server,
             ),
-            _feature(
-              'Controllers',
-              'Extend Controller directly and keep request handlers easy to scan.',
-              DartStyle(
-                minWidth: 56,
-                padding: EdgeInsets.all(2),
-                radius: 9999,
-                background: Color('#34d399'),
-              ),
+            _pillarCard(
+              title: 'Flint Client',
+              subtitle: 'Universal Client SDK',
+              body: 'Cross-platform HTTP & WebSocket client with memory/disk caching, offline sync, and real-time DB channels.',
+              linkHref: '/client',
+              linkLabel: 'Explore Client',
+              accentColor: '#38bdf8',
+              icon: Icons.globe,
             ),
-            _feature(
-              'Content',
-              'Store docs as Markdown, then render them where the UI needs them.',
-              DartStyle(
-                minWidth: 56,
-                padding: EdgeInsets.all(2),
-                radius: 9999,
-                background: Color('#f59e0b'),
-              ),
+            _pillarCard(
+              title: 'Flint AI',
+              subtitle: 'Autonomous AI Engine',
+              body: 'Multi-provider agent mesh, streaming chat, embeddings, function calling, audio transcription, and persistent memory.',
+              linkHref: '/ai',
+              linkLabel: 'Explore AI Engine',
+              accentColor: '#a78bfa',
+              icon: Icons.sparkles,
             ),
-            _feature(
-              'UI',
-              'Use Flint UI pages for interactive docs without returning to template files.',
-              DartStyle(
-                minWidth: 56,
-                padding: EdgeInsets.all(2),
-                radius: 9999,
-                background: Color('#fb7185'),
-              ),
+            _pillarCard(
+              title: 'Flint Hardware',
+              subtitle: 'Robotics & IoT SDK',
+              body: 'Robotics state machines, HC-SR04 sonar, MPU6050 IMU, motor drivers, and Wokwi virtual simulator bundles.',
+              linkHref: '/hardware',
+              linkLabel: 'Explore Hardware',
+              accentColor: '#f97316',
+              icon: Icons.zap,
             ),
           ],
         ),
@@ -93,35 +115,86 @@ class PlatformSection extends Component {
     );
   }
 
-  View _feature(String title, String body, DartStyle accent) {
+  View _pillarCard({
+    required String title,
+    required String subtitle,
+    required String body,
+    required String linkHref,
+    required String linkLabel,
+    required String accentColor,
+    required IconData icon,
+  }) {
     return Container(
       dartStyle: DartStyle(
-        display: Display.grid,
-        gap: 12,
-        minWidth: 250,
-        padding: EdgeInsets.all(18),
-        radius: 8,
-        border: Border(color: Color.rgba(51, 65, 85, 0.82), width: 1),
+        display: Display.flex,
+        flexDirection: FlexDirection.column,
+        justifyContent: JustifyContent.between,
+        gap: 16,
+        padding: EdgeInsets.all(20),
+        radius: 16,
+        border: Border(color: ThemeToken.color('line'), width: 1),
         background: ThemeToken.color('panel'),
+        hover: DartStyle(
+          border: Border(color: Color(accentColor), width: 1),
+        ),
       ),
       children: [
-        Container(dartStyle: accent),
-        Text.h3(
-          title,
-          dartStyle: DartStyle(
-            margin: EdgeInsets.all(0),
-            fontSize: 16,
-            fontWeight: 700,
-            color: ThemeToken.color('text'),
-          ),
+        Container(
+          dartStyle: DartStyle(display: Display.grid, gap: 10),
+          children: [
+            Container(
+              dartStyle: DartStyle(
+                width: 40,
+                height: 40,
+                display: Display.flex,
+                alignItems: AlignItems.center,
+                justifyContent: JustifyContent.center,
+                radius: 10,
+                background: Color.rgba(15, 23, 42, 0.6),
+                border: Border.all(color: Color(accentColor)),
+              ),
+              children: [
+                Icon(icon, size: 20, color: Color(accentColor)),
+              ],
+            ),
+            Text.h3(
+              title,
+              dartStyle: DartStyle(
+                margin: EdgeInsets.all(0),
+                fontSize: 18,
+                fontWeight: 800,
+                color: ThemeToken.color('text'),
+              ),
+            ),
+            Text.span(
+              subtitle,
+              dartStyle: DartStyle(
+                fontSize: 12,
+                fontWeight: 700,
+                color: Color(accentColor),
+              ),
+            ),
+            Text.p(
+              body,
+              dartStyle: DartStyle(
+                margin: EdgeInsets.all(0),
+                fontSize: 13,
+                lineHeight: 1.55,
+                color: ThemeToken.color('muted'),
+              ),
+            ),
+          ],
         ),
-        Text.p(
-          body,
+        Link(
+          href: linkHref,
+          child: linkLabel,
           dartStyle: DartStyle(
-            margin: EdgeInsets.all(0),
+            display: Display.inlineFlex,
+            alignItems: AlignItems.center,
             fontSize: 13,
-            lineHeight: 1.6,
-            color: Color('#9ca8ba'),
+            fontWeight: 800,
+            color: Color(accentColor),
+            hover: const DartStyle(textDecoration: 'underline'),
           ),
         ),
       ],

@@ -7,6 +7,7 @@ import 'pages/content_page.dart';
 import 'pages/client_page.dart';
 import 'pages/ai_page.dart';
 import 'pages/hardware_page.dart';
+import 'pages/fullstack_page.dart';
 import 'pages/ui_docs_page.dart';
 import 'pages/examples_page.dart';
 import 'pages/guides_page.dart';
@@ -23,6 +24,7 @@ import 'pages/submit_build_page.dart';
 
 final componentRegistry = PageRegistry({
   'Home': (props) => HomePage(props),
+  'Fullstack': (props) => FullstackPage(props),
   'WhatsNew': (props) => WhatsNewPage(props),
   'Changelog': (props) => ChangelogPage(props),
   'Client': (props) => ClientPage(props),

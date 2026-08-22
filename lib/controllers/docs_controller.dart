@@ -7,14 +7,35 @@ class DocsController extends Controller {
   Future<Response> home() async {
     return res.page(
       'Home',
-      title: 'Flint Dart - Modern Dart Backend Framework',
+      title: 'Flint Ecosystem - The Unified Dart Stack',
       props: await docs.baseData(req),
       meta: docs.pageMeta(
-        title: 'Flint Dart - Modern Dart Backend Framework',
+        title: 'Flint Ecosystem - The Unified Dart Stack',
         description:
-            'Build backend APIs, docs, UI pages, and full-stack Dart applications with Flint Dart.',
+            'One language across your entire modern stack: Full-Stack Web (Flint Dart), Universal Client SDK (Flint Client), Native AI Engine (Flint AI), and Robotics & Hardware (Flint Hardware).',
         canonicalPath: '/',
       ),
+    );
+  }
+
+  Future<Response> fullstack() async {
+    return res.page(
+      'Fullstack',
+      title: 'Flint Dart Full-Stack Web Framework - Flint Docs',
+      meta: docs.pageMeta(
+        title: 'Flint Dart Full-Stack Web Framework - Flint Docs',
+        description:
+            'Build full-stack Dart web applications with HTTP routes, SSR, declarative Web UI, Row-Level Security database APIs, and WebSockets in pure Dart.',
+        canonicalPath: '/fullstack',
+      ),
+      props: {
+        ...await docs.baseData(req),
+        'contentHtml':
+            await docs.readMarkdownContent('lib/content/pages/fullstack.md'),
+        'title': 'Flint Dart Full-Stack Web Framework',
+        'description':
+            'Build full-stack Dart web applications with HTTP routes, SSR, declarative Web UI, Row-Level Security database APIs, and WebSockets in pure Dart.',
+      },
     );
   }
 

@@ -318,7 +318,7 @@ class HomeHero extends FlintComponent {
           children: [
             Icon(Icons.cloud, size: 15, color: _mintStrong),
             Text.span(
-              'Dart-first full-stack apps',
+              'The Unified Dart Ecosystem',
               dartStyle: DartStyle(
                 color: ThemeToken.color('primary'),
                 fontSize: 12,
@@ -330,7 +330,7 @@ class HomeHero extends FlintComponent {
           ],
         ),
         Text.h1(
-          'Flint Dart',
+          'Flint Ecosystem',
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 20, bottom: 0),
             maxWidth: 760,
@@ -356,17 +356,17 @@ class HomeHero extends FlintComponent {
               delayMilliseconds: 130,
               fillMode: AnimationFillMode.both,
             ),
-            lg: DartStyle(fontSize: 100),
+            lg: DartStyle(fontSize: 92),
           ),
         ),
         Text.h2(
-          'A modern backend, UI layer, and shipping loop in one expressive Dart stack.',
+          'One language across your entire stack: Full-Stack Web, Client SDK, Native AI, and Robotics.',
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 18, bottom: 0),
             maxWidth: 760,
             color: ThemeToken.color('text'),
-            fontSize: 25,
-            lineHeight: 1.12,
+            fontSize: 24,
+            lineHeight: 1.15,
             fontWeight: 850,
             letterSpacing: 0,
             animation: StyleAnimation.named(
@@ -376,17 +376,17 @@ class HomeHero extends FlintComponent {
               delayMilliseconds: 190,
               fillMode: AnimationFillMode.both,
             ),
-            lg: DartStyle(fontSize: 40),
+            lg: DartStyle(fontSize: 36),
           ),
         ),
         Text.p(
-          'Ship routes, controllers, auth, models, generated API docs, server-rendered views, and reactive Flint UI screens without stitching together half a stack.',
+          'Build end-to-end full-stack web applications with Flint Dart, universal cross-platform clients with Flint Client, autonomous AI agents with Flint AI, and connected hardware & robotics with Flint Hardware.',
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 22, bottom: 0),
             maxWidth: 690,
             color: ThemeToken.color('muted'),
-            fontSize: 18,
-            lineHeight: 1.72,
+            fontSize: 17,
+            lineHeight: 1.7,
             animation: StyleAnimation.named(
               'flint-docs-rise',
               milliseconds: 760,
@@ -412,29 +412,38 @@ class HomeHero extends FlintComponent {
           ),
           children: [
             Link(
-              href: '/guides',
+              href: '/fullstack',
               tone: Tone.primary,
               children: [
-                Text.span('Start building'),
-                Icon(Icons.arrowRight, size: 17),
+                Icon(Icons.layers, size: 17),
+                Text.span('Full-Stack Web'),
               ],
             ),
             Link(
-              href: '/ui',
+              href: '/client',
               variant: ButtonVariant.outline,
               tone: Tone.neutral,
               children: [
-                Icon(Icons.palette, size: 17),
-                Text.span('Explore Flint UI'),
+                Icon(Icons.globe, size: 17),
+                Text.span('Client SDK'),
               ],
             ),
             Link(
-              href: '/api',
-              variant: ButtonVariant.ghost,
+              href: '/ai',
+              variant: ButtonVariant.outline,
               tone: Tone.neutral,
               children: [
-                Icon(Icons.book, size: 17),
-                Text.span('Browse API'),
+                Icon(Icons.sparkles, size: 17),
+                Text.span('AI Engine'),
+              ],
+            ),
+            Link(
+              href: '/hardware',
+              variant: ButtonVariant.outline,
+              tone: Tone.neutral,
+              children: [
+                Icon(Icons.zap, size: 17),
+                Text.span('Hardware & Robotics'),
               ],
             ),
           ],

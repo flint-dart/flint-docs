@@ -9,9 +9,10 @@ class DocsRoutes extends RouteGroup {
   void register(Flint app) {
     final docs = app.controller(DocsController.new);
     docs.get('/', (c) => c.home());
+    docs.get('/fullstack', (c) => c.fullstack());
     docs.get('/guides', (c) => c.guidesIndex());
     docs.get('/guides/:topic', (c) => c.guidesTopic());
-    docs.get('/ui', (c) => c.ui());
+    docs.get('/ui', (c) => c.fullstack());
     docs.get('/client', (c) => c.client());
     docs.get('/ai', (c) => c.ai());
     docs.get('/hardware', (c) => c.hardware());
