@@ -83,7 +83,56 @@ class NavBar extends FlintComponent {
     );
   }
 
+  String get _currentPillar {
+    final explicit = props['activePillar']?.toString();
+    if (explicit != null && explicit.isNotEmpty) return explicit;
+    final path = props['currentPath']?.toString() ?? '';
+    if (path.startsWith('/fullstack') ||
+        path.startsWith('/guides') ||
+        path.startsWith('/api') ||
+        path.startsWith('/whats-new') ||
+        path.startsWith('/changelog') ||
+        path.startsWith('/examples') ||
+        path.startsWith('/ui')) {
+      return 'fullstack';
+    }
+    if (path.startsWith('/client')) return 'client';
+    if (path.startsWith('/ai')) return 'ai';
+    if (path.startsWith('/hardware')) return 'hardware';
+    return 'ecosystem';
+  }
+
   FlintNode _brandCluster() {
+    final pillar = _currentPillar;
+    final isPillarPage = pillar != 'ecosystem';
+
+    String pillarLabel = 'Ecosystem';
+    String pillarHref = '/';
+    String? pillarVersion;
+    Color accentColor = const Color('#38bdf8');
+
+    if (pillar == 'fullstack') {
+      pillarLabel = 'Fullstack';
+      pillarHref = '/fullstack';
+      pillarVersion = 'v${props['flintDartVersion'] ?? '1.3.2'}';
+      accentColor = const Color('#34d399');
+    } else if (pillar == 'client') {
+      pillarLabel = 'Client SDK';
+      pillarHref = '/client';
+      pillarVersion = 'v${props['flintClientVersion'] ?? '0.1.0'}';
+      accentColor = const Color('#38bdf8');
+    } else if (pillar == 'ai') {
+      pillarLabel = 'AI Engine';
+      pillarHref = '/ai';
+      pillarVersion = 'v0.1.0';
+      accentColor = const Color('#a78bfa');
+    } else if (pillar == 'hardware') {
+      pillarLabel = 'Hardware';
+      pillarHref = '/hardware';
+      pillarVersion = 'v0.1.0';
+      accentColor = const Color('#f97316');
+    }
+
     return Row(
       dartStyle: DartStyle(
         display: Display.flex,
@@ -92,68 +141,118 @@ class NavBar extends FlintComponent {
         minWidth: 0,
       ),
       children: [
-        _logo(),
-        if (_showGuideMenu) _guideToggle(),
-        if (_showApiMenu) _apiToggle(),
-      ],
-    );
-  }
-
-  FlintNode _logo() {
-    return Link(
-      href: '/',
-      dartStyle: DartStyle(
-        display: Display.flex,
-        alignItems: AlignItems.center,
-        gap: 12,
-      ),
-      children: [
-        Container(
+        Link(
+          href: pillarHref,
           dartStyle: DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
-            justifyContent: JustifyContent.center,
-            width: 38,
-            height: 38,
-            radius: ThemeToken.radius('md'),
-            border: Border.all(color: Color.rgba(56, 189, 248, 0.34)),
-            background: Background.layers([
-              Gradient.linear(
-                135,
-                const [
-                  GradientStop(Color.rgba(56, 189, 248, 0.24)),
-                  GradientStop(Color.rgba(52, 211, 153, 0.18)),
-                ],
-              ),
-              ThemeToken.color('panel'),
-            ]),
-            shadow: ThemeToken.shadow('glow'),
+            gap: 12,
           ),
           children: [
-            brandLogoMark(size: 30),
+            Container(
+              dartStyle: DartStyle(
+                display: Display.flex,
+                alignItems: AlignItems.center,
+                justifyContent: JustifyContent.center,
+                width: 38,
+                height: 38,
+                radius: ThemeToken.radius('md'),
+                border: Border.all(color: Color.rgba(56, 189, 248, 0.34)),
+                background: Background.layers([
+                  Gradient.linear(
+                    135,
+                    const [
+                      GradientStop(Color.rgba(56, 189, 248, 0.24)),
+                      GradientStop(Color.rgba(52, 211, 153, 0.18)),
+                    ],
+                  ),
+                  ThemeToken.color('panel'),
+                ]),
+                shadow: ThemeToken.shadow('glow'),
+              ),
+              children: [
+                brandLogoMark(size: 30),
+              ],
+            ),
+            Container(
+              dartStyle: DartStyle(display: Display.grid, gap: 2),
+              children: [
+                Row(
+                  dartStyle: DartStyle(
+                    display: Display.flex,
+                    alignItems: AlignItems.center,
+                    gap: 6,
+                  ),
+                  children: [
+                    Text.span(
+                      'Flint',
+                      dartStyle: DartStyle(
+                        color: ThemeToken.color('text'),
+                        fontSize: 15,
+                        fontWeight: 800,
+                      ),
+                    ),
+                    if (pillarVersion != null)
+                      Container(
+                        dartStyle: DartStyle(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                          radius: 999,
+                          background: Color.rgba(52, 211, 153, 0.12),
+                          border: Border.all(color: Color.rgba(52, 211, 153, 0.3)),
+                        ),
+                        children: [
+                          Text.span(
+                            pillarVersion,
+                            dartStyle: const DartStyle(
+                              fontSize: 10,
+                              fontWeight: 800,
+                              color: Color('#34d399'),
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+                Text.span(
+                  pillarLabel,
+                  dartStyle: DartStyle(
+                    color: isPillarPage ? accentColor : ThemeToken.color('muted'),
+                    fontSize: 11,
+                    fontWeight: 800,
+                    letterSpacing: 0.3,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
-        Container(
-          dartStyle: DartStyle(display: Display.grid, gap: 2),
-          children: [
-            Text.span(
-              'Flint',
-              dartStyle: DartStyle(
+        if (isPillarPage)
+          Link(
+            href: '/',
+            dartStyle: DartStyle(
+              display: Display.none,
+              alignItems: AlignItems.center,
+              gap: 4,
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              radius: 999,
+              background: Color.rgba(255, 255, 255, 0.05),
+              border: Border.all(color: ThemeToken.color('line')),
+              color: ThemeToken.color('muted'),
+              fontSize: 11,
+              fontWeight: 700,
+              hover: DartStyle(
                 color: ThemeToken.color('text'),
-                fontSize: 15,
-                fontWeight: 800,
+                background: Color.rgba(255, 255, 255, 0.1),
               ),
+              sm: DartStyle(display: Display.inlineFlex),
             ),
-            Text.span(
-              'Ecosystem',
-              dartStyle: DartStyle(
-                color: ThemeToken.color('muted'),
-                fontSize: 11,
-                fontWeight: 700,
-              ),
-            ),
-          ],
-        ),
+            children: [
+              Icon(Icons.arrowLeft, size: 12),
+              Text.span('Ecosystem'),
+            ],
+          ),
+        if (_showGuideMenu) _guideToggle(),
+        if (_showApiMenu) _apiToggle(),
       ],
     );
   }
@@ -231,14 +330,49 @@ class NavBar extends FlintComponent {
   }
 
   FlintNode _desktopLinks() {
-    return Row(
-      dartStyle: DartStyle(
-        display: Display.none,
-        alignItems: AlignItems.center,
-        gap: 6,
-        lg: DartStyle(display: Display.flex),
-      ),
-      children: [
+    final pillar = _currentPillar;
+    final List<FlintNode> links;
+
+    if (pillar == 'fullstack') {
+      links = [
+        _navLink('/fullstack', 'Overview'),
+        _navLink('/fullstack#features', 'Features'),
+        _navLink('/guides', 'Guides'),
+        _navLink('/api', 'API'),
+        _navLink('/whats-new', "What's New"),
+        _navLink('/changelog', 'Changelog'),
+        _navLink('/examples', 'Examples'),
+        _navLink('/', 'Ecosystem ↗'),
+      ];
+    } else if (pillar == 'client') {
+      links = [
+        _navLink('/client', 'Overview'),
+        _navLink('/client#features', 'Features'),
+        _navLink('/client#caching', 'Caching'),
+        _navLink('/client#channels', 'Real-Time'),
+        _navLink('https://pub.dev/packages/flint_client', 'pub.dev ↗'),
+        _navLink('/', 'Ecosystem ↗'),
+      ];
+    } else if (pillar == 'ai') {
+      links = [
+        _navLink('/ai', 'Overview'),
+        _navLink('/ai#agents', 'Agents'),
+        _navLink('/ai#tools', 'Tool Policies'),
+        _navLink('/ai#chat', 'Streaming'),
+        _navLink('https://pub.dev/packages/flint_ai', 'pub.dev ↗'),
+        _navLink('/', 'Ecosystem ↗'),
+      ];
+    } else if (pillar == 'hardware') {
+      links = [
+        _navLink('/hardware', 'Overview'),
+        _navLink('/hardware#sensors', 'Sensors'),
+        _navLink('/hardware#statemachine', 'State Machine'),
+        _navLink('/hardware#wokwi', 'Wokwi Simulator'),
+        _navLink('https://pub.dev/packages/flint_hardware', 'pub.dev ↗'),
+        _navLink('/', 'Ecosystem ↗'),
+      ];
+    } else {
+      links = [
         _navLink('/', 'Ecosystem'),
         _navLink('/fullstack', 'Fullstack'),
         _navLink('/client', 'Client'),
@@ -248,7 +382,17 @@ class NavBar extends FlintComponent {
         _navLink('/blog', 'Blog'),
         _navLink('/questions', 'Questions'),
         _navLink('/changelog', 'Changelog'),
-      ],
+      ];
+    }
+
+    return Row(
+      dartStyle: DartStyle(
+        display: Display.none,
+        alignItems: AlignItems.center,
+        gap: 6,
+        lg: DartStyle(display: Display.flex),
+      ),
+      children: links,
     );
   }
 
@@ -546,19 +690,143 @@ class NavBar extends FlintComponent {
               dartStyle: DartStyle(
                 display: Display.grid,
                 gap: 6,
-                margin: EdgeInsets.only(top: 18),
+                margin: const EdgeInsets.only(top: 18),
               ),
               children: [
-                _drawerLink('/', 'Ecosystem'),
-                _drawerLink('/fullstack', 'Fullstack'),
-                _drawerLink('/client', 'Client'),
-                _drawerLink('/ai', 'AI'),
-                _drawerLink('/hardware', 'Hardware'),
-                _drawerLink('/api', 'API'),
-                _drawerLink('/blog', 'Blog'),
-                _drawerLink('/questions', 'Questions'),
-                _drawerLink('/changelog', 'Changelog'),
-                if (_canWrite) _drawerLink('/blog/write', 'Write Blog Post'),
+                if (_currentPillar == 'fullstack') ...[
+                  Text.span(
+                    'FLINT FULLSTACK',
+                    dartStyle: const DartStyle(
+                      fontSize: 11,
+                      fontWeight: 800,
+                      color: Color('#34d399'),
+                      letterSpacing: 0.5,
+                      margin: EdgeInsets.only(bottom: 4),
+                    ),
+                  ),
+                  _drawerLink('/fullstack', 'Overview'),
+                  _drawerLink('/fullstack#features', 'Features'),
+                  _drawerLink('/guides', 'Guides'),
+                  _drawerLink('/api', 'API Reference'),
+                  _drawerLink('/whats-new', "What's New"),
+                  _drawerLink('/changelog', 'Changelog'),
+                  _drawerLink('/examples', 'Examples'),
+                  Container(
+                    dartStyle: DartStyle(
+                      height: 1,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      background: ThemeToken.color('line'),
+                    ),
+                  ),
+                  Text.span(
+                    'ECOSYSTEM',
+                    dartStyle: DartStyle(
+                      fontSize: 11,
+                      fontWeight: 800,
+                      color: ThemeToken.color('muted'),
+                      letterSpacing: 0.5,
+                      margin: const EdgeInsets.only(bottom: 4),
+                    ),
+                  ),
+                  _drawerLink('/', 'Ecosystem Overview'),
+                  _drawerLink('/client', 'Client SDK'),
+                  _drawerLink('/ai', 'AI Engine'),
+                  _drawerLink('/hardware', 'Hardware & Robotics'),
+                  _drawerLink('/blog', 'Blog'),
+                  _drawerLink('/questions', 'Questions'),
+                ] else if (_currentPillar == 'client') ...[
+                  Text.span(
+                    'FLINT CLIENT SDK',
+                    dartStyle: const DartStyle(
+                      fontSize: 11,
+                      fontWeight: 800,
+                      color: Color('#38bdf8'),
+                      letterSpacing: 0.5,
+                      margin: EdgeInsets.only(bottom: 4),
+                    ),
+                  ),
+                  _drawerLink('/client', 'Overview'),
+                  _drawerLink('/client#features', 'Features'),
+                  _drawerLink('/client#caching', 'Caching'),
+                  _drawerLink('/client#channels', 'Real-Time Channels'),
+                  _drawerLink('https://pub.dev/packages/flint_client', 'pub.dev Package'),
+                  Container(
+                    dartStyle: DartStyle(
+                      height: 1,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      background: ThemeToken.color('line'),
+                    ),
+                  ),
+                  _drawerLink('/', 'Ecosystem Overview'),
+                  _drawerLink('/fullstack', 'Fullstack Framework'),
+                  _drawerLink('/ai', 'AI Engine'),
+                  _drawerLink('/hardware', 'Hardware & Robotics'),
+                ] else if (_currentPillar == 'ai') ...[
+                  Text.span(
+                    'FLINT AI ENGINE',
+                    dartStyle: const DartStyle(
+                      fontSize: 11,
+                      fontWeight: 800,
+                      color: Color('#a78bfa'),
+                      letterSpacing: 0.5,
+                      margin: EdgeInsets.only(bottom: 4),
+                    ),
+                  ),
+                  _drawerLink('/ai', 'Overview'),
+                  _drawerLink('/ai#agents', 'Agents & Workflows'),
+                  _drawerLink('/ai#tools', 'Tool Policies'),
+                  _drawerLink('/ai#chat', 'Streaming Chat'),
+                  _drawerLink('https://pub.dev/packages/flint_ai', 'pub.dev Package'),
+                  Container(
+                    dartStyle: DartStyle(
+                      height: 1,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      background: ThemeToken.color('line'),
+                    ),
+                  ),
+                  _drawerLink('/', 'Ecosystem Overview'),
+                  _drawerLink('/fullstack', 'Fullstack Framework'),
+                  _drawerLink('/client', 'Client SDK'),
+                  _drawerLink('/hardware', 'Hardware & Robotics'),
+                ] else if (_currentPillar == 'hardware') ...[
+                  Text.span(
+                    'FLINT HARDWARE & ROBOTICS',
+                    dartStyle: const DartStyle(
+                      fontSize: 11,
+                      fontWeight: 800,
+                      color: Color('#f97316'),
+                      letterSpacing: 0.5,
+                      margin: EdgeInsets.only(bottom: 4),
+                    ),
+                  ),
+                  _drawerLink('/hardware', 'Overview'),
+                  _drawerLink('/hardware#sensors', 'Sensors & IMU'),
+                  _drawerLink('/hardware#statemachine', 'State Machine'),
+                  _drawerLink('/hardware#wokwi', 'Wokwi Simulator'),
+                  _drawerLink('https://pub.dev/packages/flint_hardware', 'pub.dev Package'),
+                  Container(
+                    dartStyle: DartStyle(
+                      height: 1,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      background: ThemeToken.color('line'),
+                    ),
+                  ),
+                  _drawerLink('/', 'Ecosystem Overview'),
+                  _drawerLink('/fullstack', 'Fullstack Framework'),
+                  _drawerLink('/client', 'Client SDK'),
+                  _drawerLink('/ai', 'AI Engine'),
+                ] else ...[
+                  _drawerLink('/', 'Ecosystem'),
+                  _drawerLink('/fullstack', 'Fullstack'),
+                  _drawerLink('/client', 'Client'),
+                  _drawerLink('/ai', 'AI'),
+                  _drawerLink('/hardware', 'Hardware'),
+                  _drawerLink('/api', 'API'),
+                  _drawerLink('/blog', 'Blog'),
+                  _drawerLink('/questions', 'Questions'),
+                  _drawerLink('/changelog', 'Changelog'),
+                  if (_canWrite) _drawerLink('/blog/write', 'Write Blog Post'),
+                ],
               ],
             ),
           ],

@@ -1456,6 +1456,7 @@ Sitemap: $sitemapUrl
       'canComment': canComment,
       'currentUserId': user?['id']?.toString(),
       'currentUserLabel': currentUserLabel,
+      'currentPath': req.path,
       'flintDartVersion': ProductVersions.flintDartVersion,
       'flintDartVersionLabel': ProductVersions.flintDartVersionLabel,
       'flintUiVersion': ProductVersions.flintUiVersion,

@@ -8,7 +8,10 @@ class DocsController extends Controller {
     return res.page(
       'Home',
       title: 'Flint Ecosystem - The Unified Dart Stack',
-      props: await docs.baseData(req),
+      props: {
+        ...await docs.baseData(req),
+        'activePillar': 'ecosystem',
+      },
       meta: docs.pageMeta(
         title: 'Flint Ecosystem - The Unified Dart Stack',
         description:
@@ -30,6 +33,7 @@ class DocsController extends Controller {
       ),
       props: {
         ...await docs.baseData(req),
+        'activePillar': 'fullstack',
         'contentHtml':
             await docs.readMarkdownContent('lib/content/pages/fullstack.md'),
         'title': 'Flint Dart Full-Stack Web Framework',
@@ -60,6 +64,7 @@ class DocsController extends Controller {
       ),
       props: {
         ...await docs.baseData(req),
+        'activePillar': 'client',
         'contentHtml':
             await docs.readMarkdownContent('lib/content/pages/client.md'),
         'title': 'FlintClient Guide - Flint Dart',
@@ -81,6 +86,7 @@ class DocsController extends Controller {
       ),
       props: {
         ...await docs.baseData(req),
+        'activePillar': 'ai',
         'contentHtml':
             await docs.readMarkdownContent('lib/content/pages/ai.md'),
         'title': 'Flint AI Guide - Agents, Tools, and Workflows',
@@ -102,6 +108,7 @@ class DocsController extends Controller {
       ),
       props: {
         ...await docs.baseData(req),
+        'activePillar': 'hardware',
         'contentHtml':
             await docs.readMarkdownContent('lib/content/pages/hardware.md'),
         'title': 'Flint Hardware Guide - Embedded Systems & Robotics in Dart',

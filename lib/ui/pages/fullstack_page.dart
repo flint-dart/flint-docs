@@ -104,6 +104,7 @@ class FullstackPage extends Component {
 
   View _featurePillars() {
     return Container(
+      props: const {'id': 'features'},
       dartStyle: DartStyle(
         display: Display.grid,
         gridTemplateColumns: GridTemplateColumns.one,
