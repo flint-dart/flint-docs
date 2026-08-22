@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 class TrustedBar extends FlintComponent {
   @override
@@ -82,7 +82,8 @@ class TrustedBar extends FlintComponent {
                   ),
                   children: [
                     _trustPill('4 Pillars', 'Web, Client, AI, Robotics'),
-                    _trustPill('0 Context Switch', 'pure Dart across all layers'),
+                    _trustPill(
+                        '0 Context Switch', 'pure Dart across all layers'),
                     _trustPill('100% Type-Safe', 'shared schemas and models'),
                   ],
                 ),

@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 import 'pages/home_page.dart';
 import 'pages/whats_new_page.dart';

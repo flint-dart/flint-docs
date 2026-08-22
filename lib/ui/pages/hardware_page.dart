@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 import '../shared/page_shell.dart';
 
@@ -181,10 +181,14 @@ class HardwarePage extends Component {
         gap: 14,
       ),
       children: [
-        _quickCard('⚡ Multi-MCU', 'Compile to MicroPython, Arduino C++, or C for ESP32 and RP2040.'),
-        _quickCard('🤖 Robotics State Machine', 'Declarative state transitions with patrol, avoidance, and docking.'),
-        _quickCard('🕹️ Drivers Pack', 'Built-in drivers for HC-SR04, MPU-6050, Differential Drive, and DHT22.'),
-        _quickCard('🌐 Wokwi Simulator', 'Auto-generates diagram.json circuits for 1-click browser simulation.'),
+        _quickCard('⚡ Multi-MCU',
+            'Compile to MicroPython, Arduino C++, or C for ESP32 and RP2040.'),
+        _quickCard('🤖 Robotics State Machine',
+            'Declarative state transitions with patrol, avoidance, and docking.'),
+        _quickCard('🕹️ Drivers Pack',
+            'Built-in drivers for HC-SR04, MPU-6050, Differential Drive, and DHT22.'),
+        _quickCard('🌐 Wokwi Simulator',
+            'Auto-generates diagram.json circuits for 1-click browser simulation.'),
       ],
     );
   }

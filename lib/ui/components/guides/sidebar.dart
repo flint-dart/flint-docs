@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 class GuidesSidebar extends Component {
   final String active;
@@ -63,7 +63,7 @@ class GuidesSidebar extends Component {
     final (slug, label, children) = item;
     if (children == null) {
       return Link(
-        href: '/guides/$slug',
+        href: '/fullstack/guides/$slug',
         dartStyle: slug == active
             ? DartStyle(
                 display: Display.block,
@@ -144,7 +144,7 @@ class GuidesSidebar extends Component {
             children: [
               for (final child in children)
                 Link(
-                  href: '/guides/${child.$1}',
+                  href: '/fullstack/guides/${child.$1}',
                   dartStyle: child.$1 == active
                       ? DartStyle(
                           display: Display.block,

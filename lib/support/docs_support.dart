@@ -112,18 +112,19 @@ class DocsSupport {
         title: '$heading Guide - Flint Dart',
         description:
             'Learn $heading in Flint Dart with clear explanations and Dart examples.',
-        canonicalPath: '/guides/$topic',
+        canonicalPath: '/fullstack/guides/$topic',
       ),
       props: {
         ...await baseData(req),
+        'activePillar': 'fullstack',
         'showGuideMenu': true,
         'initialSection': topic,
         'contentHtml': contentHtml,
         'previousGuideTitle': hasPreviousGuide ? previousGuideTitle : null,
         'previousGuideUrl':
-            hasPreviousGuide ? '/guides/$previousTopicSlug' : null,
+            hasPreviousGuide ? '/fullstack/guides/$previousTopicSlug' : null,
         'nextGuideTitle': hasNextGuide ? nextGuideTitle : null,
-        'nextGuideUrl': hasNextGuide ? '/guides/$nextTopicSlug' : null,
+        'nextGuideUrl': hasNextGuide ? '/fullstack/guides/$nextTopicSlug' : null,
       },
     );
   }
@@ -156,18 +157,19 @@ class DocsSupport {
       meta: pageMeta(
         title: '$heading API - Flint Dart',
         description: 'Reference for the $heading API in Flint Dart.',
-        canonicalPath: topic == 'flint-class' ? '/api' : '/api/$topic',
+        canonicalPath: topic == 'flint-class' ? '/fullstack/api' : '/fullstack/api/$topic',
       ),
       props: {
         ...await baseData(req),
+        'activePillar': 'fullstack',
         'showApiMenu': true,
         'initialSection': topic,
         'contentHtml': contentHtml,
         'previousApiTitle': previousApiTitle,
         'previousApiUrl':
-            previousTopicSlug != null ? '/api/$previousTopicSlug' : null,
+            previousTopicSlug != null ? '/fullstack/api/$previousTopicSlug' : null,
         'nextApiTitle': nextApiTitle,
-        'nextApiUrl': nextTopicSlug != null ? '/api/$nextTopicSlug' : null,
+        'nextApiUrl': nextTopicSlug != null ? '/fullstack/api/$nextTopicSlug' : null,
       },
     );
   }

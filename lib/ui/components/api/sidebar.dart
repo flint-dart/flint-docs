@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 class ApiSidebar extends Component {
   final String active;
@@ -28,7 +28,7 @@ class ApiSidebar extends Component {
       }
       items.add(
         Link(
-          href: '/api/$slug',
+          href: '/fullstack/api/$slug',
           dartStyle: slug == active
               ? DartStyle(
                   display: Display.block,

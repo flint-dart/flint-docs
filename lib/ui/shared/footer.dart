@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 import '../../support/product_versions.dart';
 import 'brand_logo.dart';
@@ -55,24 +55,25 @@ class Footer extends Component {
                       children: [
                         _brand(),
                         _linkColumn(
-                          'Product',
+                          'Ecosystem Pillars',
                           [
-                            ('/guides', 'Guides'),
-                            ('/ui', 'UI'),
-                            ('/api', 'API'),
-                            ('/examples', 'Examples'),
-                            ('/client', 'Client'),
-                            ('/ai', 'AI'),
-                            ('/dart', 'Dart lessons'),
+                            ('/fullstack', 'Fullstack Framework'),
+                            ('/fullstack/guides', 'Fullstack Guides'),
+                            ('/fullstack/api', 'Fullstack API'),
+                            ('/fullstack/examples', 'Examples & Tutorials'),
+                            ('/client', 'Client SDK'),
+                            ('/ai', 'AI Engine'),
+                            ('/hardware', 'Hardware & Robotics'),
                           ],
                         ),
                         _linkColumn(
-                          'Updates',
+                          'Updates & Resources',
                           [
-                            ('/whats-new', "What's New"),
-                            ('/changelog', 'Changelog'),
+                            ('/fullstack/whats-new', "What's New"),
+                            ('/fullstack/changelog', 'Changelog'),
                             ('/questions', 'Questions'),
                             ('/blog', 'Blog'),
+                            ('/dart', 'Dart Lessons'),
                           ],
                         ),
                         _linkColumn(
@@ -116,7 +117,7 @@ class Footer extends Component {
                   ),
                   children: [
                     Text.span(
-                      'Copyright 2024 Flint Dart. Maintained by Eulogia Technologies.',
+                      'Copyright 2026 Flint Dart. Maintained by Eulogia Technologies.',
                       dartStyle: DartStyle(
                         fontSize: 11,
                         color: ThemeToken.color('muted'),
@@ -130,7 +131,7 @@ class Footer extends Component {
                         gap: 8,
                       ),
                       children: [
-                        _pill(ProductVersions.flintDartVersionLabel),
+                        _pill('v ${ProductVersions.flintDartVersion}'),
                         _pill('MIT License'),
                         _pill('Built with Dart'),
                       ],
@@ -188,7 +189,7 @@ class Footer extends Component {
               dartStyle: DartStyle(display: Display.grid, gap: 2),
               children: [
                 Text.span(
-                  'Flint Dart',
+                  'Flint Ecosystem',
                   dartStyle: DartStyle(
                     fontSize: 16,
                     fontWeight: 900,
@@ -196,7 +197,7 @@ class Footer extends Component {
                   ),
                 ),
                 Text.span(
-                  'Backend framework and Dart UI docs',
+                  'The Unified Dart Technology Stack',
                   dartStyle: DartStyle(
                     fontSize: 11,
                     fontWeight: 700,
@@ -208,7 +209,7 @@ class Footer extends Component {
           ],
         ),
         Text.p(
-          'Build routes, controllers, APIs, docs, and browser UI from one Dart-shaped stack.',
+          'One language powering Full-Stack Web, Cross-Platform Clients, Native AI, and Connected Robotics.',
           dartStyle: DartStyle(
             maxWidth: 390,
             margin: EdgeInsets.all(0),
@@ -224,9 +225,10 @@ class Footer extends Component {
             gap: 8,
           ),
           children: [
-            _pill('Controllers'),
-            _pill('OpenAPI'),
-            _pill('Flint UI'),
+            _pill('Fullstack'),
+            _pill('Client SDK'),
+            _pill('AI Engine'),
+            _pill('Hardware'),
           ],
         ),
       ],

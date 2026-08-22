@@ -9,7 +9,7 @@ The goal is not to hide the web. The goal is to keep the same Dart mental model 
 Create a component by extending `Component` and returning a view from `build()`.
 
 ```dart
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 class WelcomeCard extends Component {
   @override

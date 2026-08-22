@@ -164,12 +164,15 @@ class DocsController extends Controller {
     return res.page(
       'Examples',
       title: 'Examples & Tutorials - Flint Dart',
-      props: await docs.baseData(req),
+      props: {
+        ...await docs.baseData(req),
+        'activePillar': 'fullstack',
+      },
       meta: docs.pageMeta(
         title: 'Examples & Tutorials - Flint Dart',
         description:
             'Practical Flint Dart examples for blogs, Q&A workflows, auth, models, and routes.',
-        canonicalPath: '/examples',
+        canonicalPath: '/fullstack/examples',
       ),
     );
   }
@@ -191,10 +194,11 @@ class DocsController extends Controller {
         title: 'Changelog - Flint Dart',
         description:
             'Version history, fixes, and framework changes for Flint Dart.',
-        canonicalPath: '/changelog',
+        canonicalPath: '/fullstack/changelog',
       ),
       props: {
         ...await docs.baseData(req),
+        'activePillar': 'fullstack',
         'entries': entries,
       },
     );
@@ -204,12 +208,15 @@ class DocsController extends Controller {
     return res.page(
       'WhatsNew',
       title: "What's New - Flint Dart",
-      props: await docs.baseData(req),
+      props: {
+        ...await docs.baseData(req),
+        'activePillar': 'fullstack',
+      },
       meta: docs.pageMeta(
         title: "What's New - Flint Dart",
         description:
-            'Latest highlights in Flint Dart, Flint UI, CLI, migrations, and documentation.',
-        canonicalPath: '/whats-new',
+            'Latest release highlights and improvements for Flint Dart.',
+        canonicalPath: '/fullstack/whats-new',
       ),
     );
   }

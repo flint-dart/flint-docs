@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 import '../shared/page_shell.dart';
 
@@ -178,7 +178,7 @@ class ShowcaseDetailPage extends Component {
       children: [
         Container(
           dartStyle: DartStyle(
-            flex: Flex.fill(),
+            flex: const FlexValue.auto(),
             display: Display.grid,
             gap: 14,
             padding: EdgeInsets.all(22),

@@ -1,5 +1,5 @@
 import 'package:flint_dart/flint_dart.dart';
-import 'package:flint_ui/flint_ui_server.dart';
+import 'package:flint_dart/flint_ui_server.dart';
 import 'package:flint_docs/ui/component_registry.dart';
 import 'package:flint_docs/routes/app_routes.dart';
 

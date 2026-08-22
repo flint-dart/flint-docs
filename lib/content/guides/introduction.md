@@ -15,7 +15,7 @@ The goal is not to hide Dart. The goal is to let Dart do more of the work.
 Flint UI lets you create frontend components with Dart classes. A component returns a view, and the internal renderer turns that view into browser UI.
 
 ```dart
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 class Counter extends Component {
   int count = 0;

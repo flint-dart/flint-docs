@@ -9,7 +9,7 @@ The important rule is simple: define theme tokens once, then use those tokens ev
 Create a root design file for your app, for example `lib/ui/components/root_design.dart`.
 
 ```dart
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 const appLightTheme = FlintTheme(
   name: 'app-light',
@@ -223,7 +223,7 @@ Accent colors can stay hardcoded when they communicate state, brand, or selectio
 This example shows one complete screen using the same theme system throughout the page.
 
 ```dart
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 class AccountSettingsPage extends Component {
   final TextEditingController name = TextEditingController();

@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 import '../../../support/product_versions.dart';
 
@@ -530,7 +530,8 @@ class HomeHero extends FlintComponent {
                 gridTemplateColumns: GridTemplateColumns.one,
                 gap: 10,
                 sm: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
                 ),
               ),
               children: [

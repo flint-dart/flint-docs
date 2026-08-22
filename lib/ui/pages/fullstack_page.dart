@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 import '../shared/page_shell.dart';
 
@@ -109,25 +109,30 @@ class FullstackPage extends Component {
         display: Display.grid,
         gridTemplateColumns: GridTemplateColumns.one,
         gap: 16,
-        md: DartStyle(gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.oneFr)),
+        md: DartStyle(
+            gridTemplateColumns:
+                GridTemplateColumns.repeat(3, GridTrack.oneFr)),
       ),
       children: [
         _featureCard(
           icon: Icons.server,
           title: 'HTTP & Controller Core',
-          desc: 'High-performance HTTP server with middleware pipelines, controller routing, and session authentication.',
+          desc:
+              'High-performance HTTP server with middleware pipelines, controller routing, and session authentication.',
           accent: '#34d399',
         ),
         _featureCard(
           icon: Icons.palette,
           title: 'Declarative Web UI',
-          desc: 'Pure Dart components, typed styling, reactive state signals, 2D canvas, and WebGL 3D scenes.',
+          desc:
+              'Pure Dart components, typed styling, reactive state signals, 2D canvas, and WebGL 3D scenes.',
           accent: '#38bdf8',
         ),
         _featureCard(
           icon: Icons.database,
           title: 'Secure DB API Gateway',
-          desc: 'Built-in Row-Level Security (RLS), owner filters, query compilers, and protocol serialization.',
+          desc:
+              'Built-in Row-Level Security (RLS), owner filters, query compilers, and protocol serialization.',
           accent: '#a78bfa',
         ),
       ],

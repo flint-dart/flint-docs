@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 import 'nav_bar.dart';
 import 'flash_banner.dart';
 import 'footer.dart';

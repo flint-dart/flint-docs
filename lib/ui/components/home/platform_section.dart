@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 class PlatformSection extends Component {
   @override
@@ -24,7 +24,8 @@ class PlatformSection extends Component {
                 alignItems: AlignItems.center,
                 gap: 8,
                 width: SizeValue('fit-content'),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 radius: 999,
                 background: const Color.rgba(56, 189, 248, 0.12),
                 border: Border.all(color: const Color.rgba(56, 189, 248, 0.3)),
@@ -69,14 +70,19 @@ class PlatformSection extends Component {
             gridTemplateColumns: GridTemplateColumns.one,
             gap: 16,
             margin: EdgeInsets.only(top: 32, bottom: 0),
-            md: DartStyle(gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr)),
-            lg: DartStyle(gridTemplateColumns: GridTemplateColumns.repeat(4, GridTrack.oneFr)),
+            md: DartStyle(
+                gridTemplateColumns:
+                    GridTemplateColumns.repeat(2, GridTrack.oneFr)),
+            lg: DartStyle(
+                gridTemplateColumns:
+                    GridTemplateColumns.repeat(4, GridTrack.oneFr)),
           ),
           children: [
             _pillarCard(
               title: 'Flint Dart',
               subtitle: 'Full-Stack Web Framework',
-              body: 'Server HTTP routes, SSR, declarative Web UI, Row-Level Security database API gateway, and migrations.',
+              body:
+                  'Server HTTP routes, SSR, declarative Web UI, Row-Level Security database API gateway, and migrations.',
               linkHref: '/fullstack',
               linkLabel: 'Explore Fullstack',
               accentColor: '#34d399',
@@ -85,7 +91,8 @@ class PlatformSection extends Component {
             _pillarCard(
               title: 'Flint Client',
               subtitle: 'Universal Client SDK',
-              body: 'Cross-platform HTTP & WebSocket client with memory/disk caching, offline sync, and real-time DB channels.',
+              body:
+                  'Cross-platform HTTP & WebSocket client with memory/disk caching, offline sync, and real-time DB channels.',
               linkHref: '/client',
               linkLabel: 'Explore Client',
               accentColor: '#38bdf8',
@@ -94,7 +101,8 @@ class PlatformSection extends Component {
             _pillarCard(
               title: 'Flint AI',
               subtitle: 'Autonomous AI Engine',
-              body: 'Multi-provider agent mesh, streaming chat, embeddings, function calling, audio transcription, and persistent memory.',
+              body:
+                  'Multi-provider agent mesh, streaming chat, embeddings, function calling, audio transcription, and persistent memory.',
               linkHref: '/ai',
               linkLabel: 'Explore AI Engine',
               accentColor: '#a78bfa',
@@ -103,7 +111,8 @@ class PlatformSection extends Component {
             _pillarCard(
               title: 'Flint Hardware',
               subtitle: 'Robotics & IoT SDK',
-              body: 'Robotics state machines, HC-SR04 sonar, MPU6050 IMU, motor drivers, and Wokwi virtual simulator bundles.',
+              body:
+                  'Robotics state machines, HC-SR04 sonar, MPU6050 IMU, motor drivers, and Wokwi virtual simulator bundles.',
               linkHref: '/hardware',
               linkLabel: 'Explore Hardware',
               accentColor: '#f97316',

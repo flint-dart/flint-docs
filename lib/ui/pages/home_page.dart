@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 import '../components/home/build_for.dart';
 import '../components/home/final_cta.dart';

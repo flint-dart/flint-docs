@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 class BuildFor extends FlintComponent {
   @override
@@ -24,7 +24,8 @@ class BuildFor extends FlintComponent {
                 alignItems: AlignItems.center,
                 gap: 8,
                 width: SizeValue('fit-content'),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 radius: 999,
                 background: const Color.rgba(52, 211, 153, 0.12),
                 border: Border.all(color: const Color.rgba(52, 211, 153, 0.3)),
@@ -69,8 +70,12 @@ class BuildFor extends FlintComponent {
             gridTemplateColumns: GridTemplateColumns.one,
             gap: 16,
             margin: const EdgeInsets.only(top: 32, bottom: 0),
-            md: DartStyle(gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr)),
-            lg: DartStyle(gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.oneFr)),
+            md: DartStyle(
+                gridTemplateColumns:
+                    GridTemplateColumns.repeat(2, GridTrack.oneFr)),
+            lg: DartStyle(
+                gridTemplateColumns:
+                    GridTemplateColumns.repeat(3, GridTrack.oneFr)),
           ),
           children: _capabilities
               .map((item) => _capability(item.$1, item.$2, item.$3, item.$4))

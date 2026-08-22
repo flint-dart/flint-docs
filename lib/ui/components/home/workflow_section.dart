@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 class WorkflowSection extends Component {
   @override
@@ -138,7 +138,8 @@ class WorkflowSection extends Component {
         _flowStep(
           step: '3',
           title: 'Full-Stack Server & DB Gateway',
-          desc: 'Flint Dart enforces Row-Level Security & persists event models.',
+          desc:
+              'Flint Dart enforces Row-Level Security & persists event models.',
           color: '#34d399',
           icon: Icons.server,
         ),

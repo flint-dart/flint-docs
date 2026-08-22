@@ -1,5 +1,5 @@
 import 'package:flint_client/flint_client.dart';
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 import 'package:universal_web/web.dart' as web;
 
 import '../shared/auth_panel.dart';

@@ -1,4 +1,4 @@
-import 'package:flint_ui/flint_ui.dart';
+import 'package:flint_dart/ui.dart';
 
 import '../components/api/sidebar.dart';
 import '../components/guides/sidebar.dart';
@@ -195,10 +195,12 @@ class NavBar extends FlintComponent {
                     if (pillarVersion != null)
                       Container(
                         dartStyle: DartStyle(
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 1),
                           radius: 999,
                           background: Color.rgba(52, 211, 153, 0.12),
-                          border: Border.all(color: Color.rgba(52, 211, 153, 0.3)),
+                          border:
+                              Border.all(color: Color.rgba(52, 211, 153, 0.3)),
                         ),
                         children: [
                           Text.span(
@@ -216,7 +218,8 @@ class NavBar extends FlintComponent {
                 Text.span(
                   pillarLabel,
                   dartStyle: DartStyle(
-                    color: isPillarPage ? accentColor : ThemeToken.color('muted'),
+                    color:
+                        isPillarPage ? accentColor : ThemeToken.color('muted'),
                     fontSize: 11,
                     fontWeight: 800,
                     letterSpacing: 0.3,
@@ -337,11 +340,11 @@ class NavBar extends FlintComponent {
       links = [
         _navLink('/fullstack', 'Overview'),
         _navLink('/fullstack#features', 'Features'),
-        _navLink('/guides', 'Guides'),
-        _navLink('/api', 'API'),
-        _navLink('/whats-new', "What's New"),
-        _navLink('/changelog', 'Changelog'),
-        _navLink('/examples', 'Examples'),
+        _navLink('/fullstack/guides', 'Guides'),
+        _navLink('/fullstack/api', 'API'),
+        _navLink('/fullstack/whats-new', "What's New"),
+        _navLink('/fullstack/changelog', 'Changelog'),
+        _navLink('/fullstack/examples', 'Examples'),
         _navLink('/', 'Ecosystem ↗'),
       ];
     } else if (pillar == 'client') {
@@ -706,11 +709,11 @@ class NavBar extends FlintComponent {
                   ),
                   _drawerLink('/fullstack', 'Overview'),
                   _drawerLink('/fullstack#features', 'Features'),
-                  _drawerLink('/guides', 'Guides'),
-                  _drawerLink('/api', 'API Reference'),
-                  _drawerLink('/whats-new', "What's New"),
-                  _drawerLink('/changelog', 'Changelog'),
-                  _drawerLink('/examples', 'Examples'),
+                  _drawerLink('/fullstack/guides', 'Guides'),
+                  _drawerLink('/fullstack/api', 'API Reference'),
+                  _drawerLink('/fullstack/whats-new', "What's New"),
+                  _drawerLink('/fullstack/changelog', 'Changelog'),
+                  _drawerLink('/fullstack/examples', 'Examples'),
                   Container(
                     dartStyle: DartStyle(
                       height: 1,
@@ -749,7 +752,8 @@ class NavBar extends FlintComponent {
                   _drawerLink('/client#features', 'Features'),
                   _drawerLink('/client#caching', 'Caching'),
                   _drawerLink('/client#channels', 'Real-Time Channels'),
-                  _drawerLink('https://pub.dev/packages/flint_client', 'pub.dev Package'),
+                  _drawerLink('https://pub.dev/packages/flint_client',
+                      'pub.dev Package'),
                   Container(
                     dartStyle: DartStyle(
                       height: 1,
@@ -776,7 +780,8 @@ class NavBar extends FlintComponent {
                   _drawerLink('/ai#agents', 'Agents & Workflows'),
                   _drawerLink('/ai#tools', 'Tool Policies'),
                   _drawerLink('/ai#chat', 'Streaming Chat'),
-                  _drawerLink('https://pub.dev/packages/flint_ai', 'pub.dev Package'),
+                  _drawerLink(
+                      'https://pub.dev/packages/flint_ai', 'pub.dev Package'),
                   Container(
                     dartStyle: DartStyle(
                       height: 1,
@@ -803,7 +808,8 @@ class NavBar extends FlintComponent {
                   _drawerLink('/hardware#sensors', 'Sensors & IMU'),
                   _drawerLink('/hardware#statemachine', 'State Machine'),
                   _drawerLink('/hardware#wokwi', 'Wokwi Simulator'),
-                  _drawerLink('https://pub.dev/packages/flint_hardware', 'pub.dev Package'),
+                  _drawerLink('https://pub.dev/packages/flint_hardware',
+                      'pub.dev Package'),
                   Container(
                     dartStyle: DartStyle(
                       height: 1,
