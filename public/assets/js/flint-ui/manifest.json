@@ -1,0 +1,7 @@
+{
+  "mode": "page-bundles",
+  "fallback": "/assets/js/flint-ui/main.dart.js",
+  "pages": {
+    "Fullstack": "/assets/js/flint-ui/pages/fullstack.7f705af2a4ab.dart.js"
+  }
+}
