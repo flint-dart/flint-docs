@@ -35,7 +35,7 @@ class DocsController extends Controller {
         ...await docs.baseData(req),
         'activePillar': 'fullstack',
         'contentHtml':
-            await docs.readMarkdownContent('lib/content/pages/fullstack.md'),
+            await docs.readMarkdownContent('lib/content/fullstack/overview.md'),
         'title': 'Flint Dart Full-Stack Web Framework',
         'description':
             'Build full-stack Dart web applications with HTTP routes, SSR, declarative Web UI, Row-Level Security database APIs, and WebSockets in pure Dart.',
@@ -66,7 +66,7 @@ class DocsController extends Controller {
         ...await docs.baseData(req),
         'activePillar': 'client',
         'contentHtml':
-            await docs.readMarkdownContent('lib/content/pages/client.md'),
+            await docs.readMarkdownContent('lib/content/client/overview.md'),
         'title': 'FlintClient Guide - Flint Dart',
         'description':
             'Official FlintClient guide: setup, requests, retries, caching, cancellation, parse modes, and observability hooks.',
@@ -88,7 +88,7 @@ class DocsController extends Controller {
         ...await docs.baseData(req),
         'activePillar': 'ai',
         'contentHtml':
-            await docs.readMarkdownContent('lib/content/pages/ai.md'),
+            await docs.readMarkdownContent('lib/content/ai/overview.md'),
         'title': 'Flint AI Guide - Agents, Tools, and Workflows',
         'description':
             'Official Flint AI guide: providers, agents, tools, workflows, streaming chat, memory, persistence, and production safety.',
@@ -101,7 +101,7 @@ class DocsController extends Controller {
       ...await docs.baseData(req),
       'activePillar': 'ai',
       'contentHtml':
-          await docs.readMarkdownContent('lib/content/pages/ai.md'),
+          await docs.readMarkdownContent('lib/content/ai/overview.md'),
       'title': 'Flint AI Guide - Agents, Tools, and Workflows',
       'description':
           'Official Flint AI guide: providers, agents, tools, workflows, streaming chat, memory, and persistence.',
@@ -123,7 +123,7 @@ class DocsController extends Controller {
         ...await docs.baseData(req),
         'activePillar': 'hardware',
         'contentHtml':
-            await docs.readMarkdownContent('lib/content/pages/hardware.md'),
+            await docs.readMarkdownContent('lib/content/hardware/overview.md'),
         'title': 'Flint Hardware Guide - Embedded Systems & Robotics in Dart',
         'description':
             'Build embedded firmware, robotics state machines, sensor drivers, and Wokwi simulation circuits in pure Dart with Flint Hardware.',
@@ -136,7 +136,7 @@ class DocsController extends Controller {
       ...await docs.baseData(req),
       'activePillar': 'hardware',
       'contentHtml':
-          await docs.readMarkdownContent('lib/content/pages/hardware.md'),
+          await docs.readMarkdownContent('lib/content/hardware/overview.md'),
       'title': 'Flint Hardware Guide - Embedded Systems & Robotics in Dart',
       'description':
           'Official Flint Hardware guide: MCU targets, drivers, robotics state machines, TFLite Micro, and Wokwi simulation.',
@@ -149,7 +149,7 @@ class DocsController extends Controller {
       ...await docs.baseData(req),
       'activePillar': 'client',
       'contentHtml':
-          await docs.readMarkdownContent('lib/content/pages/client.md'),
+          await docs.readMarkdownContent('lib/content/client/overview.md'),
       'title': 'FlintClient Guide - Flint Dart',
       'description':
           'Official FlintClient guide: setup, requests, retries, caching, cancellation, and observability.',
@@ -170,7 +170,7 @@ class DocsController extends Controller {
       props: {
         ...await docs.baseData(req),
         'contentHtml':
-            await docs.readMarkdownContent('lib/content/pages/ui.md'),
+            await docs.readMarkdownContent('lib/content/fullstack/ui.md'),
         'title': 'Flint UI Guide - Build UI in Dart',
         'description':
             'Official Flint UI guide: components, props, state, events, DartStyle, pages, and browser rendering.',
@@ -182,7 +182,7 @@ class DocsController extends Controller {
     return docs.renderContentPage(res, {
       ...await docs.baseData(req),
       'contentHtml':
-          await docs.readMarkdownContent('lib/content/pages/dart.md'),
+          await docs.readMarkdownContent('lib/content/dart/overview.md'),
       'title': 'Dart Lessons - Learn Dart Clearly',
       'description':
           'Learn Dart with simple, practical lessons: syntax, functions, classes, null safety, and async.',

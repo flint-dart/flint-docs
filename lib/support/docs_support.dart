@@ -103,7 +103,7 @@ class DocsSupport {
     final heading = topicHeading(topic);
     final contentTopic = guideContentTopic(topic);
     final contentHtml = await readMarkdownContent(
-      'lib/content/guides/$contentTopic.md',
+      'lib/content/fullstack/guides/$contentTopic.md',
     );
     return res.page(
       'Guides',
@@ -149,7 +149,7 @@ class DocsSupport {
     final nextApiTitle =
         nextTopicSlug != null ? topicHeading(nextTopicSlug).trim() : null;
     final contentHtml = await readMarkdownContent(
-      'lib/content/api/api-$topic.md',
+      'lib/content/fullstack/api/api-$topic.md',
     );
     return res.page(
       'Api',

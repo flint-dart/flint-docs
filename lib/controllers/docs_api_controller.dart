@@ -154,7 +154,7 @@ class DocsApiController extends Controller {
       return res.status(404).json({'error': 'Not found'});
     }
     try {
-      final file = File('lib/content/guides/$name.md');
+      final file = File('lib/content/fullstack/guides/$name.md');
       if (!await file.exists()) {
         return res.status(404).json({'error': 'Partial not found'});
       }
@@ -193,7 +193,7 @@ class DocsApiController extends Controller {
     try {
       final buffer = StringBuffer();
       for (final section in sections) {
-        final file = File('lib/content/api/$section.md');
+        final file = File('lib/content/fullstack/api/$section.md');
         if (await file.exists()) {
           buffer.write(
             docs.renderMarkdownToHtml(await file.readAsString()),
