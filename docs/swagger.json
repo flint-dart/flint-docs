@@ -404,7 +404,31 @@
         }
       }
     },
-    "/ai": {
+    "/client/guides/{topic}": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: topic"
+          }
+        ]
+      }
+    },
+    "/ai/guides": {
       "get": {
         "summary": "",
         "tags": [
@@ -430,7 +454,31 @@
         }
       }
     },
-    "/dart": {
+    "/hardware/guides/{topic}": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: topic"
+          }
+        ]
+      }
+    },
+    "/dart/guides": {
       "get": {
         "summary": "",
         "tags": [
