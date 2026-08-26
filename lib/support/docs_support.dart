@@ -599,7 +599,7 @@ class DocsSupport {
       return trimmed;
     }
 
-    final base = FlintEnv.get('APP_URL', 'http://localhost:3030').trim();
+    final base = FlintEnv.get('APP_URL', 'https://flintdart.dev').trim();
     final normalizedBase =
         base.endsWith('/') ? base.substring(0, base.length - 1) : base;
     final normalizedPath = trimmed.startsWith('/') ? trimmed : '/$trimmed';

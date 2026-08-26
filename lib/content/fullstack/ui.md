@@ -116,6 +116,89 @@ Container(
 
 For docs and learning examples, inline `DartStyle` is useful because the reader can see the component and its visual design together.
 
+## Responsive Breakpoints (sm, md, lg, xl)
+
+Flint UI uses mobile-first responsive breakpoints directly within `DartStyle`. Define your mobile base styles on the root `DartStyle`, and override layout, typography, and spacing for larger screens using the `sm`, `md`, `lg`, and `xl` properties.
+
+### Breakpoint Specifications
+
+| Breakpoint | Target Screen Width | Typical Devices |
+| :--- | :--- | :--- |
+| **Base (Default)** | `< 640px` | Mobile phones |
+| **`sm`** | `≥ 640px` | Large phones, small tablets in portrait |
+| **`md`** | `≥ 768px` | Tablets, iPads |
+| **`lg`** | `≥ 1024px` | Laptops, small desktop monitors |
+| **`xl`** | `≥ 1280px` | Large desktop displays |
+
+### Responsive Grid Example
+
+```dart
+Container(
+  dartStyle: DartStyle(
+    display: Display.grid,
+    // Mobile: 1 single column
+    gridTemplateColumns: GridTemplateColumns.one,
+    gap: 16,
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+    
+    // Tablet (md: >= 768px): 2 columns
+    md: DartStyle(
+      gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+      gap: 24,
+    ),
+    
+    // Desktop (lg: >= 1024px): 3 columns
+    lg: DartStyle(
+      gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.oneFr),
+      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 64),
+      gap: 32,
+    ),
+    
+    // Wide Screen (xl: >= 1280px): 4 columns
+    xl: DartStyle(
+      gridTemplateColumns: GridTemplateColumns.repeat(4, GridTrack.oneFr),
+      padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 72),
+      gap: 40,
+    ),
+  ),
+  children: [
+    FeatureCard(title: 'Routing'),
+    FeatureCard(title: 'Models'),
+    FeatureCard(title: 'Auth'),
+    FeatureCard(title: 'AI Engine'),
+  ],
+);
+```
+
+### Responsive Typography & Visibility
+
+```dart
+// Heading that scales dynamically from mobile to large desktop
+Text.h1(
+  'Autonomous Robotics in Dart',
+  dartStyle: DartStyle(
+    fontSize: 28,
+    lineHeight: 1.15,
+    color: ThemeToken.color('text'),
+    md: const DartStyle(fontSize: 40),
+    lg: const DartStyle(fontSize: 48),
+    xl: const DartStyle(fontSize: 54),
+  ),
+);
+
+// Element visible on desktop, hidden on mobile
+Container(
+  dartStyle: const DartStyle(
+    display: Display.none,
+    lg: DartStyle(display: Display.flex),
+  ),
+  children: [
+    DesktopSidebar(),
+  ],
+);
+```
+
 ## Opt into theme mode
 
 Theme mode is opt-in. If an app does not configure a theme, Flint UI does not set `data-theme`, does not read local storage, and does not use the system color scheme. The app simply uses its normal/default design.
