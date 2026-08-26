@@ -1291,43 +1291,39 @@ Future<void> main() async {
   _Snippet(
     tabLabel: 'robotics.dart',
     pillarTitle: 'Flint Hardware & Robotics',
-    filename: 'firmware/rover.dart',
+    filename: 'firmware/cam_guard.dart',
     href: '/hardware',
     icon: Icons.zap,
     accentColor: Color('#f97316'),
-    statusMessage: 'ESP32 Native • Swarm Mesh • Wokwi & C99/ROS 2 Export',
-    code: '''import 'dart:io';
-import 'package:flint_hardware/flint_hardware.dart';
+    statusMessage: 'ESP32-CAM Native • TFLite Micro Model • 15 FPS Inference',
+    code: '''import 'package:flint_hardware/flint_hardware.dart';
 
-void main() async {
-  final rover = FirmwareBuilder('autonomous_rover', target: BoardTarget.esp32);
+void main() {
+  final visionGuard = FirmwareBuilder('cam_guard', target: BoardTarget.esp32Cam);
 
-  final sonar = rover.sonar(triggerPin: 5, echoPin: 18);
-  final imu = rover.imu(sdaPin: 21, sclPin: 22);
-  final drive = rover.differentialDrive(
-    leftPwmPin: 14, leftDirPin: 27,
-    rightPwmPin: 12, rightDirPin: 26,
+  // 1. Configure On-Board Camera
+  visionGuard.camera(
+    resolution: CameraResolution.qvga,
+    format: PixelFormat.rgb565,
+    frameRate: 15,
   );
 
-  rover.meshSwarm(swarm: SwarmId.robotics, channel: WifiChannel.ch6);
-  rover.bluetooth(
-    deviceName: 'Flint-Rover-01',
-    services: [BleService.battery(initialLevelPercent: 100)],
+  // 2. Load Quantized TFLite Micro Model
+  final model = visionGuard.tfliteModel(
+    name: 'person_detect',
+    assetPath: 'models/person_detect.tflite',
+    inputShape: const [1, 96, 96, 1],
+    outputShape: const [1, 2],
+    quantization: TensorQuantization.int8,
+    tensorArenaSizeKb: 128,
   );
 
-  rover.loop((ctx) {
-    ctx.setPwm(drive.leftPwmPin, 0.8);
-    ctx.setPwm(drive.rightPwmPin, 0.8);
+  // 3. Real-Time Edge Inference Loop
+  visionGuard.loop((ctx) {
+    ctx.log('Running on-device TFLite inference...');
   });
-
-  await rover.exportBundle(Directory('build/rover'));
 }''',
     lines: [
-      _CodeLine([
-        _Token('import ', _kw, bold: true),
-        _Token("'dart:io'", _str),
-        _Token(';', _txt),
-      ]),
       _CodeLine([
         _Token('import ', _kw, bold: true),
         _Token("'package:flint_hardware/flint_hardware.dart'", _str),
@@ -1337,101 +1333,86 @@ void main() async {
       _CodeLine([
         _Token('void ', _typ),
         _Token('main', _fn),
-        _Token('() ', _txt),
-        _Token('async', _kw, bold: true),
-        _Token(' {', _txt),
+        _Token('() {', _txt),
       ]),
       _CodeLine([
         _Token('  final ', _kw),
-        _Token('rover = ', _txt),
+        _Token('visionGuard = ', _txt),
         _Token('FirmwareBuilder', _typ, bold: true),
-        _Token("('rover', target: ", _txt),
+        _Token("('cam_guard', target: ", _txt),
         _Token('BoardTarget', _typ),
-        _Token('.esp32);', _txt),
+        _Token('.esp32Cam);', _txt),
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('  final ', _kw),
-        _Token('sonar = rover.', _txt),
-        _Token('sonar', _fn),
-        _Token('(triggerPin: 5, echoPin: 18);', _txt),
-      ]),
-      _CodeLine([
-        _Token('  final ', _kw),
-        _Token('imu = rover.', _txt),
-        _Token('imu', _fn),
-        _Token('(sdaPin: 21, sclPin: 22);', _txt),
-      ]),
-      _CodeLine([
-        _Token('  final ', _kw),
-        _Token('drive = rover.', _txt),
-        _Token('differentialDrive', _fn),
+        _Token('  visionGuard.', _txt),
+        _Token('camera', _fn),
         _Token('(', _txt),
       ]),
       _CodeLine([
-        _Token('    leftPwmPin: 14, leftDirPin: 27,', _txt),
+        _Token('    resolution: ', _txt),
+        _Token('CameraResolution', _typ),
+        _Token('.qvga,', _txt),
       ]),
       _CodeLine([
-        _Token('    rightPwmPin: 12, rightDirPin: 26,', _txt),
+        _Token('    format: ', _txt),
+        _Token('PixelFormat', _typ),
+        _Token('.rgb565, frameRate: 15,', _txt),
       ]),
       _CodeLine([
         _Token('  );', _txt),
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('  rover.', _txt),
-        _Token('meshSwarm', _fn),
-        _Token('(swarm: ', _txt),
-        _Token('SwarmId', _typ),
-        _Token('.robotics, channel: ', _txt),
-        _Token('WifiChannel', _typ),
-        _Token('.ch6);', _txt),
-      ]),
-      _CodeLine([
-        _Token('  rover.', _txt),
-        _Token('bluetooth', _fn),
+        _Token('  final ', _kw),
+        _Token('model = visionGuard.', _txt),
+        _Token('tfliteModel', _fn),
         _Token('(', _txt),
       ]),
       _CodeLine([
-        _Token('    deviceName: ', _txt),
-        _Token("'Flint-Rover-01'", _str),
+        _Token('    name: ', _txt),
+        _Token("'person_detect'", _str),
         _Token(',', _txt),
       ]),
       _CodeLine([
-        _Token('    services: [', _txt),
-        _Token('BleService', _typ),
-        _Token('.battery(initialLevelPercent: 100)],', _txt),
+        _Token('    assetPath: ', _txt),
+        _Token("'models/person_detect.tflite'", _str),
+        _Token(',', _txt),
+      ]),
+      _CodeLine([
+        _Token('    inputShape: ', _txt),
+        _Token('const ', _kw),
+        _Token('[1, 96, 96, 1],', _txt),
+      ]),
+      _CodeLine([
+        _Token('    outputShape: ', _txt),
+        _Token('const ', _kw),
+        _Token('[1, 2],', _txt),
+      ]),
+      _CodeLine([
+        _Token('    quantization: ', _txt),
+        _Token('TensorQuantization', _typ),
+        _Token('.int8,', _txt),
+      ]),
+      _CodeLine([
+        _Token('    tensorArenaSizeKb: 128,', _txt),
       ]),
       _CodeLine([
         _Token('  );', _txt),
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('  rover.', _txt),
+        _Token('  visionGuard.', _txt),
         _Token('loop', _fn),
         _Token('((ctx) {', _txt),
       ]),
       _CodeLine([
         _Token('    ctx.', _txt),
-        _Token('setPwm', _fn),
-        _Token('(drive.leftPwmPin, 0.8);', _txt),
-      ]),
-      _CodeLine([
-        _Token('    ctx.', _txt),
-        _Token('setPwm', _fn),
-        _Token('(drive.rightPwmPin, 0.8);', _txt),
+        _Token('log', _fn),
+        _Token("('Running on-device TFLite inference...');", _str),
       ]),
       _CodeLine([
         _Token('  });', _txt),
-      ]),
-      _CodeLine([]),
-      _CodeLine([
-        _Token('  await ', _kw),
-        _Token('rover.', _txt),
-        _Token('exportBundle', _fn),
-        _Token('(', _txt),
-        _Token('Directory', _typ),
-        _Token("('build/rover'));", _str),
       ]),
       _CodeLine([
         _Token('}', _txt),
