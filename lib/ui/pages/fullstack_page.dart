@@ -1957,16 +1957,19 @@ class Project extends Model<Project> {
     tag: 'Live Channels',
     icon: Icons.zap,
     accentColor: Color('#f59e0b'),
-    statusMessage: '0.1ms Channel Broadcast • Presence Active • Sub-millisecond',
+    statusMessage: '0.1ms Room Broadcast • Presence Active • Sub-millisecond',
     code: '''import 'package:flint_dart/flint_dart.dart';
 
 void registerWebSockets(Flint app) {
-  app.channel('deployments:{id}').on('status_changed', (ctx) async {
-    final status = ctx.data['status'];
-    ctx.broadcast('deployment_updated', {
-      'id': ctx.param('id'),
-      'status': status,
-      'timestamp': DateTime.now().toIso8601String(),
+  app.websocket('/ws/deployments', (req, socket) {
+    final projectId = req.query['id'] ?? 'global';
+    socket.join(projectId);
+
+    socket.on('deploy', (data) {
+      socket.emitToRoom(projectId, 'deployment_updated', {
+        'status': 'building',
+        'timestamp': DateTime.now().toIso8601String(),
+      });
     });
   });
 }''',
@@ -1986,36 +1989,46 @@ void registerWebSockets(Flint app) {
       ]),
       _FullstackLine([
         _FullstackToken('  app.', _txt),
-        _FullstackToken('channel', _fn),
-        _FullstackToken("('deployments:{id}').", _str),
+        _FullstackToken('websocket', _fn),
+        _FullstackToken("('/ws/deployments', (req, socket) {", _str),
+      ]),
+      _FullstackLine([
+        _FullstackToken('    final ', _kw),
+        _FullstackToken("projectId = req.query['id'] ?? ", _txt),
+        _FullstackToken("'global'", _str),
+        _FullstackToken(';', _txt),
+      ]),
+      _FullstackLine([
+        _FullstackToken('    socket.', _txt),
+        _FullstackToken('join', _fn),
+        _FullstackToken('(projectId);', _txt),
+      ]),
+      _FullstackLine([]),
+      _FullstackLine([
+        _FullstackToken('    socket.', _txt),
         _FullstackToken('on', _fn),
-        _FullstackToken("('status_changed', (ctx) ", _str),
-        _FullstackToken('async', _kw, bold: true),
-        _FullstackToken(' {', _txt),
+        _FullstackToken("('deploy', (data) {", _str),
       ]),
       _FullstackLine([
-        _FullstackToken("    final status = ctx.data['status'];", _txt),
+        _FullstackToken('      socket.', _txt),
+        _FullstackToken('emitToRoom', _fn),
+        _FullstackToken("(projectId, 'deployment_updated', {", _str),
       ]),
       _FullstackLine([
-        _FullstackToken('    ctx.', _txt),
-        _FullstackToken('broadcast', _fn),
-        _FullstackToken("('deployment_updated', {", _str),
+        _FullstackToken("        'status': ", _txt),
+        _FullstackToken("'building'", _str),
+        _FullstackToken(',', _txt),
       ]),
       _FullstackLine([
-        _FullstackToken("      'id': ctx.", _txt),
-        _FullstackToken('param', _fn),
-        _FullstackToken("('id'),", _str),
-      ]),
-      _FullstackLine([
-        _FullstackToken("      'status': status,", _txt),
-      ]),
-      _FullstackLine([
-        _FullstackToken("      'timestamp': ", _txt),
+        _FullstackToken("        'timestamp': ", _txt),
         _FullstackToken('DateTime.', _typ),
         _FullstackToken('now', _fn),
         _FullstackToken('().', _txt),
         _FullstackToken('toIso8601String', _fn),
         _FullstackToken('(),', _txt),
+      ]),
+      _FullstackLine([
+        _FullstackToken('      });', _txt),
       ]),
       _FullstackLine([
         _FullstackToken('    });', _txt),
