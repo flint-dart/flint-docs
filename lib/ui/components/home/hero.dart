@@ -1291,28 +1291,43 @@ Future<void> main() async {
   _Snippet(
     tabLabel: 'robotics.dart',
     pillarTitle: 'Flint Hardware & Robotics',
-    filename: 'firmware/robot.dart',
+    filename: 'firmware/rover.dart',
     href: '/hardware',
     icon: Icons.zap,
     accentColor: Color('#f97316'),
-    statusMessage: 'FirmwareBuilder • ESP32 Native • Real-Time Loop',
-    code: '''import 'package:flint_hardware/flint_hardware.dart';
+    statusMessage: 'ESP32 Native • Swarm Mesh • Wokwi & C99/ROS 2 Export',
+    code: '''import 'dart:io';
+import 'package:flint_hardware/flint_hardware.dart';
 
-void main() {
-  final robot = FirmwareBuilder('rover_01', target: BoardTarget.esp32);
+void main() async {
+  final rover = FirmwareBuilder('autonomous_rover', target: BoardTarget.esp32);
 
-  final sonar = robot.sonar(triggerPin: 5, echoPin: 18);
-  final drive = robot.differentialDrive(
+  final sonar = rover.sonar(triggerPin: 5, echoPin: 18);
+  final imu = rover.imu(sdaPin: 21, sclPin: 22);
+  final drive = rover.differentialDrive(
     leftPwmPin: 14, leftDirPin: 27,
     rightPwmPin: 12, rightDirPin: 26,
   );
 
-  robot.loop((ctx) {
-    final dist = ctx.readSonar(sonar);
-    if (dist < 15) ctx.reverseDrive(drive);
+  rover.meshSwarm(swarm: SwarmId.robotics, channel: WifiChannel.ch6);
+  rover.bluetooth(
+    deviceName: 'Flint-Rover-01',
+    services: [BleService.battery(initialLevelPercent: 100)],
+  );
+
+  rover.loop((ctx) {
+    ctx.setPwm(drive.leftPwmPin, 0.8);
+    ctx.setPwm(drive.rightPwmPin, 0.8);
   });
+
+  await rover.exportBundle(Directory('build/rover'));
 }''',
     lines: [
+      _CodeLine([
+        _Token('import ', _kw, bold: true),
+        _Token("'dart:io'", _str),
+        _Token(';', _txt),
+      ]),
       _CodeLine([
         _Token('import ', _kw, bold: true),
         _Token("'package:flint_hardware/flint_hardware.dart'", _str),
@@ -1322,26 +1337,34 @@ void main() {
       _CodeLine([
         _Token('void ', _typ),
         _Token('main', _fn),
-        _Token('() {', _txt),
+        _Token('() ', _txt),
+        _Token('async', _kw, bold: true),
+        _Token(' {', _txt),
       ]),
       _CodeLine([
         _Token('  final ', _kw),
-        _Token('robot = ', _txt),
+        _Token('rover = ', _txt),
         _Token('FirmwareBuilder', _typ, bold: true),
-        _Token("('rover_01', target: ", _txt),
+        _Token("('rover', target: ", _txt),
         _Token('BoardTarget', _typ),
         _Token('.esp32);', _txt),
       ]),
       _CodeLine([]),
       _CodeLine([
         _Token('  final ', _kw),
-        _Token('sonar = robot.', _txt),
+        _Token('sonar = rover.', _txt),
         _Token('sonar', _fn),
         _Token('(triggerPin: 5, echoPin: 18);', _txt),
       ]),
       _CodeLine([
         _Token('  final ', _kw),
-        _Token('drive = robot.', _txt),
+        _Token('imu = rover.', _txt),
+        _Token('imu', _fn),
+        _Token('(sdaPin: 21, sclPin: 22);', _txt),
+      ]),
+      _CodeLine([
+        _Token('  final ', _kw),
+        _Token('drive = rover.', _txt),
         _Token('differentialDrive', _fn),
         _Token('(', _txt),
       ]),
@@ -1356,24 +1379,59 @@ void main() {
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('  robot.', _txt),
+        _Token('  rover.', _txt),
+        _Token('meshSwarm', _fn),
+        _Token('(swarm: ', _txt),
+        _Token('SwarmId', _typ),
+        _Token('.robotics, channel: ', _txt),
+        _Token('WifiChannel', _typ),
+        _Token('.ch6);', _txt),
+      ]),
+      _CodeLine([
+        _Token('  rover.', _txt),
+        _Token('bluetooth', _fn),
+        _Token('(', _txt),
+      ]),
+      _CodeLine([
+        _Token('    deviceName: ', _txt),
+        _Token("'Flint-Rover-01'", _str),
+        _Token(',', _txt),
+      ]),
+      _CodeLine([
+        _Token('    services: [', _txt),
+        _Token('BleService', _typ),
+        _Token('.battery(initialLevelPercent: 100)],', _txt),
+      ]),
+      _CodeLine([
+        _Token('  );', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('  rover.', _txt),
         _Token('loop', _fn),
         _Token('((ctx) {', _txt),
       ]),
       _CodeLine([
-        _Token('    final ', _kw),
-        _Token('dist = ctx.', _txt),
-        _Token('readSonar', _fn),
-        _Token('(sonar);', _txt),
+        _Token('    ctx.', _txt),
+        _Token('setPwm', _fn),
+        _Token('(drive.leftPwmPin, 0.8);', _txt),
       ]),
       _CodeLine([
-        _Token('    if ', _kw, bold: true),
-        _Token('(dist < 15) ctx.', _txt),
-        _Token('reverseDrive', _fn),
-        _Token('(drive);', _txt),
+        _Token('    ctx.', _txt),
+        _Token('setPwm', _fn),
+        _Token('(drive.rightPwmPin, 0.8);', _txt),
       ]),
       _CodeLine([
         _Token('  });', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('  await ', _kw),
+        _Token('rover.', _txt),
+        _Token('exportBundle', _fn),
+        _Token('(', _txt),
+        _Token('Directory', _typ),
+        _Token("('build/rover'));", _str),
       ]),
       _CodeLine([
         _Token('}', _txt),
