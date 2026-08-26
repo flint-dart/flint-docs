@@ -139,20 +139,15 @@ class FullstackPage extends StatefulComponent {
               dartStyle: DartStyle(
                 display: Display.grid,
                 gridTemplateColumns: GridTemplateColumns.one,
-                gap: 40,
+                gap: 32,
                 alignItems: AlignItems.center,
+                width: const SizeValue.percent(100),
                 lg: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.tracks([
-                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.05)),
-                    GridTrack.minmax(540, SizeValue.fr(1.18)),
-                  ]),
-                  gap: 48,
+                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                  gap: 40,
                 ),
                 xl: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.tracks([
-                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.05)),
-                    GridTrack.minmax(620, SizeValue.fr(1.2)),
-                  ]),
+                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
                   gap: 64,
                 ),
               ),

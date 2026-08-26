@@ -130,14 +130,35 @@ class ClientPage extends Component {
           ],
         ),
         Row(
-          dartStyle: DartStyle(
+          dartStyle: const DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 10,
           ),
           children: [
+            Link(
+              href: '/client/guides',
+              dartStyle: DartStyle(
+                display: Display.inlineFlex,
+                alignItems: AlignItems.center,
+                gap: 6,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                radius: 10,
+                background: const Color('#38bdf8'),
+                color: const Color('#050b14'),
+                fontWeight: 800,
+                fontSize: 13,
+              ),
+              children: [
+                Text.span(
+                  'Explore Client Guides',
+                  dartStyle: const DartStyle(color: Color('#050b14'), fontWeight: 800),
+                ),
+                Icon(Icons.arrowRight, size: 16, color: const Color('#050b14')),
+              ],
+            ),
             _heroLink('pub.dev', 'https://pub.dev/packages/flint_client'),
-            _heroLink('GitHub', 'https://github.com/flintdart/flint-client'),
+            _heroLink('GitHub', 'https://github.com/flint-dart/flint-client'),
             _heroLink('Examples', '/examples'),
           ],
         ),
@@ -157,7 +178,7 @@ class ClientPage extends Component {
       ),
       children: [
         Row(
-          dartStyle: DartStyle(
+          dartStyle: const DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             gap: 8,
@@ -212,7 +233,10 @@ class ClientPage extends Component {
         gap: 14,
         gridTemplateColumns: GridTemplateColumns.one,
         md: DartStyle(
-          gridTemplateColumns: GridTemplateColumns.autoFit(240),
+          gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+        ),
+        lg: DartStyle(
+          gridTemplateColumns: GridTemplateColumns.repeat(4, GridTrack.oneFr),
         ),
       ),
       children: [

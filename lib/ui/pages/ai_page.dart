@@ -130,12 +130,33 @@ class AiPage extends Component {
           ],
         ),
         Row(
-          dartStyle: DartStyle(
+          dartStyle: const DartStyle(
             display: Display.flex,
             flexWrap: FlexWrap.wrap,
             gap: 10,
           ),
           children: [
+            Link(
+              href: '/ai/guides',
+              dartStyle: DartStyle(
+                display: Display.inlineFlex,
+                alignItems: AlignItems.center,
+                gap: 6,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                radius: 10,
+                background: const Color('#38bdf8'),
+                color: const Color('#050b14'),
+                fontWeight: 800,
+                fontSize: 13,
+              ),
+              children: [
+                Text.span(
+                  'Explore AI Guides',
+                  dartStyle: const DartStyle(color: Color('#050b14'), fontWeight: 800),
+                ),
+                Icon(Icons.arrowRight, size: 16, color: const Color('#050b14')),
+              ],
+            ),
             _heroLink('Setup', '#install-and-setup'),
             _heroLink('Streaming', '#streaming-chat'),
             _heroLink('Security', '#production-tool-security'),
@@ -157,7 +178,7 @@ class AiPage extends Component {
       ),
       children: [
         Row(
-          dartStyle: DartStyle(
+          dartStyle: const DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             gap: 8,
@@ -221,7 +242,10 @@ class AiPage extends Component {
         gap: 14,
         gridTemplateColumns: GridTemplateColumns.one,
         md: DartStyle(
-          gridTemplateColumns: GridTemplateColumns.autoFit(240),
+          gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+        ),
+        lg: DartStyle(
+          gridTemplateColumns: GridTemplateColumns.repeat(4, GridTrack.oneFr),
         ),
       ),
       children: [

@@ -156,20 +156,15 @@ class HomeHero extends StatefulComponent {
               dartStyle: DartStyle(
                 display: Display.grid,
                 gridTemplateColumns: GridTemplateColumns.one,
-                gap: 36,
+                gap: 32,
                 alignItems: AlignItems.center,
+                width: const SizeValue.percent(100),
                 lg: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.tracks([
-                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.05)),
-                    GridTrack.minmax(520, SizeValue.fr(1.15)),
-                  ]),
-                  gap: 48,
+                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                  gap: 40,
                 ),
                 xl: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.tracks([
-                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.05)),
-                    GridTrack.minmax(600, SizeValue.fr(1.2)),
-                  ]),
+                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
                   gap: 64,
                 ),
               ),
