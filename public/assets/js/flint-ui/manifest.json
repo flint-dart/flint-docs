@@ -12,6 +12,8 @@
     "UiDocs": "/assets/js/flint-ui/pages/ui_docs.5112797fd970.dart.js",
     "Examples": "/assets/js/flint-ui/pages/examples.efda9f2c0531.dart.js",
     "Guides": "/assets/js/flint-ui/pages/guides.86da3a488ed0.dart.js",
-    "Api": "/assets/js/flint-ui/pages/api.285680ffeff0.dart.js"
+    "Api": "/assets/js/flint-ui/pages/api.285680ffeff0.dart.js",
+    "Questions": "/assets/js/flint-ui/pages/questions.1d69032d61ff.dart.js",
+    "AskQuestion": "/assets/js/flint-ui/pages/ask_question.862cc2c3754b.dart.js"
   }
 }
