@@ -12074,4 +12074,4 @@
   });
 })();
 
-//# sourceMappingURL=showcase_detail.dart.js.map
+//# sourceMappingURL=showcase_detail.b7dbc73cbb58.dart.js.map
