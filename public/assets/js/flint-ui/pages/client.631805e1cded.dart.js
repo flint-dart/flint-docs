@@ -5008,6 +5008,10 @@
       this.index = t1;
       this._name = t2;
     },
+    TextAlign: function TextAlign(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
     Button$(child, children, dartStyle, onPressed, props, size, tone, variant) {
       var t1 = A.LinkedHashMap_LinkedHashMap$of(props, type$.String, type$.nullable_Object),
         t2 = props.$index(0, "type");
@@ -5097,6 +5101,15 @@
       this.children = t2;
     },
     Icon_closure: function Icon_closure() {
+    },
+    Column$(children, dartStyle) {
+      var _null = null,
+        t1 = dartStyle.display;
+      if (t1 === B.Display_grid_5_grid)
+        t1 = B.Display_flex_3_flex;
+      else if (t1 == null)
+        t1 = B.Display_flex_3_flex;
+      return new A.Column("div", A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, dartStyle.alignItems, _null, _null, dartStyle.backdropFilter, dartStyle.background, _null, dartStyle.border, _null, _null, _null, _null, _null, dartStyle.bottom, _null, _null, dartStyle.color, dartStyle.cursor, _null, _null, t1, _null, _null, _null, B.FlexDirection_column_2_column, _null, _null, dartStyle.flexWrap, _null, _null, _null, dartStyle.fontSize, dartStyle.fontWeight, dartStyle.gap, _null, _null, dartStyle.height, _null, _null, dartStyle.justifyContent, _null, dartStyle.left, _null, dartStyle.lg, _null, _null, dartStyle.margin, _null, dartStyle.maxHeight, dartStyle.maxWidth, dartStyle.md, dartStyle.minHeight, dartStyle.minWidth, _null, dartStyle.opacity, dartStyle.overflow, _null, _null, _null, dartStyle.padding, dartStyle.position, dartStyle.radius, _null, dartStyle.right, _null, _null, _null, dartStyle.shadow, dartStyle.sm, dartStyle.textAlign, _null, _null, _null, dartStyle.top, dartStyle.transform, dartStyle.transition, _null, _null, dartStyle.width, _null, _null, dartStyle.xl, dartStyle.zIndex), B.Map_IwXTo, B.Map_empty1), A.normalizeChildren(_null, children));
     },
     Column: function Column(t0, t1, t2) {
       this.tag = t0;
@@ -9527,7 +9540,7 @@
   };
   A.DartStyle.prototype = {
     toMap$0() {
-      var t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, t58, t59, t60, t61, _this = this, _null = null,
+      var t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, t58, t59, t60, t61, t62, _this = this, _null = null,
         t1 = _this.padding;
       t1 = t1 == null ? _null : t1.toCss$0();
       t2 = _this.margin;
@@ -9580,28 +9593,29 @@
       t42 = A.cssValue(_this.lineHeight, true);
       t43 = A.cssValue(_this.letterSpacing, false);
       t44 = A.cssValue(_this.color, false);
-      t45 = A.cssValue(_this.textTransform, true);
-      t46 = A.cssValue(_this.textDecoration, true);
-      t47 = A.cssValue(_this.textOverflow, true);
-      t48 = A.cssValue(_this.whiteSpace, true);
-      t49 = A.cssValue(_this.wordBreak, true);
-      t50 = A.cssValue(_this.overflowWrap, true);
-      t51 = A.cssValue(_this.cursor, true);
-      t52 = A.cssValue(_this.resize, true);
-      t53 = A.cssValue(_this.background, false);
-      t54 = A.cssValue(_this.backgroundClip, true);
-      t55 = A.cssValue(_this.webkitBackgroundClip, true);
-      t56 = A.cssValue(_this.radius, false);
-      t57 = _this.border;
-      t57 = t57 == null ? _null : t57.toCss$0();
-      t58 = _this.borderTop;
+      t45 = _this.textAlign == null ? _null : "center";
+      t46 = A.cssValue(_this.textTransform, true);
+      t47 = A.cssValue(_this.textDecoration, true);
+      t48 = A.cssValue(_this.textOverflow, true);
+      t49 = A.cssValue(_this.whiteSpace, true);
+      t50 = A.cssValue(_this.wordBreak, true);
+      t51 = A.cssValue(_this.overflowWrap, true);
+      t52 = A.cssValue(_this.cursor, true);
+      t53 = A.cssValue(_this.resize, true);
+      t54 = A.cssValue(_this.background, false);
+      t55 = A.cssValue(_this.backgroundClip, true);
+      t56 = A.cssValue(_this.webkitBackgroundClip, true);
+      t57 = A.cssValue(_this.radius, false);
+      t58 = _this.border;
       t58 = t58 == null ? _null : t58.toCss$0();
-      t59 = _this.borderBottom;
+      t59 = _this.borderTop;
       t59 = t59 == null ? _null : t59.toCss$0();
-      t60 = A.cssValue(_this.borderCollapse, true);
-      t61 = _this.shadow;
-      t61 = t61 instanceof A.Shadow ? t61.toCss$0() : A.cssValue(t61, false);
-      return A._withoutNulls(A.LinkedHashMap_LinkedHashMap$_literal(["padding", t1, "margin", t2, "width", t3, "height", t4, "min-width", t5, "max-width", t6, "min-height", t7, "max-height", t8, "display", t9, "gap", t10, "align-items", t11, "justify-items", t12, "justify-content", t13, "flex", t14, "flex-direction", t15, "flex-wrap", t16, "flex-grow", t17, "flex-shrink", t18, "flex-basis", t19, "grid-template-columns", t20, "position", t21, "top", t22, "right", t23, "bottom", t24, "left", t25, "z-index", _this.zIndex, "overflow", t26, "overflow-x", t27, "overflow-y", t28, "box-sizing", t29, "scroll-behavior", t30, "scrollbar-display", t32, "scrollbar-width", t33, "-ms-overflow-style", t31, "aspect-ratio", t34, "object-fit", t35, "transform", t36, "backdrop-filter", t37, "mask-image", t38, "font-family", t39, "font-size", t40, "font-weight", t41, "line-height", t42, "letter-spacing", t43, "color", t44, "text-align", null, "text-transform", t45, "text-decoration", t46, "text-overflow", t47, "white-space", t48, "word-break", t49, "overflow-wrap", t50, "cursor", t51, "resize", t52, "background", t53, "background-clip", t54, "-webkit-background-clip", t55, "border-radius", t56, "border", t57, "border-top", t58, "border-right", null, "border-bottom", t59, "border-left", null, "border-collapse", t60, "box-shadow", t61, "opacity", _this.opacity, "transition", A.cssValue(_this.transition, true), "animation", A.cssValue(_this.animation, true), "will-change", A.cssValue(_this.willChange, true)], type$.String, type$.nullable_Object));
+      t60 = _this.borderBottom;
+      t60 = t60 == null ? _null : t60.toCss$0();
+      t61 = A.cssValue(_this.borderCollapse, true);
+      t62 = _this.shadow;
+      t62 = t62 instanceof A.Shadow ? t62.toCss$0() : A.cssValue(t62, false);
+      return A._withoutNulls(A.LinkedHashMap_LinkedHashMap$_literal(["padding", t1, "margin", t2, "width", t3, "height", t4, "min-width", t5, "max-width", t6, "min-height", t7, "max-height", t8, "display", t9, "gap", t10, "align-items", t11, "justify-items", t12, "justify-content", t13, "flex", t14, "flex-direction", t15, "flex-wrap", t16, "flex-grow", t17, "flex-shrink", t18, "flex-basis", t19, "grid-template-columns", t20, "position", t21, "top", t22, "right", t23, "bottom", t24, "left", t25, "z-index", _this.zIndex, "overflow", t26, "overflow-x", t27, "overflow-y", t28, "box-sizing", t29, "scroll-behavior", t30, "scrollbar-display", t32, "scrollbar-width", t33, "-ms-overflow-style", t31, "aspect-ratio", t34, "object-fit", t35, "transform", t36, "backdrop-filter", t37, "mask-image", t38, "font-family", t39, "font-size", t40, "font-weight", t41, "line-height", t42, "letter-spacing", t43, "color", t44, "text-align", t45, "text-transform", t46, "text-decoration", t47, "text-overflow", t48, "white-space", t49, "word-break", t50, "overflow-wrap", t51, "cursor", t52, "resize", t53, "background", t54, "background-clip", t55, "-webkit-background-clip", t56, "border-radius", t57, "border", t58, "border-top", t59, "border-right", null, "border-bottom", t60, "border-left", null, "border-collapse", t61, "box-shadow", t62, "opacity", _this.opacity, "transition", A.cssValue(_this.transition, true), "animation", A.cssValue(_this.animation, true), "will-change", A.cssValue(_this.willChange, true)], type$.String, type$.nullable_Object));
     },
     get$breakpointStyles() {
       var _this = this,
@@ -9644,7 +9658,7 @@
       return t1;
     },
     merge$1(override) {
-      var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, _this = this;
+      var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, t58, t59, _this = this;
       if (override == null)
         return _this;
       t1 = override.padding;
@@ -9716,109 +9730,115 @@
       t23 = override.overflow;
       if (t23 == null)
         t23 = _this.overflow;
-      t24 = override.boxSizing;
+      t24 = override.overflowX;
       if (t24 == null)
-        t24 = _this.boxSizing;
-      t25 = override.scrollBehavior;
+        t24 = _this.overflowX;
+      t25 = override.boxSizing;
       if (t25 == null)
-        t25 = _this.scrollBehavior;
-      t26 = override.objectFit;
+        t25 = _this.boxSizing;
+      t26 = override.scrollBehavior;
       if (t26 == null)
-        t26 = _this.objectFit;
-      t27 = override.transform;
+        t26 = _this.scrollBehavior;
+      t27 = override.objectFit;
       if (t27 == null)
-        t27 = _this.transform;
-      t28 = override.backdropFilter;
+        t27 = _this.objectFit;
+      t28 = override.transform;
       if (t28 == null)
-        t28 = _this.backdropFilter;
-      t29 = override.fontFamily;
+        t28 = _this.transform;
+      t29 = override.backdropFilter;
       if (t29 == null)
-        t29 = _this.fontFamily;
-      t30 = override.fontSize;
+        t29 = _this.backdropFilter;
+      t30 = override.fontFamily;
       if (t30 == null)
-        t30 = _this.fontSize;
-      t31 = override.fontWeight;
+        t30 = _this.fontFamily;
+      t31 = override.fontSize;
       if (t31 == null)
-        t31 = _this.fontWeight;
-      t32 = override.lineHeight;
+        t31 = _this.fontSize;
+      t32 = override.fontWeight;
       if (t32 == null)
-        t32 = _this.lineHeight;
-      t33 = override.letterSpacing;
+        t32 = _this.fontWeight;
+      t33 = override.lineHeight;
       if (t33 == null)
-        t33 = _this.letterSpacing;
-      t34 = override.color;
+        t33 = _this.lineHeight;
+      t34 = override.letterSpacing;
       if (t34 == null)
-        t34 = _this.color;
-      t35 = override.textDecoration;
+        t34 = _this.letterSpacing;
+      t35 = override.color;
       if (t35 == null)
-        t35 = _this.textDecoration;
-      t36 = override.textOverflow;
+        t35 = _this.color;
+      t36 = override.textAlign;
       if (t36 == null)
-        t36 = _this.textOverflow;
-      t37 = override.whiteSpace;
+        t36 = _this.textAlign;
+      t37 = override.textDecoration;
       if (t37 == null)
-        t37 = _this.whiteSpace;
-      t38 = override.cursor;
+        t37 = _this.textDecoration;
+      t38 = override.textOverflow;
       if (t38 == null)
-        t38 = _this.cursor;
-      t39 = override.background;
+        t38 = _this.textOverflow;
+      t39 = override.whiteSpace;
       if (t39 == null)
-        t39 = _this.background;
-      t40 = override.radius;
+        t39 = _this.whiteSpace;
+      t40 = override.cursor;
       if (t40 == null)
-        t40 = _this.radius;
-      t41 = override.border;
+        t40 = _this.cursor;
+      t41 = override.background;
       if (t41 == null)
-        t41 = _this.border;
-      t42 = override.borderTop;
+        t41 = _this.background;
+      t42 = override.radius;
       if (t42 == null)
-        t42 = _this.borderTop;
-      t43 = override.borderBottom;
+        t42 = _this.radius;
+      t43 = override.border;
       if (t43 == null)
-        t43 = _this.borderBottom;
-      t44 = override.shadow;
+        t43 = _this.border;
+      t44 = override.borderTop;
       if (t44 == null)
-        t44 = _this.shadow;
-      t45 = override.opacity;
+        t44 = _this.borderTop;
+      t45 = override.borderBottom;
       if (t45 == null)
-        t45 = _this.opacity;
-      t46 = override.backgroundClip;
+        t45 = _this.borderBottom;
+      t46 = override.shadow;
       if (t46 == null)
-        t46 = _this.backgroundClip;
-      t47 = override.webkitBackgroundClip;
+        t46 = _this.shadow;
+      t47 = override.opacity;
       if (t47 == null)
-        t47 = _this.webkitBackgroundClip;
-      t48 = override.transition;
+        t47 = _this.opacity;
+      t48 = override.backgroundClip;
       if (t48 == null)
-        t48 = _this.transition;
-      t49 = override.hover;
+        t48 = _this.backgroundClip;
+      t49 = override.webkitBackgroundClip;
       if (t49 == null)
-        t49 = _this.hover;
-      t50 = override.focusVisible;
+        t49 = _this.webkitBackgroundClip;
+      t50 = override.transition;
       if (t50 == null)
-        t50 = _this.focusVisible;
-      t51 = override.active;
+        t50 = _this.transition;
+      t51 = override.hover;
       if (t51 == null)
-        t51 = _this.active;
-      t52 = override.light;
+        t51 = _this.hover;
+      t52 = override.focusVisible;
       if (t52 == null)
-        t52 = _this.light;
-      t53 = override.dark;
+        t52 = _this.focusVisible;
+      t53 = override.active;
       if (t53 == null)
-        t53 = _this.dark;
-      t54 = override.sm;
+        t53 = _this.active;
+      t54 = override.light;
       if (t54 == null)
-        t54 = _this.sm;
-      t55 = override.md;
+        t54 = _this.light;
+      t55 = override.dark;
       if (t55 == null)
-        t55 = _this.md;
-      t56 = override.lg;
+        t55 = _this.dark;
+      t56 = override.sm;
       if (t56 == null)
-        t56 = _this.lg;
-      t57 = override.xl;
+        t56 = _this.sm;
+      t57 = override.md;
       if (t57 == null)
-        t57 = _this.xl;
-      return A.DartStyle$(t51, t11, _this.animation, _this.aspectRatio, t28, t39, t46, t41, t43, _this.borderCollapse, _this.borderLeft, _this.borderRight, t42, t20, t24, _this.checked, t34, t38, t53, _this.disabled, t9, _this.expanded, _this.flex, _this.flexBasis, t13, _this.flexGrow, t15, t14, _this.focus, t50, t29, t30, t31, t10, _this.gradient, t16, t4, t49, _this.invalid, t12, _this.justifyItems, t21, t33, t56, t52, t32, t2, _this.maskImage, t8, t6, t55, t7, t5, t26, t45, t23, _this.overflowWrap, _this.overflowX, _this.overflowY, t1, t17, t40, _this.resize, t19, t25, _this.scrollbarDisplay, _this.selected, t44, t54, _this.textAlign, t35, t36, _this.textTransform, t18, t27, t48, t47, t37, t3, _this.willChange, _this.wordBreak, t57, t22);
+        t57 = _this.md;
+      t58 = override.lg;
+      if (t58 == null)
+        t58 = _this.lg;
+      t59 = override.xl;
+      if (t59 == null)
+        t59 = _this.xl;
+      return A.DartStyle$(t53, t11, _this.animation, _this.aspectRatio, t29, t41, t48, t43, t45, _this.borderCollapse, _this.borderLeft, _this.borderRight, t44, t20, t25, _this.checked, t35, t40, t55, _this.disabled, t9, _this.expanded, _this.flex, _this.flexBasis, t13, _this.flexGrow, t15, t14, _this.focus, t52, t30, t31, t32, t10, _this.gradient, t16, t4, t51, _this.invalid, t12, _this.justifyItems, t21, t34, t58, t54, t33, t2, _this.maskImage, t8, t6, t57, t7, t5, t27, t47, t23, _this.overflowWrap, t24, _this.overflowY, t1, t17, t42, _this.resize, t19, t26, _this.scrollbarDisplay, _this.selected, t46, t56, t36, t37, t38, _this.textTransform, t18, t28, t50, t49, t39, t3, _this.willChange, _this.wordBreak, t59, t22);
     }
   };
   A.Gradient.prototype = {
@@ -10216,6 +10236,11 @@
       return "Position." + this._name;
     }
   };
+  A.TextAlign.prototype = {
+    _enumToString$0() {
+      return "TextAlign." + this._name;
+    }
+  };
   A.Button.prototype = {};
   A.HtmlContent.prototype = {
     didMount$0() {
@@ -10397,158 +10422,205 @@
       return t1 == null ? "" : t1;
     },
     build$0() {
-      var t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, _this = this, _null = null, _s3_ = "div",
+      var t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, _this = this, _null = null, _s5_ = "solid", _s3_ = "div",
         _s7_ = "#10b981",
         _s7_0 = "#06b6d4",
         _s7_1 = "#f59e0b",
         _s7_2 = "#a855f7",
+        _s30_ = "/client/guides/getting-started",
         _s10_ = "color.text",
-        _s11_ = "color.muted",
         _s10_0 = "color.line",
-        t1 = _this._heroSection$0(),
-        t2 = A.Text_span("BUILT FOR RELIABILITY", B.DartStyle_IaP),
-        t3 = A.Text_h2("Everything you need in a modern HTTP client.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s10_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 28, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.18, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null)),
-        t4 = A.Text_p("No need to assemble 5 separate packages. FlintClient provides integrated retry policies, caching strategies, cooperative cancellation, and full error diagnostics out of the box.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s11_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 15, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.65, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null)),
-        t5 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_jKl, B.Map_empty1, B.Map_empty1);
-      t4 = A.normalizeChildren(_null, [t2, t3, t4]);
-      t3 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t3 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 16, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(3, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, t3, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
-      t2 = $.$get$Icons_refresh();
-      t6 = _this._pillarCard$4$accent$desc$icon$title(_s7_, "Automatic exponential backoff with jitter, retry budgets, and standard HTTP 429 Retry-After header awareness.", t2, "Idempotent Retry Policy");
-      t7 = $.$get$Icons_database();
-      t8 = _this._pillarCard$4$accent$desc$icon$title(_s7_0, "In-memory LRU combined with persistent disk cache. Supports cacheFirst, networkFirst, and staleWhileRevalidate strategies.", t7, "Multi-Tier Caching");
-      t9 = _this._pillarCard$4$accent$desc$icon$title(_s7_1, "Pass CancellationToken to any request. Abort network sockets cleanly with dedicated FlintCancelledException handling.", $.$get$Icons_x(), "Cooperative Cancellation");
-      t10 = _this._pillarCard$4$accent$desc$icon$title(_s7_2, "Type-safe response decoding. Toggle between strict schema validation or lenient parsing with fallback data serializers.", $.$get$Icons_code(), "Strict & Lenient Deserialization");
-      t11 = _this._pillarCard$4$accent$desc$icon$title("#ec4899", "Comprehensive request lifecycle hooks. Inject Correlation IDs, log traffic, track latency, and export OpenTelemetry metrics.", $.$get$Icons_activity(), "Observability & Interceptors");
-      t12 = _this._pillarCard$4$accent$desc$icon$title("#38bdf8", "Built-in WebSocket client with automatic heartbeat pings, exponential reconnect backoff, and typed JSON stream channels.", $.$get$Icons_zap(), "Full-Duplex WebSockets");
-      t3 = A.mergeComponentProps(B.Map_empty1, _null, t3, B.Map_empty1, B.Map_empty1);
-      t12 = A.normalizeChildren(_null, [t6, t8, t9, t10, t11, t12]);
-      t11 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_EIL, B.Map_empty1, B.Map_empty1);
-      t12 = A.normalizeChildren(_null, [new A.Container(_s3_, t5, t4), new A.Container(_s3_, t3, t12)]);
-      t3 = A.DartStyle$(_null, _null, _null, _null, _null, new A.TokenRef("color.panel", _null), _null, new A.Border(1, new A.TokenRef(_s10_0, _null), "solid"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 20, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_28_28_28_28, _null, 20, _null, _null, _null, _null, _null, new A.TokenRef("shadow.sm", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t4 = A.Text_span("UNDER THE HOOD", B.DartStyle_uLp);
-      t5 = A.Text_h3("The FlintClient Pipeline Flow", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s10_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 22, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
-      t10 = A.Text_p("Every request travels through a deterministic, observable lifecycle before returning typed data to your application.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s11_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.6, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
-      t9 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_X1h, B.Map_empty1, B.Map_empty1);
-      t10 = A.normalizeChildren(_null, [t4, t5, t10]);
-      t5 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(3, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t5 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(5, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, t5, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
-      t4 = _this._pipelineStage$3("1. Dispatch", "Intercept headers & inject Correlation ID", _s7_0);
-      t8 = _this._pipelineStage$3("2. Cache Check", "Evaluate LRU store & TTL policy", "#3b82f6");
-      t6 = _this._pipelineStage$3("3. Transport", "Stream HTTP/2 or HTTP/1.1 socket payload", _s7_);
-      t13 = _this._pipelineStage$3("4. Resilience", "Handle 429/503 retry backoff & jitter", _s7_1);
-      t14 = _this._pipelineStage$3("5. Decode", "Deserialize typed model or throw structured error", _s7_2);
+        _s11_ = "color.muted",
+        _s17_ = "color.panelStrong",
+        t1 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, new A.TokenRef("color.bg", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s10_, _null), _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, B.FlexDirection_column_2_column, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 0, _null, _null, _null, _null, B.Overflow_hidden, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.SizeValue("100%"), _null, _null, _null, _null),
+        t2 = _this._heroSection$0(),
+        t3 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, new A.Border(1, new A.TokenRef(_s10_0, _null), _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.DartStyle_Bxp, _null, _null, _null, _null, _null, B.SizeValue_lLc, B.DartStyle_EsM, _null, 0, _null, _null, _null, _null, _null, _null, B.EdgeInsets_48_16_48_16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, B.DartStyle_Oiv, _null),
+        t4 = A.Text_span("BUILT FOR RELIABILITY", B.DartStyle_IaP),
+        t5 = A.Text_h2("Everything you need in a modern HTTP client.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s10_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 28, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.18, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null)),
+        t6 = A.Text_p("No need to assemble 5 separate packages. FlintClient provides integrated retry policies, caching strategies, cooperative cancellation, and full error diagnostics out of the box.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s11_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 15, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.65, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null)),
+        t7 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_jKl, B.Map_empty1, B.Map_empty1);
+      t6 = A.normalizeChildren(_null, [t4, t5, t6]);
+      t5 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t5 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 16, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(3, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, t5, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
+      t4 = $.$get$Icons_refresh();
+      t8 = _this._pillarCard$4$accent$desc$icon$title(_s7_, "Automatic exponential backoff with jitter, retry budgets, and standard HTTP 429 Retry-After header awareness.", t4, "Idempotent Retry Policy");
+      t9 = $.$get$Icons_database();
+      t10 = _this._pillarCard$4$accent$desc$icon$title(_s7_0, "In-memory LRU combined with persistent disk cache. Supports cacheFirst, networkFirst, and staleWhileRevalidate strategies.", t9, "Multi-Tier Caching");
+      t11 = _this._pillarCard$4$accent$desc$icon$title(_s7_1, "Pass CancellationToken to any request. Abort network sockets cleanly with dedicated FlintCancelledException handling.", $.$get$Icons_x(), "Cooperative Cancellation");
+      t12 = $.$get$Icons_code();
+      t13 = _this._pillarCard$4$accent$desc$icon$title(_s7_2, "Type-safe response decoding. Toggle between strict schema validation or lenient parsing with fallback data serializers.", t12, "Strict & Lenient Deserialization");
+      t14 = _this._pillarCard$4$accent$desc$icon$title("#ec4899", "Comprehensive request lifecycle hooks. Inject Correlation IDs, log traffic, track latency, and export OpenTelemetry metrics.", $.$get$Icons_activity(), "Observability & Interceptors");
+      t15 = _this._pillarCard$4$accent$desc$icon$title("#38bdf8", "Built-in WebSocket client with automatic heartbeat pings, exponential reconnect backoff, and typed JSON stream channels.", $.$get$Icons_zap(), "Full-Duplex WebSockets");
       t5 = A.mergeComponentProps(B.Map_empty1, _null, t5, B.Map_empty1, B.Map_empty1);
-      t14 = A.normalizeChildren(_null, [t4, t8, t6, t13, t14]);
+      t15 = A.normalizeChildren(_null, [t8, t10, t11, t13, t14, t15]);
+      t14 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_VQx, B.Map_empty1, B.Map_empty1);
+      t15 = A.normalizeChildren(_null, [new A.Container(_s3_, t7, t6), new A.Container(_s3_, t5, t15)]);
       t3 = A.mergeComponentProps(B.Map_empty1, _null, t3, B.Map_empty1, B.Map_empty1);
-      t14 = A.normalizeChildren(_null, [new A.Container(_s3_, t9, t10), new A.Container(_s3_, t5, t14)]);
-      t5 = A.DartStyle$(_null, _null, _null, _null, _null, new A.TokenRef("color.panelStrong", _null), _null, new A.Border(1, new A.TokenRef(_s10_0, _null), "solid"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 20, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_28_28_28_28, _null, 20, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t10 = A.Text_span("DIAGNOSTICS & EXCEPTIONS", B.DartStyle_Z80);
-      t9 = A.Text_h3("Predictable, Structured Error Handling", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s10_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 22, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
-      t13 = A.Text_p("Never catch generic exceptions again. Every failure belongs to a typed category with HTTP status codes, original response bodies, and diagnostic stack traces.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s11_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.6, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
-      t6 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_X1h, B.Map_empty1, B.Map_empty1);
-      t13 = A.normalizeChildren(_null, [t10, t9, t13]);
-      t9 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t9 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(3, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, t9, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
-      t10 = _this._errorCard$3("FlintHttpException", "HTTP 4xx/5xx status codes with decoded server error body.", "#ef4444");
-      t8 = _this._errorCard$3("FlintTimeoutException", "Distinct connect, read, and write socket timeout boundaries.", _s7_1);
-      t4 = _this._errorCard$3("FlintNetworkException", "DNS failures, offline state, connection refused, or SSL errors.", _s7_0);
-      t15 = _this._errorCard$3("FlintParseException", "JSON syntax or schema deserialization validation errors.", _s7_2);
-      t16 = _this._errorCard$3("FlintCancelledException", "Request explicitly aborted via CancellationToken.", "#64748b");
-      t17 = _this._errorCard$3("FlintRateLimitException", "HTTP 429 with parsed duration from Retry-After header.", _s7_);
-      t9 = A.mergeComponentProps(B.Map_empty1, _null, t9, B.Map_empty1, B.Map_empty1);
-      t17 = A.normalizeChildren(_null, [t10, t8, t4, t15, t16, t17]);
+      t15 = A.normalizeChildren(_null, [new A.Container(_s3_, t14, t15)]);
+      t14 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, new A.Border(1, new A.TokenRef(_s10_0, _null), _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.DartStyle_Bxp, _null, _null, _null, _null, _null, B.SizeValue_lLc, B.DartStyle_EsM, _null, 0, _null, _null, _null, _null, _null, _null, B.EdgeInsets_48_16_48_16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, B.DartStyle_Oiv, _null);
+      t5 = A.DartStyle$(_null, _null, _null, _null, _null, new A.TokenRef("color.panel", _null), _null, new A.Border(1, new A.TokenRef(_s10_0, _null), _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 20, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_28_28_28_28, _null, 20, _null, _null, _null, _null, _null, new A.TokenRef("shadow.sm", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
+      t6 = A.Text_span("UNDER THE HOOD", B.DartStyle_uLp);
+      t7 = A.Text_h3("The FlintClient Pipeline Flow", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s10_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 22, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
+      t13 = A.Text_p("Every request travels through a deterministic, observable lifecycle before returning typed data to your application.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s11_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.6, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
+      t11 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_X1h, B.Map_empty1, B.Map_empty1);
+      t13 = A.normalizeChildren(_null, [t6, t7, t13]);
+      t7 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t6 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(3, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t7 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(5, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, t6, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, t7, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
+      t6 = _this._pipelineStage$3("1. Dispatch", "Intercept headers & inject Correlation ID", _s7_0);
+      t10 = _this._pipelineStage$3("2. Cache Check", "Evaluate LRU store & TTL policy", "#3b82f6");
+      t8 = _this._pipelineStage$3("3. Transport", "Stream HTTP/2 or HTTP/1.1 socket payload", _s7_);
+      t16 = _this._pipelineStage$3("4. Resilience", "Handle 429/503 retry backoff & jitter", _s7_1);
+      t17 = _this._pipelineStage$3("5. Decode", "Deserialize typed model or throw structured error", _s7_2);
+      t7 = A.mergeComponentProps(B.Map_empty1, _null, t7, B.Map_empty1, B.Map_empty1);
+      t17 = A.normalizeChildren(_null, [t6, t10, t8, t16, t17]);
       t5 = A.mergeComponentProps(B.Map_empty1, _null, t5, B.Map_empty1, B.Map_empty1);
-      t17 = A.normalizeChildren(_null, [new A.Container(_s3_, t6, t13), new A.Container(_s3_, t9, t17)]);
-      t9 = A.Text_span("OFFICIAL DOCUMENTATION", B.DartStyle_uLp);
-      t13 = A.Text_h2("Explore In-Depth Client Guides", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s10_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 26, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
-      t6 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_X1h, B.Map_empty1, B.Map_empty1);
-      t13 = A.normalizeChildren(_null, [t9, t13]);
-      t9 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t9 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 16, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(4, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, t9, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
-      t16 = _this._guideLinkCard$5$color$desc$href$icon$title(_s7_0, "Installation, base configuration, timeouts, and basic GET/POST.", "/client/guides/getting-started", $.$get$Icons_rocket(), "Getting Started");
-      t15 = _this._guideLinkCard$5$color$desc$href$icon$title("#3b82f6", "Query parameters, headers, multipart uploads, and URL encoding.", "/client/guides/requests", $.$get$Icons_send(), "Requests & Headers");
-      t7 = _this._guideLinkCard$5$color$desc$href$icon$title(_s7_, "Memory LRU, disk stores, cacheFirst, and staleWhileRevalidate.", "/client/guides/caching", t7, "Caching Strategies");
-      t2 = _this._guideLinkCard$5$color$desc$href$icon$title(_s7_1, "Exponential backoff, jitter, Retry-After, and CancellationToken.", "/client/guides/retries-cancellation", t2, "Retries & Cancellation");
-      t9 = A.mergeComponentProps(B.Map_empty1, _null, t9, B.Map_empty1, B.Map_empty1);
-      t2 = A.normalizeChildren(_null, [t16, t15, t7, t2]);
-      t7 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_hEX, B.Map_empty1, B.Map_empty1);
-      t2 = A.normalizeChildren(_null, [new A.Container(_s3_, t6, t13), new A.Container(_s3_, t9, t2)]);
+      t17 = A.normalizeChildren(_null, [new A.Container(_s3_, t11, t13), new A.Container(_s3_, t7, t17)]);
+      t14 = A.mergeComponentProps(B.Map_empty1, _null, t14, B.Map_empty1, B.Map_empty1);
+      t17 = A.normalizeChildren(_null, [new A.Container(_s3_, t5, t17)]);
+      t5 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, new A.Border(1, new A.TokenRef(_s10_0, _null), _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.DartStyle_Bxp, _null, _null, _null, _null, _null, B.SizeValue_lLc, B.DartStyle_EsM, _null, 0, _null, _null, _null, _null, _null, _null, B.EdgeInsets_48_16_48_16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, B.DartStyle_Oiv, _null);
+      t7 = A.DartStyle$(_null, _null, _null, _null, _null, new A.TokenRef(_s17_, _null), _null, new A.Border(1, new A.TokenRef(_s10_0, _null), _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 20, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_28_28_28_28, _null, 20, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
+      t13 = A.Text_span("DIAGNOSTICS & EXCEPTIONS", B.DartStyle_Z80);
+      t11 = A.Text_h3("Predictable, Structured Error Handling", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s10_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 22, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
+      t16 = A.Text_p("Never catch generic exceptions again. Every failure belongs to a typed category with HTTP status codes, original response bodies, and diagnostic stack traces.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s11_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.6, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
+      t8 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_X1h, B.Map_empty1, B.Map_empty1);
+      t16 = A.normalizeChildren(_null, [t13, t11, t16]);
+      t11 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t11 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(3, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, t11, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
+      t13 = _this._errorCard$3("FlintHttpException", "HTTP 4xx/5xx status codes with decoded server error body.", "#ef4444");
+      t10 = _this._errorCard$3("FlintTimeoutException", "Distinct connect, read, and write socket timeout boundaries.", _s7_1);
+      t6 = _this._errorCard$3("FlintNetworkException", "DNS failures, offline state, connection refused, or SSL errors.", _s7_0);
+      t18 = _this._errorCard$3("FlintParseException", "JSON syntax or schema deserialization validation errors.", _s7_2);
+      t19 = _this._errorCard$3("FlintCancelledException", "Request explicitly aborted via CancellationToken.", "#64748b");
+      t20 = _this._errorCard$3("FlintRateLimitException", "HTTP 429 with parsed duration from Retry-After header.", _s7_);
+      t11 = A.mergeComponentProps(B.Map_empty1, _null, t11, B.Map_empty1, B.Map_empty1);
+      t20 = A.normalizeChildren(_null, [t13, t10, t6, t18, t19, t20]);
+      t7 = A.mergeComponentProps(B.Map_empty1, _null, t7, B.Map_empty1, B.Map_empty1);
+      t20 = A.normalizeChildren(_null, [new A.Container(_s3_, t8, t16), new A.Container(_s3_, t11, t20)]);
+      t5 = A.mergeComponentProps(B.Map_empty1, _null, t5, B.Map_empty1, B.Map_empty1);
+      t20 = A.normalizeChildren(_null, [new A.Container(_s3_, t7, t20)]);
+      t7 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, new A.Border(1, new A.TokenRef(_s10_0, _null), _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.DartStyle_Bxp, _null, _null, _null, _null, _null, B.SizeValue_lLc, B.DartStyle_EsM, _null, 0, _null, _null, _null, _null, _null, _null, B.EdgeInsets_48_16_48_16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, B.DartStyle_Oiv, _null);
+      t11 = A.Text_span("OFFICIAL DOCUMENTATION", B.DartStyle_uLp);
+      t16 = A.Text_h2("Explore In-Depth Client Guides", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s10_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 26, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
+      t8 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_X1h, B.Map_empty1, B.Map_empty1);
+      t16 = A.normalizeChildren(_null, [t11, t16]);
+      t11 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t11 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 16, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(4, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, t11, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
+      t19 = $.$get$Icons_rocket();
+      t18 = _this._guideLinkCard$5$color$desc$href$icon$title(_s7_0, "Installation, base configuration, timeouts, and basic GET/POST.", _s30_, t19, "Getting Started");
+      t6 = _this._guideLinkCard$5$color$desc$href$icon$title("#3b82f6", "Query parameters, headers, multipart uploads, and URL encoding.", "/client/guides/requests", $.$get$Icons_send(), "Requests & Headers");
+      t9 = _this._guideLinkCard$5$color$desc$href$icon$title(_s7_, "Memory LRU, disk stores, cacheFirst, and staleWhileRevalidate.", "/client/guides/caching", t9, "Caching Strategies");
+      t4 = _this._guideLinkCard$5$color$desc$href$icon$title(_s7_1, "Exponential backoff, jitter, Retry-After, and CancellationToken.", "/client/guides/retries-cancellation", t4, "Retries & Cancellation");
+      t11 = A.mergeComponentProps(B.Map_empty1, _null, t11, B.Map_empty1, B.Map_empty1);
+      t4 = A.normalizeChildren(_null, [t18, t6, t9, t4]);
+      t9 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_EIL, B.Map_empty1, B.Map_empty1);
+      t4 = A.normalizeChildren(_null, [new A.Container(_s3_, t8, t16), new A.Container(_s3_, t11, t4)]);
+      t7 = A.mergeComponentProps(B.Map_empty1, _null, t7, B.Map_empty1, B.Map_empty1);
+      t4 = A.normalizeChildren(_null, [new A.Container(_s3_, t9, t4)]);
       t9 = _this._articleShell$0();
-      t13 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_SmT, B.Map_empty1, B.Map_empty1);
-      t9 = A.normalizeChildren(_null, [t1, new A.Container(_s3_, t11, t12), new A.Container(_s3_, t3, t14), new A.Container(_s3_, t5, t17), new A.Container(_s3_, t7, t2), t9]);
-      return new A.SiteLayout(_this.props, new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_4yO, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [new A.Container(_s3_, t13, t9)])));
+      t11 = A.DartStyle$(_null, _null, _null, _null, _null, new A.TokenRef(_s17_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.DartStyle_2bQ, _null, _null, _null, _null, _null, B.SizeValue_lLc, B.DartStyle_UXj, _null, 0, _null, _null, _null, _null, _null, _null, B.EdgeInsets_64_16_64_16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, B.DartStyle_Nwm, _null);
+      t16 = A.Text_h2("Start Building with FlintClient", A.DartStyle$(_null, _null, _null, _null, _null, A.Gradient_Gradient$linear(110, B.List_ewA), B.C_BackgroundClip, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Color_transparent, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lqd, 900, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.TextAlign_1_center, _null, _null, _null, _null, _null, _null, B.C_BackgroundClip, _null, _null, _null, _null, _null, _null));
+      t8 = A.Text_p("Production-ready HTTP with typed responses, retries, caching, and WebSockets \u2014 all in pure Dart.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef(_s11_, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.6, B.EdgeInsets_0_0_0_0, _null, _null, 600, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.TextAlign_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
+      t19 = A.Link$(_null, [A.Icon$(t19, _null, 16), A.Text_span("Get Started", _null)], _null, _s30_, _null, B.Tone_1, _null);
+      t6 = A.Link$(_null, [A.Icon$($.$get$Icons_link(), _null, 14), A.Text_span("pub.dev", _null)], _null, "https://pub.dev/packages/flint_client", _null, B.Tone_0, B.ButtonVariant_2);
+      t12 = A.Link$(_null, [A.Icon$(t12, _null, 14), A.Text_span("Source Code", _null)], _null, string$.https_, _null, B.Tone_0, B.ButtonVariant_3);
+      t12 = A.Column$([t16, t8, new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_kR1, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [t19, t6, t12]))], B.DartStyle_h5s);
+      t11 = A.mergeComponentProps(B.Map_empty1, _null, t11, B.Map_empty1, B.Map_empty1);
+      t12 = A.normalizeChildren(_null, [t12]);
+      return new A.SiteLayout(_this.props, new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, t1, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [t2, new A.Container(_s3_, t3, t15), new A.Container(_s3_, t14, t17), new A.Container(_s3_, t5, t20), new A.Container(_s3_, t7, t4), t9, new A.Container(_s3_, t11, t12)])));
     },
     _heroSection$0() {
-      var snippet, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, i, t13, _this = this, _null = null, _s5_ = "solid", _s3_ = "div",
+      var snippet, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, i, t14, t15, _this = this, _null = null, _s5_ = "solid", _s3_ = "div",
+        _s8_ = "color.bg",
         t1 = _this._activeStudioTab;
       if (!(t1 < 5))
         return A.ioore(B.List_fuN, t1);
       snippet = B.List_fuN[t1];
-      t1 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 32, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 40, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 56, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null);
-      t2 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, B.Color_4v2, _null, new A.Border(1, B.Color_kTm, _s5_), _null, _null, _null, _null, _null, _null, _null, _null, B.Color_8Z5, _null, _null, _null, B.Display_eAD, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, 900, 8, _null, _null, _null, _null, _null, _null, _null, _null, 0.5, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_6_12_6_12, _null, 999, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t3 = A.Icon$($.$get$Icons_globe(), B.Color_8Z5, 14);
-      t4 = A.Text_span("UNIVERSAL DART & FLUTTER CLIENT", _null);
-      t2 = A.mergeComponentProps(B.Map_empty1, _null, t2, B.Map_empty1, B.Map_empty1);
-      t4 = A.normalizeChildren(_null, [t3, t4]);
-      t3 = A._element("h1", "Flint Client SDK", _null, B.Map_empty1, B.Map_empty1, A.DartStyle$(_null, _null, _null, _null, _null, A.Gradient_Gradient$linear(110, B.List_ewA), B.C_BackgroundClip, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Color_transparent, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_9NR, 900, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.05, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.C_BackgroundClip, _null, _null, _null, _null, _null, _null));
-      t5 = A.Text_h2("A production-ready HTTP engine engineered for resilience, performance, and typed simplicity.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.text", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 18, 700, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.35, B.EdgeInsets_0_0_0_0, _null, _null, _null, B.DartStyle_tJ2, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
-      t6 = A.Text_p("Eliminate boilerplate across mobile, desktop, CLI, and web apps. FlintClient gives you exponential backoff retries, multi-tier LRU caching, cooperative cancellation tokens, multipart file streaming, and full-duplex WebSocket channels in pure Dart.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.muted", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.68, B.EdgeInsets_0_0_0_0, _null, _null, _null, B.DartStyle_RZy, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
-      t7 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, B.Color_W8Z, _null, new A.Border(1, B.Color_kTm, _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, _null, _null, _null, _null, _null, B.JustifyContent_P8D, _null, _null, _null, _null, _null, _null, _null, _null, _null, 520, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_10_14_10_14, _null, 10, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
-      t8 = A.Row$([A.Text_span("$", B.DartStyle_K2z), A.Text_span("dart pub add flint_client", B.DartStyle_D09)], B.DartStyle_lQp);
+      t1 = type$.JSArray_Object;
+      t2 = A.DartStyle$(_null, _null, _null, _null, _null, A.Background_Background$layers(A._setArrayType([A.Gradient_Gradient$radialCircle(B.GradientPosition_xrI, B.List_KT1), A.Gradient_Gradient$radialCircle(B.GradientPosition_hao, B.List_9Ir), A.Gradient_Gradient$linear(155, B.List_N6P)], t1)), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t2 = A.DartStyle$(_null, _null, _null, _null, _null, new A.TokenRef(_s8_, _null), _null, _null, new A.Border(1, new A.TokenRef("color.line", _null), _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, A.Background_Background$layers(A._setArrayType([A.Gradient_Gradient$radialCircle(B.GradientPosition_odX, B.List_CUp), A.Gradient_Gradient$radialCircle(B.GradientPosition_MdS, B.List_Bml), A.Gradient_Gradient$linear(160, A._setArrayType([new A.GradientStop(new A.TokenRef(_s8_, _null), 0), new A.GradientStop(new A.TokenRef("color.panel", _null), 55), new A.GradientStop(new A.TokenRef("color.panelStrong", _null), 100)], t1))], t1)), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, t2, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Overflow_hidden, _null, _null, _null, _null, B.Position_relative_1_relative, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
+      t1 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_grid_5_grid, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 32, _null, B.GridTemplateColumns_Boe, _null, _null, _null, _null, _null, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 40, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null, _null, _null, _null, _null, _null, _null, _null, 0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 64, _null, new A.GridTemplateColumns("repeat(" + A._gridCssValue(2, true) + ", " + A._gridCssValue(B.C_GridTrack, false) + ")"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), _null);
+      t3 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, B.Color_4v2, _null, new A.Border(1, B.Color_kTm, _s5_), _null, _null, _null, _null, _null, _null, _null, _null, B.Color_8Z5, _null, _null, _null, B.Display_eAD, _null, _null, _null, _null, _null, _null, B.C_FlexWrap, _null, _null, _null, 11, 900, 8, _null, _null, _null, _null, _null, _null, _null, _null, 0.8, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_6_12_6_12, _null, 999, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t4 = A.Icon$($.$get$Icons_globe(), B.Color_8Z5, 14);
+      t5 = A.Text_span("UNIVERSAL DART & FLUTTER CLIENT", _null);
+      t3 = A.mergeComponentProps(B.Map_empty1, _null, t3, B.Map_empty1, B.Map_empty1);
+      t5 = A.normalizeChildren(_null, [t4, t5]);
+      t4 = A._element("h1", "Flint Client SDK", _null, B.Map_empty1, B.Map_empty1, A.DartStyle$(_null, _null, _null, _null, _null, A.Gradient_Gradient$linear(110, B.List_ewA), B.C_BackgroundClip, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Color_transparent, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_9NR, 900, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.05, B.EdgeInsets_0_0_0_0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.C_BackgroundClip, _null, _null, _null, _null, _null, _null));
+      t6 = A.Text_h2("A production-ready HTTP engine engineered for resilience, performance, and typed simplicity.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.text", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 17, 700, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.35, B.EdgeInsets_0_0_0_0, _null, _null, _null, B.DartStyle_tJ2, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
+      t7 = A.Text_p("Eliminate boilerplate across mobile, desktop, CLI, and web apps. FlintClient gives you exponential backoff retries, multi-tier LRU caching, cooperative cancellation tokens, multipart file streaming, and full-duplex WebSocket channels in pure Dart.", A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.TokenRef("color.muted", _null), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 14, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 1.68, B.EdgeInsets_0_0_0_0, _null, _null, _null, B.DartStyle_RZy, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null));
+      t8 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, B.Color_W8Z, _null, new A.Border(1, B.Color_kTm, _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, _null, _null, _null, _null, _null, B.JustifyContent_P8D, _null, _null, _null, _null, _null, _null, _null, _null, _null, 520, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_10_14_10_14, _null, 10, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
+      t9 = A.Text_span("$", B.DartStyle_K2z);
+      t10 = A.Text_span("dart pub add flint_client", B.DartStyle_D09);
+      t11 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_OEy, B.Map_empty1, B.Map_empty1);
+      t10 = A.normalizeChildren(_null, [t9, t10]);
       t9 = _this._copiedCmd;
-      t10 = A.DartStyle$(_null, _null, _null, _null, _null, B.Color_qii, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, t9 ? B.Color_fXp : B.Color_fwH, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, 700, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_6_10_6_10, _null, 6, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t11 = A.Icon$(t9 ? $.$get$Icons_check() : $.$get$Icons_copy(), _null, 13);
-      t9 = A.Button$(_null, [t11, A.Text_span(_this._copiedCmd ? "Copied" : "Copy", _null)], t10, new A.ClientPage__heroSection_closure(_this), B.Map_empty1, B.ComponentSize_1, B.Tone_1, B.ButtonVariant_3);
-      t7 = A.mergeComponentProps(B.Map_empty1, _null, t7, B.Map_empty1, B.Map_empty1);
-      t9 = A.normalizeChildren(_null, [t8, t9]);
-      t8 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, B.C_FlexWrap, _null, _null, _null, _null, _null, 12, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_8_null_null_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t10 = A.Link$(_null, [A.Text_span("Explore Guides", _null), A.Icon$($.$get$Icons_arrowRight(), _null, 16)], _null, "/client/guides", _null, B.Tone_1, _null);
-      t11 = A.Link$(_null, [A.Icon$($.$get$Icons_link(), _null, 14), A.Text_span("pub.dev", _null)], _null, "https://pub.dev/packages/flint_client", _null, B.Tone_0, B.ButtonVariant_2);
-      t12 = A.Link$(_null, [A.Icon$($.$get$Icons_code(), _null, 14), A.Text_span("GitHub", _null)], _null, "https://github.com/flint-dart/flint-client", _null, B.Tone_0, B.ButtonVariant_3);
+      t12 = A.DartStyle$(_null, _null, _null, _null, _null, B.Color_qii, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, t9 ? B.Color_fXp : B.Color_fwH, _null, _null, _null, _null, _null, _null, _null, _null, _null, 0, _null, _null, _null, _null, 12, 700, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_6_10_6_10, _null, 6, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t13 = A.Icon$(t9 ? $.$get$Icons_check() : $.$get$Icons_copy(), _null, 13);
+      t9 = A.Button$(_null, [t13, A.Text_span(_this._copiedCmd ? "Copied" : "Copy", _null)], t12, new A.ClientPage__heroSection_closure(_this), B.Map_empty1, B.ComponentSize_1, B.Tone_1, B.ButtonVariant_3);
       t8 = A.mergeComponentProps(B.Map_empty1, _null, t8, B.Map_empty1, B.Map_empty1);
-      t12 = A.normalizeChildren(_null, [t10, t11, t12]);
-      t10 = A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, B.AlignItems_sVI, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, B.FlexDirection_column_2_column, _null, _null, _null, _null, _null, _null, _null, _null, 16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null), B.Map_IwXTo, B.Map_empty1);
-      t12 = A.normalizeChildren(_null, [new A.Container(_s3_, t2, t4), t3, t5, t6, new A.Container(_s3_, t7, t9), new A.Container(_s3_, t8, t12)]);
-      t8 = A.DartStyle$(_null, _null, _null, _null, _null, B.Color_t2V, _null, new A.Border(1, B.Color_4v20, _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 0, _null, _null, B.Overflow_hidden, _null, _null, _null, _null, _null, 16, _null, _null, _null, _null, _null, B.Shadow_iCp, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
-      t9 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, B.Color_oZx, _null, _null, B.Border_o5Y, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, _null, _null, _null, _null, _null, B.JustifyContent_P8D, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_10_14_10_14, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t7 = A.Row$([new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, _null, _null, _null, _null, B.Color_I1H, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 999, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null), B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, B.List_empty1)), new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, _null, _null, _null, _null, B.Color_HJ0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 999, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null), B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, B.List_empty1)), new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, _null, _null, _null, _null, B.Color_fXp, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 999, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null), B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, B.List_empty1))], B.DartStyle_wQ1);
-      t6 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 4, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, "auto", _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t5 = [];
+      t9 = A.normalizeChildren(_null, [new A.Container(_s3_, t11, t10), t9]);
+      t10 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, B.C_FlexWrap, _null, _null, _null, _null, _null, 12, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_8_null_null_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t11 = A.Link$(_null, [A.Text_span("Explore Guides", _null), A.Icon$($.$get$Icons_arrowRight(), _null, 16)], _null, "/client/guides", _null, B.Tone_1, _null);
+      t12 = A.Link$(_null, [A.Icon$($.$get$Icons_link(), _null, 14), A.Text_span("pub.dev", _null)], _null, "https://pub.dev/packages/flint_client", _null, B.Tone_0, B.ButtonVariant_2);
+      t13 = A.Link$(_null, [A.Icon$($.$get$Icons_code(), _null, 14), A.Text_span("GitHub", _null)], _null, string$.https_, _null, B.Tone_0, B.ButtonVariant_3);
+      t13 = A.Column$([new A.Container(_s3_, t3, t5), t4, t6, t7, new A.Container(_s3_, t8, t9), new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, t10, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [t11, t12, t13]))], B.DartStyle_SEp);
+      t12 = A.DartStyle$(_null, _null, _null, _null, _null, B.Color_t2V, _null, new A.Border(1, B.Color_4v20, _s5_), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 0, _null, _null, B.Overflow_hidden, _null, _null, _null, _null, _null, 16, _null, _null, _null, _null, _null, B.Shadow_iCp, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
+      t11 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, B.Color_oZx, _null, _null, B.Border_o5Y, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, B.C_FlexWrap, _null, _null, _null, _null, _null, 12, _null, _null, _null, _null, _null, B.JustifyContent_P8D, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_10_14_10_14, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t10 = A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, _null, _null, _null, _null, B.Color_I1H, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 999, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null), B.Map_empty1, B.Map_empty1);
+      t9 = A.normalizeChildren(_null, B.List_empty1);
+      t8 = A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, _null, _null, _null, _null, B.Color_HJ0, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 999, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null), B.Map_empty1, B.Map_empty1);
+      t7 = A.normalizeChildren(_null, B.List_empty1);
+      t6 = A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, _null, _null, _null, _null, B.Color_fXp, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 999, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 10, _null, _null, _null, _null), B.Map_empty1, B.Map_empty1);
+      t4 = A.normalizeChildren(_null, B.List_empty1);
+      t5 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_Mnc, B.Map_empty1, B.Map_empty1);
+      t4 = A.normalizeChildren(_null, [new A.Container(_s3_, t10, t9), new A.Container(_s3_, t8, t7), new A.Container(_s3_, t6, t4)]);
+      t6 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 4, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 0, _null, _null, "auto", _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t7 = [];
       for (i = 0; i < 5; ++i)
-        t5.push(_this._tabButton$2(i, B.List_fuN[i].tabTitle));
-      t2 = A.mergeComponentProps(B.Map_empty1, _null, t6, B.Map_empty1, B.Map_empty1);
-      t5 = A.normalizeChildren(_null, t5);
-      t9 = A.mergeComponentProps(B.Map_empty1, _null, t9, B.Map_empty1, B.Map_empty1);
-      t5 = A.normalizeChildren(_null, [t7, new A.Container(_s3_, t2, t5)]);
-      t2 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, B.Color_4v21, _null, _null, B.Border_HCW, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, _null, _null, _null, _null, _null, B.JustifyContent_P8D, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_12_16_12_16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t7 = A.Text_span(snippet.description, B.DartStyle_IfW);
-      t3 = snippet.badgeColor;
-      t4 = A.DartStyle$(_null, _null, _null, _null, _null, new A.Color("rgba(6, 182, 212, 0.15)"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.Color(t3), _null, _null, _null, _null, _null, _null, _null, _null, _null, 0, _null, _null, _null, B.FontFamily_e9a, 11, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_3_8_3_8, _null, 4, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t6 = A.Text_span(snippet.badge, _null);
-      t4 = A.mergeComponentProps(B.Map_empty1, _null, t4, B.Map_empty1, B.Map_empty1);
-      t6 = A.normalizeChildren(_null, [t6]);
-      t2 = A.mergeComponentProps(B.Map_empty1, _null, t2, B.Map_empty1, B.Map_empty1);
-      t6 = A.normalizeChildren(_null, [t7, new A.Container(_s3_, t4, t6)]);
-      t4 = A.Text_span(snippet.code, _null);
-      t7 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_RgA, B.Map_empty1, B.Map_empty1);
-      t4 = A.normalizeChildren(_null, [t4]);
-      t11 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, B.Color_Awp, _null, _null, _null, _null, _null, _null, B.Border_Ndp, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 8, _null, _null, _null, _null, _null, B.JustifyContent_P8D, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_10_16_10_16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
-      t3 = A.Row$([new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, _null, _null, _null, _null, new A.Color(t3), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 7, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 999, _null, _null, _null, _null, _null, new A.Shadow(0, 8, 2, new A.Color(t3)), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 7, _null, _null, _null, _null), B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, B.List_empty1)), A.Text_span(snippet.status, B.DartStyle_XdG)], B.DartStyle_i4W);
-      t13 = A.Text_span("Pure Dart \u2022 Zero Platform Glue", B.DartStyle_KeW);
+        t7.push(_this._tabButton$2(i, B.List_fuN[i].tabTitle));
+      t3 = A.mergeComponentProps(B.Map_empty1, _null, t6, B.Map_empty1, B.Map_empty1);
+      t7 = A.normalizeChildren(_null, t7);
       t11 = A.mergeComponentProps(B.Map_empty1, _null, t11, B.Map_empty1, B.Map_empty1);
-      t13 = A.normalizeChildren(_null, [t3, t13]);
-      t8 = A.mergeComponentProps(B.Map_empty1, _null, t8, B.Map_empty1, B.Map_empty1);
-      t13 = A.normalizeChildren(_null, [new A.Container(_s3_, t9, t5), new A.Container(_s3_, t2, t6), new A.Container(_s3_, t7, t4), new A.Container(_s3_, t11, t13)]);
-      return new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, t1, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [new A.Column(_s3_, t10, t12), new A.Container(_s3_, t8, t13)]));
+      t7 = A.normalizeChildren(_null, [new A.Container(_s3_, t5, t4), new A.Container(_s3_, t3, t7)]);
+      t3 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, B.Color_4v21, _null, _null, B.Border_HCW, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 12, _null, _null, _null, _null, _null, B.JustifyContent_P8D, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_12_16_12_16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t4 = A.Text_span(snippet.description, B.DartStyle_bTU);
+      t5 = snippet.badgeColor;
+      t6 = A.DartStyle$(_null, _null, _null, _null, _null, new A.Color("rgba(6, 182, 212, 0.15)"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, new A.Color(t5), _null, _null, _null, _null, _null, _null, _null, _null, _null, 0, _null, _null, _null, B.FontFamily_e9a, 11, 800, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_3_8_3_8, _null, 4, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t8 = A.Text_span(snippet.badge, _null);
+      t6 = A.mergeComponentProps(B.Map_empty1, _null, t6, B.Map_empty1, B.Map_empty1);
+      t8 = A.normalizeChildren(_null, [t8]);
+      t3 = A.mergeComponentProps(B.Map_empty1, _null, t3, B.Map_empty1, B.Map_empty1);
+      t8 = A.normalizeChildren(_null, [t4, new A.Container(_s3_, t6, t8)]);
+      t6 = A.Text_span(snippet.code, _null);
+      t4 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_RgA, B.Map_empty1, B.Map_empty1);
+      t6 = A.normalizeChildren(_null, [t6]);
+      t9 = A.DartStyle$(_null, B.AlignItems_center_1_center, _null, _null, _null, B.Color_Awp, _null, _null, _null, _null, _null, _null, B.Border_Ndp, _null, _null, _null, _null, _null, _null, _null, B.Display_flex_3_flex, _null, _null, _null, _null, _null, _null, B.C_FlexWrap, _null, _null, _null, _null, _null, 8, _null, _null, _null, _null, _null, B.JustifyContent_P8D, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_10_16_10_16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null);
+      t5 = A.mergeComponentProps(B.Map_empty1, _null, A.DartStyle$(_null, _null, _null, _null, _null, new A.Color(t5), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 7, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 999, _null, _null, _null, _null, _null, new A.Shadow(0, 8, 2, new A.Color(t5)), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, 7, _null, _null, _null, _null), B.Map_empty1, B.Map_empty1);
+      t10 = A.normalizeChildren(_null, B.List_empty1);
+      t14 = A.Text_span(snippet.status, B.DartStyle_XdG);
+      t15 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_i4W, B.Map_empty1, B.Map_empty1);
+      t14 = A.normalizeChildren(_null, [new A.Container(_s3_, t5, t10), t14]);
+      t10 = A.Text_span("Pure Dart \u2022 Zero Platform Glue", B.DartStyle_KeW);
+      t9 = A.mergeComponentProps(B.Map_empty1, _null, t9, B.Map_empty1, B.Map_empty1);
+      t10 = A.normalizeChildren(_null, [new A.Container(_s3_, t15, t14), t10]);
+      t12 = A.mergeComponentProps(B.Map_empty1, _null, t12, B.Map_empty1, B.Map_empty1);
+      t10 = A.normalizeChildren(_null, [new A.Container(_s3_, t11, t7), new A.Container(_s3_, t3, t8), new A.Container(_s3_, t4, t6), new A.Container(_s3_, t9, t10)]);
+      t1 = A.mergeComponentProps(B.Map_empty1, _null, t1, B.Map_empty1, B.Map_empty1);
+      t10 = A.normalizeChildren(_null, [t13, new A.Container(_s3_, t12, t10)]);
+      t12 = A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_0AF, B.Map_empty1, B.Map_empty1);
+      t10 = A.normalizeChildren(_null, [new A.Container(_s3_, t1, t10)]);
+      return new A.Container(_s3_, A.mergeComponentProps(B.Map_empty1, _null, t2, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [new A.Container(_s3_, t12, t10)]));
     },
     _articleShell$0() {
-      var t1, t2, _null = null;
+      var t1, t2, t3, _null = null;
       if (this.get$_contentHtml().length === 0)
         return new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, B.DartStyle_72Q, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, B.List_empty1));
-      t1 = A.DartStyle$(_null, _null, _null, _null, _null, new A.TokenRef("color.panel", _null), _null, new A.Border(1, new A.TokenRef("color.line", _null), "solid"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_28_28_28_28, _null, 20, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
-      t2 = this.get$_contentHtml();
-      return new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, t1, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [new A.HtmlContent(t2, "client-docs", B.Map_empty1)]));
+      t1 = A.DartStyle$(_null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.DartStyle_Bxp, _null, _null, _null, _null, _null, B.SizeValue_lLc, B.DartStyle_EsM, _null, 0, _null, _null, _null, _null, _null, _null, B.EdgeInsets_48_16_48_16, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, B.DartStyle_Oiv, _null);
+      t2 = A.DartStyle$(_null, _null, _null, _null, _null, new A.TokenRef("color.panel", _null), _null, new A.Border(1, new A.TokenRef("color.line", _null), "solid"), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.EdgeInsets_28_28_28_28, _null, 20, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, B.SizeValue_lLc, _null, _null, _null, _null);
+      t3 = this.get$_contentHtml();
+      t2 = A.mergeComponentProps(B.Map_empty1, _null, t2, B.Map_empty1, B.Map_empty1);
+      t3 = A.normalizeChildren(_null, [new A.HtmlContent(t3, "client-docs", B.Map_empty1)]);
+      return new A.Container("div", A.mergeComponentProps(B.Map_empty1, _null, t1, B.Map_empty1, B.Map_empty1), A.normalizeChildren(_null, [new A.Container("div", t2, t3)]));
     },
     _tabButton$2(index, title) {
       var _null = null,
@@ -11300,7 +11372,7 @@
     _inheritMany(A.StatefulComponent, [A.StateSignalListener, A.HtmlContent, A.ApiSidebar, A.GuidesSidebar, A.ClientPage, A.Footer, A.SiteLayout]);
     _inherit(A.WebStorageBackend, A.BrowserStorage);
     _inherit(A.LocalStorage, A.WebStorageBackend);
-    _inheritMany(A._Enum, [A.Breakpoint, A.FlintThemeMode, A.Display, A.FlexDirection, A.AlignItems, A.JustifyContent, A.Position, A.Tone, A.ComponentSize, A.ButtonVariant]);
+    _inheritMany(A._Enum, [A.Breakpoint, A.FlintThemeMode, A.Display, A.FlexDirection, A.AlignItems, A.JustifyContent, A.Position, A.TextAlign, A.Tone, A.ComponentSize, A.ButtonVariant]);
     _inheritMany(A.FlintElement, [A.Button, A.Spinner, A.Icon, A.Column, A.Container, A.Image, A.Link, A.Row]);
     _inherit(A._EventStream, A.Stream);
     _mixin(A.UnmodifiableListBase, A.UnmodifiableListMixin);
@@ -11326,7 +11398,8 @@
   A._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"LegacyJavaScriptObject","UnknownJavaScriptObject":"LegacyJavaScriptObject","JavaScriptFunction":"LegacyJavaScriptObject","NativeArrayBuffer":"NativeByteBuffer","JSBool":{"bool":[],"TrustedGetRuntimeType":[]},"JSNull":{"TrustedGetRuntimeType":[]},"JavaScriptObject":{"JSObject":[]},"LegacyJavaScriptObject":{"JSObject":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"],"JSObject":[],"Iterable":["1"]},"JSArraySafeToStringHook":{"SafeToStringHook":[]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"],"JSObject":[],"Iterable":["1"]},"ArrayIterator":{"Iterator":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[],"TrustedGetRuntimeType":[]},"JSNumNotInt":{"double":[],"num":[],"TrustedGetRuntimeType":[]},"JSString":{"String":[],"Pattern":[],"TrustedGetRuntimeType":[]},"LateError":{"Error":[]},"CodeUnits":{"ListBase":["int"],"UnmodifiableListMixin":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"],"ListBase.E":"int"},"EfficientLengthIterable":{"Iterable":["1"]},"ListIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"ListIterator":{"Iterator":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"MappedIterator":{"Iterator":["2"]},"MappedListIterable":{"ListIterable":["2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2","ListIterable.E":"2"},"WhereIterable":{"Iterable":["1"],"Iterable.E":"1"},"WhereIterator":{"Iterator":["1"]},"UnmodifiableListBase":{"ListBase":["1"],"UnmodifiableListMixin":["1"],"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_Record_2":{"_Record2":[],"_Record":[]},"_Record_3":{"_Record3":[],"_Record":[]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"ConstantMap":["1","2"],"Map":["1","2"]},"_KeysOrValues":{"Iterable":["1"],"Iterable.E":"1"},"_KeysOrValuesOrElementsIterator":{"Iterator":["1"]},"ConstantSet":{"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"ConstantStringSet":{"ConstantSet":["1"],"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"Closure":{"Function":[]},"Closure0Args":{"Function":[]},"Closure2Args":{"Function":[]},"TearOffClosure":{"Function":[]},"StaticClosure":{"Function":[]},"BoundClosure":{"Function":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapBase":["1","2"],"LinkedHashMap":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"LinkedHashMapKeysIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"LinkedHashMapKeyIterator":{"Iterator":["1"]},"LinkedHashMapValuesIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"LinkedHashMapValueIterator":{"Iterator":["1"]},"LinkedHashMapEntriesIterable":{"EfficientLengthIterable":["MapEntry<1,2>"],"Iterable":["MapEntry<1,2>"],"Iterable.E":"MapEntry<1,2>"},"LinkedHashMapEntryIterator":{"Iterator":["MapEntry<1,2>"]},"_Record2":{"_Record":[]},"_Record3":{"_Record":[]},"JSSyntaxRegExp":{"RegExp":[],"Pattern":[]},"_MatchImplementation":{"RegExpMatch":[],"Match":[]},"_AllMatchesIterable":{"Iterable":["RegExpMatch"],"Iterable.E":"RegExpMatch"},"_AllMatchesIterator":{"Iterator":["RegExpMatch"]},"StringMatch":{"Match":[]},"_StringAllMatchesIterable":{"Iterable":["Match"],"Iterable.E":"Match"},"_StringAllMatchesIterator":{"Iterator":["Match"]},"NativeByteBuffer":{"JSObject":[],"TrustedGetRuntimeType":[]},"NativeTypedData":{"JSObject":[]},"NativeByteData":{"JSObject":[],"TrustedGetRuntimeType":[]},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"],"JSObject":[]},"NativeTypedArrayOfDouble":{"ListBase":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"]},"NativeTypedArrayOfInt":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"]},"NativeFloat32List":{"ListBase":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"],"TrustedGetRuntimeType":[],"ListBase.E":"double"},"NativeFloat64List":{"ListBase":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"],"TrustedGetRuntimeType":[],"ListBase.E":"double"},"NativeInt16List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeInt32List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeInt8List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeUint16List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeUint32List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeUint8ClampedList":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"NativeUint8List":{"ListBase":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int"},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"_SyncStarIterator":{"Iterator":["1"]},"_SyncStarIterable":{"Iterable":["1"],"Iterable.E":"1"},"AsyncError":{"Error":[]},"_AsyncCompleter":{"_Completer":["1"]},"_Future":{"Future":["1"]},"_Zone":{"Zone":[]},"_RootZone":{"_Zone":[],"Zone":[]},"_LinkedHashSet":{"SetBase":["1"],"LinkedHashSet":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_LinkedHashSetIterator":{"Iterator":["1"]},"ListBase":{"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"MapBase":{"Map":["1","2"]},"SetBase":{"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_SetBase":{"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_JsonMap":{"MapBase":["String","@"],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"_JsonMapKeyIterable":{"ListIterable":["String"],"EfficientLengthIterable":["String"],"Iterable":["String"],"Iterable.E":"String","ListIterable.E":"String"},"JsonUnsupportedObjectError":{"Error":[]},"JsonCyclicError":{"Error":[]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"RegExpMatch":{"Match":[]},"String":{"Pattern":[]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"OutOfMemoryError":{"Error":[]},"StackOverflowError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"StringBuffer":{"StringSink":[]},"FlintComponent":{"FlintNode":[]},"StatefulComponent":{"FlintComponent":[],"FlintNode":[]},"FlintElement":{"FlintNode":[]},"FlintText":{"FlintNode":[]},"FlintFragment":{"FlintNode":[]},"FlintComponentNode":{"FlintNode":[]},"StateSignalListener":{"FlintComponent":[],"FlintNode":[]},"LocalStorage":{"BrowserStorage":[]},"WebStorageBackend":{"BrowserStorage":[]},"Button":{"FlintNode":[]},"HtmlContent":{"FlintComponent":[],"FlintNode":[]},"Spinner":{"FlintNode":[]},"Icon":{"FlintNode":[]},"Column":{"FlintNode":[]},"Container":{"FlintNode":[]},"Image":{"FlintNode":[]},"Link":{"FlintNode":[]},"Row":{"FlintNode":[]},"ApiSidebar":{"FlintComponent":[],"FlintNode":[]},"GuidesSidebar":{"FlintComponent":[],"FlintNode":[]},"ClientPage":{"FlintComponent":[],"FlintNode":[]},"FlashBanner":{"FlintComponent":[],"FlintNode":[]},"Footer":{"FlintComponent":[],"FlintNode":[]},"NavBar":{"FlintComponent":[],"FlintNode":[]},"SiteLayout":{"FlintComponent":[],"FlintNode":[]},"_EventStream":{"Stream":["1"]},"_EventStreamSubscription":{"StreamSubscription":["1"]},"Int8List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint8List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint8ClampedList":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Int16List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint16List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Int32List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint32List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Float32List":{"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]},"Float64List":{"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]}}'));
   A._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"EfficientLengthIterable":1,"UnmodifiableListBase":1,"NativeTypedArray":1,"_SetBase":1,"Codec":2,"Converter":2}'));
   var string$ = {
-    Error_: "Error handler must accept one Object or one Object and a StackTrace as arguments, and return a value of the returned future's type"
+    Error_: "Error handler must accept one Object or one Object and a StackTrace as arguments, and return a value of the returned future's type",
+    https_: "https://github.com/flint-dart/flint-client"
   };
   var type$ = (function rtii() {
     var findType = A.findType;
@@ -11436,7 +11509,6 @@
     B.PlainJavaScriptObject_methods = J.PlainJavaScriptObject.prototype;
     B.UnknownJavaScriptObject_methods = J.UnknownJavaScriptObject.prototype;
     B.AlignItems_center_1_center = new A.AlignItems("center", 1, "center");
-    B.AlignItems_sVI = new A.AlignItems("flex-start", 0, "start");
     B.Color_transparent = new A.Color("transparent");
     B.Border_1_Color_transparent_solid = new A.Border(1, B.Color_transparent, "solid");
     B.Color_Jcx = new A.Color("rgba(255, 255, 255, 0.05)");
@@ -11619,18 +11691,27 @@
     B.ComponentSize_2 = new A.ComponentSize(2, "md");
     B.Cursor_pointer = new A.Cursor("pointer");
     B.DartStyle_01B = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "translateY(0)", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_32_16_32_16 = new A.EdgeInsets(32, 16, 32, 16);
+    B.SizeValue_lLc = new A.SizeValue("100%");
+    B.Position_relative_1_relative = new A.Position("relative", 1, "relative");
+    B.EdgeInsets_56_36_56_36 = new A.EdgeInsets(56, 36, 56, 36);
+    B.DartStyle_EsM = new A.DartStyle(B.EdgeInsets_56_36_56_36, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_64_56_64_56 = new A.EdgeInsets(64, 56, 64, 56);
+    B.DartStyle_Bxp = new A.DartStyle(B.EdgeInsets_64_56_64_56, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_72_80_72_80 = new A.EdgeInsets(72, 80, 72, 80);
+    B.DartStyle_Oiv = new A.DartStyle(B.EdgeInsets_72_80_72_80, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_0AF = new A.DartStyle(B.EdgeInsets_32_16_32_16, null, B.SizeValue_lLc, null, 0, B.SizeValue_lLc, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Position_relative_1_relative, null, null, null, null, 2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_EsM, B.DartStyle_Bxp, B.DartStyle_Oiv);
     B.DartStyle_0x9 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_96_56_96_56 = new A.EdgeInsets(96, 56, 96, 56);
+    B.DartStyle_2bQ = new A.DartStyle(B.EdgeInsets_96_56_96_56, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_null_null_4_null = new A.EdgeInsets(null, null, 4, null);
     B.DartStyle_4Af = new A.DartStyle(null, B.EdgeInsets_null_null_4_null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 11, 800, null, 0.5, B.Color_Xzx, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.SizeValue_lLc = new A.SizeValue("100%");
-    B.Display_flex_3_flex = new A.Display("flex", 3, "flex");
-    B.JustifyContent_center_1_center = new A.JustifyContent("center", 1, "center");
-    B.DartStyle_4yO = new A.DartStyle(null, null, B.SizeValue_lLc, null, null, null, null, null, B.Display_flex_3_flex, null, null, null, B.JustifyContent_center_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Display_none_6_none = new A.Display("none", 6, "none");
     B.DartStyle_72Q = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_none_6_none, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_9CP = new A.DartStyle(null, B.EdgeInsets_null_null_4_null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 11, 800, null, 0.5, B.Color_56f, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_null_18_null_18 = new A.EdgeInsets(null, 18, null, 18);
     B.DartStyle_C5p = new A.DartStyle(B.EdgeInsets_null_18_null_18, null, null, null, null, null, 46, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 15, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.Display_flex_3_flex = new A.Display("flex", 3, "flex");
     B.JustifyContent_P8D = new A.JustifyContent("space-between", 3, "between");
     B.DartStyle_COl = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, null, B.AlignItems_center_1_center, null, B.JustifyContent_P8D, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.FontFamily_e9a = new A.FontFamily('ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace');
@@ -11646,12 +11727,16 @@
     B.Border_YsG = new A.Border(1, B.Color_OOk0, "solid");
     B.DartStyle_H3U = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_FUE, null, null, null, null, null, null, null, null, null, B.Color_OOk, null, B.Border_YsG, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_IaP = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 12, 900, null, 0.5, B.Color_8Z5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_IfW = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "hidden", null, null, null, null, null, null, null, null, null, null, null, 12, null, null, null, B.Color_O59, null, null, null, "ellipsis", "nowrap", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_K2z = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.FontFamily_e9a, 14, 900, null, null, B.Color_8Z5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Color_ejg = new A.Color("#64748b");
     B.DartStyle_KeW = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 11, 700, null, null, B.Color_ejg, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_null_12_null_12 = new A.EdgeInsets(null, 12, null, 12);
     B.DartStyle_LP2 = new A.DartStyle(B.EdgeInsets_null_12_null_12, null, null, null, null, null, 34, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 13, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_Mnc = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 6, B.AlignItems_center_1_center, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_96_80_96_80 = new A.EdgeInsets(96, 80, 96, 80);
+    B.DartStyle_Nwm = new A.DartStyle(B.EdgeInsets_96_80_96_80, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.Overflow_hidden = new A.Overflow("hidden");
+    B.DartStyle_OEy = new A.DartStyle(null, null, null, null, 0, null, null, null, B.Display_flex_3_flex, 10, B.AlignItems_center_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Overflow_hidden, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_PPq = new A.DartStyle(null, B.EdgeInsets_null_null_4_null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 11, 800, null, 0.5, B.Color_1Tn, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Color_9WD = new A.Color("rgba(15, 23, 42, 0.72)");
     B.DartStyle_Pk7 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_FUE, null, null, null, null, null, null, null, null, null, B.Color_9WD, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
@@ -11660,19 +11745,19 @@
     B.Color_s7T = new A.Color("#e2e8f0");
     B.Color_Dl6 = new A.Color("#030712");
     B.DartStyle_RgA = new A.DartStyle(B.EdgeInsets_18_18_18_18, null, null, null, null, null, null, 380, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "auto", null, null, null, null, null, null, null, null, null, null, B.FontFamily_e9a, 12.5, null, 1.6, null, B.Color_s7T, null, null, null, null, "pre", null, null, null, null, B.Color_Dl6, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.EdgeInsets_32_16_32_16 = new A.EdgeInsets(32, 16, 32, 16);
-    B.EdgeInsets_48_32_48_32 = new A.EdgeInsets(48, 32, 48, 32);
-    B.DartStyle_ACs = new A.DartStyle(B.EdgeInsets_48_32_48_32, null, null, null, null, null, null, null, null, 56, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.EdgeInsets_64_48_64_48 = new A.EdgeInsets(64, 48, 64, 48);
-    B.DartStyle_324 = new A.DartStyle(B.EdgeInsets_64_48_64_48, null, null, null, null, null, null, null, null, 64, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_SmT = new A.DartStyle(B.EdgeInsets_32_16_32_16, null, B.SizeValue_lLc, null, null, 1200, null, null, B.Display_grid_5_grid, 40, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.DartStyle_ACs, B.DartStyle_324, null);
+    B.AlignItems_sVI = new A.AlignItems("flex-start", 0, "start");
+    B.DartStyle_SEp = new A.DartStyle(null, null, B.SizeValue_lLc, null, 0, null, null, null, null, 16, B.AlignItems_sVI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_null_14_null_14 = new A.EdgeInsets(null, 14, null, 14);
     B.DartStyle_T2J = new A.DartStyle(B.EdgeInsets_null_14_null_14, null, null, null, null, null, 40, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 14, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_80_36_80_36 = new A.EdgeInsets(80, 36, 80, 36);
+    B.DartStyle_UXj = new A.DartStyle(B.EdgeInsets_80_36_80_36, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_VQx = new A.DartStyle(null, null, B.SizeValue_lLc, null, null, null, null, null, B.Display_grid_5_grid, 32, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_X1h = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_grid_5_grid, 6, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_XdG = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.FontFamily_e9a, 11, null, null, null, B.Color_fwH, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_Z80 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 11, 900, null, 0.5, B.Color_HJ0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_ZN3 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_bIt = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "translateY(16px)", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_bTU = new A.DartStyle(null, null, null, null, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "hidden", null, null, null, null, null, null, null, null, null, null, null, 12, null, null, null, B.Color_O59, null, null, null, "ellipsis", "nowrap", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.EdgeInsets_14_20_14_20 = new A.EdgeInsets(14, 20, 14, 20);
     B.EdgeInsets_14_36_14_36 = new A.EdgeInsets(14, 36, 14, 36);
     B.DartStyle_ugt = new A.DartStyle(B.EdgeInsets_14_36_14_36, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
@@ -11687,15 +11772,16 @@
     B.DartStyle_gIG = new A.DartStyle(null, null, B.SizeValue_lLc, null, null, null, null, null, B.Display_flex_3_flex, null, B.AlignItems_center_1_center, null, null, null, B.FlexDirection_column_2_column, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_ge7 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "translateY(-16px)", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_gx1 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "scale(1)", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_hEX = new A.DartStyle(null, null, B.SizeValue_lLc, null, null, null, null, null, B.Display_grid_5_grid, 20, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.DartStyle_h5s = new A.DartStyle(null, null, B.SizeValue_lLc, null, null, null, null, null, null, 24, B.AlignItems_center_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_i4W = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 8, B.AlignItems_center_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_jKl = new A.DartStyle(null, null, null, null, null, 720, null, null, B.Display_grid_5_grid, 8, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_lQp = new A.DartStyle(null, null, null, null, 0, null, null, null, B.Display_flex_3_flex, 10, B.AlignItems_center_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    B.EdgeInsets_8_null_null_null = new A.EdgeInsets(8, null, null, null);
+    B.JustifyContent_center_1_center = new A.JustifyContent("center", 1, "center");
+    B.DartStyle_kR1 = new A.DartStyle(null, B.EdgeInsets_8_null_null_null, null, null, null, null, null, null, B.Display_flex_3_flex, 12, null, null, B.JustifyContent_center_1_center, null, null, B.C_FlexWrap, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_mfp = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "scale(0.95)", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_qvA = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, B.Color_FZY, null, null, null, null, null, null, null, null, null, B.Color_9WD, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_tJ2 = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 22, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.DartStyle_uLp = new A.DartStyle(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 11, 900, null, 0.5, B.Color_8Z5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    B.DartStyle_wQ1 = new A.DartStyle(null, null, null, null, null, null, null, null, B.Display_flex_3_flex, 6, B.AlignItems_center_1_center, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     B.Color_RiS = new A.Color("rgba(14, 165, 233, 0.1)");
     B.Color_fZl0 = new A.Color("rgba(56, 189, 248, 0.32)");
     B.Border_RlB = new A.Border(1, B.Color_fZl0, "solid");
@@ -11717,8 +11803,10 @@
     B.EdgeInsets_20_20_20_20 = new A.EdgeInsets(20, 20, 20, 20);
     B.EdgeInsets_28_28_28_28 = new A.EdgeInsets(28, 28, 28, 28);
     B.EdgeInsets_3_8_3_8 = new A.EdgeInsets(3, 8, 3, 8);
+    B.EdgeInsets_48_16_48_16 = new A.EdgeInsets(48, 16, 48, 16);
     B.EdgeInsets_4_10_4_10 = new A.EdgeInsets(4, 10, 4, 10);
     B.EdgeInsets_4_8_4_8 = new A.EdgeInsets(4, 8, 4, 8);
+    B.EdgeInsets_64_16_64_16 = new A.EdgeInsets(64, 16, 64, 16);
     B.EdgeInsets_6_10_6_10 = new A.EdgeInsets(6, 10, 6, 10);
     B.EdgeInsets_6_12_6_12 = new A.EdgeInsets(6, 12, 6, 12);
     B.EdgeInsets_6_8_6_8 = new A.EdgeInsets(6, 8, 6, 8);
@@ -11726,7 +11814,6 @@
     B.EdgeInsets_8_10_8_10 = new A.EdgeInsets(8, 10, 8, 10);
     B.EdgeInsets_8_12_8_12 = new A.EdgeInsets(8, 12, 8, 12);
     B.EdgeInsets_8_null_8_null = new A.EdgeInsets(8, null, 8, null);
-    B.EdgeInsets_8_null_null_null = new A.EdgeInsets(8, null, null, null);
     B.FlexDirection_row_0_row = new A.FlexDirection("row", 0, "row");
     B.FlintThemeMode_dark_1_dark = new A.FlintThemeMode("dark", 1, "dark");
     B.FlintThemeMode_light_0_light = new A.FlintThemeMode("light", 0, "light");
@@ -11770,13 +11857,39 @@
     B.Map_HYCNY = new A.ConstantStringMap(B.Object_sm_0_glow_1, [B.Shadow_AJj, B.Shadow_GIR], type$.ConstantStringMap_of_String_and_nullable_Object);
     B.FlintTheme_7Kd = new A.FlintTheme(B.Map_qqXXg, B.Map_Se8oZ, B.Map_LHCTW, B.Map_HYCNY);
     B.FlintThemeProvider_rSL = new A.FlintThemeProvider(B.FlintTheme_m1T, B.FlintTheme_7Kd, B.FlintThemeMode_dark_1_dark);
+    B.GradientPosition_MdS = new A.GradientPosition("85% 15%");
     B.GradientPosition_NyX = new A.GradientPosition("88% 8%");
     B.GradientPosition_Orq = new A.GradientPosition("18% 0%");
+    B.GradientPosition_hao = new A.GradientPosition("80% 10%");
+    B.GradientPosition_odX = new A.GradientPosition("15% 0%");
+    B.GradientPosition_xrI = new A.GradientPosition("20% 0%");
     B.GridTemplateColumns_Boe = new A.GridTemplateColumns("1fr");
     B.JsonDecoder_null = new A.JsonDecoder(null);
     B.JsonEncoder_null = new A.JsonEncoder(null);
     B.JustifyContent_KKE = new A.JustifyContent("flex-start", 0, "start");
+    B.Color_unP = new A.Color("rgba(59, 130, 246, 0.12)");
+    B.GradientStop_vnL = new A.GradientStop(B.Color_unP, 0);
+    B.GradientStop_Color_transparent_45 = new A.GradientStop(B.Color_transparent, 45);
+    B.List_9Ir = makeConstList([B.GradientStop_vnL, B.GradientStop_Color_transparent_45], type$.JSArray_Object);
+    B.Color_unP0 = new A.Color("rgba(59, 130, 246, 0.14)");
+    B.GradientStop_vnL0 = new A.GradientStop(B.Color_unP0, 0);
+    B.GradientStop_Color_transparent_44 = new A.GradientStop(B.Color_transparent, 44);
+    B.List_Bml = makeConstList([B.GradientStop_vnL0, B.GradientStop_Color_transparent_44], type$.JSArray_Object);
+    B.Color_4v22 = new A.Color("rgba(6, 182, 212, 0.18)");
+    B.GradientStop_xHc = new A.GradientStop(B.Color_4v22, 0);
+    B.GradientStop_Color_transparent_42 = new A.GradientStop(B.Color_transparent, 42);
+    B.List_CUp = makeConstList([B.GradientStop_xHc, B.GradientStop_Color_transparent_42], type$.JSArray_Object);
     B.List_Dj7 = makeConstList(["models", "orm", "orm-query", "orm-relations"], type$.JSArray_String);
+    B.Color_4v23 = new A.Color("rgba(6, 182, 212, 0.15)");
+    B.GradientStop_xHc0 = new A.GradientStop(B.Color_4v23, 0);
+    B.List_KT1 = makeConstList([B.GradientStop_xHc0, B.GradientStop_Color_transparent_45], type$.JSArray_Object);
+    B.Color_cN3 = new A.Color("#f0f9ff");
+    B.GradientStop_hSD = new A.GradientStop(B.Color_cN3, 0);
+    B.Color_PUv = new A.Color("#ecfeff");
+    B.GradientStop_Yqd = new A.GradientStop(B.Color_PUv, 48);
+    B.Color_ehL = new A.Color("#f0fdf4");
+    B.GradientStop_MJA = new A.GradientStop(B.Color_ehL, 100);
+    B.List_N6P = makeConstList([B.GradientStop_hSD, B.GradientStop_Yqd, B.GradientStop_MJA], type$.JSArray_Object);
     B.Color_JfV = new A.Color("rgba(16, 185, 129, 0.12)");
     B.GradientStop_1Ra = new A.GradientStop(B.Color_JfV, null);
     B.GradientStop_Color_transparent_30 = new A.GradientStop(B.Color_transparent, 30);
@@ -11902,7 +12015,6 @@
     B.Map_yRm20 = new A.ConstantStringMap(B.Object_PRn, ["Close API navigation"], type$.ConstantStringMap_of_String_and_nullable_Object);
     B.Map_yRqVt = new A.ConstantStringMap(B.Object_PRn, ["Close guide navigation"], type$.ConstantStringMap_of_String_and_nullable_Object);
     B.Overflow_auto = new A.Overflow("auto");
-    B.Overflow_hidden = new A.Overflow("hidden");
     B.Position_absolute_2_absolute = new A.Position("absolute", 2, "absolute");
     B.Position_fixed_3_fixed = new A.Position("fixed", 3, "fixed");
     B.Position_sticky_4_sticky = new A.Position("sticky", 4, "sticky");
@@ -11933,6 +12045,8 @@
     B.SizeValue_9NR = new A.SizeValue("clamp(2.2rem, 5.5vw, 4.4rem)");
     B.SizeValue_auto = new A.SizeValue("auto");
     B.SizeValue_lOa = new A.SizeValue("100vh");
+    B.SizeValue_lqd = new A.SizeValue("clamp(1.6rem, 4vw, 2.4rem)");
+    B.TextAlign_1_center = new A.TextAlign(1, "center");
     B.Tone_0 = new A.Tone(0, "neutral");
     B.Tone_1 = new A.Tone(1, "primary");
     B.Tone_3 = new A.Tone(3, "warning");
@@ -12179,4 +12293,4 @@
   });
 })();
 
-//# sourceMappingURL=client.00558d572f73.dart.js.map
+//# sourceMappingURL=client.631805e1cded.dart.js.map

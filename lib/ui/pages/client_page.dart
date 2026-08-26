@@ -152,403 +152,502 @@ ws.sendJson({'action': 'subscribe', 'channel': 'robotics_fleet'});''',
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: const DartStyle(
+        dartStyle: DartStyle(
           width: SizeValue.percent(100),
+          minWidth: 0,
+          overflowX: Overflow.hidden,
+          background: ThemeToken.color('bg'),
+          color: ThemeToken.color('text'),
           display: Display.flex,
-          justifyContent: JustifyContent.center,
+          flexDirection: FlexDirection.column,
+          alignItems: AlignItems.center,
         ),
         children: [
-          Container(
-            dartStyle: const DartStyle(
-              width: SizeValue.percent(100),
-              maxWidth: 1200,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-              display: Display.grid,
-              gap: 40,
-              md: DartStyle(
-                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 48),
-                gap: 56,
-              ),
-              lg: DartStyle(
-                padding: EdgeInsets.symmetric(horizontal: 48, vertical: 64),
-                gap: 64,
-              ),
-            ),
-            children: [
-              _heroSection(),
-              _pillarsMatrix(),
-              _requestLifecycleSection(),
-              _errorHierarchySection(),
-              _guidesDirectory(),
-              _articleShell(),
-            ],
-          ),
+          _heroSection(),
+          _pillarsMatrix(),
+          _requestLifecycleSection(),
+          _errorHierarchySection(),
+          _guidesDirectory(),
+          _articleShell(),
+          _finalCtaSection(),
         ],
       ),
     );
   }
 
-  // ===========================================================================
-  // 1. HERO SECTION & INTERACTIVE STUDIO
-  // ===========================================================================
   View _heroSection() {
     final snippet = _studioSnippets[_activeStudioTab];
 
     return Container(
       dartStyle: DartStyle(
-        display: Display.grid,
-        gridTemplateColumns: GridTemplateColumns.one,
-        gap: 32,
-        alignItems: AlignItems.center,
+        position: Position.relative,
+        overflow: Overflow.hidden,
         width: const SizeValue.percent(100),
-        lg: DartStyle(
-          gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
-          gap: 40,
+        borderBottom: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('bg'),
+        light: DartStyle(
+          background: Background.layers([
+            Gradient.radialCircle(
+              at: const GradientPosition.percent(20, 0),
+              stops: const [
+                GradientStop(Color.rgba(6, 182, 212, 0.15), 0),
+                GradientStop(Colors.transparent, 45),
+              ],
+            ),
+            Gradient.radialCircle(
+              at: const GradientPosition.percent(80, 10),
+              stops: const [
+                GradientStop(Color.rgba(59, 130, 246, 0.12), 0),
+                GradientStop(Colors.transparent, 45),
+              ],
+            ),
+            Gradient.linear(
+              155,
+              const [
+                GradientStop(Color('#f0f9ff'), 0),
+                GradientStop(Color('#ecfeff'), 48),
+                GradientStop(Color('#f0fdf4'), 100),
+              ],
+            ),
+          ]),
         ),
-        xl: DartStyle(
-          gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
-          gap: 56,
+        dark: DartStyle(
+          background: Background.layers([
+            Gradient.radialCircle(
+              at: const GradientPosition.percent(15, 0),
+              stops: const [
+                GradientStop(Color.rgba(6, 182, 212, 0.18), 0),
+                GradientStop(Colors.transparent, 42),
+              ],
+            ),
+            Gradient.radialCircle(
+              at: const GradientPosition.percent(85, 15),
+              stops: const [
+                GradientStop(Color.rgba(59, 130, 246, 0.14), 0),
+                GradientStop(Colors.transparent, 44),
+              ],
+            ),
+            Gradient.linear(
+              160,
+              [
+                GradientStop(ThemeToken.color('bg'), 0),
+                GradientStop(ThemeToken.color('panel'), 55),
+                GradientStop(ThemeToken.color('panelStrong'), 100),
+              ],
+            ),
+          ]),
         ),
       ),
       children: [
-        // Left Column: Copy, Badges, CLI Box, and CTAs
-        Column(
-          dartStyle: const DartStyle(gap: 16, alignItems: AlignItems.start),
-          children: [
-            Container(
-              dartStyle: DartStyle(
-                display: Display.inlineFlex,
-                alignItems: AlignItems.center,
-                gap: 8,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                radius: 999,
-                background: const Color.rgba(6, 182, 212, 0.12),
-                border: Border.all(color: const Color.rgba(6, 182, 212, 0.3)),
-                color: const Color('#06b6d4'),
-                fontSize: 12,
-                fontWeight: 900,
-                letterSpacing: 0.5,
-              ),
-              children: [
-                Icon(Icons.globe, size: 14, color: const Color('#06b6d4')),
-                Text.span('UNIVERSAL DART & FLUTTER CLIENT'),
-              ],
-            ),
-            Text.h1(
-              'Flint Client SDK',
-              dartStyle: DartStyle(
-                margin: const EdgeInsets.all(0),
-                fontSize: const SizeValue('clamp(2.2rem, 5.5vw, 4.4rem)'),
-                lineHeight: 1.05,
-                fontWeight: 900,
-                color: const Color('transparent'),
-                background: Gradient.linear(
-                  110,
-                  const [
-                    GradientStop(Color('#06b6d4'), 0),
-                    GradientStop(Color('#3b82f6'), 50),
-                    GradientStop(Color('#10b981'), 100),
-                  ],
-                ),
-                backgroundClip: BackgroundClip.text,
-                webkitBackgroundClip: BackgroundClip.text,
-              ),
-            ),
-            Text.h2(
-              'A production-ready HTTP engine engineered for resilience, performance, and typed simplicity.',
-              dartStyle: DartStyle(
-                margin: const EdgeInsets.all(0),
-                fontSize: 18,
-                lineHeight: 1.35,
-                fontWeight: 700,
-                color: ThemeToken.color('text'),
-                md: const DartStyle(fontSize: 22),
-              ),
-            ),
-            Text.p(
-              'Eliminate boilerplate across mobile, desktop, CLI, and web apps. FlintClient gives you exponential backoff retries, multi-tier LRU caching, cooperative cancellation tokens, multipart file streaming, and full-duplex WebSocket channels in pure Dart.',
-              dartStyle: DartStyle(
-                margin: const EdgeInsets.all(0),
-                fontSize: 14,
-                lineHeight: 1.68,
-                color: ThemeToken.color('muted'),
-                md: const DartStyle(fontSize: 15),
-              ),
-            ),
-            // Install command box
-            Container(
-              dartStyle: DartStyle(
-                width: const SizeValue.percent(100),
-                maxWidth: 520,
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                radius: 10,
-                border: Border.all(color: const Color.rgba(6, 182, 212, 0.3)),
-                background: const Color.rgba(3, 7, 18, 0.85),
-                display: Display.flex,
-                alignItems: AlignItems.center,
-                justifyContent: JustifyContent.between,
-                gap: 12,
-              ),
-              children: [
-                Row(
-                  dartStyle: const DartStyle(
-                    display: Display.flex,
-                    alignItems: AlignItems.center,
-                    gap: 10,
-                    minWidth: 0,
-                  ),
-                  children: [
-                    Text.span(
-                      r'$',
-                      dartStyle: const DartStyle(
-                        color: Color('#06b6d4'),
-                        fontWeight: 900,
-                        fontSize: 14,
-                        fontFamily: FontFamily.monospace,
-                      ),
-                    ),
-                    Text.span(
-                      'dart pub add flint_client',
-                      dartStyle: const DartStyle(
-                        color: Color('#f8fafc'),
-                        fontSize: 13,
-                        fontFamily: FontFamily.monospace,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      ),
-                    ),
-                  ],
-                ),
-                Button(
-                  variant: ButtonVariant.ghost,
-                  size: ComponentSize.sm,
-                  onPressed: (_) {
-                    setState(() => _copiedCmd = true);
-                  },
-                  dartStyle: DartStyle(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    radius: 6,
-                    background: const Color.rgba(255, 255, 255, 0.08),
-                    color: _copiedCmd ? const Color('#10b981') : const Color('#cbd5e1'),
-                    fontSize: 12,
-                    fontWeight: 700,
-                  ),
-                  children: [
-                    Icon(_copiedCmd ? Icons.check : Icons.copy, size: 13),
-                    Text.span(_copiedCmd ? 'Copied' : 'Copy'),
-                  ],
-                ),
-              ],
-            ),
-            // Action CTAs
-            Container(
-              dartStyle: DartStyle(
-                display: Display.flex,
-                flexWrap: FlexWrap.wrap,
-                gap: 12,
-                margin: const EdgeInsets.only(top: 8),
-              ),
-              children: [
-                Link(
-                  href: '/client/guides',
-                  tone: Tone.primary,
-                  children: [
-                    Text.span('Explore Guides'),
-                    Icon(Icons.arrowRight, size: 16),
-                  ],
-                ),
-                Link(
-                  href: 'https://pub.dev/packages/flint_client',
-                  variant: ButtonVariant.outline,
-                  tone: Tone.neutral,
-                  children: [
-                    Icon(Icons.link, size: 14),
-                    Text.span('pub.dev'),
-                  ],
-                ),
-                Link(
-                  href: 'https://github.com/flint-dart/flint-client',
-                  variant: ButtonVariant.ghost,
-                  tone: Tone.neutral,
-                  children: [
-                    Icon(Icons.code, size: 14),
-                    Text.span('GitHub'),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-
-        // Right Column: Interactive Code Studio & Live Status Strip
         Container(
-          dartStyle: DartStyle(
-            width: const SizeValue.percent(100),
+          dartStyle: const DartStyle(
+            position: Position.relative,
+            zIndex: 2,
+            width: SizeValue.percent(100),
+            maxWidth: SizeValue.percent(100),
             minWidth: 0,
-            radius: 16,
-            border: Border.all(color: const Color.rgba(6, 182, 212, 0.25)),
-            background: const Color('#050b14'),
-            overflow: Overflow.hidden,
-            shadow: const Shadow(
-              y: 20,
-              blur: 60,
-              spread: -20,
-              color: Color.rgba(0, 0, 0, 0.8),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+            md: DartStyle(
+              padding: EdgeInsets.symmetric(horizontal: 36, vertical: 56),
+            ),
+            lg: DartStyle(
+              padding: EdgeInsets.symmetric(horizontal: 56, vertical: 64),
+            ),
+            xl: DartStyle(
+              padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72),
             ),
           ),
           children: [
-            // Top Bar with macOS Window Dots and Studio Tabs
             Container(
               dartStyle: DartStyle(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                background: const Color.rgba(255, 255, 255, 0.04),
-                borderBottom: const Border(
-                  color: Color.rgba(255, 255, 255, 0.08),
-                  width: 1,
-                ),
-                display: Display.flex,
+                display: Display.grid,
+                gridTemplateColumns: GridTemplateColumns.one,
+                gap: 32,
                 alignItems: AlignItems.center,
-                justifyContent: JustifyContent.between,
-                gap: 12,
+                width: const SizeValue.percent(100),
+                minWidth: 0,
+                lg: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                  gap: 40,
+                ),
+                xl: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                  gap: 64,
+                ),
               ),
               children: [
-                Row(
+                // Left Column: Copy, Badges, CLI Box, and CTAs
+                Column(
                   dartStyle: const DartStyle(
-                    display: Display.flex,
-                    alignItems: AlignItems.center,
-                    gap: 6,
-                  ),
-                  children: [
-                    _macDot(const Color('#ef4444')),
-                    _macDot(const Color('#f59e0b')),
-                    _macDot(const Color('#10b981')),
-                  ],
-                ),
-                Container(
-                  dartStyle: DartStyle(
-                    display: Display.flex,
-                    alignItems: AlignItems.center,
-                    gap: 4,
-                    overflow: 'auto',
-                  ),
-                  children: [
-                    for (var i = 0; i < _studioSnippets.length; i++)
-                      _tabButton(i, _studioSnippets[i].tabTitle),
-                  ],
-                ),
-              ],
-            ),
-            // Header Info Strip
-            Container(
-              dartStyle: DartStyle(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                background: const Color.rgba(6, 182, 212, 0.05),
-                borderBottom: const Border(
-                  color: Color.rgba(255, 255, 255, 0.05),
-                  width: 1,
-                ),
-                display: Display.flex,
-                alignItems: AlignItems.center,
-                justifyContent: JustifyContent.between,
-                gap: 12,
-              ),
-              children: [
-                Text.span(
-                  snippet.description,
-                  dartStyle: const DartStyle(
-                    fontSize: 12,
-                    color: Color('#94a3b8'),
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  ),
-                ),
-                Container(
-                  dartStyle: DartStyle(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    radius: 4,
-                    background: Color.rgba(6, 182, 212, 0.15),
-                    color: Color(snippet.badgeColor),
-                    fontSize: 11,
-                    fontWeight: 800,
-                    fontFamily: FontFamily.monospace,
-                    flexShrink: 0,
-                  ),
-                  children: [Text.span(snippet.badge)],
-                ),
-              ],
-            ),
-            // Code Editor Box
-            Container(
-              dartStyle: const DartStyle(
-                padding: EdgeInsets.all(18),
-                maxHeight: 380,
-                overflow: 'auto',
-                fontFamily: FontFamily.monospace,
-                fontSize: 12.5,
-                lineHeight: 1.6,
-                background: Color('#030712'),
-                color: Color('#e2e8f0'),
-                whiteSpace: 'pre',
-              ),
-              children: [
-                Text.span(snippet.code),
-              ],
-            ),
-            // Live Status Strip
-            Container(
-              dartStyle: DartStyle(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                background: const Color.rgba(255, 255, 255, 0.02),
-                borderTop: const Border(
-                  color: Color.rgba(255, 255, 255, 0.06),
-                  width: 1,
-                ),
-                display: Display.flex,
-                alignItems: AlignItems.center,
-                justifyContent: JustifyContent.between,
-                gap: 8,
-              ),
-              children: [
-                Row(
-                  dartStyle: const DartStyle(
-                    display: Display.flex,
-                    alignItems: AlignItems.center,
-                    gap: 8,
+                    gap: 16,
+                    alignItems: AlignItems.start,
+                    minWidth: 0,
+                    width: SizeValue.percent(100),
                   ),
                   children: [
                     Container(
                       dartStyle: DartStyle(
-                        width: 7,
-                        height: 7,
+                        display: Display.inlineFlex,
+                        alignItems: AlignItems.center,
+                        flexWrap: FlexWrap.wrap,
+                        gap: 8,
+                        maxWidth: const SizeValue.percent(100),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
                         radius: 999,
-                        background: Color(snippet.badgeColor),
-                        shadow: Shadow(
-                          y: 0,
-                          blur: 8,
-                          spread: 2,
-                          color: Color(snippet.badgeColor),
+                        background: const Color.rgba(6, 182, 212, 0.12),
+                        border: Border.all(
+                            color: const Color.rgba(6, 182, 212, 0.3)),
+                        color: const Color('#06b6d4'),
+                        fontSize: 11,
+                        fontWeight: 900,
+                        letterSpacing: 0.8,
+                      ),
+                      children: [
+                        Icon(Icons.globe,
+                            size: 14, color: const Color('#06b6d4')),
+                        Text.span('UNIVERSAL DART & FLUTTER CLIENT'),
+                      ],
+                    ),
+                    Text.h1(
+                      'Flint Client SDK',
+                      dartStyle: DartStyle(
+                        margin: const EdgeInsets.all(0),
+                        fontSize: const SizeValue('clamp(2.2rem, 5.5vw, 4.4rem)'),
+                        lineHeight: 1.05,
+                        fontWeight: 900,
+                        color: const Color('transparent'),
+                        background: Gradient.linear(
+                          110,
+                          const [
+                            GradientStop(Color('#06b6d4'), 0),
+                            GradientStop(Color('#3b82f6'), 50),
+                            GradientStop(Color('#10b981'), 100),
+                          ],
                         ),
+                        backgroundClip: BackgroundClip.text,
+                        webkitBackgroundClip: BackgroundClip.text,
                       ),
                     ),
-                    Text.span(
-                      snippet.status,
-                      dartStyle: const DartStyle(
-                        fontSize: 11,
-                        color: Color('#cbd5e1'),
-                        fontFamily: FontFamily.monospace,
+                    Text.h2(
+                      'A production-ready HTTP engine engineered for resilience, performance, and typed simplicity.',
+                      dartStyle: DartStyle(
+                        margin: const EdgeInsets.all(0),
+                        fontSize: 17,
+                        lineHeight: 1.35,
+                        fontWeight: 700,
+                        color: ThemeToken.color('text'),
+                        md: const DartStyle(fontSize: 22),
                       ),
+                    ),
+                    Text.p(
+                      'Eliminate boilerplate across mobile, desktop, CLI, and web apps. FlintClient gives you exponential backoff retries, multi-tier LRU caching, cooperative cancellation tokens, multipart file streaming, and full-duplex WebSocket channels in pure Dart.',
+                      dartStyle: DartStyle(
+                        margin: const EdgeInsets.all(0),
+                        fontSize: 14,
+                        lineHeight: 1.68,
+                        color: ThemeToken.color('muted'),
+                        md: const DartStyle(fontSize: 15),
+                      ),
+                    ),
+                    // Install command box
+                    Container(
+                      dartStyle: DartStyle(
+                        width: const SizeValue.percent(100),
+                        maxWidth: 520,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 10),
+                        radius: 10,
+                        border: Border.all(
+                            color: const Color.rgba(6, 182, 212, 0.3)),
+                        background: const Color.rgba(3, 7, 18, 0.85),
+                        display: Display.flex,
+                        alignItems: AlignItems.center,
+                        justifyContent: JustifyContent.between,
+                        gap: 12,
+                      ),
+                      children: [
+                        Container(
+                          dartStyle: const DartStyle(
+                            display: Display.flex,
+                            alignItems: AlignItems.center,
+                            gap: 10,
+                            minWidth: 0,
+                            overflow: Overflow.hidden,
+                          ),
+                          children: [
+                            Text.span(
+                              r'$',
+                              dartStyle: const DartStyle(
+                                color: Color('#06b6d4'),
+                                fontWeight: 900,
+                                fontSize: 14,
+                                fontFamily: FontFamily.monospace,
+                              ),
+                            ),
+                            Text.span(
+                              'dart pub add flint_client',
+                              dartStyle: const DartStyle(
+                                color: Color('#f8fafc'),
+                                fontSize: 13,
+                                fontFamily: FontFamily.monospace,
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                              ),
+                            ),
+                          ],
+                        ),
+                        Button(
+                          variant: ButtonVariant.ghost,
+                          size: ComponentSize.sm,
+                          onPressed: (_) {
+                            setState(() => _copiedCmd = true);
+                          },
+                          dartStyle: DartStyle(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 6),
+                            radius: 6,
+                            background: const Color.rgba(255, 255, 255, 0.08),
+                            color: _copiedCmd
+                                ? const Color('#10b981')
+                                : const Color('#cbd5e1'),
+                            fontSize: 12,
+                            fontWeight: 700,
+                            flexShrink: 0,
+                          ),
+                          children: [
+                            Icon(_copiedCmd ? Icons.check : Icons.copy,
+                                size: 13),
+                            Text.span(_copiedCmd ? 'Copied' : 'Copy'),
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Action CTAs
+                    Container(
+                      dartStyle: DartStyle(
+                        display: Display.flex,
+                        flexWrap: FlexWrap.wrap,
+                        gap: 12,
+                        margin: const EdgeInsets.only(top: 8),
+                      ),
+                      children: [
+                        Link(
+                          href: '/client/guides',
+                          tone: Tone.primary,
+                          children: [
+                            Text.span('Explore Guides'),
+                            Icon(Icons.arrowRight, size: 16),
+                          ],
+                        ),
+                        Link(
+                          href: 'https://pub.dev/packages/flint_client',
+                          variant: ButtonVariant.outline,
+                          tone: Tone.neutral,
+                          children: [
+                            Icon(Icons.link, size: 14),
+                            Text.span('pub.dev'),
+                          ],
+                        ),
+                        Link(
+                          href: 'https://github.com/flint-dart/flint-client',
+                          variant: ButtonVariant.ghost,
+                          tone: Tone.neutral,
+                          children: [
+                            Icon(Icons.code, size: 14),
+                            Text.span('GitHub'),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                Text.span(
-                  'Pure Dart • Zero Platform Glue',
-                  dartStyle: const DartStyle(
-                    fontSize: 11,
-                    fontWeight: 700,
-                    color: Color('#64748b'),
+
+                // Right Column: Interactive Code Studio & Live Status Strip
+                Container(
+                  dartStyle: DartStyle(
+                    width: const SizeValue.percent(100),
+                    minWidth: 0,
+                    radius: 16,
+                    border: Border.all(
+                        color: const Color.rgba(6, 182, 212, 0.25)),
+                    background: const Color('#050b14'),
+                    overflow: Overflow.hidden,
+                    shadow: const Shadow(
+                      y: 20,
+                      blur: 60,
+                      spread: -20,
+                      color: Color.rgba(0, 0, 0, 0.8),
+                    ),
                   ),
+                  children: [
+                    // Top Bar with macOS Window Dots and Studio Tabs
+                    Container(
+                      dartStyle: DartStyle(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 10),
+                        background: const Color.rgba(255, 255, 255, 0.04),
+                        borderBottom: const Border(
+                          color: Color.rgba(255, 255, 255, 0.08),
+                          width: 1,
+                        ),
+                        display: Display.flex,
+                        alignItems: AlignItems.center,
+                        justifyContent: JustifyContent.between,
+                        gap: 12,
+                        flexWrap: FlexWrap.wrap,
+                      ),
+                      children: [
+                        Container(
+                          dartStyle: const DartStyle(
+                            display: Display.flex,
+                            alignItems: AlignItems.center,
+                            gap: 6,
+                            flexShrink: 0,
+                          ),
+                          children: [
+                            _macDot(const Color('#ef4444')),
+                            _macDot(const Color('#f59e0b')),
+                            _macDot(const Color('#10b981')),
+                          ],
+                        ),
+                        Container(
+                          dartStyle: DartStyle(
+                            display: Display.flex,
+                            alignItems: AlignItems.center,
+                            gap: 4,
+                            overflow: 'auto',
+                            minWidth: 0,
+                          ),
+                          children: [
+                            for (var i = 0; i < _studioSnippets.length; i++)
+                              _tabButton(i, _studioSnippets[i].tabTitle),
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Header Info Strip
+                    Container(
+                      dartStyle: DartStyle(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                        background: const Color.rgba(6, 182, 212, 0.05),
+                        borderBottom: const Border(
+                          color: Color.rgba(255, 255, 255, 0.05),
+                          width: 1,
+                        ),
+                        display: Display.flex,
+                        alignItems: AlignItems.center,
+                        justifyContent: JustifyContent.between,
+                        gap: 12,
+                      ),
+                      children: [
+                        Text.span(
+                          snippet.description,
+                          dartStyle: const DartStyle(
+                            fontSize: 12,
+                            color: Color('#94a3b8'),
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            minWidth: 0,
+                          ),
+                        ),
+                        Container(
+                          dartStyle: DartStyle(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 3),
+                            radius: 4,
+                            background: Color.rgba(6, 182, 212, 0.15),
+                            color: Color(snippet.badgeColor),
+                            fontSize: 11,
+                            fontWeight: 800,
+                            fontFamily: FontFamily.monospace,
+                            flexShrink: 0,
+                          ),
+                          children: [Text.span(snippet.badge)],
+                        ),
+                      ],
+                    ),
+                    // Code Editor Box
+                    Container(
+                      dartStyle: const DartStyle(
+                        padding: EdgeInsets.all(18),
+                        maxHeight: 380,
+                        overflow: 'auto',
+                        fontFamily: FontFamily.monospace,
+                        fontSize: 12.5,
+                        lineHeight: 1.6,
+                        background: Color('#030712'),
+                        color: Color('#e2e8f0'),
+                        whiteSpace: 'pre',
+                      ),
+                      children: [
+                        Text.span(snippet.code),
+                      ],
+                    ),
+                    // Live Status Strip
+                    Container(
+                      dartStyle: DartStyle(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
+                        background: const Color.rgba(255, 255, 255, 0.02),
+                        borderTop: const Border(
+                          color: Color.rgba(255, 255, 255, 0.06),
+                          width: 1,
+                        ),
+                        display: Display.flex,
+                        alignItems: AlignItems.center,
+                        justifyContent: JustifyContent.between,
+                        flexWrap: FlexWrap.wrap,
+                        gap: 8,
+                      ),
+                      children: [
+                        Container(
+                          dartStyle: const DartStyle(
+                            display: Display.flex,
+                            alignItems: AlignItems.center,
+                            gap: 8,
+                          ),
+                          children: [
+                            Container(
+                              dartStyle: DartStyle(
+                                width: 7,
+                                height: 7,
+                                radius: 999,
+                                background: Color(snippet.badgeColor),
+                                shadow: Shadow(
+                                  y: 0,
+                                  blur: 8,
+                                  spread: 2,
+                                  color: Color(snippet.badgeColor),
+                                ),
+                              ),
+                            ),
+                            Text.span(
+                              snippet.status,
+                              dartStyle: const DartStyle(
+                                fontSize: 11,
+                                color: Color('#cbd5e1'),
+                                fontFamily: FontFamily.monospace,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text.span(
+                          'Pure Dart • Zero Platform Glue',
+                          dartStyle: const DartStyle(
+                            fontSize: 11,
+                            fontWeight: 700,
+                            color: Color('#64748b'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -563,104 +662,129 @@ ws.sendJson({'action': 'subscribe', 'channel': 'robotics_fleet'});''',
   // ===========================================================================
   View _pillarsMatrix() {
     return Container(
-      dartStyle: const DartStyle(
-        display: Display.grid,
-        gap: 24,
-        width: SizeValue.percent(100),
+      dartStyle: DartStyle(
+        width: const SizeValue.percent(100),
+        maxWidth: const SizeValue.percent(100),
+        minWidth: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+        md: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 36, vertical: 56),
+        ),
+        lg: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 56, vertical: 64),
+        ),
+        xl: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72),
+        ),
+        borderBottom: Border(
+          color: ThemeToken.color('line'),
+          width: 1,
+        ),
       ),
       children: [
         Container(
           dartStyle: const DartStyle(
             display: Display.grid,
-            gap: 8,
-            maxWidth: 720,
+            gap: 32,
+            width: SizeValue.percent(100),
           ),
           children: [
-            Text.span(
-              'BUILT FOR RELIABILITY',
+            Container(
               dartStyle: const DartStyle(
-                fontSize: 12,
-                fontWeight: 900,
-                color: Color('#06b6d4'),
-                letterSpacing: 0.5,
+                display: Display.grid,
+                gap: 8,
+                maxWidth: 720,
               ),
+              children: [
+                Text.span(
+                  'BUILT FOR RELIABILITY',
+                  dartStyle: const DartStyle(
+                    fontSize: 12,
+                    fontWeight: 900,
+                    color: Color('#06b6d4'),
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                Text.h2(
+                  'Everything you need in a modern HTTP client.',
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
+                    fontSize: 28,
+                    fontWeight: 800,
+                    lineHeight: 1.18,
+                    color: ThemeToken.color('text'),
+                  ),
+                ),
+                Text.p(
+                  'No need to assemble 5 separate packages. FlintClient provides integrated retry policies, caching strategies, cooperative cancellation, and full error diagnostics out of the box.',
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
+                    fontSize: 15,
+                    lineHeight: 1.65,
+                    color: ThemeToken.color('muted'),
+                  ),
+                ),
+              ],
             ),
-            Text.h2(
-              'Everything you need in a modern HTTP client.',
+            Container(
               dartStyle: DartStyle(
-                margin: const EdgeInsets.all(0),
-                fontSize: 28,
-                fontWeight: 800,
-                lineHeight: 1.18,
-                color: ThemeToken.color('text'),
+                display: Display.grid,
+                gridTemplateColumns: GridTemplateColumns.one,
+                gap: 16,
+                width: const SizeValue.percent(100),
+                md: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                ),
+                lg: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(3, GridTrack.oneFr),
+                ),
               ),
-            ),
-            Text.p(
-              'No need to assemble 5 separate packages. FlintClient provides integrated retry policies, caching strategies, cooperative cancellation, and full error diagnostics out of the box.',
-              dartStyle: DartStyle(
-                margin: const EdgeInsets.all(0),
-                fontSize: 15,
-                lineHeight: 1.65,
-                color: ThemeToken.color('muted'),
-              ),
-            ),
-          ],
-        ),
-        Container(
-          dartStyle: DartStyle(
-            display: Display.grid,
-            gridTemplateColumns: GridTemplateColumns.one,
-            gap: 16,
-            width: const SizeValue.percent(100),
-            md: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
-            ),
-            lg: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.oneFr),
-            ),
-          ),
-          children: [
-            _pillarCard(
-              icon: Icons.refresh,
-              title: 'Idempotent Retry Policy',
-              desc:
-                  'Automatic exponential backoff with jitter, retry budgets, and standard HTTP 429 Retry-After header awareness.',
-              accent: '#10b981',
-            ),
-            _pillarCard(
-              icon: Icons.database,
-              title: 'Multi-Tier Caching',
-              desc:
-                  'In-memory LRU combined with persistent disk cache. Supports cacheFirst, networkFirst, and staleWhileRevalidate strategies.',
-              accent: '#06b6d4',
-            ),
-            _pillarCard(
-              icon: Icons.x,
-              title: 'Cooperative Cancellation',
-              desc:
-                  'Pass CancellationToken to any request. Abort network sockets cleanly with dedicated FlintCancelledException handling.',
-              accent: '#f59e0b',
-            ),
-            _pillarCard(
-              icon: Icons.code,
-              title: 'Strict & Lenient Deserialization',
-              desc:
-                  'Type-safe response decoding. Toggle between strict schema validation or lenient parsing with fallback data serializers.',
-              accent: '#a855f7',
-            ),
-            _pillarCard(
-              icon: Icons.activity,
-              title: 'Observability & Interceptors',
-              desc:
-                  'Comprehensive request lifecycle hooks. Inject Correlation IDs, log traffic, track latency, and export OpenTelemetry metrics.',
-              accent: '#ec4899',
-            ),
-            _pillarCard(
-              icon: Icons.zap,
-              title: 'Full-Duplex WebSockets',
-              desc:
-                  'Built-in WebSocket client with automatic heartbeat pings, exponential reconnect backoff, and typed JSON stream channels.',
-              accent: '#38bdf8',
+              children: [
+                _pillarCard(
+                  icon: Icons.refresh,
+                  title: 'Idempotent Retry Policy',
+                  desc:
+                      'Automatic exponential backoff with jitter, retry budgets, and standard HTTP 429 Retry-After header awareness.',
+                  accent: '#10b981',
+                ),
+                _pillarCard(
+                  icon: Icons.database,
+                  title: 'Multi-Tier Caching',
+                  desc:
+                      'In-memory LRU combined with persistent disk cache. Supports cacheFirst, networkFirst, and staleWhileRevalidate strategies.',
+                  accent: '#06b6d4',
+                ),
+                _pillarCard(
+                  icon: Icons.x,
+                  title: 'Cooperative Cancellation',
+                  desc:
+                      'Pass CancellationToken to any request. Abort network sockets cleanly with dedicated FlintCancelledException handling.',
+                  accent: '#f59e0b',
+                ),
+                _pillarCard(
+                  icon: Icons.code,
+                  title: 'Strict & Lenient Deserialization',
+                  desc:
+                      'Type-safe response decoding. Toggle between strict schema validation or lenient parsing with fallback data serializers.',
+                  accent: '#a855f7',
+                ),
+                _pillarCard(
+                  icon: Icons.activity,
+                  title: 'Observability & Interceptors',
+                  desc:
+                      'Comprehensive request lifecycle hooks. Inject Correlation IDs, log traffic, track latency, and export OpenTelemetry metrics.',
+                  accent: '#ec4899',
+                ),
+                _pillarCard(
+                  icon: Icons.zap,
+                  title: 'Full-Duplex WebSockets',
+                  desc:
+                      'Built-in WebSocket client with automatic heartbeat pings, exponential reconnect backoff, and typed JSON stream channels.',
+                  accent: '#38bdf8',
+                ),
+              ],
             ),
           ],
         ),
@@ -674,66 +798,102 @@ ws.sendJson({'action': 'subscribe', 'channel': 'robotics_fleet'});''',
   View _requestLifecycleSection() {
     return Container(
       dartStyle: DartStyle(
-        display: Display.grid,
-        gap: 20,
-        padding: const EdgeInsets.all(28),
-        radius: 20,
-        border: Border(color: ThemeToken.color('line'), width: 1),
-        background: ThemeToken.color('panel'),
-        shadow: ThemeToken.shadow('sm'),
+        width: const SizeValue.percent(100),
+        maxWidth: const SizeValue.percent(100),
+        minWidth: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+        md: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 36, vertical: 56),
+        ),
+        lg: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 56, vertical: 64),
+        ),
+        xl: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72),
+        ),
+        borderBottom: Border(
+          color: ThemeToken.color('line'),
+          width: 1,
+        ),
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(display: Display.grid, gap: 6),
-          children: [
-            Text.span(
-              'UNDER THE HOOD',
-              dartStyle: const DartStyle(
-                fontSize: 11,
-                fontWeight: 900,
-                color: Color('#06b6d4'),
-                letterSpacing: 0.5,
-              ),
-            ),
-            Text.h3(
-              'The FlintClient Pipeline Flow',
-              dartStyle: DartStyle(
-                margin: const EdgeInsets.all(0),
-                fontSize: 22,
-                fontWeight: 800,
-                color: ThemeToken.color('text'),
-              ),
-            ),
-            Text.p(
-              'Every request travels through a deterministic, observable lifecycle before returning typed data to your application.',
-              dartStyle: DartStyle(
-                margin: const EdgeInsets.all(0),
-                fontSize: 14,
-                lineHeight: 1.6,
-                color: ThemeToken.color('muted'),
-              ),
-            ),
-          ],
-        ),
-        Container(
           dartStyle: DartStyle(
             display: Display.grid,
-            gridTemplateColumns: GridTemplateColumns.one,
-            gap: 12,
+            gap: 20,
+            padding: const EdgeInsets.all(28),
+            radius: 20,
+            border: Border(color: ThemeToken.color('line'), width: 1),
+            background: ThemeToken.color('panel'),
+            shadow: ThemeToken.shadow('sm'),
             width: const SizeValue.percent(100),
-            md: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.oneFr),
-            ),
-            lg: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(5, GridTrack.oneFr),
-            ),
           ),
           children: [
-            _pipelineStage('1. Dispatch', 'Intercept headers & inject Correlation ID', '#06b6d4'),
-            _pipelineStage('2. Cache Check', 'Evaluate LRU store & TTL policy', '#3b82f6'),
-            _pipelineStage('3. Transport', 'Stream HTTP/2 or HTTP/1.1 socket payload', '#10b981'),
-            _pipelineStage('4. Resilience', 'Handle 429/503 retry backoff & jitter', '#f59e0b'),
-            _pipelineStage('5. Decode', 'Deserialize typed model or throw structured error', '#a855f7'),
+            Container(
+              dartStyle: const DartStyle(display: Display.grid, gap: 6),
+              children: [
+                Text.span(
+                  'UNDER THE HOOD',
+                  dartStyle: const DartStyle(
+                    fontSize: 11,
+                    fontWeight: 900,
+                    color: Color('#06b6d4'),
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                Text.h3(
+                  'The FlintClient Pipeline Flow',
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
+                    fontSize: 22,
+                    fontWeight: 800,
+                    color: ThemeToken.color('text'),
+                  ),
+                ),
+                Text.p(
+                  'Every request travels through a deterministic, observable lifecycle before returning typed data to your application.',
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
+                    fontSize: 14,
+                    lineHeight: 1.6,
+                    color: ThemeToken.color('muted'),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              dartStyle: DartStyle(
+                display: Display.grid,
+                gridTemplateColumns: GridTemplateColumns.one,
+                gap: 12,
+                width: const SizeValue.percent(100),
+                sm: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                ),
+                md: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(3, GridTrack.oneFr),
+                ),
+                lg: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(5, GridTrack.oneFr),
+                ),
+              ),
+              children: [
+                _pipelineStage('1. Dispatch',
+                    'Intercept headers & inject Correlation ID', '#06b6d4'),
+                _pipelineStage('2. Cache Check',
+                    'Evaluate LRU store & TTL policy', '#3b82f6'),
+                _pipelineStage('3. Transport',
+                    'Stream HTTP/2 or HTTP/1.1 socket payload', '#10b981'),
+                _pipelineStage('4. Resilience',
+                    'Handle 429/503 retry backoff & jitter', '#f59e0b'),
+                _pipelineStage('5. Decode',
+                    'Deserialize typed model or throw structured error',
+                    '#a855f7'),
+              ],
+            ),
           ],
         ),
       ],
@@ -746,66 +906,104 @@ ws.sendJson({'action': 'subscribe', 'channel': 'robotics_fleet'});''',
   View _errorHierarchySection() {
     return Container(
       dartStyle: DartStyle(
-        display: Display.grid,
-        gap: 20,
-        padding: const EdgeInsets.all(28),
-        radius: 20,
-        border: Border(color: ThemeToken.color('line'), width: 1),
-        background: ThemeToken.color('panelStrong'),
+        width: const SizeValue.percent(100),
+        maxWidth: const SizeValue.percent(100),
+        minWidth: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+        md: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 36, vertical: 56),
+        ),
+        lg: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 56, vertical: 64),
+        ),
+        xl: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72),
+        ),
+        borderBottom: Border(
+          color: ThemeToken.color('line'),
+          width: 1,
+        ),
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(display: Display.grid, gap: 6),
-          children: [
-            Text.span(
-              'DIAGNOSTICS & EXCEPTIONS',
-              dartStyle: const DartStyle(
-                fontSize: 11,
-                fontWeight: 900,
-                color: Color('#f59e0b'),
-                letterSpacing: 0.5,
-              ),
-            ),
-            Text.h3(
-              'Predictable, Structured Error Handling',
-              dartStyle: DartStyle(
-                margin: const EdgeInsets.all(0),
-                fontSize: 22,
-                fontWeight: 800,
-                color: ThemeToken.color('text'),
-              ),
-            ),
-            Text.p(
-              'Never catch generic exceptions again. Every failure belongs to a typed category with HTTP status codes, original response bodies, and diagnostic stack traces.',
-              dartStyle: DartStyle(
-                margin: const EdgeInsets.all(0),
-                fontSize: 14,
-                lineHeight: 1.6,
-                color: ThemeToken.color('muted'),
-              ),
-            ),
-          ],
-        ),
-        Container(
           dartStyle: DartStyle(
             display: Display.grid,
-            gridTemplateColumns: GridTemplateColumns.one,
-            gap: 12,
+            gap: 20,
+            padding: const EdgeInsets.all(28),
+            radius: 20,
+            border: Border(color: ThemeToken.color('line'), width: 1),
+            background: ThemeToken.color('panelStrong'),
             width: const SizeValue.percent(100),
-            md: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
-            ),
-            lg: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.oneFr),
-            ),
           ),
           children: [
-            _errorCard('FlintHttpException', 'HTTP 4xx/5xx status codes with decoded server error body.', '#ef4444'),
-            _errorCard('FlintTimeoutException', 'Distinct connect, read, and write socket timeout boundaries.', '#f59e0b'),
-            _errorCard('FlintNetworkException', 'DNS failures, offline state, connection refused, or SSL errors.', '#06b6d4'),
-            _errorCard('FlintParseException', 'JSON syntax or schema deserialization validation errors.', '#a855f7'),
-            _errorCard('FlintCancelledException', 'Request explicitly aborted via CancellationToken.', '#64748b'),
-            _errorCard('FlintRateLimitException', 'HTTP 429 with parsed duration from Retry-After header.', '#10b981'),
+            Container(
+              dartStyle: const DartStyle(display: Display.grid, gap: 6),
+              children: [
+                Text.span(
+                  'DIAGNOSTICS & EXCEPTIONS',
+                  dartStyle: const DartStyle(
+                    fontSize: 11,
+                    fontWeight: 900,
+                    color: Color('#f59e0b'),
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                Text.h3(
+                  'Predictable, Structured Error Handling',
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
+                    fontSize: 22,
+                    fontWeight: 800,
+                    color: ThemeToken.color('text'),
+                  ),
+                ),
+                Text.p(
+                  'Never catch generic exceptions again. Every failure belongs to a typed category with HTTP status codes, original response bodies, and diagnostic stack traces.',
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
+                    fontSize: 14,
+                    lineHeight: 1.6,
+                    color: ThemeToken.color('muted'),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              dartStyle: DartStyle(
+                display: Display.grid,
+                gridTemplateColumns: GridTemplateColumns.one,
+                gap: 12,
+                width: const SizeValue.percent(100),
+                sm: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                ),
+                lg: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(3, GridTrack.oneFr),
+                ),
+              ),
+              children: [
+                _errorCard('FlintHttpException',
+                    'HTTP 4xx/5xx status codes with decoded server error body.',
+                    '#ef4444'),
+                _errorCard('FlintTimeoutException',
+                    'Distinct connect, read, and write socket timeout boundaries.',
+                    '#f59e0b'),
+                _errorCard('FlintNetworkException',
+                    'DNS failures, offline state, connection refused, or SSL errors.',
+                    '#06b6d4'),
+                _errorCard('FlintParseException',
+                    'JSON syntax or schema deserialization validation errors.',
+                    '#a855f7'),
+                _errorCard('FlintCancelledException',
+                    'Request explicitly aborted via CancellationToken.',
+                    '#64748b'),
+                _errorCard('FlintRateLimitException',
+                    'HTTP 429 with parsed duration from Retry-After header.',
+                    '#10b981'),
+              ],
+            ),
           ],
         ),
       ],
@@ -817,76 +1015,105 @@ ws.sendJson({'action': 'subscribe', 'channel': 'robotics_fleet'});''',
   // ===========================================================================
   View _guidesDirectory() {
     return Container(
-      dartStyle: const DartStyle(
-        display: Display.grid,
-        gap: 20,
-        width: SizeValue.percent(100),
+      dartStyle: DartStyle(
+        width: const SizeValue.percent(100),
+        maxWidth: const SizeValue.percent(100),
+        minWidth: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+        md: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 36, vertical: 56),
+        ),
+        lg: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 56, vertical: 64),
+        ),
+        xl: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72),
+        ),
+        borderBottom: Border(
+          color: ThemeToken.color('line'),
+          width: 1,
+        ),
       ),
       children: [
         Container(
-          dartStyle: const DartStyle(display: Display.grid, gap: 6),
-          children: [
-            Text.span(
-              'OFFICIAL DOCUMENTATION',
-              dartStyle: const DartStyle(
-                fontSize: 11,
-                fontWeight: 900,
-                color: Color('#06b6d4'),
-                letterSpacing: 0.5,
-              ),
-            ),
-            Text.h2(
-              'Explore In-Depth Client Guides',
-              dartStyle: DartStyle(
-                margin: const EdgeInsets.all(0),
-                fontSize: 26,
-                fontWeight: 800,
-                color: ThemeToken.color('text'),
-              ),
-            ),
-          ],
-        ),
-        Container(
-          dartStyle: DartStyle(
+          dartStyle: const DartStyle(
             display: Display.grid,
-            gridTemplateColumns: GridTemplateColumns.one,
-            gap: 16,
-            width: const SizeValue.percent(100),
-            md: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
-            ),
-            lg: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(4, GridTrack.oneFr),
-            ),
+            gap: 24,
+            width: SizeValue.percent(100),
           ),
           children: [
-            _guideLinkCard(
-              title: 'Getting Started',
-              desc: 'Installation, base configuration, timeouts, and basic GET/POST.',
-              href: '/client/guides/getting-started',
-              icon: Icons.rocket,
-              color: '#06b6d4',
+            Container(
+              dartStyle: const DartStyle(display: Display.grid, gap: 6),
+              children: [
+                Text.span(
+                  'OFFICIAL DOCUMENTATION',
+                  dartStyle: const DartStyle(
+                    fontSize: 11,
+                    fontWeight: 900,
+                    color: Color('#06b6d4'),
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                Text.h2(
+                  'Explore In-Depth Client Guides',
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
+                    fontSize: 26,
+                    fontWeight: 800,
+                    color: ThemeToken.color('text'),
+                  ),
+                ),
+              ],
             ),
-            _guideLinkCard(
-              title: 'Requests & Headers',
-              desc: 'Query parameters, headers, multipart uploads, and URL encoding.',
-              href: '/client/guides/requests',
-              icon: Icons.send,
-              color: '#3b82f6',
-            ),
-            _guideLinkCard(
-              title: 'Caching Strategies',
-              desc: 'Memory LRU, disk stores, cacheFirst, and staleWhileRevalidate.',
-              href: '/client/guides/caching',
-              icon: Icons.database,
-              color: '#10b981',
-            ),
-            _guideLinkCard(
-              title: 'Retries & Cancellation',
-              desc: 'Exponential backoff, jitter, Retry-After, and CancellationToken.',
-              href: '/client/guides/retries-cancellation',
-              icon: Icons.refresh,
-              color: '#f59e0b',
+            Container(
+              dartStyle: DartStyle(
+                display: Display.grid,
+                gridTemplateColumns: GridTemplateColumns.one,
+                gap: 16,
+                width: const SizeValue.percent(100),
+                sm: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                ),
+                lg: DartStyle(
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(4, GridTrack.oneFr),
+                ),
+              ),
+              children: [
+                _guideLinkCard(
+                  title: 'Getting Started',
+                  desc:
+                      'Installation, base configuration, timeouts, and basic GET/POST.',
+                  href: '/client/guides/getting-started',
+                  icon: Icons.rocket,
+                  color: '#06b6d4',
+                ),
+                _guideLinkCard(
+                  title: 'Requests & Headers',
+                  desc:
+                      'Query parameters, headers, multipart uploads, and URL encoding.',
+                  href: '/client/guides/requests',
+                  icon: Icons.send,
+                  color: '#3b82f6',
+                ),
+                _guideLinkCard(
+                  title: 'Caching Strategies',
+                  desc:
+                      'Memory LRU, disk stores, cacheFirst, and staleWhileRevalidate.',
+                  href: '/client/guides/caching',
+                  icon: Icons.database,
+                  color: '#10b981',
+                ),
+                _guideLinkCard(
+                  title: 'Retries & Cancellation',
+                  desc:
+                      'Exponential backoff, jitter, Retry-After, and CancellationToken.',
+                  href: '/client/guides/retries-cancellation',
+                  icon: Icons.refresh,
+                  color: '#f59e0b',
+                ),
+              ],
             ),
           ],
         ),
@@ -904,14 +1131,136 @@ ws.sendJson({'action': 'subscribe', 'channel': 'robotics_fleet'});''',
 
     return Container(
       dartStyle: DartStyle(
-        padding: const EdgeInsets.all(28),
-        radius: 20,
-        border: Border(color: ThemeToken.color('line'), width: 1),
-        background: ThemeToken.color('panel'),
         width: const SizeValue.percent(100),
+        maxWidth: const SizeValue.percent(100),
+        minWidth: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+        md: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 36, vertical: 56),
+        ),
+        lg: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 56, vertical: 64),
+        ),
+        xl: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72),
+        ),
       ),
       children: [
-        HtmlContent(id: 'client-docs', html: _contentHtml),
+        Container(
+          dartStyle: DartStyle(
+            padding: const EdgeInsets.all(28),
+            radius: 20,
+            border: Border(color: ThemeToken.color('line'), width: 1),
+            background: ThemeToken.color('panel'),
+            width: const SizeValue.percent(100),
+          ),
+          children: [
+            HtmlContent(id: 'client-docs', html: _contentHtml),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // ===========================================================================
+  // 7. FINAL CTA SECTION
+  // ===========================================================================
+  View _finalCtaSection() {
+    return Container(
+      dartStyle: DartStyle(
+        width: const SizeValue.percent(100),
+        maxWidth: const SizeValue.percent(100),
+        minWidth: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 64),
+        md: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 36, vertical: 80),
+        ),
+        lg: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 56, vertical: 96),
+        ),
+        xl: const DartStyle(
+          padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96),
+        ),
+        background: ThemeToken.color('panelStrong'),
+      ),
+      children: [
+        Column(
+          dartStyle: const DartStyle(
+            gap: 24,
+            alignItems: AlignItems.center,
+            width: SizeValue.percent(100),
+          ),
+          children: [
+            Text.h2(
+              'Start Building with FlintClient',
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
+                fontSize: const SizeValue('clamp(1.6rem, 4vw, 2.4rem)'),
+                fontWeight: 900,
+                textAlign: TextAlign.center,
+                color: const Color('transparent'),
+                background: Gradient.linear(
+                  110,
+                  const [
+                    GradientStop(Color('#06b6d4'), 0),
+                    GradientStop(Color('#3b82f6'), 50),
+                    GradientStop(Color('#10b981'), 100),
+                  ],
+                ),
+                backgroundClip: BackgroundClip.text,
+                webkitBackgroundClip: BackgroundClip.text,
+              ),
+            ),
+            Text.p(
+              'Production-ready HTTP with typed responses, retries, caching, and WebSockets — all in pure Dart.',
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
+                fontSize: 16,
+                lineHeight: 1.6,
+                color: ThemeToken.color('muted'),
+                textAlign: TextAlign.center,
+                maxWidth: 600,
+              ),
+            ),
+            Container(
+              dartStyle: const DartStyle(
+                display: Display.flex,
+                flexWrap: FlexWrap.wrap,
+                justifyContent: JustifyContent.center,
+                gap: 12,
+                margin: EdgeInsets.only(top: 8),
+              ),
+              children: [
+                Link(
+                  href: '/client/guides/getting-started',
+                  tone: Tone.primary,
+                  children: [
+                    Icon(Icons.rocket, size: 16),
+                    Text.span('Get Started'),
+                  ],
+                ),
+                Link(
+                  href: 'https://pub.dev/packages/flint_client',
+                  variant: ButtonVariant.outline,
+                  tone: Tone.neutral,
+                  children: [
+                    Icon(Icons.link, size: 14),
+                    Text.span('pub.dev'),
+                  ],
+                ),
+                Link(
+                  href: 'https://github.com/flint-dart/flint-client',
+                  variant: ButtonVariant.ghost,
+                  tone: Tone.neutral,
+                  children: [
+                    Icon(Icons.code, size: 14),
+                    Text.span('Source Code'),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ],
     );
   }
