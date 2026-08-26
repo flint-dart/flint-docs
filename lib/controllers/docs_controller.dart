@@ -109,6 +109,24 @@ class DocsController extends Controller {
     });
   }
 
+  Future<Response> aiTopic() async {
+    final topic = req.param('topic') ?? 'getting-started';
+    final content =
+        await docs.readMarkdownContent('lib/content/ai/guides/$topic.md');
+    if (content.isEmpty) {
+      return aiGuides();
+    }
+    final heading = docs.topicHeading(topic);
+    return docs.renderContentPage(res, {
+      ...await docs.baseData(req),
+      'activePillar': 'ai',
+      'contentHtml': content,
+      'title': '$heading - Flint AI Guide',
+      'description': 'Guide for $heading in Flint AI.',
+      'canonicalUrl': docs.absoluteUrl('/ai/guides/$topic'),
+    });
+  }
+
   Future<Response> hardware() async {
     return res.page(
       'Hardware',
@@ -144,6 +162,24 @@ class DocsController extends Controller {
     });
   }
 
+  Future<Response> hardwareTopic() async {
+    final topic = req.param('topic') ?? 'getting-started';
+    final content =
+        await docs.readMarkdownContent('lib/content/hardware/guides/$topic.md');
+    if (content.isEmpty) {
+      return hardwareGuides();
+    }
+    final heading = docs.topicHeading(topic);
+    return docs.renderContentPage(res, {
+      ...await docs.baseData(req),
+      'activePillar': 'hardware',
+      'contentHtml': content,
+      'title': '$heading - Flint Hardware Guide',
+      'description': 'Guide for $heading in Flint Hardware.',
+      'canonicalUrl': docs.absoluteUrl('/hardware/guides/$topic'),
+    });
+  }
+
   Future<Response> clientGuides() async {
     return docs.renderContentPage(res, {
       ...await docs.baseData(req),
@@ -154,6 +190,24 @@ class DocsController extends Controller {
       'description':
           'Official FlintClient guide: setup, requests, retries, caching, cancellation, and observability.',
       'canonicalUrl': docs.absoluteUrl('/client/guides'),
+    });
+  }
+
+  Future<Response> clientTopic() async {
+    final topic = req.param('topic') ?? 'getting-started';
+    final content =
+        await docs.readMarkdownContent('lib/content/client/guides/$topic.md');
+    if (content.isEmpty) {
+      return clientGuides();
+    }
+    final heading = docs.topicHeading(topic);
+    return docs.renderContentPage(res, {
+      ...await docs.baseData(req),
+      'activePillar': 'client',
+      'contentHtml': content,
+      'title': '$heading - FlintClient Guide',
+      'description': 'Guide for $heading in FlintClient.',
+      'canonicalUrl': docs.absoluteUrl('/client/guides/$topic'),
     });
   }
 
