@@ -2,6 +2,7 @@
   "mode": "page-bundles",
   "fallback": "/assets/js/flint-ui/main.adacf105e351.dart.js",
   "pages": {
-    "Home": "/assets/js/flint-ui/pages/home.1ee1165edbdc.dart.js"
+    "Home": "/assets/js/flint-ui/pages/home.1ee1165edbdc.dart.js",
+    "Fullstack": "/assets/js/flint-ui/pages/fullstack.947c30a83b5a.dart.js"
   }
 }
