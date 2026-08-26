@@ -24,9 +24,13 @@ class DocsRoutes extends RouteGroup {
 
     // Other Ecosystem Pillars
     docs.get('/client', (c) => c.client());
+    docs.get('/client/guides', (c) => c.clientGuides());
     docs.get('/ai', (c) => c.ai());
+    docs.get('/ai/guides', (c) => c.aiGuides());
     docs.get('/hardware', (c) => c.hardware());
+    docs.get('/hardware/guides', (c) => c.hardwareGuides());
     docs.get('/dart', (c) => c.dartLessons());
+    docs.get('/dart/guides', (c) => c.dartLessons());
 
     // Backwards-compatible aliases
     docs.get('/guides', (c) => c.guidesIndex());

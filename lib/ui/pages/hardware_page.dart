@@ -300,7 +300,7 @@ class HardwarePage extends StatefulComponent {
                       ),
                       children: [
                         Link(
-                          href: '/guides',
+                          href: '/hardware/guides',
                           dartStyle: DartStyle(
                             display: Display.inlineFlex,
                             alignItems: AlignItems.center,
@@ -1540,7 +1540,7 @@ class HardwarePage extends StatefulComponent {
                   ),
                   children: [
                     Link(
-                      href: '/guides',
+                      href: '/hardware/guides',
                       dartStyle: DartStyle(
                         display: Display.inlineFlex,
                         alignItems: AlignItems.center,

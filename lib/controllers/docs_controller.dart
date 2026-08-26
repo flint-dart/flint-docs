@@ -96,6 +96,19 @@ class DocsController extends Controller {
     );
   }
 
+  Future<Response> aiGuides() async {
+    return docs.renderContentPage(res, {
+      ...await docs.baseData(req),
+      'activePillar': 'ai',
+      'contentHtml':
+          await docs.readMarkdownContent('lib/content/pages/ai.md'),
+      'title': 'Flint AI Guide - Agents, Tools, and Workflows',
+      'description':
+          'Official Flint AI guide: providers, agents, tools, workflows, streaming chat, memory, and persistence.',
+      'canonicalUrl': docs.absoluteUrl('/ai/guides'),
+    });
+  }
+
   Future<Response> hardware() async {
     return res.page(
       'Hardware',
@@ -116,6 +129,32 @@ class DocsController extends Controller {
             'Build embedded firmware, robotics state machines, sensor drivers, and Wokwi simulation circuits in pure Dart with Flint Hardware.',
       },
     );
+  }
+
+  Future<Response> hardwareGuides() async {
+    return docs.renderContentPage(res, {
+      ...await docs.baseData(req),
+      'activePillar': 'hardware',
+      'contentHtml':
+          await docs.readMarkdownContent('lib/content/pages/hardware.md'),
+      'title': 'Flint Hardware Guide - Embedded Systems & Robotics in Dart',
+      'description':
+          'Official Flint Hardware guide: MCU targets, drivers, robotics state machines, TFLite Micro, and Wokwi simulation.',
+      'canonicalUrl': docs.absoluteUrl('/hardware/guides'),
+    });
+  }
+
+  Future<Response> clientGuides() async {
+    return docs.renderContentPage(res, {
+      ...await docs.baseData(req),
+      'activePillar': 'client',
+      'contentHtml':
+          await docs.readMarkdownContent('lib/content/pages/client.md'),
+      'title': 'FlintClient Guide - Flint Dart',
+      'description':
+          'Official FlintClient guide: setup, requests, retries, caching, cancellation, and observability.',
+      'canonicalUrl': docs.absoluteUrl('/client/guides'),
+    });
   }
 
   Future<Response> ui() async {
