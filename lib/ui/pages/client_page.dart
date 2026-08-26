@@ -22,7 +22,7 @@ class ClientPage extends Component {
       code: '''import 'package:flint_client/flint_client.dart';
 
 final client = FlintClient(
-  baseUrl: 'https://api.example.com/v1',
+  baseUrl: 'https://api.flintdart.dev/v1',
   retryPolicy: RetryPolicy(
     maxAttempts: 4,
     initialDelay: Duration(milliseconds: 200),
@@ -49,7 +49,7 @@ print('Payload: \${response.data}');''',
       code: '''import 'package:flint_client/flint_client.dart';
 
 final client = FlintClient(
-  baseUrl: 'https://api.example.com',
+  baseUrl: 'https://api.flintdart.dev/v1',
   cacheStore: MemoryCacheStore(maxEntries: 500),
 );
 
@@ -123,11 +123,11 @@ final response = await client.upload<UploadResult>(
       badgeColor: '#ec4899',
       description:
           'Full-duplex real-time communication with automatic heartbeats, backoff, and typed channels.',
-      status: 'CONNECTED • ws://api.example.com/live',
+      status: 'CONNECTED • wss://api.flintdart.dev/v1/live',
       code: '''import 'package:flint_client/flint_client.dart';
 
 final ws = FlintWebSocket(
-  'wss://api.example.com/v1/live',
+  'wss://api.flintdart.dev/v1/live',
   reconnectPolicy: ReconnectPolicy(
     maxAttempts: 10,
     interval: Duration(seconds: 2),
