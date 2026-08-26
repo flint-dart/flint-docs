@@ -7,10 +7,14 @@ class PlatformSection extends Component {
       dartStyle: const DartStyle(
         width: SizeValue.percent(100),
         maxWidth: SizeValue.percent(100),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 64),
-        md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 64)),
-        lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 72)),
-        xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 80)),
+        minWidth: 0,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 56),
+        md: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 64)),
+        lg: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 56, vertical: 72)),
+        xl: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 80)),
       ),
       children: [
         Container(
@@ -18,6 +22,7 @@ class PlatformSection extends Component {
             display: Display.grid,
             gap: 10,
             maxWidth: 760,
+            minWidth: 0,
           ),
           children: [
             Row(
@@ -49,10 +54,11 @@ class PlatformSection extends Component {
               'The Complete Dart Technology Stack',
               dartStyle: DartStyle(
                 margin: EdgeInsets.all(0),
-                fontSize: 32,
+                fontSize: 28,
                 fontWeight: 800,
                 lineHeight: 1.15,
                 color: ThemeToken.color('text'),
+                md: const DartStyle(fontSize: 32),
               ),
             ),
             Text.p(
@@ -69,16 +75,17 @@ class PlatformSection extends Component {
         Container(
           dartStyle: DartStyle(
             display: Display.grid,
-            gridTemplateColumns: GridTemplateColumns.one,
+            gridTemplateColumns: 'minmax(0, 1fr)',
             gap: 16,
             width: const SizeValue.percent(100),
+            minWidth: 0,
             margin: const EdgeInsets.only(top: 32, bottom: 0),
-            md: DartStyle(
-                gridTemplateColumns:
-                    GridTemplateColumns.repeat(2, GridTrack.oneFr)),
-            lg: DartStyle(
-                gridTemplateColumns:
-                    GridTemplateColumns.repeat(4, GridTrack.oneFr)),
+            md: const DartStyle(
+              gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+            ),
+            lg: const DartStyle(
+              gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+            ),
           ),
           children: [
             _pillarCard(
@@ -142,17 +149,23 @@ class PlatformSection extends Component {
         flexDirection: FlexDirection.column,
         justifyContent: JustifyContent.between,
         gap: 16,
-        padding: EdgeInsets.all(20),
+        minWidth: 0,
+        padding: EdgeInsets.all(18),
         radius: 16,
         border: Border(color: ThemeToken.color('line'), width: 1),
         background: ThemeToken.color('panel'),
         hover: DartStyle(
           border: Border(color: Color(accentColor), width: 1),
         ),
+        sm: const DartStyle(padding: EdgeInsets.all(20)),
       ),
       children: [
         Container(
-          dartStyle: DartStyle(display: Display.grid, gap: 10),
+          dartStyle: DartStyle(
+            display: Display.grid,
+            gap: 10,
+            minWidth: 0,
+          ),
           children: [
             Container(
               dartStyle: DartStyle(

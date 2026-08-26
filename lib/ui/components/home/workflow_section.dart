@@ -7,21 +7,26 @@ class WorkflowSection extends Component {
       dartStyle: const DartStyle(
         width: SizeValue.percent(100),
         maxWidth: SizeValue.percent(100),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 64),
-        md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 64)),
-        lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 72)),
-        xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 80)),
+        minWidth: 0,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 56),
+        md: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 64)),
+        lg: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 56, vertical: 72)),
+        xl: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 80)),
       ),
       children: [
         Container(
           dartStyle: DartStyle(
             display: Display.grid,
-            gridTemplateColumns: GridTemplateColumns.one,
+            gridTemplateColumns: 'minmax(0, 1fr)',
             alignItems: AlignItems.center,
             gap: 32,
             width: const SizeValue.percent(100),
-            lg: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+            minWidth: 0,
+            lg: const DartStyle(
+              gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
               gap: 48,
             ),
           ),
@@ -59,10 +64,11 @@ class WorkflowSection extends Component {
                   'Four Pillars. One Seamless Workflow.',
                   dartStyle: DartStyle(
                     margin: const EdgeInsets.all(0),
-                    fontSize: 32,
+                    fontSize: 28,
                     fontWeight: 800,
                     lineHeight: 1.15,
                     color: ThemeToken.color('text'),
+                    md: const DartStyle(fontSize: 32),
                   ),
                 ),
                 Text.p(
@@ -79,12 +85,18 @@ class WorkflowSection extends Component {
                     display: Display.flex,
                     flexWrap: FlexWrap.wrap,
                     gap: 12,
+                    width: SizeValue.percent(100),
                     margin: const EdgeInsets.only(top: 12),
                   ),
                   children: [
                     Link(
                       href: '/fullstack',
                       tone: Tone.primary,
+                      dartStyle: const DartStyle(
+                        width: SizeValue.percent(100),
+                        justifyContent: JustifyContent.center,
+                        sm: DartStyle(width: SizeValue.auto),
+                      ),
                       children: [
                         Text.span('Full-Stack Web'),
                         Icon(Icons.arrowRight, size: 16),
@@ -94,6 +106,11 @@ class WorkflowSection extends Component {
                       href: '/hardware',
                       variant: ButtonVariant.outline,
                       tone: Tone.neutral,
+                      dartStyle: const DartStyle(
+                        width: SizeValue.percent(100),
+                        justifyContent: JustifyContent.center,
+                        sm: DartStyle(width: SizeValue.auto),
+                      ),
                       children: [
                         Text.span('Robotics Guide'),
                         Icon(Icons.arrowRight, size: 16),
@@ -114,10 +131,13 @@ class WorkflowSection extends Component {
       dartStyle: DartStyle(
         display: Display.grid,
         gap: 12,
-        padding: const EdgeInsets.all(20),
+        width: SizeValue.percent(100),
+        minWidth: 0,
+        padding: const EdgeInsets.all(16),
         radius: 18,
         border: Border(color: ThemeToken.color('line'), width: 1),
         background: ThemeToken.color('panel'),
+        sm: const DartStyle(padding: EdgeInsets.all(20)),
       ),
       children: [
         _flowStep(
@@ -168,6 +188,7 @@ class WorkflowSection extends Component {
         display: Display.flex,
         alignItems: AlignItems.start,
         gap: 14,
+        minWidth: 0,
         padding: const EdgeInsets.all(14),
         radius: 12,
         border: Border(color: ThemeToken.color('line'), width: 1),
@@ -181,6 +202,7 @@ class WorkflowSection extends Component {
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.center,
+            flexShrink: 0,
             radius: 8,
             background: Color.rgba(15, 23, 42, 0.7),
             border: Border.all(color: Color(color)),
@@ -190,7 +212,12 @@ class WorkflowSection extends Component {
           ],
         ),
         Container(
-          dartStyle: DartStyle(display: Display.grid, gap: 3),
+          dartStyle: DartStyle(
+            display: Display.grid,
+            gap: 3,
+            minWidth: 0,
+            flex: '1 1 0',
+          ),
           children: [
             Text.h3(
               title,

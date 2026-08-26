@@ -7,10 +7,14 @@ class DartAmplified extends FlintComponent {
       dartStyle: DartStyle(
         width: const SizeValue.percent(100),
         maxWidth: const SizeValue.percent(100),
+        minWidth: 0,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
-        md: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 32, vertical: 64)),
-        lg: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
-        xl: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
+        md: const DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 64)),
+        lg: const DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
+        xl: const DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
         border: Border(color: ThemeToken.color('line'), width: 1),
         background: ThemeToken.color('panelStrong'),
       ),
@@ -21,16 +25,20 @@ class DartAmplified extends FlintComponent {
             display: Display.grid,
             gap: 14,
             maxWidth: 840,
+            minWidth: 0,
           ),
           children: [
             Row(
               dartStyle: DartStyle(
                 display: Display.inlineFlex,
                 alignItems: AlignItems.center,
+                flexWrap: FlexWrap.wrap,
                 gap: 8,
+                maxWidth: SizeValue.percent(100),
                 width: const SizeValue('fit-content'),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                radius: 999,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                radius: 14,
                 background: const Color.rgba(56, 189, 248, 0.12),
                 border: Border.all(color: const Color.rgba(56, 189, 248, 0.35)),
               ),
@@ -77,14 +85,15 @@ class DartAmplified extends FlintComponent {
         Container(
           dartStyle: DartStyle(
             display: Display.grid,
-            gridTemplateColumns: GridTemplateColumns.one,
+            gridTemplateColumns: 'minmax(0, 1fr)',
             gap: 20,
+            minWidth: 0,
             margin: const EdgeInsets.only(top: 48, bottom: 40),
-            md: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+            md: const DartStyle(
+              gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
             ),
-            lg: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.oneFr),
+            lg: const DartStyle(
+              gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
             ),
           ),
           children: [
@@ -155,21 +164,24 @@ class DartAmplified extends FlintComponent {
         Container(
           dartStyle: DartStyle(
             width: const SizeValue.percent(100),
-            padding: const EdgeInsets.all(28),
+            minWidth: 0,
+            padding: const EdgeInsets.all(18),
             radius: 18,
             background: const Color.rgba(15, 23, 42, 0.75),
             border: Border.all(color: const Color.rgba(56, 189, 248, 0.2)),
+            sm: const DartStyle(padding: EdgeInsets.all(28)),
             md: const DartStyle(padding: EdgeInsets.all(36)),
           ),
           children: [
             Row(
               dartStyle: DartStyle(
                 display: Display.grid,
-                gridTemplateColumns: GridTemplateColumns.one,
+                gridTemplateColumns: 'minmax(0, 1fr)',
                 gap: 24,
                 alignItems: AlignItems.center,
-                lg: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                minWidth: 0,
+                lg: const DartStyle(
+                  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
                 ),
               ),
               children: [
@@ -205,6 +217,8 @@ class DartAmplified extends FlintComponent {
                     display: Display.flex,
                     flexWrap: FlexWrap.wrap,
                     gap: 12,
+                    width: SizeValue.percent(100),
+                    minWidth: 0,
                     justifyContent: JustifyContent.start,
                     lg: const DartStyle(justifyContent: JustifyContent.end),
                   ),
@@ -215,19 +229,25 @@ class DartAmplified extends FlintComponent {
                         display: Display.inlineFlex,
                         alignItems: AlignItems.center,
                         gap: 8,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 12),
                         radius: 10,
                         background: const Color('#38bdf8'),
                         color: const Color('#050b14'),
                         fontWeight: 800,
                         fontSize: 13,
+                        width: SizeValue.percent(100),
+                        justifyContent: JustifyContent.center,
+                        sm: const DartStyle(width: SizeValue.auto),
                       ),
                       children: [
                         Text.span(
                           'Explore Fullstack Dart',
-                          dartStyle: const DartStyle(color: Color('#050b14'), fontWeight: 800),
+                          dartStyle: const DartStyle(
+                              color: Color('#050b14'), fontWeight: 800),
                         ),
-                        Icon(Icons.arrowRight, size: 16, color: const Color('#050b14')),
+                        Icon(Icons.arrowRight,
+                            size: 16, color: const Color('#050b14')),
                       ],
                     ),
                     Link(
@@ -236,20 +256,26 @@ class DartAmplified extends FlintComponent {
                         display: Display.inlineFlex,
                         alignItems: AlignItems.center,
                         gap: 8,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 12),
                         radius: 10,
                         background: ThemeToken.color('panelStrong'),
                         border: Border.all(color: ThemeToken.color('line')),
                         color: ThemeToken.color('text'),
                         fontWeight: 700,
                         fontSize: 13,
+                        width: SizeValue.percent(100),
+                        justifyContent: JustifyContent.center,
+                        sm: const DartStyle(width: SizeValue.auto),
                       ),
                       children: [
                         Text.span(
                           'See Dart on Hardware',
-                          dartStyle: DartStyle(color: ThemeToken.color('text'), fontWeight: 700),
+                          dartStyle: DartStyle(
+                              color: ThemeToken.color('text'), fontWeight: 700),
                         ),
-                        Icon(Icons.zap, size: 15, color: const Color('#f97316')),
+                        Icon(Icons.zap,
+                            size: 15, color: const Color('#f97316')),
                       ],
                     ),
                   ],
@@ -279,7 +305,8 @@ class DartAmplified extends FlintComponent {
       dartStyle: DartStyle(
         display: Display.flex,
         flexDirection: FlexDirection.column,
-        padding: const EdgeInsets.all(20),
+        minWidth: 0,
+        padding: const EdgeInsets.all(18),
         radius: 16,
         background: ThemeToken.color('panel'),
         border: Border.all(color: ThemeToken.color('line')),
@@ -287,6 +314,7 @@ class DartAmplified extends FlintComponent {
         hover: DartStyle(
           border: Border.all(color: Color(accentColor)),
         ),
+        sm: const DartStyle(padding: EdgeInsets.all(20)),
       ),
       children: [
         Column(
@@ -296,8 +324,10 @@ class DartAmplified extends FlintComponent {
               dartStyle: DartStyle(
                 display: Display.flex,
                 alignItems: AlignItems.center,
+                flexWrap: FlexWrap.wrap,
                 width: const SizeValue.percent(100),
                 gap: 12,
+                minWidth: 0,
               ),
               children: [
                 Container(
@@ -310,6 +340,7 @@ class DartAmplified extends FlintComponent {
                     display: Display.flex,
                     alignItems: AlignItems.center,
                     justifyContent: JustifyContent.center,
+                    flexShrink: 0,
                   ),
                   children: [
                     Icon(icon, size: 18, color: Color(accentColor)),
@@ -321,10 +352,12 @@ class DartAmplified extends FlintComponent {
                     fontSize: 10,
                     fontWeight: 800,
                     color: Color(accentColor),
-                    padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
                     radius: 999,
                     background: Color.rgba(r, g, b, 0.1),
                     border: Border.all(color: Color.rgba(r, g, b, 0.25)),
+                    maxWidth: SizeValue.percent(100),
                   ),
                 ),
               ],

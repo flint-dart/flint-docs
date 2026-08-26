@@ -53,6 +53,7 @@ class HomeHero extends StatefulComponent {
         position: Position.relative,
         overflow: Overflow.hidden,
         width: SizeValue.percent(100),
+        minWidth: 0,
         minHeight: SizeValue('calc(100vh - 68px)'),
         borderBottom: Border(color: ThemeToken.color('line'), width: 1),
         background: ThemeToken.color('bg'),
@@ -145,10 +146,14 @@ class HomeHero extends StatefulComponent {
             zIndex: 2,
             width: SizeValue.percent(100),
             maxWidth: SizeValue.percent(100),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 36),
-            md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 48)),
-            lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 56)),
-            xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 64)),
+            minWidth: 0,
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+            md: DartStyle(
+                padding: EdgeInsets.symmetric(horizontal: 36, vertical: 48)),
+            lg: DartStyle(
+                padding: EdgeInsets.symmetric(horizontal: 56, vertical: 56)),
+            xl: DartStyle(
+                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 64)),
           ),
           children: [
             _topAnnouncementPill(),
@@ -159,12 +164,15 @@ class HomeHero extends StatefulComponent {
                 gap: 32,
                 alignItems: AlignItems.center,
                 width: const SizeValue.percent(100),
+                minWidth: 0,
                 lg: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
                   gap: 40,
                 ),
                 xl: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
                   gap: 64,
                 ),
               ),
@@ -188,6 +196,8 @@ class HomeHero extends StatefulComponent {
       dartStyle: const DartStyle(
         display: Display.flex,
         justifyContent: JustifyContent.center,
+        width: SizeValue.percent(100),
+        minWidth: 0,
         margin: EdgeInsets.only(bottom: 28),
       ),
       children: [
@@ -196,9 +206,12 @@ class HomeHero extends StatefulComponent {
           dartStyle: DartStyle(
             display: Display.inlineFlex,
             alignItems: AlignItems.center,
+            justifyContent: JustifyContent.center,
+            flexWrap: FlexWrap.wrap,
             gap: 10,
+            maxWidth: SizeValue.percent(100),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-            radius: 999,
+            radius: 14,
             border: Border.all(color: Color.rgba(16, 185, 129, 0.3)),
             background: ThemeToken.color('panel'),
             shadow: Shadow(
@@ -257,7 +270,8 @@ class HomeHero extends StatefulComponent {
                 color: ThemeToken.color('text'),
               ),
             ),
-            Icon(Icons.chevronRight, size: 14, color: ThemeToken.color('primary')),
+            Icon(Icons.chevronRight,
+                size: 14, color: ThemeToken.color('primary')),
           ],
         ),
       ],
@@ -269,15 +283,22 @@ class HomeHero extends StatefulComponent {
   // ---------------------------------------------------------------------------
   FlintNode _heroLeftColumn(String installCmd) {
     return Column(
-      dartStyle: const DartStyle(gap: 0, alignItems: AlignItems.start),
+      dartStyle: const DartStyle(
+        gap: 0,
+        alignItems: AlignItems.start,
+        width: SizeValue.percent(100),
+        minWidth: 0,
+      ),
       children: [
         Container(
           dartStyle: DartStyle(
             display: Display.inlineFlex,
             alignItems: AlignItems.center,
+            flexWrap: FlexWrap.wrap,
             gap: 8,
+            maxWidth: SizeValue.percent(100),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            radius: 999,
+            radius: 14,
             background: Color.rgba(16, 185, 129, 0.12),
             border: Border.all(color: Color.rgba(16, 185, 129, 0.28)),
             color: Color('#10b981'),
@@ -295,8 +316,9 @@ class HomeHero extends StatefulComponent {
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 14, bottom: 0),
             maxWidth: 820,
-            fontSize: const SizeValue('clamp(2.1rem, 5.5vw, 4.8rem)'),
-            lineHeight: 1.05,
+            fontSize: 36,
+            lineHeight: 1.08,
+            letterSpacing: -1.2,
             fontWeight: 900,
             color: Color('transparent'),
             background: Gradient.linear(
@@ -309,6 +331,10 @@ class HomeHero extends StatefulComponent {
             ),
             backgroundClip: BackgroundClip.text,
             webkitBackgroundClip: BackgroundClip.text,
+            sm: const DartStyle(fontSize: 44),
+            md: const DartStyle(fontSize: 56),
+            lg: const DartStyle(fontSize: 68),
+            xl: const DartStyle(fontSize: 76),
           ),
         ),
         Text.h2(
@@ -351,6 +377,7 @@ class HomeHero extends StatefulComponent {
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
             gap: 12,
+            minWidth: 0,
             backdropFilter: StyleFilter.blur(14),
           ),
           children: [
@@ -361,6 +388,7 @@ class HomeHero extends StatefulComponent {
                 gap: 10,
                 minWidth: 0,
                 overflow: 'hidden',
+                flex: '1 1 0',
               ),
               children: [
                 Text.span(
@@ -393,7 +421,8 @@ class HomeHero extends StatefulComponent {
                 display: Display.inlineFlex,
                 alignItems: AlignItems.center,
                 gap: 6,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 radius: 6,
                 background: _copiedInstall
                     ? Color.rgba(16, 185, 129, 0.25)
@@ -401,6 +430,7 @@ class HomeHero extends StatefulComponent {
                 color: _copiedInstall ? Color('#34d399') : Colors.white,
                 fontSize: 12,
                 fontWeight: 800,
+                flexShrink: 0,
                 transition: StyleTransition.all(milliseconds: 150),
               ),
               children: [
@@ -417,7 +447,10 @@ class HomeHero extends StatefulComponent {
         // CTA Buttons
         Wrap(
           gap: 12,
-          dartStyle: const DartStyle(margin: EdgeInsets.only(top: 24)),
+          dartStyle: const DartStyle(
+            width: SizeValue.percent(100),
+            margin: EdgeInsets.only(top: 24),
+          ),
           children: [
             Link(
               href: '/fullstack',
@@ -427,7 +460,10 @@ class HomeHero extends StatefulComponent {
                 alignItems: AlignItems.center,
                 gap: 8,
                 minHeight: 46,
-                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                width: SizeValue.percent(100),
+                justifyContent: JustifyContent.center,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
                 radius: 8,
                 fontSize: 15,
                 fontWeight: 900,
@@ -437,6 +473,7 @@ class HomeHero extends StatefulComponent {
                   spread: -10,
                   color: Color.rgba(16, 185, 129, 0.5),
                 ),
+                sm: const DartStyle(width: SizeValue.auto),
               ),
               children: [
                 Text.span('Get Started Free'),
@@ -452,10 +489,13 @@ class HomeHero extends StatefulComponent {
                 alignItems: AlignItems.center,
                 gap: 8,
                 minHeight: 46,
+                width: SizeValue.percent(100),
+                justifyContent: JustifyContent.center,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 radius: 8,
                 fontSize: 14,
                 fontWeight: 800,
+                sm: DartStyle(width: SizeValue.auto),
               ),
               children: [
                 Icon(Icons.book, size: 16),
@@ -471,10 +511,13 @@ class HomeHero extends StatefulComponent {
                 alignItems: AlignItems.center,
                 gap: 8,
                 minHeight: 46,
+                width: SizeValue.percent(100),
+                justifyContent: JustifyContent.center,
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 radius: 8,
                 fontSize: 14,
                 fontWeight: 800,
+                sm: DartStyle(width: SizeValue.auto),
               ),
               children: [
                 Icon(Icons.code, size: 16),
@@ -496,6 +539,7 @@ class HomeHero extends StatefulComponent {
         position: Position.relative,
         zIndex: 2,
         width: SizeValue.percent(100),
+        minWidth: 0,
         radius: 12,
         border: Border.all(
           color: Color.rgba(56, 189, 248, 0.25),
@@ -524,13 +568,16 @@ class HomeHero extends StatefulComponent {
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
             gap: 12,
+            minWidth: 0,
           ),
           children: [
             Row(
               dartStyle: const DartStyle(
-                display: Display.flex,
                 alignItems: AlignItems.center,
                 gap: 6,
+                flexShrink: 0,
+                display: Display.none,
+                sm: DartStyle(display: Display.flex),
               ),
               children: [
                 _macDot(const Color('#ef4444')),
@@ -542,8 +589,12 @@ class HomeHero extends StatefulComponent {
               dartStyle: const DartStyle(
                 display: Display.flex,
                 alignItems: AlignItems.center,
-                flexWrap: FlexWrap.wrap,
+                flexWrap: FlexWrap.nowrap,
                 gap: 4,
+                minWidth: 0,
+                flex: '1 1 0',
+                overflowX: Overflow.auto,
+                overflowY: Overflow.hidden,
               ),
               children: [
                 for (var i = 0; i < _snippets.length; i++)
@@ -567,6 +618,7 @@ class HomeHero extends StatefulComponent {
                 radius: 6,
                 color: _copiedCode ? Color('#34d399') : Color('#94a3b8'),
                 background: Color.rgba(255, 255, 255, 0.05),
+                flexShrink: 0,
               ),
               children: [
                 Icon(
@@ -589,6 +641,8 @@ class HomeHero extends StatefulComponent {
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
+            gap: 10,
+            minWidth: 0,
           ),
           children: [
             Row(
@@ -596,6 +650,8 @@ class HomeHero extends StatefulComponent {
                 display: Display.flex,
                 alignItems: AlignItems.center,
                 gap: 8,
+                minWidth: 0,
+                flex: '1 1 0',
               ),
               children: [
                 Icon(snippet.icon, size: 16, color: snippet.accentColor),
@@ -605,6 +661,7 @@ class HomeHero extends StatefulComponent {
                     fontSize: 13,
                     fontWeight: 900,
                     color: Colors.white,
+                    flexShrink: 0,
                   ),
                 ),
                 Text.span(
@@ -613,6 +670,10 @@ class HomeHero extends StatefulComponent {
                     fontSize: 12,
                     color: Color('#94a3b8'),
                     fontFamily: FontFamily.monospace,
+                    minWidth: 0,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
                   ),
                 ),
               ],
@@ -626,6 +687,7 @@ class HomeHero extends StatefulComponent {
                 display: Display.inlineFlex,
                 alignItems: AlignItems.center,
                 gap: 4,
+                flexShrink: 0,
               ),
               children: [
                 Text.span('Docs'),
@@ -637,14 +699,16 @@ class HomeHero extends StatefulComponent {
         // Code Display Window
         Container(
           dartStyle: const DartStyle(
-            padding: EdgeInsets.all(20),
-            maxHeight: 400,
+            padding: EdgeInsets.all(14),
+            maxHeight: 320,
             overflow: 'auto',
             fontFamily: FontFamily.monospace,
-            fontSize: 13,
+            fontSize: 12,
             lineHeight: 1.65,
             background: Color('#040807'),
             whiteSpace: 'pre',
+            sm: DartStyle(
+                padding: EdgeInsets.all(20), fontSize: 13, maxHeight: 400),
           ),
           children: [
             _syntaxHighlightedBlock(snippet.lines),
@@ -662,6 +726,8 @@ class HomeHero extends StatefulComponent {
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
+            gap: 10,
+            minWidth: 0,
           ),
           children: [
             Row(
@@ -669,6 +735,8 @@ class HomeHero extends StatefulComponent {
                 display: Display.flex,
                 alignItems: AlignItems.center,
                 gap: 8,
+                minWidth: 0,
+                flex: '1 1 0',
               ),
               children: [
                 Container(
@@ -685,6 +753,10 @@ class HomeHero extends StatefulComponent {
                     fontSize: 11,
                     color: Color('#94a3b8'),
                     fontFamily: FontFamily.monospace,
+                    minWidth: 0,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
                   ),
                 ),
               ],
@@ -695,6 +767,9 @@ class HomeHero extends StatefulComponent {
                 fontSize: 11,
                 fontWeight: 800,
                 color: Color('#64748b'),
+                display: Display.none,
+                flexShrink: 0,
+                sm: DartStyle(display: Display.inlineBlock),
               ),
             ),
           ],
@@ -723,12 +798,10 @@ class HomeHero extends StatefulComponent {
         fontSize: 12,
         fontWeight: active ? 900 : 600,
         color: active ? Colors.white : const Color('#94a3b8'),
-        background: active
-            ? Color.rgba(255, 255, 255, 0.1)
-            : Colors.transparent,
-        borderBottom: active
-            ? Border(color: accent, width: 2)
-            : Border.none,
+        background:
+            active ? Color.rgba(255, 255, 255, 0.1) : Colors.transparent,
+        borderBottom: active ? Border(color: accent, width: 2) : Border.none,
+        flexShrink: 0,
       ),
       children: [
         Icon(icon, size: 13, color: active ? accent : const Color('#64748b')),
@@ -794,8 +867,9 @@ class HomeHero extends StatefulComponent {
     return Container(
       dartStyle: DartStyle(
         width: SizeValue.percent(100),
-        margin: const EdgeInsets.only(top: 48),
-        padding: const EdgeInsets.all(16),
+        minWidth: 0,
+        margin: const EdgeInsets.only(top: 36),
+        padding: const EdgeInsets.all(14),
         radius: 10,
         border: Border.all(color: ThemeToken.color('line')),
         background: ThemeToken.color('panel'),
@@ -813,6 +887,8 @@ class HomeHero extends StatefulComponent {
           shadow: ThemeToken.shadow('glow'),
         ),
         backdropFilter: StyleFilter.blur(16),
+        md: const DartStyle(
+            margin: EdgeInsets.only(top: 48), padding: EdgeInsets.all(16)),
       ),
       children: [
         Container(
@@ -821,11 +897,12 @@ class HomeHero extends StatefulComponent {
             gridTemplateColumns: GridTemplateColumns.one,
             gap: 16,
             width: const SizeValue.percent(100),
-            md: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+            minWidth: 0,
+            md: const DartStyle(
+              gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
             ),
-            lg: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(4, GridTrack.oneFr),
+            lg: const DartStyle(
+              gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
             ),
           ),
           children: [
@@ -870,6 +947,7 @@ class HomeHero extends StatefulComponent {
         display: Display.flex,
         alignItems: AlignItems.center,
         gap: 12,
+        minWidth: 0,
       ),
       children: [
         Container(
@@ -887,16 +965,18 @@ class HomeHero extends StatefulComponent {
           child: Icon(icon, size: 18),
         ),
         Column(
-          dartStyle: const DartStyle(gap: 1, minWidth: 0),
+          dartStyle: const DartStyle(
+            gap: 1,
+            minWidth: 0,
+            flex: '1 1 0',
+          ),
           children: [
             Text.strong(
               title,
               dartStyle: DartStyle(
                 fontSize: 13,
                 color: ThemeToken.color('text'),
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
+                lineHeight: 1.35,
               ),
             ),
             Text.span(
@@ -904,9 +984,7 @@ class HomeHero extends StatefulComponent {
               dartStyle: DartStyle(
                 fontSize: 11,
                 color: ThemeToken.color('muted'),
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
+                lineHeight: 1.4,
               ),
             ),
           ],

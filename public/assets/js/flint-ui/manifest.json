@@ -1,12 +1,12 @@
 {
   "mode": "page-bundles",
-  "fallback": "/assets/js/flint-ui/main.4d055be7b762.dart.js",
+  "fallback": "/assets/js/flint-ui/main.510946ad373e.dart.js",
   "pages": {
     "Fullstack": "/assets/js/flint-ui/pages/fullstack.851b88f10f49.dart.js",
-    "Home": "/assets/js/flint-ui/pages/home.ef6edfd9f3fc.dart.js",
+    "Home": "/assets/js/flint-ui/pages/home.3edb49b0f9aa.dart.js",
     "WhatsNew": "/assets/js/flint-ui/pages/whats_new.bcf54c081acc.dart.js",
     "Changelog": "/assets/js/flint-ui/pages/changelog.28620052c13d.dart.js",
-    "Client": "/assets/js/flint-ui/pages/client.c365df462f07.dart.js",
+    "Client": "/assets/js/flint-ui/pages/client.07c435487b57.dart.js",
     "Ai": "/assets/js/flint-ui/pages/ai.b85f5a9ff618.dart.js",
     "Hardware": "/assets/js/flint-ui/pages/hardware.6cb3906f2277.dart.js",
     "UiDocs": "/assets/js/flint-ui/pages/ui_docs.5112797fd970.dart.js",

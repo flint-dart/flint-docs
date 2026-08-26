@@ -20,6 +20,9 @@ class HomePage extends Component {
       body: Container(
         dartStyle: const DartStyle(
           display: Display.grid,
+          width: SizeValue.percent(100),
+          minWidth: 0,
+          overflowX: Overflow.hidden,
         ),
         children: [
           HomeHero(),

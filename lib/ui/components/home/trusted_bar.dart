@@ -7,17 +7,22 @@ class TrustedBar extends FlintComponent {
       dartStyle: const DartStyle(
         width: SizeValue.percent(100),
         maxWidth: SizeValue.percent(100),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 28),
-        md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 28)),
-        lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 32)),
-        xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 36)),
+        minWidth: 0,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        md: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 28)),
+        lg: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 56, vertical: 32)),
+        xl: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 36)),
       ),
       children: [
         Container(
           dartStyle: DartStyle(
             display: Display.grid,
             gap: 20,
-            padding: const EdgeInsets.all(22),
+            minWidth: 0,
+            padding: const EdgeInsets.all(18),
             radius: 16,
             border: Border(color: ThemeToken.color('line'), width: 1),
             background: ThemeToken.color('panel'),
@@ -36,6 +41,7 @@ class TrustedBar extends FlintComponent {
                 Color.rgba(15, 23, 42, 0.72),
               ]),
             ),
+            sm: const DartStyle(padding: EdgeInsets.all(22)),
           ),
           children: [
             Row(
@@ -45,13 +51,16 @@ class TrustedBar extends FlintComponent {
                 alignItems: AlignItems.end,
                 justifyContent: JustifyContent.between,
                 gap: 18,
+                width: SizeValue.percent(100),
+                minWidth: 0,
               ),
               children: [
                 Container(
                   dartStyle: DartStyle(
                     display: Display.grid,
                     gap: 8,
-                    minWidth: 280,
+                    minWidth: 0,
+                    flex: '1 1 360px',
                   ),
                   children: [
                     Text.span(
@@ -68,19 +77,26 @@ class TrustedBar extends FlintComponent {
                       dartStyle: DartStyle(
                         margin: const EdgeInsets.all(0),
                         maxWidth: 560,
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: 800,
                         lineHeight: 1.14,
                         color: ThemeToken.color('text'),
+                        md: const DartStyle(fontSize: 24),
                       ),
                     ),
                   ],
                 ),
                 Row(
                   dartStyle: DartStyle(
-                    display: Display.flex,
-                    flexWrap: FlexWrap.wrap,
+                    display: Display.grid,
+                    gridTemplateColumns: 'minmax(0, 1fr)',
                     gap: 8,
+                    width: SizeValue.percent(100),
+                    minWidth: 0,
+                    flex: '1 1 480px',
+                    sm: const DartStyle(
+                      gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+                    ),
                   ),
                   children: [
                     _trustPill('4 Pillars', 'Web, Client, AI, Robotics'),
@@ -94,14 +110,15 @@ class TrustedBar extends FlintComponent {
             Container(
               dartStyle: DartStyle(
                 display: Display.grid,
-                gridTemplateColumns: GridTemplateColumns.one,
+                gridTemplateColumns: 'minmax(0, 1fr)',
                 gap: 14,
                 width: const SizeValue.percent(100),
-                md: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                minWidth: 0,
+                md: const DartStyle(
+                  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
                 ),
-                lg: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.repeat(4, GridTrack.oneFr),
+                lg: const DartStyle(
+                  gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
                 ),
               ),
               children: [
@@ -154,6 +171,7 @@ class TrustedBar extends FlintComponent {
         display: Display.grid,
         gap: 10,
         width: const SizeValue.percent(100),
+        minWidth: 0,
         padding: const EdgeInsets.all(16),
         radius: 12,
         border: Border(color: ThemeToken.color('line'), width: 1),
@@ -224,7 +242,8 @@ class TrustedBar extends FlintComponent {
       dartStyle: DartStyle(
         display: Display.grid,
         gap: 2,
-        minWidth: 130,
+        width: const SizeValue.percent(100),
+        minWidth: 0,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         radius: 8,
         border: Border(color: ThemeToken.color('line'), width: 1),
