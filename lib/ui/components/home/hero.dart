@@ -1027,16 +1027,16 @@ final List<_Snippet> _snippets = [
     statusMessage: 'HTTP 200 OK • 0.4ms latency • RLS Active',
     code: '''import 'package:flint_dart/flint_dart.dart';
 
-class ProjectController extends Controller {
-  Future<Response> index() async {
-    final user = await req.auth;
+void registerRoutes(Flint app) {
+  app.get('/api/projects', (ctx) async {
+    final user = await ctx.req.auth;
     final projects = await Project()
         .where('user_id', '=', user.id)
         .withRelation('deployments')
         .get();
 
-    return res.json({'status': true, 'data': projects});
-  }
+    return ctx.res?.json({'status': true, 'data': projects});
+  });
 }''',
     lines: [
       _CodeLine([
@@ -1046,18 +1046,16 @@ class ProjectController extends Controller {
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('class ', _kw, bold: true),
-        _Token('ProjectController ', _typ, bold: true),
-        _Token('extends ', _kw),
-        _Token('Controller', _typ),
-        _Token(' {', _txt),
+        _Token('void ', _typ),
+        _Token('registerRoutes', _fn),
+        _Token('(', _txt),
+        _Token('Flint', _typ, bold: true),
+        _Token(' app) {', _txt),
       ]),
       _CodeLine([
-        _Token('  Future<', _typ),
-        _Token('Response', _typ, bold: true),
-        _Token('> ', _txt),
-        _Token('index', _fn),
-        _Token('() ', _txt),
+        _Token('  app.', _txt),
+        _Token('get', _fn),
+        _Token("('/api/projects', (ctx) ", _str),
         _Token('async', _kw, bold: true),
         _Token(' {', _txt),
       ]),
@@ -1065,7 +1063,7 @@ class ProjectController extends Controller {
         _Token('    final ', _kw),
         _Token('user = ', _txt),
         _Token('await ', _kw),
-        _Token('req.', _txt),
+        _Token('ctx.req.', _txt),
         _Token('auth', _fn),
         _Token(';', _txt),
       ]),
@@ -1094,12 +1092,12 @@ class ProjectController extends Controller {
       _CodeLine([]),
       _CodeLine([
         _Token('    return ', _kw, bold: true),
-        _Token('res.', _txt),
+        _Token('ctx.res?.', _txt),
         _Token('json', _fn),
         _Token("({'status': true, 'data': projects});", _txt),
       ]),
       _CodeLine([
-        _Token('  }', _txt),
+        _Token('  });', _txt),
       ]),
       _CodeLine([
         _Token('}', _txt),

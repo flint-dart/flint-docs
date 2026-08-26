@@ -1655,29 +1655,29 @@ final _txt = Color('#e2e8f0'); // Plain text
 
 final List<_FullstackSnippet> _snippets = [
   _FullstackSnippet(
-    tabLabel: 'controller.dart',
-    layerTitle: 'HTTP & Controller Layer',
-    filename: 'lib/controllers/project_controller.dart',
-    tag: 'Backend Route',
+    tabLabel: 'routes.dart',
+    layerTitle: 'Unified Routing & Context (ctx)',
+    filename: 'lib/routes/api_routes.dart',
+    tag: 'Context Route',
     icon: Icons.server,
     accentColor: Color('#10b981'),
-    statusMessage: 'HTTP 200 OK • 0.3ms latency • JSON Response',
+    statusMessage: 'HTTP 200 OK • 0.3ms latency • Unified Context',
     code: '''import 'package:flint_dart/flint_dart.dart';
 import 'package:app/models/project_model.dart';
 
-class ProjectController extends Controller {
-  Future<Response> index() async {
-    final user = await req.auth;
+void registerRoutes(Flint app) {
+  app.get('/api/projects', (ctx) async {
+    final user = await ctx.req.auth;
     final projects = await Project()
         .where('user_id', '=', user.id)
         .withRelation('deployments')
         .get();
 
-    return res.json({
+    return ctx.res?.json({
       'status': 'success',
       'data': projects.map((p) => p.toMap()).toList(),
     });
-  }
+  });
 }''',
     lines: [
       _FullstackLine([
@@ -1692,18 +1692,16 @@ class ProjectController extends Controller {
       ]),
       _FullstackLine([]),
       _FullstackLine([
-        _FullstackToken('class ', _kw, bold: true),
-        _FullstackToken('ProjectController ', _typ, bold: true),
-        _FullstackToken('extends ', _kw),
-        _FullstackToken('Controller', _typ),
-        _FullstackToken(' {', _txt),
+        _FullstackToken('void ', _typ),
+        _FullstackToken('registerRoutes', _fn),
+        _FullstackToken('(', _txt),
+        _FullstackToken('Flint', _typ, bold: true),
+        _FullstackToken(' app) {', _txt),
       ]),
       _FullstackLine([
-        _FullstackToken('  Future<', _typ),
-        _FullstackToken('Response', _typ, bold: true),
-        _FullstackToken('> ', _txt),
-        _FullstackToken('index', _fn),
-        _FullstackToken('() ', _txt),
+        _FullstackToken('  app.', _txt),
+        _FullstackToken('get', _fn),
+        _FullstackToken("('/api/projects', (ctx) ", _str),
         _FullstackToken('async', _kw, bold: true),
         _FullstackToken(' {', _txt),
       ]),
@@ -1711,7 +1709,7 @@ class ProjectController extends Controller {
         _FullstackToken('    final ', _kw),
         _FullstackToken('user = ', _txt),
         _FullstackToken('await ', _kw),
-        _FullstackToken('req.', _txt),
+        _FullstackToken('ctx.req.', _txt),
         _FullstackToken('auth', _fn),
         _FullstackToken(';', _txt),
       ]),
@@ -1740,7 +1738,7 @@ class ProjectController extends Controller {
       _FullstackLine([]),
       _FullstackLine([
         _FullstackToken('    return ', _kw, bold: true),
-        _FullstackToken('res.', _txt),
+        _FullstackToken('ctx.res?.', _txt),
         _FullstackToken('json', _fn),
         _FullstackToken('({', _txt),
       ]),
@@ -1762,7 +1760,7 @@ class ProjectController extends Controller {
         _FullstackToken('    });', _txt),
       ]),
       _FullstackLine([
-        _FullstackToken('  }', _txt),
+        _FullstackToken('  });', _txt),
       ]),
       _FullstackLine([
         _FullstackToken('}', _txt),
@@ -1887,23 +1885,35 @@ class DashboardPage extends Component {
     icon: Icons.database,
     accentColor: Color('#3b82f6'),
     statusMessage: 'PostgreSQL Active • Relations Typed • RLS Policy Enforced',
-    code: '''import 'package:flint_dart/flint_dart.dart';
+    code: '''import 'package:flint_dart/model.dart';
+import 'package:flint_dart/schema.dart';
 
 class Project extends Model<Project> {
+  Project() : super(() => Project());
+
+  String get name => getAttribute('name') ?? '';
+  String get status => getAttribute('status') ?? 'draft';
+  String get userId => getAttribute('user_id') ?? '';
+
   @override
-  String get table => 'projects';
-
-  int? id;
-  String? name;
-  String? userId;
-  String? status;
-
-  HasMany<Deployment> get deployments => hasMany(Deployment.new);
+  Table get table => Table(
+        name: 'projects',
+        columns: [
+          Column(name: 'name', type: ColumnType.string, length: 255),
+          Column(name: 'status', type: ColumnType.string, length: 50),
+          Column(name: 'user_id', type: ColumnType.string, length: 100),
+        ],
+      );
 }''',
     lines: [
       _FullstackLine([
         _FullstackToken('import ', _kw, bold: true),
-        _FullstackToken("'package:flint_dart/flint_dart.dart'", _str),
+        _FullstackToken("'package:flint_dart/model.dart'", _str),
+        _FullstackToken(';', _txt),
+      ]),
+      _FullstackLine([
+        _FullstackToken('import ', _kw, bold: true),
+        _FullstackToken("'package:flint_dart/schema.dart'", _str),
         _FullstackToken(';', _txt),
       ]),
       _FullstackLine([]),
@@ -1915,35 +1925,71 @@ class Project extends Model<Project> {
         _FullstackToken(' {', _txt),
       ]),
       _FullstackLine([
-        _FullstackToken('  @override', _fn),
+        _FullstackToken('  Project() : ', _txt),
+        _FullstackToken('super', _kw, bold: true),
+        _FullstackToken('(() => ', _txt),
+        _FullstackToken('Project', _typ),
+        _FullstackToken('());', _txt),
+      ]),
+      _FullstackLine([]),
+      _FullstackLine([
+        _FullstackToken('  String ', _typ),
+        _FullstackToken('get ', _kw),
+        _FullstackToken('name => ', _txt),
+        _FullstackToken('getAttribute', _fn),
+        _FullstackToken("('name') ?? ", _str),
+        _FullstackToken("''", _str),
+        _FullstackToken(';', _txt),
       ]),
       _FullstackLine([
         _FullstackToken('  String ', _typ),
         _FullstackToken('get ', _kw),
-        _FullstackToken('table => ', _txt),
-        _FullstackToken("'projects'", _str),
+        _FullstackToken('status => ', _txt),
+        _FullstackToken('getAttribute', _fn),
+        _FullstackToken("('status') ?? ", _str),
+        _FullstackToken("'draft'", _str),
         _FullstackToken(';', _txt),
       ]),
       _FullstackLine([]),
       _FullstackLine([
-        _FullstackToken('  int? id;', _txt),
+        _FullstackToken('  @override', _fn),
       ]),
       _FullstackLine([
-        _FullstackToken('  String? name;', _txt),
-      ]),
-      _FullstackLine([
-        _FullstackToken('  String? userId;', _txt),
-      ]),
-      _FullstackLine([
-        _FullstackToken('  String? status;', _txt),
-      ]),
-      _FullstackLine([]),
-      _FullstackLine([
-        _FullstackToken('  HasMany<Deployment> ', _typ),
+        _FullstackToken('  Table ', _typ),
         _FullstackToken('get ', _kw),
-        _FullstackToken('deployments => ', _txt),
-        _FullstackToken('hasMany', _fn),
-        _FullstackToken('(Deployment.new);', _txt),
+        _FullstackToken('table => ', _txt),
+        _FullstackToken('Table', _typ, bold: true),
+        _FullstackToken('(', _txt),
+      ]),
+      _FullstackLine([
+        _FullstackToken('        name: ', _txt),
+        _FullstackToken("'projects'", _str),
+        _FullstackToken(',', _txt),
+      ]),
+      _FullstackLine([
+        _FullstackToken('        columns: [', _txt),
+      ]),
+      _FullstackLine([
+        _FullstackToken('          Column(name: ', _txt),
+        _FullstackToken("'name'", _str),
+        _FullstackToken(', type: ', _txt),
+        _FullstackToken('ColumnType.', _typ),
+        _FullstackToken('string', _txt),
+        _FullstackToken(', length: 255),', _txt),
+      ]),
+      _FullstackLine([
+        _FullstackToken('          Column(name: ', _txt),
+        _FullstackToken("'status'", _str),
+        _FullstackToken(', type: ', _txt),
+        _FullstackToken('ColumnType.', _typ),
+        _FullstackToken('string', _txt),
+        _FullstackToken(', length: 50),', _txt),
+      ]),
+      _FullstackLine([
+        _FullstackToken('        ],', _txt),
+      ]),
+      _FullstackLine([
+        _FullstackToken('      );', _txt),
       ]),
       _FullstackLine([
         _FullstackToken('}', _txt),
