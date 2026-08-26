@@ -18,22 +18,21 @@ class WorkflowSection extends Component {
             display: Display.grid,
             gridTemplateColumns: GridTemplateColumns.one,
             alignItems: AlignItems.center,
-            gap: 36,
+            gap: 32,
+            width: const SizeValue.percent(100),
             lg: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.tracks([
-                GridTrack.minmax(420, GridTrack.oneFr),
-                GridTrack.minmax(SizeValue.zero, SizeValue.fr(0.9)),
-              ]),
+              gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
               gap: 48,
             ),
           ),
           children: [
             _ecosystemFlowVisual(),
             Container(
-              dartStyle: DartStyle(
+              dartStyle: const DartStyle(
                 display: Display.grid,
                 gap: 14,
-                minWidth: 300,
+                minWidth: 0,
+                width: SizeValue.percent(100),
               ),
               children: [
                 Row(

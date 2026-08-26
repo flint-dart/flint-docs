@@ -152,7 +152,7 @@ class HomeHero extends StatefulComponent {
           ),
           children: [
             _topAnnouncementPill(),
-            Row(
+            Container(
               dartStyle: DartStyle(
                 display: Display.grid,
                 gridTemplateColumns: GridTemplateColumns.one,
@@ -293,10 +293,10 @@ class HomeHero extends StatefulComponent {
         Text.h1(
           'Flint Ecosystem',
           dartStyle: DartStyle(
-            margin: const EdgeInsets.only(top: 18, bottom: 0),
+            margin: const EdgeInsets.only(top: 14, bottom: 0),
             maxWidth: 820,
-            fontSize: const SizeValue('clamp(3rem, 6.2vw, 5.2rem)'),
-            lineHeight: 0.98,
+            fontSize: const SizeValue('clamp(2.1rem, 5.5vw, 4.8rem)'),
+            lineHeight: 1.05,
             fontWeight: 900,
             color: Color('transparent'),
             background: Gradient.linear(
@@ -314,22 +314,24 @@ class HomeHero extends StatefulComponent {
         Text.h2(
           'One language across your entire stack: Full-Stack Web, Client SDK, Native AI, and Robotics.',
           dartStyle: DartStyle(
-            margin: const EdgeInsets.only(top: 16, bottom: 0),
+            margin: const EdgeInsets.only(top: 14, bottom: 0),
             maxWidth: 720,
-            fontSize: 23,
-            lineHeight: 1.28,
+            fontSize: 18,
+            lineHeight: 1.3,
             fontWeight: 800,
             color: ThemeToken.color('text'),
+            md: const DartStyle(fontSize: 23),
           ),
         ),
         Text.p(
           'Build end-to-end full-stack web applications with Flint Dart, universal cross-platform clients with Flint Client, autonomous AI agents with Flint AI, and connected hardware & robotics with Flint Hardware.',
           dartStyle: DartStyle(
-            margin: const EdgeInsets.only(top: 16, bottom: 0),
+            margin: const EdgeInsets.only(top: 14, bottom: 0),
             maxWidth: 680,
-            fontSize: 16,
-            lineHeight: 1.7,
+            fontSize: 14,
+            lineHeight: 1.65,
             color: ThemeToken.color('muted'),
+            md: const DartStyle(fontSize: 16),
           ),
         ),
         // Interactive Install Command Box
@@ -813,9 +815,19 @@ class HomeHero extends StatefulComponent {
         backdropFilter: StyleFilter.blur(16),
       ),
       children: [
-        Grid(
-          columns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: 16,
+        Container(
+          dartStyle: DartStyle(
+            display: Display.grid,
+            gridTemplateColumns: GridTemplateColumns.one,
+            gap: 16,
+            width: const SizeValue.percent(100),
+            md: DartStyle(
+              gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+            ),
+            lg: DartStyle(
+              gridTemplateColumns: GridTemplateColumns.repeat(4, GridTrack.oneFr),
+            ),
+          ),
           children: [
             _proofPill(
               Icons.server,
@@ -864,6 +876,7 @@ class HomeHero extends StatefulComponent {
           dartStyle: DartStyle(
             width: 36,
             height: 36,
+            flexShrink: 0,
             display: Display.grid,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.center,
@@ -874,13 +887,16 @@ class HomeHero extends StatefulComponent {
           child: Icon(icon, size: 18),
         ),
         Column(
-          dartStyle: const DartStyle(gap: 1),
+          dartStyle: const DartStyle(gap: 1, minWidth: 0),
           children: [
             Text.strong(
               title,
               dartStyle: DartStyle(
                 fontSize: 13,
                 color: ThemeToken.color('text'),
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
               ),
             ),
             Text.span(
@@ -888,6 +904,9 @@ class HomeHero extends StatefulComponent {
               dartStyle: DartStyle(
                 fontSize: 11,
                 color: ThemeToken.color('muted'),
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
               ),
             ),
           ],

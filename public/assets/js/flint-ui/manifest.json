@@ -1,27 +1,14 @@
 {
   "mode": "page-bundles",
-  "fallback": "/assets/js/flint-ui/main.adacf105e351.dart.js",
+  "fallback": "/assets/js/flint-ui/main.4d055be7b762.dart.js",
   "pages": {
-    "Home": "/assets/js/flint-ui/pages/home.1ee1165edbdc.dart.js",
-    "Fullstack": "/assets/js/flint-ui/pages/fullstack.b30daf627fd4.dart.js",
+    "Fullstack": "/assets/js/flint-ui/pages/fullstack.851b88f10f49.dart.js",
+    "Home": "/assets/js/flint-ui/pages/home.ef6edfd9f3fc.dart.js",
     "WhatsNew": "/assets/js/flint-ui/pages/whats_new.bcf54c081acc.dart.js",
     "Changelog": "/assets/js/flint-ui/pages/changelog.28620052c13d.dart.js",
-    "Client": "/assets/js/flint-ui/pages/client.f40b4e74a733.dart.js",
-    "Ai": "/assets/js/flint-ui/pages/ai.8951a049940b.dart.js",
-    "Hardware": "/assets/js/flint-ui/pages/hardware.4caa9ad6cf03.dart.js",
-    "UiDocs": "/assets/js/flint-ui/pages/ui_docs.5112797fd970.dart.js",
-    "Examples": "/assets/js/flint-ui/pages/examples.efda9f2c0531.dart.js",
-    "Guides": "/assets/js/flint-ui/pages/guides.86da3a488ed0.dart.js",
-    "Api": "/assets/js/flint-ui/pages/api.285680ffeff0.dart.js",
-    "Questions": "/assets/js/flint-ui/pages/questions.1d69032d61ff.dart.js",
-    "AskQuestion": "/assets/js/flint-ui/pages/ask_question.862cc2c3754b.dart.js",
-    "Blog": "/assets/js/flint-ui/pages/blog.f10b090ad3d2.dart.js",
-    "BlogDetail": "/assets/js/flint-ui/pages/blog_detail.942174bc4272.dart.js",
-    "BlogWrite": "/assets/js/flint-ui/pages/blog_write.84c16bf16bf8.dart.js",
-    "QuestionDetail": "/assets/js/flint-ui/pages/question_detail.d9ae0a693862.dart.js",
-    "Showcase": "/assets/js/flint-ui/pages/showcase.29514d90fba4.dart.js",
-    "ShowcaseDetail": "/assets/js/flint-ui/pages/showcase_detail.b7dbc73cbb58.dart.js",
-    "SubmitBuild": "/assets/js/flint-ui/pages/submit_build.2e9d2ace7d50.dart.js",
-    "Content": "/assets/js/flint-ui/pages/content.4fa7e31b1c91.dart.js"
+    "Client": "/assets/js/flint-ui/pages/client.c365df462f07.dart.js",
+    "Ai": "/assets/js/flint-ui/pages/ai.b85f5a9ff618.dart.js",
+    "Hardware": "/assets/js/flint-ui/pages/hardware.6cb3906f2277.dart.js",
+    "UiDocs": "/assets/js/flint-ui/pages/ui_docs.5112797fd970.dart.js"
   }
 }

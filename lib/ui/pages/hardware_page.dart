@@ -137,7 +137,7 @@ class HardwarePage extends StatefulComponent {
             xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72)),
           ),
           children: [
-            Row(
+            Container(
               dartStyle: DartStyle(
                 display: Display.grid,
                 gridTemplateColumns: GridTemplateColumns.one,

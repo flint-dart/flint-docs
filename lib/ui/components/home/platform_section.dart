@@ -66,12 +66,13 @@ class PlatformSection extends Component {
             ),
           ],
         ),
-        Row(
+        Container(
           dartStyle: DartStyle(
             display: Display.grid,
             gridTemplateColumns: GridTemplateColumns.one,
             gap: 16,
-            margin: EdgeInsets.only(top: 32, bottom: 0),
+            width: const SizeValue.percent(100),
+            margin: const EdgeInsets.only(top: 32, bottom: 0),
             md: DartStyle(
                 gridTemplateColumns:
                     GridTemplateColumns.repeat(2, GridTrack.oneFr)),

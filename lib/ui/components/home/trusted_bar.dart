@@ -91,12 +91,18 @@ class TrustedBar extends FlintComponent {
                 ),
               ],
             ),
-            Row(
+            Container(
               dartStyle: DartStyle(
-                display: Display.flex,
-                flexWrap: FlexWrap.wrap,
-                justifyContent: JustifyContent.center,
+                display: Display.grid,
+                gridTemplateColumns: GridTemplateColumns.one,
                 gap: 14,
+                width: const SizeValue.percent(100),
+                md: DartStyle(
+                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                ),
+                lg: DartStyle(
+                  gridTemplateColumns: GridTemplateColumns.repeat(4, GridTrack.oneFr),
+                ),
               ),
               children: [
                 _signal(
@@ -147,7 +153,7 @@ class TrustedBar extends FlintComponent {
       dartStyle: DartStyle(
         display: Display.grid,
         gap: 10,
-        minWidth: 240,
+        width: const SizeValue.percent(100),
         padding: const EdgeInsets.all(16),
         radius: 12,
         border: Border(color: ThemeToken.color('line'), width: 1),

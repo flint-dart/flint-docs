@@ -38,6 +38,8 @@ class FullstackPage extends StatefulComponent {
       body: Container(
         dartStyle: DartStyle(
           width: SizeValue.percent(100),
+          minWidth: 0,
+          overflowX: Overflow.hidden,
           background: ThemeToken.color('bg'),
           color: ThemeToken.color('text'),
           display: Display.flex,
@@ -129,25 +131,32 @@ class FullstackPage extends StatefulComponent {
             zIndex: 2,
             width: SizeValue.percent(100),
             maxWidth: SizeValue.percent(100),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-            md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 56)),
-            lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 64)),
-            xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72)),
+            minWidth: 0,
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+            md: DartStyle(
+                padding: EdgeInsets.symmetric(horizontal: 36, vertical: 56)),
+            lg: DartStyle(
+                padding: EdgeInsets.symmetric(horizontal: 56, vertical: 64)),
+            xl: DartStyle(
+                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72)),
           ),
           children: [
-            Row(
+            Container(
               dartStyle: DartStyle(
                 display: Display.grid,
                 gridTemplateColumns: GridTemplateColumns.one,
                 gap: 32,
                 alignItems: AlignItems.center,
                 width: const SizeValue.percent(100),
+                minWidth: 0,
                 lg: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
                   gap: 40,
                 ),
                 xl: DartStyle(
-                  gridTemplateColumns: GridTemplateColumns.repeat(2, GridTrack.oneFr),
+                  gridTemplateColumns:
+                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
                   gap: 64,
                 ),
               ),
@@ -164,15 +173,22 @@ class FullstackPage extends StatefulComponent {
 
   FlintNode _heroLeftText(String installCmd) {
     return Column(
-      dartStyle: const DartStyle(gap: 0, alignItems: AlignItems.start),
+      dartStyle: const DartStyle(
+        gap: 0,
+        alignItems: AlignItems.start,
+        minWidth: 0,
+        width: SizeValue.percent(100),
+      ),
       children: [
         Container(
           dartStyle: DartStyle(
             display: Display.inlineFlex,
             alignItems: AlignItems.center,
+            flexWrap: FlexWrap.wrap,
             gap: 8,
+            maxWidth: SizeValue.percent(100),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            radius: 999,
+            radius: 14,
             background: Color.rgba(16, 185, 129, 0.12),
             border: Border.all(color: Color.rgba(16, 185, 129, 0.28)),
             color: Color('#10b981'),
@@ -190,8 +206,9 @@ class FullstackPage extends StatefulComponent {
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 18, bottom: 0),
             maxWidth: 820,
-            fontSize: const SizeValue('clamp(2.5rem, 5.2vw, 4.4rem)'),
-            lineHeight: 1.05,
+            fontSize: 36,
+            lineHeight: 1.08,
+            letterSpacing: -1.2,
             fontWeight: 900,
             color: Color('transparent'),
             background: Gradient.linear(
@@ -204,6 +221,10 @@ class FullstackPage extends StatefulComponent {
             ),
             backgroundClip: BackgroundClip.text,
             webkitBackgroundClip: BackgroundClip.text,
+            sm: const DartStyle(fontSize: 42),
+            md: const DartStyle(fontSize: 52),
+            lg: const DartStyle(fontSize: 60),
+            xl: const DartStyle(fontSize: 70),
           ),
         ),
         Text.h2(
@@ -211,10 +232,11 @@ class FullstackPage extends StatefulComponent {
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 18, bottom: 0),
             maxWidth: 720,
-            fontSize: 22,
+            fontSize: 18,
             lineHeight: 1.35,
             fontWeight: 800,
             color: ThemeToken.color('text'),
+            md: const DartStyle(fontSize: 22),
           ),
         ),
         Text.p(
@@ -222,9 +244,10 @@ class FullstackPage extends StatefulComponent {
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 16, bottom: 0),
             maxWidth: 680,
-            fontSize: 16,
+            fontSize: 15,
             lineHeight: 1.7,
             color: ThemeToken.color('muted'),
+            md: const DartStyle(fontSize: 16),
           ),
         ),
         // CLI Quickstart Pill
@@ -242,6 +265,7 @@ class FullstackPage extends StatefulComponent {
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
             gap: 12,
+            minWidth: 0,
             backdropFilter: StyleFilter.blur(14),
           ),
           children: [
@@ -252,6 +276,7 @@ class FullstackPage extends StatefulComponent {
                 gap: 10,
                 minWidth: 0,
                 overflow: 'hidden',
+                flex: '1 1 0',
               ),
               children: [
                 Text.span(
@@ -284,7 +309,8 @@ class FullstackPage extends StatefulComponent {
                 display: Display.inlineFlex,
                 alignItems: AlignItems.center,
                 gap: 6,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 radius: 6,
                 background: _copiedCmd
                     ? Color.rgba(16, 185, 129, 0.25)
@@ -292,6 +318,7 @@ class FullstackPage extends StatefulComponent {
                 color: _copiedCmd ? Color('#34d399') : Colors.white,
                 fontSize: 12,
                 fontWeight: 800,
+                flexShrink: 0,
                 transition: StyleTransition.all(milliseconds: 150),
               ),
               children: [
@@ -308,7 +335,10 @@ class FullstackPage extends StatefulComponent {
         // Action CTAs
         Wrap(
           gap: 12,
-          dartStyle: const DartStyle(margin: EdgeInsets.only(top: 24)),
+          dartStyle: const DartStyle(
+            width: SizeValue.percent(100),
+            margin: EdgeInsets.only(top: 24),
+          ),
           children: [
             Link(
               href: '/guides/installation',
@@ -318,7 +348,10 @@ class FullstackPage extends StatefulComponent {
                 alignItems: AlignItems.center,
                 gap: 8,
                 minHeight: 46,
-                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                width: SizeValue.percent(100),
+                justifyContent: JustifyContent.center,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
                 radius: 8,
                 fontSize: 15,
                 fontWeight: 900,
@@ -328,6 +361,7 @@ class FullstackPage extends StatefulComponent {
                   spread: -10,
                   color: Color.rgba(16, 185, 129, 0.5),
                 ),
+                sm: const DartStyle(width: SizeValue.auto),
               ),
               children: [
                 Text.span('Quickstart in 30s'),
@@ -343,10 +377,13 @@ class FullstackPage extends StatefulComponent {
                 alignItems: AlignItems.center,
                 gap: 8,
                 minHeight: 46,
+                width: SizeValue.percent(100),
+                justifyContent: JustifyContent.center,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 radius: 8,
                 fontSize: 14,
                 fontWeight: 800,
+                sm: DartStyle(width: SizeValue.auto),
               ),
               children: [
                 Icon(Icons.book, size: 16),
@@ -362,10 +399,13 @@ class FullstackPage extends StatefulComponent {
                 alignItems: AlignItems.center,
                 gap: 8,
                 minHeight: 46,
+                width: SizeValue.percent(100),
+                justifyContent: JustifyContent.center,
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 radius: 8,
                 fontSize: 14,
                 fontWeight: 800,
+                sm: DartStyle(width: SizeValue.auto),
               ),
               children: [
                 Icon(Icons.sparkles, size: 16),
@@ -384,6 +424,7 @@ class FullstackPage extends StatefulComponent {
         position: Position.relative,
         zIndex: 2,
         width: SizeValue.percent(100),
+        minWidth: 0,
         radius: 12,
         border: Border.all(color: Color.rgba(56, 189, 248, 0.25)),
         background: Color('#050b0a'),
@@ -401,19 +442,23 @@ class FullstackPage extends StatefulComponent {
         Container(
           dartStyle: DartStyle(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            borderBottom: Border(color: Color.rgba(255, 255, 255, 0.1), width: 1),
+            borderBottom:
+                Border(color: Color.rgba(255, 255, 255, 0.1), width: 1),
             background: Color.rgba(255, 255, 255, 0.03),
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
             gap: 12,
+            minWidth: 0,
           ),
           children: [
             Row(
               dartStyle: const DartStyle(
-                display: Display.flex,
                 alignItems: AlignItems.center,
                 gap: 6,
+                flexShrink: 0,
+                display: Display.none,
+                sm: DartStyle(display: Display.flex),
               ),
               children: [
                 _macDot(const Color('#ef4444')),
@@ -425,8 +470,11 @@ class FullstackPage extends StatefulComponent {
               dartStyle: const DartStyle(
                 display: Display.flex,
                 alignItems: AlignItems.center,
-                flexWrap: FlexWrap.wrap,
+                flexWrap: FlexWrap.nowrap,
                 gap: 4,
+                minWidth: 0,
+                flex: '1 1 0',
+                overflow: Overflow.auto,
               ),
               children: [
                 for (var i = 0; i < _snippets.length; i++)
@@ -438,17 +486,21 @@ class FullstackPage extends StatefulComponent {
                       display: Display.inlineFlex,
                       alignItems: AlignItems.center,
                       gap: 6,
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
                       radius: 6,
                       fontSize: 12,
                       fontWeight: _activeTab == i ? 900 : 600,
-                      color: _activeTab == i ? Colors.white : const Color('#94a3b8'),
+                      color: _activeTab == i
+                          ? Colors.white
+                          : const Color('#94a3b8'),
                       background: _activeTab == i
                           ? Color.rgba(255, 255, 255, 0.1)
                           : Colors.transparent,
                       borderBottom: _activeTab == i
                           ? Border(color: _snippets[i].accentColor, width: 2)
                           : Border.none,
+                      flexShrink: 0,
                     ),
                     children: [
                       Icon(_snippets[i].icon,
@@ -472,6 +524,7 @@ class FullstackPage extends StatefulComponent {
                 radius: 6,
                 color: _copiedCode ? Color('#34d399') : Color('#94a3b8'),
                 background: Color.rgba(255, 255, 255, 0.05),
+                flexShrink: 0,
               ),
               children: [
                 Icon(
@@ -487,10 +540,13 @@ class FullstackPage extends StatefulComponent {
           dartStyle: DartStyle(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             background: Color.rgba(255, 255, 255, 0.02),
-            borderBottom: Border(color: Color.rgba(255, 255, 255, 0.06), width: 1),
+            borderBottom:
+                Border(color: Color.rgba(255, 255, 255, 0.06), width: 1),
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
+            gap: 10,
+            minWidth: 0,
           ),
           children: [
             Row(
@@ -498,6 +554,8 @@ class FullstackPage extends StatefulComponent {
                 display: Display.flex,
                 alignItems: AlignItems.center,
                 gap: 8,
+                minWidth: 0,
+                flex: '1 1 0',
               ),
               children: [
                 Icon(snippet.icon, size: 16, color: snippet.accentColor),
@@ -507,6 +565,7 @@ class FullstackPage extends StatefulComponent {
                     fontSize: 13,
                     fontWeight: 900,
                     color: Colors.white,
+                    flexShrink: 0,
                   ),
                 ),
                 Text.span(
@@ -515,6 +574,10 @@ class FullstackPage extends StatefulComponent {
                     fontSize: 12,
                     color: Color('#94a3b8'),
                     fontFamily: FontFamily.monospace,
+                    minWidth: 0,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
                   ),
                 ),
               ],
@@ -527,6 +590,7 @@ class FullstackPage extends StatefulComponent {
                 color: Color('#34d399'),
                 fontSize: 11,
                 fontWeight: 800,
+                flexShrink: 0,
               ),
               children: [
                 Text.span(snippet.tag),
@@ -537,14 +601,16 @@ class FullstackPage extends StatefulComponent {
         // Code Block
         Container(
           dartStyle: const DartStyle(
-            padding: EdgeInsets.all(20),
-            maxHeight: 380,
+            padding: EdgeInsets.all(14),
+            maxHeight: 320,
             overflow: 'auto',
             fontFamily: FontFamily.monospace,
-            fontSize: 13,
+            fontSize: 12,
             lineHeight: 1.65,
             background: Color('#040807'),
             whiteSpace: 'pre',
+            sm: DartStyle(
+                padding: EdgeInsets.all(20), fontSize: 13, maxHeight: 380),
           ),
           children: [
             _syntaxBlock(snippet.lines),
@@ -559,6 +625,8 @@ class FullstackPage extends StatefulComponent {
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
+            gap: 10,
+            minWidth: 0,
           ),
           children: [
             Row(
@@ -566,6 +634,8 @@ class FullstackPage extends StatefulComponent {
                 display: Display.flex,
                 alignItems: AlignItems.center,
                 gap: 8,
+                minWidth: 0,
+                flex: '1 1 0',
               ),
               children: [
                 Container(
@@ -582,6 +652,10 @@ class FullstackPage extends StatefulComponent {
                     fontSize: 11,
                     color: Color('#94a3b8'),
                     fontFamily: FontFamily.monospace,
+                    minWidth: 0,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
                   ),
                 ),
               ],
@@ -592,6 +666,9 @@ class FullstackPage extends StatefulComponent {
                 fontSize: 11,
                 fontWeight: 800,
                 color: Color('#64748b'),
+                display: Display.none,
+                flexShrink: 0,
+                sm: DartStyle(display: Display.inlineBlock),
               ),
             ),
           ],
@@ -608,10 +685,14 @@ class FullstackPage extends StatefulComponent {
       dartStyle: const DartStyle(
         width: SizeValue.percent(100),
         maxWidth: SizeValue.percent(100),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 48),
-        md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 56)),
-        lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 64)),
-        xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72)),
+        minWidth: 0,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+        md: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 56)),
+        lg: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 56, vertical: 64)),
+        xl: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 72)),
         borderBottom: Border(color: Color.rgba(255, 255, 255, 0.08), width: 1),
       ),
       children: [
@@ -630,10 +711,11 @@ class FullstackPage extends StatefulComponent {
             Text.h2(
               'One Language From DOM to Database',
               dartStyle: DartStyle(
-                fontSize: 32,
+                fontSize: 28,
                 fontWeight: 900,
                 color: ThemeToken.color('text'),
                 textAlign: TextAlign.center,
+                md: const DartStyle(fontSize: 32),
               ),
             ),
             Text.p(
@@ -650,15 +732,28 @@ class FullstackPage extends StatefulComponent {
         Container(
           dartStyle: const DartStyle(margin: EdgeInsets.only(top: 36)),
           children: [
-            Grid(
-              columns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: 16,
+            Container(
+              dartStyle: const DartStyle(
+                display: Display.grid,
+                gridTemplateColumns: 'minmax(0, 1fr)',
+                gap: 16,
+                md: DartStyle(
+                  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                ),
+                lg: DartStyle(
+                  gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+                ),
+                xl: DartStyle(
+                  gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+                ),
+              ),
               children: [
                 _pipelineNode(
                   step: '01',
                   title: 'Declarative Web UI',
                   sub: 'SSR & Reactive Signals',
-                  desc: 'Pure Dart widgets rendered on server or client with instant hydration.',
+                  desc:
+                      'Pure Dart widgets rendered on server or client with instant hydration.',
                   icon: Icons.palette,
                   accent: Color('#10b981'),
                 ),
@@ -666,7 +761,8 @@ class FullstackPage extends StatefulComponent {
                   step: '02',
                   title: 'Routing & Auth Guard',
                   sub: 'Middleware Pipeline',
-                  desc: 'Typed route params, session/JWT auth, and rate-limiting filters.',
+                  desc:
+                      'Typed route params, session/JWT auth, and rate-limiting filters.',
                   icon: Icons.shield,
                   accent: Color('#06b6d4'),
                 ),
@@ -674,7 +770,8 @@ class FullstackPage extends StatefulComponent {
                   step: '03',
                   title: 'Controller & Service',
                   sub: 'Business Logic Core',
-                  desc: 'Controllers receive typed requests and return JSON or SSR Page views.',
+                  desc:
+                      'Controllers receive typed requests and return JSON or SSR Page views.',
                   icon: Icons.server,
                   accent: Color('#3b82f6'),
                 ),
@@ -682,7 +779,8 @@ class FullstackPage extends StatefulComponent {
                   step: '04',
                   title: 'ORM & RLS Gateway',
                   sub: 'Row-Level Security',
-                  desc: 'PostgreSQL / MySQL / SQLite query builder with automated tenant isolation.',
+                  desc:
+                      'PostgreSQL / MySQL / SQLite query builder with automated tenant isolation.',
                   icon: Icons.database,
                   accent: Color('#8b5cf6'),
                 ),
@@ -690,7 +788,8 @@ class FullstackPage extends StatefulComponent {
                   step: '05',
                   title: 'Realtime Channels',
                   sub: 'WebSocket Pub/Sub',
-                  desc: 'Sub-millisecond broadcast channels for real-time live events.',
+                  desc:
+                      'Sub-millisecond broadcast channels for real-time live events.',
                   icon: Icons.zap,
                   accent: Color('#f59e0b'),
                 ),
@@ -712,7 +811,7 @@ class FullstackPage extends StatefulComponent {
   }) {
     return Container(
       dartStyle: DartStyle(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(18),
         radius: 12,
         border: Border.all(color: ThemeToken.color('line')),
         background: ThemeToken.color('panel'),
@@ -720,6 +819,8 @@ class FullstackPage extends StatefulComponent {
         flexDirection: FlexDirection.column,
         gap: 10,
         transition: StyleTransition.all(milliseconds: 180),
+        minWidth: 0,
+        md: const DartStyle(padding: EdgeInsets.all(20)),
         hover: DartStyle(
           border: Border.all(color: accent),
           transform: StyleTransform.translateY(-3),
@@ -798,10 +899,14 @@ class FullstackPage extends StatefulComponent {
       dartStyle: const DartStyle(
         width: SizeValue.percent(100),
         maxWidth: SizeValue.percent(100),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 64),
-        md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 72)),
-        lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
-        xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
+        minWidth: 0,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 56),
+        md: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 72)),
+        lg: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
+        xl: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
       ),
       children: [
         Column(
@@ -819,10 +924,11 @@ class FullstackPage extends StatefulComponent {
             Text.h2(
               'Everything You Need For Production Web Apps',
               dartStyle: DartStyle(
-                fontSize: 34,
+                fontSize: 28,
                 fontWeight: 900,
                 color: ThemeToken.color('text'),
                 textAlign: TextAlign.center,
+                md: const DartStyle(fontSize: 34),
               ),
             ),
             Text.p(
@@ -837,16 +943,29 @@ class FullstackPage extends StatefulComponent {
           ],
         ),
         Container(
-          dartStyle: const DartStyle(margin: EdgeInsets.only(top: 48)),
+          dartStyle: const DartStyle(
+            margin: EdgeInsets.only(top: 36),
+            md: DartStyle(margin: EdgeInsets.only(top: 48)),
+          ),
           children: [
-            Grid(
-              columns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: 24,
+            Container(
+              dartStyle: const DartStyle(
+                display: Display.grid,
+                gridTemplateColumns: 'minmax(0, 1fr)',
+                gap: 24,
+                md: DartStyle(
+                  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                ),
+                xl: DartStyle(
+                  gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+                ),
+              ),
               children: [
                 _pillarCard(
                   icon: Icons.server,
                   title: 'Sub-Millisecond Controller Routing',
-                  desc: 'High-speed asynchronous HTTP router with parametric matching, route grouping, middleware pipelines, and automatic CORS & rate-limiting.',
+                  desc:
+                      'High-speed asynchronous HTTP router with parametric matching, route grouping, middleware pipelines, and automatic CORS & rate-limiting.',
                   bullets: [
                     'Controller routing with req.params, req.query, req.json()',
                     'Typed middleware guards for auth & permissions',
@@ -857,7 +976,8 @@ class FullstackPage extends StatefulComponent {
                 _pillarCard(
                   icon: Icons.palette,
                   title: 'Pure Dart Declarative UI & SSR',
-                  desc: 'Compose web pages using pure Dart components. Server-Side Render (SSR) for blazing SEO speeds with lightweight client hydration.',
+                  desc:
+                      'Compose web pages using pure Dart components. Server-Side Render (SSR) for blazing SEO speeds with lightweight client hydration.',
                   bullets: [
                     'Zero HTML/JSX templates: 100% typed Dart widget tree',
                     'Tokenized design system with instant dark/light themes',
@@ -868,7 +988,8 @@ class FullstackPage extends StatefulComponent {
                 _pillarCard(
                   icon: Icons.database,
                   title: 'Flint ORM & Row-Level Security',
-                  desc: 'Fluent query builder for PostgreSQL, MySQL, and SQLite. Built-in Row-Level Security (RLS) guarantees automated tenant isolation.',
+                  desc:
+                      'Fluent query builder for PostgreSQL, MySQL, and SQLite. Built-in Row-Level Security (RLS) guarantees automated tenant isolation.',
                   bullets: [
                     'Type-safe relations: hasMany, belongsTo, withRelation()',
                     'Automatic migration runner and seeder pipelines',
@@ -879,7 +1000,8 @@ class FullstackPage extends StatefulComponent {
                 _pillarCard(
                   icon: Icons.zap,
                   title: 'Real-Time WebSockets & Channels',
-                  desc: 'Multiplex live WebSocket connections into named channels. Stream live events, user presence, and collaborative updates seamlessly.',
+                  desc:
+                      'Multiplex live WebSocket connections into named channels. Stream live events, user presence, and collaborative updates seamlessly.',
                   bullets: [
                     'Channel broadcast pub/sub with room filtering',
                     'Live heartbeat & automatic reconnect handlers',
@@ -890,7 +1012,8 @@ class FullstackPage extends StatefulComponent {
                 _pillarCard(
                   icon: Icons.shield,
                   title: 'Built-in Auth, Sessions & RBAC',
-                  desc: 'Turnkey authentication engine supporting encrypted HTTP cookie sessions, JWT bearer tokens, password hashing, and role hierarchies.',
+                  desc:
+                      'Turnkey authentication engine supporting encrypted HTTP cookie sessions, JWT bearer tokens, password hashing, and role hierarchies.',
                   bullets: [
                     'Session cookies with SameSite & Secure flags',
                     'Role-based authorization (@hasRole, _hasPermission)',
@@ -901,7 +1024,8 @@ class FullstackPage extends StatefulComponent {
                 _pillarCard(
                   icon: Icons.cloud,
                   title: 'Zero-Config Native Deployment',
-                  desc: 'Compile your entire full-stack app into a single native AOT executable or lightweight 25MB Docker container with instant cold starts.',
+                  desc:
+                      'Compile your entire full-stack app into a single native AOT executable or lightweight 25MB Docker container with instant cold starts.',
                   bullets: [
                     'Single binary deployment: No Node runtime dependencies',
                     'Instant sub-10ms container cold starts on Linux',
@@ -926,20 +1050,23 @@ class FullstackPage extends StatefulComponent {
   }) {
     return Container(
       dartStyle: DartStyle(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(18),
         radius: 14,
         border: Border.all(color: ThemeToken.color('line')),
         background: ThemeToken.color('panel'),
         display: Display.flex,
         flexDirection: FlexDirection.column,
         gap: 14,
+        minWidth: 0,
+        md: const DartStyle(padding: EdgeInsets.all(24)),
       ),
       children: [
         Row(
           dartStyle: const DartStyle(
             display: Display.flex,
-            alignItems: AlignItems.center,
+            alignItems: AlignItems.start,
             gap: 12,
+            minWidth: 0,
           ),
           children: [
             Container(
@@ -961,6 +1088,8 @@ class FullstackPage extends StatefulComponent {
                 fontSize: 17,
                 fontWeight: 900,
                 color: ThemeToken.color('text'),
+                minWidth: 0,
+                flex: '1 1 0',
               ),
             ),
           ],
@@ -987,17 +1116,27 @@ class FullstackPage extends StatefulComponent {
               Row(
                 dartStyle: const DartStyle(
                   display: Display.flex,
-                  alignItems: AlignItems.center,
+                  alignItems: AlignItems.start,
                   gap: 8,
+                  minWidth: 0,
                 ),
                 children: [
-                  Icon(Icons.check, size: 14, color: accent),
+                  Container(
+                    dartStyle: const DartStyle(
+                      padding: EdgeInsets.only(top: 2),
+                      flexShrink: 0,
+                    ),
+                    child: Icon(Icons.check, size: 14, color: accent),
+                  ),
                   Text.span(
                     bullet,
                     dartStyle: DartStyle(
                       fontSize: 12,
                       fontWeight: 600,
+                      lineHeight: 1.5,
                       color: ThemeToken.color('text'),
+                      minWidth: 0,
+                      flex: '1 1 0',
                     ),
                   ),
                 ],
@@ -1016,10 +1155,14 @@ class FullstackPage extends StatefulComponent {
       dartStyle: DartStyle(
         width: SizeValue.percent(100),
         maxWidth: SizeValue.percent(100),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 64),
-        md: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 72)),
-        lg: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
-        xl: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
+        minWidth: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 56),
+        md: const DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 72)),
+        lg: const DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
+        xl: const DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
         borderTop: Border(color: ThemeToken.color('line'), width: 1),
         borderBottom: Border(color: ThemeToken.color('line'), width: 1),
         background: ThemeToken.color('panel'),
@@ -1040,10 +1183,11 @@ class FullstackPage extends StatefulComponent {
             Text.h2(
               'Stack Comparison & Developer Experience',
               dartStyle: DartStyle(
-                fontSize: 34,
+                fontSize: 28,
                 fontWeight: 900,
                 color: ThemeToken.color('text'),
                 textAlign: TextAlign.center,
+                md: const DartStyle(fontSize: 34),
               ),
             ),
             Text.p(
@@ -1064,9 +1208,18 @@ class FullstackPage extends StatefulComponent {
             width: SizeValue.percent(100),
           ),
           children: [
-            Grid(
-              columns: 'repeat(auto-fit, minmax(260px, 1fr))',
-              gap: 16,
+            Container(
+              dartStyle: const DartStyle(
+                display: Display.grid,
+                gridTemplateColumns: 'minmax(0, 1fr)',
+                gap: 16,
+                md: DartStyle(
+                  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                ),
+                xl: DartStyle(
+                  gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+                ),
+              ),
               children: [
                 _matrixCard(
                   stack: 'Flint Dart',
@@ -1133,17 +1286,18 @@ class FullstackPage extends StatefulComponent {
   }) {
     return Container(
       dartStyle: DartStyle(
-        padding: const EdgeInsets.all(22),
+        padding: const EdgeInsets.all(18),
         radius: 12,
         border: isHero
             ? Border.all(color: const Color('#10b981'), width: 2)
             : Border.all(color: ThemeToken.color('line')),
-        background: isHero
-            ? Color.rgba(16, 185, 129, 0.06)
-            : ThemeToken.color('bg'),
+        background:
+            isHero ? Color.rgba(16, 185, 129, 0.06) : ThemeToken.color('bg'),
         display: Display.flex,
         flexDirection: FlexDirection.column,
         gap: 12,
+        minWidth: 0,
+        md: const DartStyle(padding: EdgeInsets.all(22)),
       ),
       children: [
         Row(
@@ -1151,6 +1305,8 @@ class FullstackPage extends StatefulComponent {
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
+            flexWrap: FlexWrap.wrap,
+            gap: 8,
           ),
           children: [
             Text.strong(
@@ -1158,7 +1314,8 @@ class FullstackPage extends StatefulComponent {
               dartStyle: DartStyle(
                 fontSize: 18,
                 fontWeight: 900,
-                color: isHero ? const Color('#10b981') : ThemeToken.color('text'),
+                color:
+                    isHero ? const Color('#10b981') : ThemeToken.color('text'),
               ),
             ),
             Container(
@@ -1220,10 +1377,14 @@ class FullstackPage extends StatefulComponent {
       dartStyle: const DartStyle(
         width: SizeValue.percent(100),
         maxWidth: SizeValue.percent(100),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 64),
-        md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 72)),
-        lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
-        xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
+        minWidth: 0,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 56),
+        md: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 72)),
+        lg: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
+        xl: DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
       ),
       children: [
         Column(
@@ -1241,10 +1402,11 @@ class FullstackPage extends StatefulComponent {
             Text.h2(
               'Jumpstart Your Next Project in Seconds',
               dartStyle: DartStyle(
-                fontSize: 34,
+                fontSize: 28,
                 fontWeight: 900,
                 color: ThemeToken.color('text'),
                 textAlign: TextAlign.center,
+                md: const DartStyle(fontSize: 34),
               ),
             ),
             Text.p(
@@ -1259,15 +1421,28 @@ class FullstackPage extends StatefulComponent {
           ],
         ),
         Container(
-          dartStyle: const DartStyle(margin: EdgeInsets.only(top: 48)),
+          dartStyle: const DartStyle(
+            margin: EdgeInsets.only(top: 36),
+            md: DartStyle(margin: EdgeInsets.only(top: 48)),
+          ),
           children: [
-            Grid(
-              columns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: 20,
+            Container(
+              dartStyle: const DartStyle(
+                display: Display.grid,
+                gridTemplateColumns: 'minmax(0, 1fr)',
+                gap: 20,
+                md: DartStyle(
+                  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                ),
+                xl: DartStyle(
+                  gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+                ),
+              ),
               children: [
                 _starterCard(
                   title: 'E-Commerce Marketplace',
-                  desc: 'Full store with shopping cart, customer checkout, product catalogue, and order admin panel.',
+                  desc:
+                      'Full store with shopping cart, customer checkout, product catalogue, and order admin panel.',
                   cmd: 'flint create store --template=ecommerce',
                   tag: 'Starter',
                   icon: Icons.server,
@@ -1275,7 +1450,8 @@ class FullstackPage extends StatefulComponent {
                 ),
                 _starterCard(
                   title: 'Multi-Tenant SaaS Admin',
-                  desc: 'Subscription billing ready, role permissions, analytics telemetry, and RLS tenant isolation.',
+                  desc:
+                      'Subscription billing ready, role permissions, analytics telemetry, and RLS tenant isolation.',
                   cmd: 'flint create saas_app --template=saas',
                   tag: 'Popular',
                   icon: Icons.layers,
@@ -1283,7 +1459,8 @@ class FullstackPage extends StatefulComponent {
                 ),
                 _starterCard(
                   title: 'Real-Time Chat & Collab',
-                  desc: 'WebSocket pub/sub rooms, live message streams, presence indicators, and notification tray.',
+                  desc:
+                      'WebSocket pub/sub rooms, live message streams, presence indicators, and notification tray.',
                   cmd: 'flint create chat --template=realtime',
                   tag: 'WebSocket',
                   icon: Icons.zap,
@@ -1291,7 +1468,8 @@ class FullstackPage extends StatefulComponent {
                 ),
                 _starterCard(
                   title: 'Multi-Author Blog & Media',
-                  desc: 'Markdown publishing engine, comment threads, SEO metadata headers, and category archives.',
+                  desc:
+                      'Markdown publishing engine, comment threads, SEO metadata headers, and category archives.',
                   cmd: 'flint create publication --template=blog',
                   tag: 'SSR & SEO',
                   icon: Icons.book,
@@ -1315,7 +1493,7 @@ class FullstackPage extends StatefulComponent {
   }) {
     return Container(
       dartStyle: DartStyle(
-        padding: const EdgeInsets.all(22),
+        padding: const EdgeInsets.all(18),
         radius: 12,
         border: Border.all(color: ThemeToken.color('line')),
         background: ThemeToken.color('panel'),
@@ -1323,6 +1501,8 @@ class FullstackPage extends StatefulComponent {
         flexDirection: FlexDirection.column,
         justifyContent: JustifyContent.between,
         gap: 16,
+        minWidth: 0,
+        md: const DartStyle(padding: EdgeInsets.all(22)),
       ),
       children: [
         Column(
@@ -1350,7 +1530,8 @@ class FullstackPage extends StatefulComponent {
                 ),
                 Container(
                   dartStyle: DartStyle(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     radius: 4,
                     background: Color.rgba(16, 185, 129, 0.15),
                     color: accent,
@@ -1390,6 +1571,8 @@ class FullstackPage extends StatefulComponent {
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,
+            gap: 8,
+            minWidth: 0,
           ),
           children: [
             Text.span(
@@ -1398,6 +1581,8 @@ class FullstackPage extends StatefulComponent {
                 fontSize: 11,
                 fontFamily: FontFamily.monospace,
                 color: Color('#e2e8f0'),
+                minWidth: 0,
+                flex: '1 1 0',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
@@ -1407,7 +1592,10 @@ class FullstackPage extends StatefulComponent {
               variant: ButtonVariant.ghost,
               size: ComponentSize.sm,
               onPressed: (_) => _copyCommand(cmd),
-              dartStyle: const DartStyle(padding: EdgeInsets.all(4)),
+              dartStyle: const DartStyle(
+                padding: EdgeInsets.all(4),
+                flexShrink: 0,
+              ),
               children: [
                 Icon(Icons.copy, size: 12, color: const Color('#94a3b8')),
               ],
@@ -1426,10 +1614,14 @@ class FullstackPage extends StatefulComponent {
       dartStyle: DartStyle(
         width: SizeValue.percent(100),
         maxWidth: SizeValue.percent(100),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 64),
-        md: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 72)),
-        lg: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
-        xl: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
+        minWidth: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 56),
+        md: const DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 72)),
+        lg: const DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
+        xl: const DartStyle(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
         borderTop: Border(color: ThemeToken.color('line'), width: 1),
         background: Background.layers([
           Gradient.radialCircle(
@@ -1446,8 +1638,10 @@ class FullstackPage extends StatefulComponent {
         Container(
           dartStyle: DartStyle(
             maxWidth: 820,
+            width: SizeValue.percent(100),
+            minWidth: 0,
             margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
-            padding: const EdgeInsets.all(36),
+            padding: const EdgeInsets.all(22),
             radius: 20,
             border: Border.all(color: const Color('#10b981')),
             background: ThemeToken.color('panel'),
@@ -1462,6 +1656,7 @@ class FullstackPage extends StatefulComponent {
             alignItems: AlignItems.center,
             textAlign: TextAlign.center,
             gap: 18,
+            sm: const DartStyle(padding: EdgeInsets.all(36)),
           ),
           children: [
             Container(
@@ -1480,9 +1675,10 @@ class FullstackPage extends StatefulComponent {
             Text.h2(
               'Start Building Fullstack Dart Apps Today',
               dartStyle: DartStyle(
-                fontSize: 32,
+                fontSize: 28,
                 fontWeight: 900,
                 color: ThemeToken.color('text'),
+                md: const DartStyle(fontSize: 32),
               ),
             ),
             Text.p(
@@ -1495,7 +1691,11 @@ class FullstackPage extends StatefulComponent {
             ),
             Wrap(
               gap: 12,
-              dartStyle: const DartStyle(margin: EdgeInsets.only(top: 8)),
+              dartStyle: const DartStyle(
+                width: SizeValue.percent(100),
+                margin: EdgeInsets.only(top: 8),
+                justifyContent: JustifyContent.center,
+              ),
               children: [
                 Link(
                   href: '/guides/installation',
@@ -1505,10 +1705,14 @@ class FullstackPage extends StatefulComponent {
                     alignItems: AlignItems.center,
                     gap: 8,
                     minHeight: 46,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    width: SizeValue.percent(100),
+                    justifyContent: JustifyContent.center,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                     radius: 8,
                     fontSize: 15,
                     fontWeight: 900,
+                    sm: const DartStyle(width: SizeValue.auto),
                   ),
                   children: [
                     Text.span('Read Installation Guide'),
@@ -1524,10 +1728,13 @@ class FullstackPage extends StatefulComponent {
                     alignItems: AlignItems.center,
                     gap: 8,
                     minHeight: 46,
+                    width: SizeValue.percent(100),
+                    justifyContent: JustifyContent.center,
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     radius: 8,
                     fontSize: 14,
                     fontWeight: 800,
+                    sm: DartStyle(width: SizeValue.auto),
                   ),
                   children: [
                     Icon(Icons.code, size: 16),
@@ -1547,7 +1754,8 @@ class FullstackPage extends StatefulComponent {
   // ---------------------------------------------------------------------------
   FlintNode _syntaxBlock(List<_FullstackLine> lines) {
     return Column(
-      dartStyle: const DartStyle(gap: 2, alignItems: AlignItems.start, whiteSpace: 'pre'),
+      dartStyle: const DartStyle(
+          gap: 2, alignItems: AlignItems.start, whiteSpace: 'pre'),
       children: [
         for (var i = 0; i < lines.length; i++)
           Row(
@@ -1840,7 +2048,8 @@ class DashboardPage extends Component {
       _FullstackLine([
         _FullstackToken('        Text.', _txt),
         _FullstackToken('h1', _fn),
-        _FullstackToken("('Active Deployments', dartStyle: _headingStyle),", _str),
+        _FullstackToken(
+            "('Active Deployments', dartStyle: _headingStyle),", _str),
       ]),
       _FullstackLine([
         _FullstackToken('        ResourceView<', _typ),
