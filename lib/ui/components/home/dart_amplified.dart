@@ -7,17 +7,17 @@ class DartAmplified extends FlintComponent {
       dartStyle: DartStyle(
         width: const SizeValue.percent(100),
         maxWidth: const SizeValue.percent(100),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 72),
-        md: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 80)),
-        lg: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 96)),
-        xl: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 104)),
-        border: Border(color: const Color.rgba(56, 189, 248, 0.15), width: 1),
-        background: const Color('#050b14'),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+        md: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 32, vertical: 64)),
+        lg: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 80)),
+        xl: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 96)),
+        border: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panelStrong'),
       ),
       children: [
         // Section Header
         Container(
-          dartStyle: DartStyle(
+          dartStyle: const DartStyle(
             display: Display.grid,
             gap: 14,
             maxWidth: 840,
@@ -51,21 +51,23 @@ class DartAmplified extends FlintComponent {
               'How Flint Amplifies the Dart Language',
               dartStyle: DartStyle(
                 margin: const EdgeInsets.all(0),
-                fontSize: 34,
+                fontSize: 26,
                 fontWeight: 900,
                 lineHeight: 1.15,
-                color: const Color('#ffffff'),
+                color: ThemeToken.color('text'),
                 letterSpacing: -0.5,
-                md: const DartStyle(fontSize: 42),
+                md: const DartStyle(fontSize: 36),
+                lg: const DartStyle(fontSize: 42),
               ),
             ),
             Text.p(
               'For years, developers loved Dart’s elegance, sound null safety, and fast compilation — but were confined to client UI. Flint unlocks Dart across the entire computing spectrum: Cloud Backends, WebAssembly SSR, Autonomous AI Agents, and Bare-Metal Robotics.',
               dartStyle: DartStyle(
                 margin: const EdgeInsets.all(0),
-                fontSize: 16,
-                lineHeight: 1.7,
-                color: const Color('#94a3b8'),
+                fontSize: 15,
+                lineHeight: 1.65,
+                color: ThemeToken.color('muted'),
+                md: const DartStyle(fontSize: 16),
               ),
             ),
           ],
@@ -172,24 +174,28 @@ class DartAmplified extends FlintComponent {
               ),
               children: [
                 Column(
-                  dartStyle: const DartStyle(gap: 12, alignItems: AlignItems.start),
+                  dartStyle: const DartStyle(
+                    gap: 8,
+                    alignItems: AlignItems.start,
+                    maxWidth: 620,
+                  ),
                   children: [
                     Text.h3(
                       'Dart Was Built for Modern Software Engineering',
-                      dartStyle: const DartStyle(
-                        fontSize: 22,
+                      dartStyle: DartStyle(
+                        fontSize: 20,
                         fontWeight: 800,
-                        color: Color('#ffffff'),
-                        margin: EdgeInsets.all(0),
+                        color: ThemeToken.color('text'),
+                        margin: const EdgeInsets.all(0),
                       ),
                     ),
                     Text.p(
                       'Flint finishes the vision: elevating Dart from an exceptional UI language into the most unified, productive, and versatile programming ecosystem on earth.',
-                      dartStyle: const DartStyle(
+                      dartStyle: DartStyle(
                         fontSize: 14,
                         lineHeight: 1.6,
-                        color: Color('#94a3b8'),
-                        margin: EdgeInsets.all(0),
+                        color: ThemeToken.color('muted'),
+                        margin: const EdgeInsets.all(0),
                       ),
                     ),
                   ],
@@ -232,16 +238,16 @@ class DartAmplified extends FlintComponent {
                         gap: 8,
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                         radius: 10,
-                        background: const Color.rgba(255, 255, 255, 0.05),
-                        border: Border.all(color: const Color.rgba(255, 255, 255, 0.15)),
-                        color: const Color('#ffffff'),
+                        background: ThemeToken.color('panelStrong'),
+                        border: Border.all(color: ThemeToken.color('line')),
+                        color: ThemeToken.color('text'),
                         fontWeight: 700,
                         fontSize: 13,
                       ),
                       children: [
                         Text.span(
                           'See Dart on Hardware',
-                          dartStyle: const DartStyle(color: Color('#ffffff'), fontWeight: 700),
+                          dartStyle: DartStyle(color: ThemeToken.color('text'), fontWeight: 700),
                         ),
                         Icon(Icons.zap, size: 15, color: const Color('#f97316')),
                       ],
@@ -273,15 +279,18 @@ class DartAmplified extends FlintComponent {
       dartStyle: DartStyle(
         display: Display.flex,
         flexDirection: FlexDirection.column,
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(20),
         radius: 16,
-        background: const Color.rgba(15, 23, 42, 0.6),
-        border: Border.all(color: const Color.rgba(255, 255, 255, 0.08)),
+        background: ThemeToken.color('panel'),
+        border: Border.all(color: ThemeToken.color('line')),
         position: Position.relative,
+        hover: DartStyle(
+          border: Border.all(color: Color(accentColor)),
+        ),
       ),
       children: [
         Column(
-          dartStyle: const DartStyle(gap: 14, alignItems: AlignItems.start),
+          dartStyle: const DartStyle(gap: 12, alignItems: AlignItems.start),
           children: [
             Row(
               dartStyle: DartStyle(
@@ -293,8 +302,8 @@ class DartAmplified extends FlintComponent {
               children: [
                 Container(
                   dartStyle: DartStyle(
-                    width: 42,
-                    height: 42,
+                    width: 40,
+                    height: 40,
                     radius: 10,
                     background: Color.rgba(r, g, b, 0.15),
                     border: Border.all(color: Color.rgba(r, g, b, 0.35)),
@@ -303,7 +312,7 @@ class DartAmplified extends FlintComponent {
                     justifyContent: JustifyContent.center,
                   ),
                   children: [
-                    Icon(icon, size: 20, color: Color(accentColor)),
+                    Icon(icon, size: 18, color: Color(accentColor)),
                   ],
                 ),
                 Text.span(
@@ -325,11 +334,11 @@ class DartAmplified extends FlintComponent {
               children: [
                 Text.h3(
                   title,
-                  dartStyle: const DartStyle(
-                    fontSize: 18,
+                  dartStyle: DartStyle(
+                    fontSize: 17,
                     fontWeight: 800,
-                    color: Color('#ffffff'),
-                    margin: EdgeInsets.all(0),
+                    color: ThemeToken.color('text'),
+                    margin: const EdgeInsets.all(0),
                   ),
                 ),
                 Text.span(
@@ -344,11 +353,11 @@ class DartAmplified extends FlintComponent {
             ),
             Text.p(
               body,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 13,
-                lineHeight: 1.6,
-                color: Color('#94a3b8'),
-                margin: EdgeInsets.all(0),
+                lineHeight: 1.55,
+                color: ThemeToken.color('muted'),
+                margin: const EdgeInsets.all(0),
               ),
             ),
           ],
