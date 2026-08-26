@@ -74,23 +74,23 @@ class HardwarePage extends StatefulComponent {
             Gradient.radialCircle(
               at: const GradientPosition.percent(20, 0),
               stops: const [
-                GradientStop(Color.rgba(249, 115, 22, 0.18), 0),
+                GradientStop(Color.rgba(249, 115, 22, 0.15), 0),
                 GradientStop(Colors.transparent, 45),
               ],
             ),
             Gradient.radialCircle(
               at: const GradientPosition.percent(80, 10),
               stops: const [
-                GradientStop(Color.rgba(234, 179, 8, 0.15), 0),
+                GradientStop(Color.rgba(234, 179, 8, 0.12), 0),
                 GradientStop(Colors.transparent, 45),
               ],
             ),
             Gradient.linear(
               155,
               const [
-                GradientStop(Color('#fffaf5'), 0),
-                GradientStop(Color('#fbf5ee'), 48),
-                GradientStop(Color('#f5ede3'), 100),
+                GradientStop(Color('#fffbf5'), 0),
+                GradientStop(Color('#faf4eb'), 48),
+                GradientStop(Color('#f5eee2'), 100),
               ],
             ),
           ]),
@@ -100,14 +100,14 @@ class HardwarePage extends StatefulComponent {
             Gradient.radialCircle(
               at: const GradientPosition.percent(15, 0),
               stops: const [
-                GradientStop(Color.rgba(249, 115, 22, 0.2), 0),
+                GradientStop(Color.rgba(249, 115, 22, 0.18), 0),
                 GradientStop(Colors.transparent, 42),
               ],
             ),
             Gradient.radialCircle(
               at: const GradientPosition.percent(85, 15),
               stops: const [
-                GradientStop(Color.rgba(234, 179, 8, 0.15), 0),
+                GradientStop(Color.rgba(234, 179, 8, 0.12), 0),
                 GradientStop(Colors.transparent, 44),
               ],
             ),
@@ -194,7 +194,7 @@ class HardwarePage extends StatefulComponent {
                         Text.span(
                           'BARE-METAL DART',
                           dartStyle: const DartStyle(
-                            color: Color('#fbbf24'),
+                            color: Color('#d97706'),
                             fontSize: 11,
                             fontWeight: 800,
                           ),
@@ -239,8 +239,8 @@ class HardwarePage extends StatefulComponent {
                         maxWidth: 520,
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                         radius: 12,
-                        background: const Color('#050b14'),
-                        border: Border.all(color: const Color.rgba(249, 115, 22, 0.25)),
+                        background: ThemeToken.color('panelStrong'),
+                        border: Border.all(color: ThemeToken.color('line')),
                       ),
                       children: [
                         Row(
@@ -260,8 +260,8 @@ class HardwarePage extends StatefulComponent {
                             ),
                             Text.span(
                               installCmd,
-                              dartStyle: const DartStyle(
-                                color: Color('#f1f5f9'),
+                              dartStyle: DartStyle(
+                                color: ThemeToken.color('text'),
                                 fontSize: 13,
                                 fontWeight: 600,
                                 letterSpacing: 0.2,
@@ -278,8 +278,8 @@ class HardwarePage extends StatefulComponent {
                             radius: 8,
                             background: _copiedCmd
                                 ? const Color.rgba(16, 185, 129, 0.2)
-                                : const Color.rgba(255, 255, 255, 0.08),
-                            color: _copiedCmd ? const Color('#10b981') : const Color('#ffffff'),
+                                : const Color.rgba(249, 115, 22, 0.1),
+                            color: _copiedCmd ? const Color('#10b981') : const Color('#f97316'),
                             fontSize: 11,
                             fontWeight: 800,
                           ),
@@ -308,16 +308,16 @@ class HardwarePage extends StatefulComponent {
                             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                             radius: 12,
                             background: const Color('#f97316'),
-                            color: const Color('#050b14'),
+                            color: const Color('#ffffff'),
                             fontWeight: 800,
                             fontSize: 14,
                           ),
                           children: [
                             Text.span(
                               'Explore Hardware SDK',
-                              dartStyle: const DartStyle(color: Color('#050b14'), fontWeight: 800),
+                              dartStyle: const DartStyle(color: Color('#ffffff'), fontWeight: 800),
                             ),
-                            Icon(Icons.arrowRight, size: 16, color: const Color('#050b14')),
+                            Icon(Icons.arrowRight, size: 16, color: const Color('#ffffff')),
                           ],
                         ),
                         Link(
@@ -335,7 +335,7 @@ class HardwarePage extends StatefulComponent {
                             fontSize: 14,
                           ),
                           children: [
-                            Icon(Icons.play, size: 16, color: const Color('#fbbf24')),
+                            Icon(Icons.play, size: 16, color: const Color('#f97316')),
                             Text.span('Launch Simulator'),
                           ],
                         ),
@@ -352,8 +352,8 @@ class HardwarePage extends StatefulComponent {
                       ),
                       children: [
                         _heroPill(Icons.zap, 'Sub-ms Loop Latency', const Color('#f97316')),
-                        _heroPill(Icons.server, 'ESP32 • nRF • STM32 • RP2040', const Color('#fbbf24')),
-                        _heroPill(Icons.layers, 'TFLite Micro Quantization', const Color('#38bdf8')),
+                        _heroPill(Icons.server, 'ESP32 • nRF • STM32 • RP2040', const Color('#d97706')),
+                        _heroPill(Icons.layers, 'TFLite Micro Quantization', const Color('#0284c7')),
                         _heroPill(Icons.shield, 'C99 & ROS 2 Code Gen', const Color('#10b981')),
                       ],
                     ),
@@ -398,7 +398,7 @@ class HardwarePage extends StatefulComponent {
     return Container(
       dartStyle: DartStyle(
         width: const SizeValue.percent(100),
-        radius: 20,
+        radius: 16,
         overflow: Overflow.hidden,
         background: const Color('#060b13'),
         border: Border.all(color: const Color.rgba(249, 115, 22, 0.3)),
@@ -602,8 +602,8 @@ class HardwarePage extends StatefulComponent {
         md: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 80)),
         lg: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 96)),
         xl: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 104)),
-        background: const Color('#03070d'),
-        borderBottom: Border(color: const Color.rgba(249, 115, 22, 0.15), width: 1),
+        background: ThemeToken.color('panelStrong'),
+        borderBottom: Border(color: ThemeToken.color('line'), width: 1),
       ),
       children: [
         Column(
@@ -639,20 +639,20 @@ class HardwarePage extends StatefulComponent {
             ),
             Text.h2(
               'End-to-End Hardware Execution Pipeline',
-              dartStyle: const DartStyle(
-                margin: EdgeInsets.all(0),
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
                 fontSize: 32,
                 fontWeight: 900,
-                color: Color('#ffffff'),
-                md: DartStyle(fontSize: 40),
+                color: ThemeToken.color('text'),
+                md: const DartStyle(fontSize: 40),
               ),
             ),
             Text.p(
               'From high-level declarative Dart definitions to bare-metal C99, quantized TFLite inference, and instant Wokwi browser circuits.',
-              dartStyle: const DartStyle(
-                margin: EdgeInsets.all(0),
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
                 fontSize: 16,
-                color: Color('#94a3b8'),
+                color: ThemeToken.color('muted'),
                 maxWidth: 720,
               ),
             ),
@@ -681,14 +681,14 @@ class HardwarePage extends StatefulComponent {
               step: '02',
               title: 'AST & Pin Arbiter',
               desc: 'Static validation of pin multiplexing, PWM timers, and memory arena limits.',
-              accentColor: '#fbbf24',
+              accentColor: '#d97706',
               icon: Icons.shield,
             ),
             _pipelineNode(
               step: '03',
               title: 'C99 / ROS 2 Gen',
               desc: 'High-speed transpilation into zero-overhead C99, C++, MicroPython, and ROS 2 nodes.',
-              accentColor: '#38bdf8',
+              accentColor: '#0284c7',
               icon: Icons.zap,
             ),
             _pipelineNode(
@@ -702,7 +702,7 @@ class HardwarePage extends StatefulComponent {
               step: '05',
               title: 'Swarm & Telemetry',
               desc: 'Live BLE telemetry sync to Flint Server DB and real-time mesh swarm broadcast.',
-              accentColor: '#a855f7',
+              accentColor: '#9333ea',
               icon: Icons.globe,
             ),
           ],
@@ -722,10 +722,13 @@ class HardwarePage extends StatefulComponent {
       dartStyle: DartStyle(
         padding: const EdgeInsets.all(20),
         radius: 14,
-        background: const Color.rgba(15, 23, 42, 0.7),
-        border: Border.all(color: const Color.rgba(255, 255, 255, 0.08)),
+        background: ThemeToken.color('panel'),
+        border: Border.all(color: ThemeToken.color('line')),
         display: Display.flex,
         flexDirection: FlexDirection.column,
+        hover: DartStyle(
+          border: Border.all(color: Color(accentColor)),
+        ),
       ),
       children: [
         Column(
@@ -752,20 +755,20 @@ class HardwarePage extends StatefulComponent {
             ),
             Text.h3(
               title,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 16,
                 fontWeight: 800,
-                color: Color('#ffffff'),
-                margin: EdgeInsets.all(0),
+                color: ThemeToken.color('text'),
+                margin: const EdgeInsets.all(0),
               ),
             ),
             Text.p(
               desc,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 12,
                 lineHeight: 1.5,
-                color: Color('#94a3b8'),
-                margin: EdgeInsets.all(0),
+                color: ThemeToken.color('muted'),
+                margin: const EdgeInsets.all(0),
               ),
             ),
           ],
@@ -779,14 +782,14 @@ class HardwarePage extends StatefulComponent {
   // ---------------------------------------------------------------------------
   FlintNode _deepPillarsSection() {
     return Container(
-      dartStyle: const DartStyle(
-        width: SizeValue.percent(100),
-        maxWidth: SizeValue.percent(100),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 72),
-        md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 80)),
-        lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 96)),
-        xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 104)),
-        background: Color('#050b14'),
+      dartStyle: DartStyle(
+        width: const SizeValue.percent(100),
+        maxWidth: const SizeValue.percent(100),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 72),
+        md: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 80)),
+        lg: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 96)),
+        xl: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 104)),
+        background: ThemeToken.color('bg'),
       ),
       children: [
         Column(
@@ -821,20 +824,20 @@ class HardwarePage extends StatefulComponent {
             ),
             Text.h2(
               'Engineered for Precision, Edge AI & Swarms',
-              dartStyle: const DartStyle(
-                margin: EdgeInsets.all(0),
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
                 fontSize: 32,
                 fontWeight: 900,
-                color: Color('#ffffff'),
-                md: DartStyle(fontSize: 40),
+                color: ThemeToken.color('text'),
+                md: const DartStyle(fontSize: 40),
               ),
             ),
             Text.p(
               'Flint Hardware bridges high-level Dart programming with the strictest demands of embedded microcontrollers.',
-              dartStyle: const DartStyle(
-                margin: EdgeInsets.all(0),
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
                 fontSize: 16,
-                color: Color('#94a3b8'),
+                color: ThemeToken.color('muted'),
                 maxWidth: 720,
               ),
             ),
@@ -870,7 +873,7 @@ class HardwarePage extends StatefulComponent {
             _pillarCard(
               title: 'Edge AI & Computer Vision',
               badge: 'TFLite Micro',
-              accentColor: '#fbbf24',
+              accentColor: '#d97706',
               icon: Icons.zap,
               desc: 'Run quantized TensorFlow Lite Micro models and stream camera frames with zero memory copies.',
               bullets: [
@@ -882,7 +885,7 @@ class HardwarePage extends StatefulComponent {
             _pillarCard(
               title: 'Robotics Kinematics & Motor Drivers',
               badge: 'Differential Drive',
-              accentColor: '#38bdf8',
+              accentColor: '#0284c7',
               icon: Icons.layers,
               desc: 'Orchestrate 2-wheel/4-wheel differential drives, sweep radar servos, and stepper motor actuators.',
               bullets: [
@@ -906,7 +909,7 @@ class HardwarePage extends StatefulComponent {
             _pillarCard(
               title: 'Wireless Swarm Mesh & BLE',
               badge: 'SwarmId & BLE',
-              accentColor: '#a855f7',
+              accentColor: '#9333ea',
               icon: Icons.globe,
               desc: 'Create peer-to-peer self-healing robot swarms with typed channels and Bluetooth Low Energy telemetry.',
               bullets: [
@@ -918,7 +921,7 @@ class HardwarePage extends StatefulComponent {
             _pillarCard(
               title: 'Wokwi & ROS 2 Code Export',
               badge: 'exportBundle()',
-              accentColor: '#06b6d4',
+              accentColor: '#0891b2',
               icon: Icons.play,
               desc: '1-click export to complete C99/C++ codebases, ROS 2 pub/sub nodes, and Wokwi browser circuits.',
               bullets: [
@@ -951,8 +954,11 @@ class HardwarePage extends StatefulComponent {
         flexDirection: FlexDirection.column,
         padding: const EdgeInsets.all(24),
         radius: 16,
-        background: const Color.rgba(15, 23, 42, 0.65),
-        border: Border.all(color: const Color.rgba(255, 255, 255, 0.08)),
+        background: ThemeToken.color('panel'),
+        border: Border.all(color: ThemeToken.color('line')),
+        hover: DartStyle(
+          border: Border.all(color: Color(accentColor)),
+        ),
       ),
       children: [
         Column(
@@ -997,20 +1003,20 @@ class HardwarePage extends StatefulComponent {
             ),
             Text.h3(
               title,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 18,
                 fontWeight: 800,
-                color: Color('#ffffff'),
-                margin: EdgeInsets.all(0),
+                color: ThemeToken.color('text'),
+                margin: const EdgeInsets.all(0),
               ),
             ),
             Text.p(
               desc,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 13,
                 lineHeight: 1.6,
-                color: Color('#94a3b8'),
-                margin: EdgeInsets.all(0),
+                color: ThemeToken.color('muted'),
+                margin: const EdgeInsets.all(0),
               ),
             ),
             Column(
@@ -1027,9 +1033,9 @@ class HardwarePage extends StatefulComponent {
                       Icon(Icons.sparkles, size: 10, color: Color(accentColor)),
                       Text.span(
                         bullet,
-                        dartStyle: const DartStyle(
+                        dartStyle: DartStyle(
                           fontSize: 12,
-                          color: Color('#cbd5e1'),
+                          color: ThemeToken.color('text'),
                           fontWeight: 600,
                         ),
                       ),
@@ -1055,8 +1061,8 @@ class HardwarePage extends StatefulComponent {
         md: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 80)),
         lg: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 96)),
         xl: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 104)),
-        background: const Color('#03070d'),
-        borderTop: Border(color: const Color.rgba(249, 115, 22, 0.12), width: 1),
+        background: ThemeToken.color('panelStrong'),
+        borderTop: Border(color: ThemeToken.color('line'), width: 1),
       ),
       children: [
         Column(
@@ -1092,20 +1098,20 @@ class HardwarePage extends StatefulComponent {
             ),
             Text.h2(
               'Microcontroller Target Comparison Matrix',
-              dartStyle: const DartStyle(
-                margin: EdgeInsets.all(0),
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
                 fontSize: 32,
                 fontWeight: 900,
-                color: Color('#ffffff'),
-                md: DartStyle(fontSize: 40),
+                color: ThemeToken.color('text'),
+                md: const DartStyle(fontSize: 40),
               ),
             ),
             Text.p(
               'Flint Hardware generates highly optimized C99 and register-level drivers for your target architecture.',
-              dartStyle: const DartStyle(
-                margin: EdgeInsets.all(0),
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
                 fontSize: 16,
-                color: Color('#94a3b8'),
+                color: ThemeToken.color('muted'),
                 maxWidth: 720,
               ),
             ),
@@ -1141,7 +1147,7 @@ class HardwarePage extends StatefulComponent {
               radio: 'Wi-Fi + BLE 5.0 + Mesh',
               aiReady: 'Vector Extensions',
               idealFor: 'Autonomous Rovers & IoT',
-              accentColor: '#fbbf24',
+              accentColor: '#d97706',
             ),
             _targetCard(
               name: 'nRF52840 Dongle',
@@ -1151,7 +1157,7 @@ class HardwarePage extends StatefulComponent {
               radio: 'BLE 5.3 + Thread',
               aiReady: 'Low Power Telemetry',
               idealFor: 'Swarm Beacons & Wearables',
-              accentColor: '#38bdf8',
+              accentColor: '#0284c7',
             ),
             _targetCard(
               name: 'RP2040 Pico',
@@ -1183,10 +1189,13 @@ class HardwarePage extends StatefulComponent {
       dartStyle: DartStyle(
         padding: const EdgeInsets.all(22),
         radius: 16,
-        background: const Color.rgba(15, 23, 42, 0.6),
-        border: Border.all(color: const Color.rgba(255, 255, 255, 0.08)),
+        background: ThemeToken.color('panel'),
+        border: Border.all(color: ThemeToken.color('line')),
         display: Display.flex,
         flexDirection: FlexDirection.column,
+        hover: DartStyle(
+          border: Border.all(color: Color(accentColor)),
+        ),
       ),
       children: [
         Column(
@@ -1194,11 +1203,11 @@ class HardwarePage extends StatefulComponent {
           children: [
             Text.h3(
               name,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 18,
                 fontWeight: 800,
-                color: Color('#ffffff'),
-                margin: EdgeInsets.all(0),
+                color: ThemeToken.color('text'),
+                margin: const EdgeInsets.all(0),
               ),
             ),
             Text.span(
@@ -1210,11 +1219,11 @@ class HardwarePage extends StatefulComponent {
               ),
             ),
             Container(
-              dartStyle: const DartStyle(
-                margin: EdgeInsets.symmetric(vertical: 8),
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.symmetric(vertical: 8),
                 height: 1,
-                width: SizeValue.percent(100),
-                background: Color.rgba(255, 255, 255, 0.08),
+                width: const SizeValue.percent(100),
+                background: ThemeToken.color('line'),
               ),
             ),
             _targetSpec('Clock', clock),
@@ -1222,20 +1231,20 @@ class HardwarePage extends StatefulComponent {
             _targetSpec('Radio', radio),
             _targetSpec('AI Engine', aiReady),
             Container(
-              dartStyle: const DartStyle(
-                margin: EdgeInsets.symmetric(vertical: 8),
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.symmetric(vertical: 8),
                 height: 1,
-                width: SizeValue.percent(100),
-                background: Color.rgba(255, 255, 255, 0.08),
+                width: const SizeValue.percent(100),
+                background: ThemeToken.color('line'),
               ),
             ),
             Text.p(
               'Best for: $idealFor',
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 12,
                 fontWeight: 700,
-                color: Color('#cbd5e1'),
-                margin: EdgeInsets.all(0),
+                color: ThemeToken.color('text'),
+                margin: const EdgeInsets.all(0),
               ),
             ),
           ],
@@ -1254,11 +1263,11 @@ class HardwarePage extends StatefulComponent {
       children: [
         Text.span(
           label,
-          dartStyle: const DartStyle(fontSize: 11, color: Color('#94a3b8'), fontWeight: 600),
+          dartStyle: DartStyle(fontSize: 11, color: ThemeToken.color('muted'), fontWeight: 600),
         ),
         Text.span(
           val,
-          dartStyle: const DartStyle(fontSize: 11, color: Color('#ffffff'), fontWeight: 700),
+          dartStyle: DartStyle(fontSize: 11, color: ThemeToken.color('text'), fontWeight: 700),
         ),
       ],
     );
@@ -1269,14 +1278,14 @@ class HardwarePage extends StatefulComponent {
   // ---------------------------------------------------------------------------
   FlintNode _starterBlueprintsSection() {
     return Container(
-      dartStyle: const DartStyle(
-        width: SizeValue.percent(100),
-        maxWidth: SizeValue.percent(100),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 72),
-        md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 80)),
-        lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 96)),
-        xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 104)),
-        background: Color('#050b14'),
+      dartStyle: DartStyle(
+        width: const SizeValue.percent(100),
+        maxWidth: const SizeValue.percent(100),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 72),
+        md: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 80)),
+        lg: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 96)),
+        xl: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 104)),
+        background: ThemeToken.color('bg'),
       ),
       children: [
         Column(
@@ -1311,20 +1320,20 @@ class HardwarePage extends StatefulComponent {
             ),
             Text.h2(
               'Production Hardware Starter Blueprints',
-              dartStyle: const DartStyle(
-                margin: EdgeInsets.all(0),
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
                 fontSize: 32,
                 fontWeight: 900,
-                color: Color('#ffffff'),
-                md: DartStyle(fontSize: 40),
+                color: ThemeToken.color('text'),
+                md: const DartStyle(fontSize: 40),
               ),
             ),
             Text.p(
               'Instant starting points with pre-wired sensor pins, motor controllers, and simulation bundles.',
-              dartStyle: const DartStyle(
-                margin: EdgeInsets.all(0),
+              dartStyle: DartStyle(
+                margin: const EdgeInsets.all(0),
                 fontSize: 16,
-                color: Color('#94a3b8'),
+                color: ThemeToken.color('muted'),
                 maxWidth: 720,
               ),
             ),
@@ -1357,14 +1366,14 @@ class HardwarePage extends StatefulComponent {
               tag: 'Differential Drive',
               desc: '2-wheel obstacle-avoiding rover with ultrasonic sonar, 6-axis IMU, and Wokwi sim.',
               cliCmd: 'flint create rover --template=rover',
-              accentColor: '#fbbf24',
+              accentColor: '#d97706',
             ),
             _starterCard(
               title: 'Swarm Mesh Beacon',
               tag: 'BLE Telemetry',
               desc: 'nRF52840 low-power mesh node with BME280 sensor and BLE battery telemetry.',
               cliCmd: 'flint create beacon --template=swarm',
-              accentColor: '#38bdf8',
+              accentColor: '#0284c7',
             ),
             _starterCard(
               title: 'ROS 2 Teleop Node',
@@ -1392,8 +1401,11 @@ class HardwarePage extends StatefulComponent {
         flexDirection: FlexDirection.column,
         padding: const EdgeInsets.all(22),
         radius: 16,
-        background: const Color.rgba(15, 23, 42, 0.6),
-        border: Border.all(color: const Color.rgba(255, 255, 255, 0.08)),
+        background: ThemeToken.color('panel'),
+        border: Border.all(color: ThemeToken.color('line')),
+        hover: DartStyle(
+          border: Border.all(color: Color(accentColor)),
+        ),
       ),
       children: [
         Column(
@@ -1409,37 +1421,37 @@ class HardwarePage extends StatefulComponent {
             ),
             Text.h3(
               title,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 17,
                 fontWeight: 800,
-                color: Color('#ffffff'),
-                margin: EdgeInsets.all(0),
+                color: ThemeToken.color('text'),
+                margin: const EdgeInsets.all(0),
               ),
             ),
             Text.p(
               desc,
-              dartStyle: const DartStyle(
+              dartStyle: DartStyle(
                 fontSize: 12,
                 lineHeight: 1.5,
-                color: Color('#94a3b8'),
-                margin: EdgeInsets.all(0),
+                color: ThemeToken.color('muted'),
+                margin: const EdgeInsets.all(0),
               ),
             ),
           ],
         ),
         Container(
-          dartStyle: const DartStyle(
-            margin: EdgeInsets.only(top: 16),
-            padding: EdgeInsets.all(10),
+          dartStyle: DartStyle(
+            margin: const EdgeInsets.only(top: 16),
+            padding: const EdgeInsets.all(10),
             radius: 8,
-            background: Color('#03070d'),
-            border: Border(color: Color.rgba(255, 255, 255, 0.08), width: 1),
+            background: ThemeToken.color('panelStrong'),
+            border: Border(color: ThemeToken.color('line'), width: 1),
           ),
           children: [
             Text.span(
               cliCmd,
-              dartStyle: const DartStyle(
-                color: Color('#cbd5e1'),
+              dartStyle: DartStyle(
+                color: ThemeToken.color('text'),
                 fontSize: 10,
                 fontWeight: 700,
               ),
@@ -1462,8 +1474,8 @@ class HardwarePage extends StatefulComponent {
         md: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 80)),
         lg: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 96)),
         xl: const DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 104)),
-        background: const Color('#03070d'),
-        borderTop: Border(color: const Color.rgba(249, 115, 22, 0.15), width: 1),
+        background: ThemeToken.color('panelStrong'),
+        borderTop: Border(color: ThemeToken.color('line'), width: 1),
       ),
       children: [
         Container(
@@ -1471,8 +1483,8 @@ class HardwarePage extends StatefulComponent {
             width: const SizeValue.percent(100),
             padding: const EdgeInsets.all(36),
             radius: 24,
-            background: const Color.rgba(249, 115, 22, 0.06),
-            border: Border.all(color: const Color.rgba(249, 115, 22, 0.25)),
+            background: ThemeToken.color('panel'),
+            border: Border.all(color: const Color.rgba(249, 115, 22, 0.35)),
             md: const DartStyle(padding: EdgeInsets.all(56)),
           ),
           children: [
@@ -1500,21 +1512,21 @@ class HardwarePage extends StatefulComponent {
                 ),
                 Text.h2(
                   'Start Building Hardware with Pure Dart Today',
-                  dartStyle: const DartStyle(
-                    margin: EdgeInsets.all(0),
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
                     fontSize: 32,
                     fontWeight: 900,
-                    color: Color('#ffffff'),
-                    md: DartStyle(fontSize: 42),
+                    color: ThemeToken.color('text'),
+                    md: const DartStyle(fontSize: 42),
                   ),
                 ),
                 Text.p(
                   'Join engineers building autonomous rovers, Edge AI cameras, and swarm robotics without fighting C++ pointers or fragmented toolchains.',
-                  dartStyle: const DartStyle(
-                    margin: EdgeInsets.all(0),
+                  dartStyle: DartStyle(
+                    margin: const EdgeInsets.all(0),
                     fontSize: 16,
                     lineHeight: 1.6,
-                    color: Color('#94a3b8'),
+                    color: ThemeToken.color('muted'),
                     maxWidth: 680,
                   ),
                 ),
@@ -1536,16 +1548,16 @@ class HardwarePage extends StatefulComponent {
                         padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
                         radius: 12,
                         background: const Color('#f97316'),
-                        color: const Color('#050b14'),
+                        color: const Color('#ffffff'),
                         fontWeight: 800,
                         fontSize: 14,
                       ),
                       children: [
                         Text.span(
                           'Read Hardware Guides',
-                          dartStyle: const DartStyle(color: Color('#050b14'), fontWeight: 800),
+                          dartStyle: const DartStyle(color: Color('#ffffff'), fontWeight: 800),
                         ),
-                        Icon(Icons.arrowRight, size: 16, color: const Color('#050b14')),
+                        Icon(Icons.arrowRight, size: 16, color: const Color('#ffffff')),
                       ],
                     ),
                     Link(
@@ -1556,14 +1568,14 @@ class HardwarePage extends StatefulComponent {
                         gap: 8,
                         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                         radius: 12,
-                        background: const Color.rgba(255, 255, 255, 0.06),
-                        border: Border.all(color: const Color.rgba(255, 255, 255, 0.15)),
-                        color: const Color('#ffffff'),
+                        background: ThemeToken.color('panelStrong'),
+                        border: Border.all(color: ThemeToken.color('line')),
+                        color: ThemeToken.color('text'),
                         fontWeight: 700,
                         fontSize: 14,
                       ),
                       children: [
-                        Icon(Icons.code, size: 16, color: const Color('#fbbf24')),
+                        Icon(Icons.code, size: 16, color: const Color('#f97316')),
                         Text.span('View GitHub Source'),
                       ],
                     ),
