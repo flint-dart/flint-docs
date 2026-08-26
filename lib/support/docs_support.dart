@@ -666,9 +666,24 @@ class DocsSupport {
   }
 
   Future<String> readMarkdownContent(String path) async {
-    final file = File(path);
-    if (!await file.exists()) return '';
-    return renderMarkdownToHtml(await file.readAsString());
+    final candidates = <String>[
+      path,
+      path.replaceFirst('lib/content/guides/', 'lib/content/fullstack/guides/'),
+      path.replaceFirst('lib/content/api/', 'lib/content/fullstack/api/'),
+      path.replaceFirst('lib/content/pages/fullstack.md', 'lib/content/fullstack/overview.md'),
+      path.replaceFirst('lib/content/pages/hardware.md', 'lib/content/hardware/overview.md'),
+      path.replaceFirst('lib/content/pages/ai.md', 'lib/content/ai/overview.md'),
+      path.replaceFirst('lib/content/pages/client.md', 'lib/content/client/overview.md'),
+      path.replaceFirst('lib/content/pages/dart.md', 'lib/content/dart/overview.md'),
+    ];
+
+    for (final candidate in candidates) {
+      final file = File(candidate);
+      if (await file.exists()) {
+        return renderMarkdownToHtml(await file.readAsString());
+      }
+    }
+    return '';
   }
 
   String blogIndexHtml(
