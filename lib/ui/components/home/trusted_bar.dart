@@ -4,11 +4,13 @@ class TrustedBar extends FlintComponent {
   @override
   FlintNode build() {
     return Container(
-      dartStyle: DartStyle(
+      dartStyle: const DartStyle(
         width: SizeValue.percent(100),
-        maxWidth: 1152,
-        margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 28),
+        maxWidth: SizeValue.percent(100),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 28),
+        md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 28)),
+        lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 32)),
+        xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 36)),
       ),
       children: [
         Container(

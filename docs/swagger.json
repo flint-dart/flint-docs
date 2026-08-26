@@ -304,7 +304,20 @@
         }
       }
     },
-    "/guides/{topic}": {
+    "/fullstack": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/fullstack/guides/{topic}": {
       "get": {
         "summary": "",
         "tags": [
@@ -328,6 +341,56 @@
         ]
       }
     },
+    "/fullstack/api/{topic}": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: topic"
+          }
+        ]
+      }
+    },
+    "/fullstack/changelog": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/fullstack/ui": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/client": {
       "get": {
         "summary": "",
@@ -341,7 +404,33 @@
         }
       }
     },
-    "/dart": {
+    "/hardware": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/guides": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "Default"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/ui": {
       "get": {
         "summary": "",
         "tags": [

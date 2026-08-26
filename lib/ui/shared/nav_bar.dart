@@ -63,9 +63,11 @@ class NavBar extends FlintComponent {
         Container(
           dartStyle: const DartStyle(
             width: SizeValue.percent(100),
-            maxWidth: 1152,
-            margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            maxWidth: SizeValue.percent(100),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 14)),
+            lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 14)),
+            xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 14)),
             display: Display.flex,
             alignItems: AlignItems.center,
             justifyContent: JustifyContent.between,

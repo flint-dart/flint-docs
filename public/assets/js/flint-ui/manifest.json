@@ -1,25 +1,8 @@
 {
   "mode": "page-bundles",
-  "fallback": "/assets/js/flint-ui/main.1c709fb26bff.dart.js",
+  "fallback": "/assets/js/flint-ui/main.aab3838d725e.dart.js",
   "pages": {
-    "Home": "/assets/js/flint-ui/pages/home.ef29aaaae920.dart.js",
-    "WhatsNew": "/assets/js/flint-ui/pages/whats_new.e271f085c209.dart.js",
-    "Changelog": "/assets/js/flint-ui/pages/changelog.496b4f34f08a.dart.js",
-    "Client": "/assets/js/flint-ui/pages/client.61518cab4270.dart.js",
-    "Ai": "/assets/js/flint-ui/pages/ai.d23d272e1f56.dart.js",
-    "UiDocs": "/assets/js/flint-ui/pages/ui_docs.7c8db585c0fa.dart.js",
-    "Examples": "/assets/js/flint-ui/pages/examples.10f2ea1d925b.dart.js",
-    "Guides": "/assets/js/flint-ui/pages/guides.a747f6f29e3d.dart.js",
-    "Api": "/assets/js/flint-ui/pages/api.1aa625ce171f.dart.js",
-    "Questions": "/assets/js/flint-ui/pages/questions.41bf72d668e9.dart.js",
-    "AskQuestion": "/assets/js/flint-ui/pages/ask_question.62a3de80efc2.dart.js",
-    "Blog": "/assets/js/flint-ui/pages/blog.edac18d65f1f.dart.js",
-    "BlogDetail": "/assets/js/flint-ui/pages/blog_detail.fa18b1853a68.dart.js",
-    "BlogWrite": "/assets/js/flint-ui/pages/blog_write.99ee8053a3b8.dart.js",
-    "QuestionDetail": "/assets/js/flint-ui/pages/question_detail.0493c1e79d4c.dart.js",
-    "Showcase": "/assets/js/flint-ui/pages/showcase.46ad6cedcacd.dart.js",
-    "ShowcaseDetail": "/assets/js/flint-ui/pages/showcase_detail.7cbdd48e7d5a.dart.js",
-    "SubmitBuild": "/assets/js/flint-ui/pages/submit_build.8e24724bf3ba.dart.js",
-    "Content": "/assets/js/flint-ui/pages/content.2cf9feda06b8.dart.js"
+    "Home": "/assets/js/flint-ui/pages/home.eb86c9415ac9.dart.js",
+    "Fullstack": "/assets/js/flint-ui/pages/fullstack.c88d01d30250.dart.js"
   }
 }

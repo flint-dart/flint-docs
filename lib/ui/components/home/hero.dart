@@ -52,6 +52,7 @@ class HomeHero extends StatefulComponent {
       dartStyle: DartStyle(
         position: Position.relative,
         overflow: Overflow.hidden,
+        width: SizeValue.percent(100),
         minHeight: SizeValue('calc(100vh - 68px)'),
         borderBottom: Border(color: ThemeToken.color('line'), width: 1),
         background: ThemeToken.color('bg'),
@@ -127,15 +128,15 @@ class HomeHero extends StatefulComponent {
         _ambientGlowOrb(
           top: '8%',
           left: '4%',
-          width: 320,
-          height: 320,
+          width: 380,
+          height: 380,
           color: Color.rgba(52, 211, 153, 0.15),
         ),
         _ambientGlowOrb(
           bottom: '12%',
           right: '5%',
-          width: 380,
-          height: 380,
+          width: 440,
+          height: 440,
           color: Color.rgba(56, 189, 248, 0.14),
         ),
         Container(
@@ -143,10 +144,11 @@ class HomeHero extends StatefulComponent {
             position: Position.relative,
             zIndex: 2,
             width: SizeValue.percent(100),
-            maxWidth: 1220,
-            margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 36),
-            lg: DartStyle(padding: EdgeInsets.symmetric(vertical: 54)),
+            maxWidth: SizeValue.percent(100),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 36),
+            md: DartStyle(padding: EdgeInsets.symmetric(horizontal: 36, vertical: 48)),
+            lg: DartStyle(padding: EdgeInsets.symmetric(horizontal: 56, vertical: 56)),
+            xl: DartStyle(padding: EdgeInsets.symmetric(horizontal: 80, vertical: 64)),
           ),
           children: [
             _topAnnouncementPill(),
@@ -154,14 +156,21 @@ class HomeHero extends StatefulComponent {
               dartStyle: DartStyle(
                 display: Display.grid,
                 gridTemplateColumns: GridTemplateColumns.one,
-                gap: 40,
+                gap: 36,
                 alignItems: AlignItems.center,
                 lg: DartStyle(
                   gridTemplateColumns: GridTemplateColumns.tracks([
-                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.02)),
-                    GridTrack.minmax(480, GridTrack.oneFr),
+                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.05)),
+                    GridTrack.minmax(520, SizeValue.fr(1.15)),
                   ]),
                   gap: 48,
+                ),
+                xl: DartStyle(
+                  gridTemplateColumns: GridTemplateColumns.tracks([
+                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.05)),
+                    GridTrack.minmax(600, SizeValue.fr(1.2)),
+                  ]),
+                  gap: 64,
                 ),
               ),
               children: [
@@ -290,7 +299,8 @@ class HomeHero extends StatefulComponent {
           'Flint Ecosystem',
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 18, bottom: 0),
-            fontSize: const SizeValue('clamp(2.8rem, 5.8vw, 4.8rem)'),
+            maxWidth: 820,
+            fontSize: const SizeValue('clamp(3rem, 6.2vw, 5.2rem)'),
             lineHeight: 0.98,
             fontWeight: 900,
             color: Color('transparent'),
@@ -310,8 +320,8 @@ class HomeHero extends StatefulComponent {
           'One language across your entire stack: Full-Stack Web, Client SDK, Native AI, and Robotics.',
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 16, bottom: 0),
-            maxWidth: 620,
-            fontSize: 22,
+            maxWidth: 720,
+            fontSize: 23,
             lineHeight: 1.28,
             fontWeight: 800,
             color: ThemeToken.color('text'),
@@ -321,7 +331,7 @@ class HomeHero extends StatefulComponent {
           'Build end-to-end full-stack web applications with Flint Dart, universal cross-platform clients with Flint Client, autonomous AI agents with Flint AI, and connected hardware & robotics with Flint Hardware.',
           dartStyle: DartStyle(
             margin: const EdgeInsets.only(top: 16, bottom: 0),
-            maxWidth: 600,
+            maxWidth: 680,
             fontSize: 16,
             lineHeight: 1.7,
             color: ThemeToken.color('muted'),
@@ -331,7 +341,7 @@ class HomeHero extends StatefulComponent {
         Container(
           dartStyle: DartStyle(
             width: SizeValue.percent(100),
-            maxWidth: 580,
+            maxWidth: 620,
             margin: const EdgeInsets.only(top: 24),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             radius: 8,
@@ -488,6 +498,7 @@ class HomeHero extends StatefulComponent {
       dartStyle: DartStyle(
         position: Position.relative,
         zIndex: 2,
+        width: SizeValue.percent(100),
         radius: 12,
         border: Border.all(
           color: Color.rgba(56, 189, 248, 0.25),
@@ -534,8 +545,8 @@ class HomeHero extends StatefulComponent {
               dartStyle: const DartStyle(
                 display: Display.flex,
                 alignItems: AlignItems.center,
+                flexWrap: FlexWrap.wrap,
                 gap: 4,
-                overflow: 'auto',
               ),
               children: [
                 for (var i = 0; i < _snippets.length; i++)
@@ -629,13 +640,14 @@ class HomeHero extends StatefulComponent {
         // Code Display Window
         Container(
           dartStyle: const DartStyle(
-            padding: EdgeInsets.all(18),
-            maxHeight: 360,
+            padding: EdgeInsets.all(20),
+            maxHeight: 400,
             overflow: 'auto',
             fontFamily: FontFamily.monospace,
             fontSize: 13,
-            lineHeight: 1.6,
+            lineHeight: 1.65,
             background: Color('#040807'),
+            whiteSpace: 'pre',
           ),
           children: [
             _syntaxHighlightedBlock(snippet.lines),
@@ -730,14 +742,20 @@ class HomeHero extends StatefulComponent {
 
   FlintNode _syntaxHighlightedBlock(List<_CodeLine> lines) {
     return Column(
-      dartStyle: const DartStyle(gap: 2, alignItems: AlignItems.start),
+      dartStyle: const DartStyle(
+        gap: 2,
+        alignItems: AlignItems.start,
+        whiteSpace: 'pre',
+      ),
       children: [
         for (var i = 0; i < lines.length; i++)
           Row(
             dartStyle: const DartStyle(
               display: Display.flex,
+              alignItems: AlignItems.baseline,
               gap: 14,
               width: SizeValue.percent(100),
+              whiteSpace: 'pre',
             ),
             children: [
               Text.span(
@@ -745,13 +763,14 @@ class HomeHero extends StatefulComponent {
                 dartStyle: const DartStyle(
                   color: Color('#475569'),
                   fontSize: 12,
+                  width: 22,
+                  display: Display.inlineBlock,
                 ),
               ),
-              Row(
+              Container(
                 dartStyle: const DartStyle(
-                  display: Display.flex,
-                  flexWrap: FlexWrap.wrap,
-                  gap: 0,
+                  display: Display.inlineBlock,
+                  whiteSpace: 'pre',
                 ),
                 children: [
                   for (final token in lines[i].tokens)
@@ -760,6 +779,7 @@ class HomeHero extends StatefulComponent {
                       dartStyle: DartStyle(
                         color: token.color,
                         fontWeight: token.bold ? 800 : 400,
+                        whiteSpace: 'pre',
                       ),
                     ),
                 ],
@@ -776,6 +796,7 @@ class HomeHero extends StatefulComponent {
   FlintNode _ecosystemProofBanner() {
     return Container(
       dartStyle: DartStyle(
+        width: SizeValue.percent(100),
         margin: const EdgeInsets.only(top: 48),
         padding: const EdgeInsets.all(16),
         radius: 10,
@@ -798,8 +819,8 @@ class HomeHero extends StatefulComponent {
       ),
       children: [
         Grid(
-          columns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: 14,
+          columns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: 16,
           children: [
             _proofPill(
               Icons.server,
@@ -999,49 +1020,49 @@ final List<_Snippet> _snippets = [
   _Snippet(
     tabLabel: 'server.dart',
     pillarTitle: 'Flint Dart Web Server',
-    filename: 'lib/routes/api.dart',
+    filename: 'lib/controllers/project_controller.dart',
     href: '/fullstack',
     icon: Icons.server,
     accentColor: Color('#10b981'),
     statusMessage: 'HTTP 200 OK • 0.4ms latency • RLS Active',
-    code: '''import 'package:flint_dart/flint.dart';
+    code: '''import 'package:flint_dart/flint_dart.dart';
 
-@Get('/api/projects')
-Future<Response> getProjects(Request req) async {
-  final user = await req.auth;
-  final projects = await Project()
-      .where('user_id', user.id)
-      .withRelation('deployments')
-      .get();
+class ProjectController extends Controller {
+  Future<Response> index() async {
+    final user = await req.auth;
+    final projects = await Project()
+        .where('user_id', '=', user.id)
+        .withRelation('deployments')
+        .get();
 
-  return Response.json({'status': true, 'data': projects});
+    return res.json({'status': true, 'data': projects});
+  }
 }''',
     lines: [
       _CodeLine([
         _Token('import ', _kw, bold: true),
-        _Token("'package:flint_dart/flint.dart'", _str),
+        _Token("'package:flint_dart/flint_dart.dart'", _str),
         _Token(';', _txt),
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('@Get', _fn, bold: true),
-        _Token("('", _txt),
-        _Token('/api/projects', _str),
-        _Token("')", _txt),
+        _Token('class ', _kw, bold: true),
+        _Token('ProjectController ', _typ, bold: true),
+        _Token('extends ', _kw),
+        _Token('Controller', _typ),
+        _Token(' {', _txt),
       ]),
       _CodeLine([
-        _Token('Future<', _typ),
+        _Token('  Future<', _typ),
         _Token('Response', _typ, bold: true),
         _Token('> ', _txt),
-        _Token('getProjects', _fn),
-        _Token('(', _txt),
-        _Token('Request', _typ),
-        _Token(' req) ', _txt),
+        _Token('index', _fn),
+        _Token('() ', _txt),
         _Token('async', _kw, bold: true),
         _Token(' {', _txt),
       ]),
       _CodeLine([
-        _Token('  final ', _kw),
+        _Token('    final ', _kw),
         _Token('user = ', _txt),
         _Token('await ', _kw),
         _Token('req.', _txt),
@@ -1049,33 +1070,36 @@ Future<Response> getProjects(Request req) async {
         _Token(';', _txt),
       ]),
       _CodeLine([
-        _Token('  final ', _kw),
+        _Token('    final ', _kw),
         _Token('projects = ', _txt),
         _Token('await ', _kw),
         _Token('Project', _typ, bold: true),
         _Token('()', _txt),
       ]),
       _CodeLine([
-        _Token('      .', _txt),
+        _Token('        .', _txt),
         _Token('where', _fn),
-        _Token("('user_id', user.id)", _txt),
+        _Token("('user_id', '=', user.id)", _txt),
       ]),
       _CodeLine([
-        _Token('      .', _txt),
+        _Token('        .', _txt),
         _Token('withRelation', _fn),
         _Token("('deployments')", _str),
       ]),
       _CodeLine([
-        _Token('      .', _txt),
+        _Token('        .', _txt),
         _Token('get', _fn),
         _Token('();', _txt),
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('  return ', _kw, bold: true),
-        _Token('Response.', _typ),
+        _Token('    return ', _kw, bold: true),
+        _Token('res.', _txt),
         _Token('json', _fn),
         _Token("({'status': true, 'data': projects});", _txt),
+      ]),
+      _CodeLine([
+        _Token('  }', _txt),
       ]),
       _CodeLine([
         _Token('}', _txt),
@@ -1089,15 +1113,19 @@ Future<Response> getProjects(Request req) async {
     href: '/client',
     icon: Icons.globe,
     accentColor: Color('#06b6d4'),
-    statusMessage: 'WebSocket Connected • Channel live • 0 packet drop',
+    statusMessage: 'Client Ready • Typed response • In-memory cache',
     code: '''import 'package:flint_client/flint_client.dart';
 
-final client = FlintClient(baseUrl: 'https://api.flintdart.dev');
+Future<void> main() async {
+  final client = FlintClient(
+    baseUrl: 'https://api.flintdart.dev',
+    debug: true,
+  );
 
-void subscribeToTelemetry() {
-  client.channel('cluster_nodes').on('metrics', (event) {
-    print('Node update: \${event.data}');
-  });
+  final response = await client.get<Map<String, dynamic>>('/api/projects');
+  if (response.isSuccess) {
+    print('Projects: \${response.data}');
+  }
 }''',
     lines: [
       _CodeLine([
@@ -1107,33 +1135,59 @@ void subscribeToTelemetry() {
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('final ', _kw),
+        _Token('Future<', _typ),
+        _Token('void', _typ),
+        _Token('> ', _txt),
+        _Token('main', _fn),
+        _Token('() ', _txt),
+        _Token('async', _kw, bold: true),
+        _Token(' {', _txt),
+      ]),
+      _CodeLine([
+        _Token('  final ', _kw),
         _Token('client = ', _txt),
         _Token('FlintClient', _typ, bold: true),
-        _Token('(baseUrl: ', _txt),
+        _Token('(', _txt),
+      ]),
+      _CodeLine([
+        _Token('    baseUrl: ', _txt),
         _Token("'https://api.flintdart.dev'", _str),
-        _Token(');', _txt),
+        _Token(',', _txt),
+      ]),
+      _CodeLine([
+        _Token('    debug: ', _txt),
+        _Token('true', _kw, bold: true),
+        _Token(',', _txt),
+      ]),
+      _CodeLine([
+        _Token('  );', _txt),
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('void ', _typ),
-        _Token('subscribeToTelemetry', _fn),
-        _Token('() {', _txt),
-      ]),
-      _CodeLine([
-        _Token('  client.', _txt),
-        _Token('channel', _fn),
-        _Token("('cluster_nodes').", _txt),
-        _Token('on', _fn),
-        _Token("('metrics', (event) {", _txt),
-      ]),
-      _CodeLine([
-        _Token('    print(', _txt),
-        _Token("'Node update: \${event.data}'", _str),
+        _Token('  final ', _kw),
+        _Token('response = ', _txt),
+        _Token('await ', _kw),
+        _Token('client.', _txt),
+        _Token('get', _fn),
+        _Token('<', _txt),
+        _Token('Map<String, dynamic>', _typ),
+        _Token(">(", _txt),
+        _Token("'/api/projects'", _str),
         _Token(');', _txt),
       ]),
       _CodeLine([
-        _Token('  });', _txt),
+        _Token('  if ', _kw, bold: true),
+        _Token('(response.', _txt),
+        _Token('isSuccess', _fn),
+        _Token(') {', _txt),
+      ]),
+      _CodeLine([
+        _Token('    print(', _txt),
+        _Token("'Projects: \${response.data}'", _str),
+        _Token(');', _txt),
+      ]),
+      _CodeLine([
+        _Token('  }', _txt),
       ]),
       _CodeLine([
         _Token('}', _txt),
@@ -1143,20 +1197,27 @@ void subscribeToTelemetry() {
   _Snippet(
     tabLabel: 'ai_agent.dart',
     pillarTitle: 'Flint AI Engine',
-    filename: 'lib/agents/researcher.dart',
+    filename: 'lib/agents/metrics_agent.dart',
     href: '/ai',
     icon: Icons.sparkles,
     accentColor: Color('#a855f7'),
-    statusMessage: 'Multi-Provider Mesh • Tool Calling • Streaming',
+    statusMessage: 'Multi-Provider Mesh • AiGoal -> AiPlan -> AiRunResult',
     code: '''import 'package:flint_ai/flint_ai.dart';
 
-final agent = FlintAgent(
-  model: 'gpt-4o',
-  meshProviders: ['gemini-1.5-pro', 'claude-3-5-sonnet'],
-  tools: [WebSearchTool(), DatabaseQueryTool()],
-);
+Future<void> main() async {
+  final ai = FlintAi();
 
-final stream = agent.promptStream('Analyze real-time server telemetry');''',
+  final result = await ai.run(
+    agent: TaskAgent(),
+    goal: const AiGoal(
+      task: 'Analyze production server metrics',
+      input: {'clusterId': 'eu-central-1'},
+    ),
+    userId: 'user-1',
+  );
+
+  print(result.output);
+}''',
     lines: [
       _CodeLine([
         _Token('import ', _kw, bold: true),
@@ -1165,71 +1226,9 @@ final stream = agent.promptStream('Analyze real-time server telemetry');''',
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('final ', _kw),
-        _Token('agent = ', _txt),
-        _Token('FlintAgent', _typ, bold: true),
-        _Token('(', _txt),
-      ]),
-      _CodeLine([
-        _Token('  model: ', _txt),
-        _Token("'gpt-4o'", _str),
-        _Token(',', _txt),
-      ]),
-      _CodeLine([
-        _Token('  meshProviders: [', _txt),
-        _Token("'gemini-1.5-pro'", _str),
-        _Token(', ', _txt),
-        _Token("'claude-3-5-sonnet'", _str),
-        _Token('],', _txt),
-      ]),
-      _CodeLine([
-        _Token('  tools: [', _txt),
-        _Token('WebSearchTool', _typ),
-        _Token('(), ', _txt),
-        _Token('DatabaseQueryTool', _typ),
-        _Token('()],', _txt),
-      ]),
-      _CodeLine([
-        _Token(');', _txt),
-      ]),
-      _CodeLine([]),
-      _CodeLine([
-        _Token('final ', _kw),
-        _Token('stream = agent.', _txt),
-        _Token('promptStream', _fn),
-        _Token("('Analyze telemetry');", _str),
-      ]),
-    ],
-  ),
-  _Snippet(
-    tabLabel: 'robotics.dart',
-    pillarTitle: 'Flint Hardware & Robotics',
-    filename: 'firmware/main.dart',
-    href: '/hardware',
-    icon: Icons.zap,
-    accentColor: Color('#f97316'),
-    statusMessage: 'MCU Clock 240MHz • Native C++ Bridge • Telemetry Active',
-    code: '''import 'package:flint_hardware/robotics.dart';
-
-void main() async {
-  final sonar = HcSr04(trigger: Pin(4), echo: Pin(5));
-  final motor = DcPixDriver(left: Pin(12), right: Pin(13));
-
-  while (true) {
-    final dist = await sonar.readDistanceCm();
-    if (dist < 15) motor.reverse();
-    await delayMs(20);
-  }
-}''',
-    lines: [
-      _CodeLine([
-        _Token('import ', _kw, bold: true),
-        _Token("'package:flint_hardware/robotics.dart'", _str),
-        _Token(';', _txt),
-      ]),
-      _CodeLine([]),
-      _CodeLine([
-        _Token('void ', _typ),
+        _Token('Future<', _typ),
+        _Token('void', _typ),
+        _Token('> ', _txt),
         _Token('main', _fn),
         _Token('() ', _txt),
         _Token('async', _kw, bold: true),
@@ -1237,50 +1236,146 @@ void main() async {
       ]),
       _CodeLine([
         _Token('  final ', _kw),
-        _Token('sonar = ', _txt),
-        _Token('HcSr04', _typ, bold: true),
-        _Token('(trigger: ', _txt),
-        _Token('Pin', _typ),
-        _Token('(4), echo: ', _txt),
-        _Token('Pin', _typ),
-        _Token('(5));', _txt),
-      ]),
-      _CodeLine([
-        _Token('  final ', _kw),
-        _Token('motor = ', _txt),
-        _Token('DcPixDriver', _typ, bold: true),
-        _Token('(left: ', _txt),
-        _Token('Pin', _typ),
-        _Token('(12), right: ', _txt),
-        _Token('Pin', _typ),
-        _Token('(13));', _txt),
+        _Token('ai = ', _txt),
+        _Token('FlintAi', _typ, bold: true),
+        _Token('();', _txt),
       ]),
       _CodeLine([]),
       _CodeLine([
-        _Token('  while', _kw, bold: true),
-        _Token(' (true) {', _txt),
+        _Token('  final ', _kw),
+        _Token('result = ', _txt),
+        _Token('await ', _kw),
+        _Token('ai.', _txt),
+        _Token('run', _fn),
+        _Token('(', _txt),
+      ]),
+      _CodeLine([
+        _Token('    agent: ', _txt),
+        _Token('TaskAgent', _typ, bold: true),
+        _Token('(),', _txt),
+      ]),
+      _CodeLine([
+        _Token('    goal: ', _txt),
+        _Token('const ', _kw),
+        _Token('AiGoal', _typ, bold: true),
+        _Token('(', _txt),
+      ]),
+      _CodeLine([
+        _Token('      task: ', _txt),
+        _Token("'Analyze production metrics'", _str),
+        _Token(',', _txt),
+      ]),
+      _CodeLine([
+        _Token("      input: {'clusterId': 'eu-central-1'},", _txt),
+      ]),
+      _CodeLine([
+        _Token('    ),', _txt),
+      ]),
+      _CodeLine([
+        _Token('    userId: ', _txt),
+        _Token("'user-1'", _str),
+        _Token(',', _txt),
+      ]),
+      _CodeLine([
+        _Token('  );', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('  print(', _txt),
+        _Token('result.output', _txt),
+        _Token(');', _txt),
+      ]),
+      _CodeLine([
+        _Token('}', _txt),
+      ]),
+    ],
+  ),
+  _Snippet(
+    tabLabel: 'robotics.dart',
+    pillarTitle: 'Flint Hardware & Robotics',
+    filename: 'firmware/robot.dart',
+    href: '/hardware',
+    icon: Icons.zap,
+    accentColor: Color('#f97316'),
+    statusMessage: 'FirmwareBuilder • ESP32 Native • Real-Time Loop',
+    code: '''import 'package:flint_hardware/flint_hardware.dart';
+
+void main() {
+  final robot = FirmwareBuilder('rover_01', target: BoardTarget.esp32);
+
+  final sonar = robot.sonar(triggerPin: 5, echoPin: 18);
+  final drive = robot.differentialDrive(
+    leftPwmPin: 14, leftDirPin: 27,
+    rightPwmPin: 12, rightDirPin: 26,
+  );
+
+  robot.loop((ctx) {
+    final dist = ctx.readSonar(sonar);
+    if (dist < 15) ctx.reverseDrive(drive);
+  });
+}''',
+    lines: [
+      _CodeLine([
+        _Token('import ', _kw, bold: true),
+        _Token("'package:flint_hardware/flint_hardware.dart'", _str),
+        _Token(';', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('void ', _typ),
+        _Token('main', _fn),
+        _Token('() {', _txt),
+      ]),
+      _CodeLine([
+        _Token('  final ', _kw),
+        _Token('robot = ', _txt),
+        _Token('FirmwareBuilder', _typ, bold: true),
+        _Token("('rover_01', target: ", _txt),
+        _Token('BoardTarget', _typ),
+        _Token('.esp32);', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('  final ', _kw),
+        _Token('sonar = robot.', _txt),
+        _Token('sonar', _fn),
+        _Token('(triggerPin: 5, echoPin: 18);', _txt),
+      ]),
+      _CodeLine([
+        _Token('  final ', _kw),
+        _Token('drive = robot.', _txt),
+        _Token('differentialDrive', _fn),
+        _Token('(', _txt),
+      ]),
+      _CodeLine([
+        _Token('    leftPwmPin: 14, leftDirPin: 27,', _txt),
+      ]),
+      _CodeLine([
+        _Token('    rightPwmPin: 12, rightDirPin: 26,', _txt),
+      ]),
+      _CodeLine([
+        _Token('  );', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('  robot.', _txt),
+        _Token('loop', _fn),
+        _Token('((ctx) {', _txt),
       ]),
       _CodeLine([
         _Token('    final ', _kw),
-        _Token('dist = ', _txt),
-        _Token('await ', _kw),
-        _Token('sonar.', _txt),
-        _Token('readDistanceCm', _fn),
-        _Token('();', _txt),
+        _Token('dist = ctx.', _txt),
+        _Token('readSonar', _fn),
+        _Token('(sonar);', _txt),
       ]),
       _CodeLine([
         _Token('    if ', _kw, bold: true),
-        _Token('(dist < 15) motor.', _txt),
-        _Token('reverse', _fn),
-        _Token('();', _txt),
+        _Token('(dist < 15) ctx.', _txt),
+        _Token('reverseDrive', _fn),
+        _Token('(drive);', _txt),
       ]),
       _CodeLine([
-        _Token('    await ', _kw),
-        _Token('delayMs', _fn),
-        _Token('(20);', _txt),
-      ]),
-      _CodeLine([
-        _Token('  }', _txt),
+        _Token('  });', _txt),
       ]),
       _CodeLine([
         _Token('}', _txt),
