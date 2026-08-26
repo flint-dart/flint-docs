@@ -1,6 +1,7 @@
 import 'package:flint_dart/ui.dart';
 
 import '../components/home/build_for.dart';
+import '../components/home/dart_amplified.dart';
 import '../components/home/final_cta.dart';
 import '../components/home/hero.dart';
 import '../components/home/platform_section.dart';
@@ -17,13 +18,14 @@ class HomePage extends Component {
     return SiteLayout(
       props: props,
       body: Container(
-        dartStyle: DartStyle(
+        dartStyle: const DartStyle(
           display: Display.grid,
         ),
         children: [
           HomeHero(),
           TrustedBar(),
           PlatformSection(),
+          DartAmplified(),
           BuildFor(),
           WorkflowSection(),
           FinalCta(),

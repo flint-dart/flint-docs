@@ -1,13 +1,7 @@
 {
   "mode": "page-bundles",
-  "fallback": "/assets/js/flint-ui/main.d21f2cb1d79b.dart.js",
+  "fallback": "/assets/js/flint-ui/main.adacf105e351.dart.js",
   "pages": {
-    "Home": "/assets/js/flint-ui/pages/home.24eced9ff41c.dart.js",
-    "Fullstack": "/assets/js/flint-ui/pages/fullstack.947c30a83b5a.dart.js",
-    "WhatsNew": "/assets/js/flint-ui/pages/whats_new.bcf54c081acc.dart.js",
-    "Changelog": "/assets/js/flint-ui/pages/changelog.28620052c13d.dart.js",
-    "Client": "/assets/js/flint-ui/pages/client.f40b4e74a733.dart.js",
-    "Ai": "/assets/js/flint-ui/pages/ai.8951a049940b.dart.js",
-    "Hardware": "/assets/js/flint-ui/pages/hardware.1d68b67021d1.dart.js"
+    "Home": "/assets/js/flint-ui/pages/home.1ee1165edbdc.dart.js"
   }
 }
