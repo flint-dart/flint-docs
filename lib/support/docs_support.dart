@@ -134,11 +134,12 @@ class DocsSupport {
     Response res,
     String topic,
   ) async {
-    if (!apiTopics.contains(topic)) {
+    final cleanTopic = topic.startsWith('api-') ? topic.substring(4) : topic;
+    if (!apiTopics.contains(cleanTopic)) {
       return res.status(404).send('Topic not found');
     }
-    final heading = topicHeading(topic);
-    final topicIndex = apiTopics.indexOf(topic);
+    final heading = topicHeading(cleanTopic);
+    final topicIndex = apiTopics.indexOf(cleanTopic);
     final previousTopicSlug = topicIndex > 0 ? apiTopics[topicIndex - 1] : null;
     final nextTopicSlug = topicIndex >= 0 && topicIndex < apiTopics.length - 1
         ? apiTopics[topicIndex + 1]
@@ -149,7 +150,7 @@ class DocsSupport {
     final nextApiTitle =
         nextTopicSlug != null ? topicHeading(nextTopicSlug).trim() : null;
     final contentHtml = await readMarkdownContent(
-      'lib/content/fullstack/api/api-$topic.md',
+      'lib/content/fullstack/api/api-$cleanTopic.md',
     );
     return res.page(
       'Api',
