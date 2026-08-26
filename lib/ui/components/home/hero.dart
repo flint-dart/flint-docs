@@ -1,10 +1,53 @@
+import 'dart:async';
+
 import 'package:flint_dart/ui.dart';
 
 import '../../../support/product_versions.dart';
+import '../copy_text.dart';
+import '../detect_os.dart';
 
-class HomeHero extends FlintComponent {
+class HomeHero extends StatefulComponent {
+  int _activeTab = 0;
+  String _selectedOs = 'linux';
+  bool _copiedInstall = false;
+  bool _copiedCode = false;
+
+  @override
+  void didMount() {
+    final detected = detectOperatingSystem();
+    if (detected != null && detected != _selectedOs) {
+      setState(() => _selectedOs = detected);
+    }
+  }
+
+  void _copyInstallCommand(String command) {
+    copyText(command);
+    setState(() => _copiedInstall = true);
+    Timer(const Duration(seconds: 2), () {
+      setState(() => _copiedInstall = false);
+    });
+  }
+
+  void _copyCurrentCode(String code) {
+    copyText(code);
+    setState(() => _copiedCode = true);
+    Timer(const Duration(seconds: 2), () {
+      setState(() => _copiedCode = false);
+    });
+  }
+
+  String _getInstallCmd() {
+    if (_selectedOs == 'windows') {
+      return 'powershell -c "irm https://flintdart.dev/install.ps1 | iex"';
+    }
+    return 'curl -fsSL https://flintdart.dev/install.sh | sh';
+  }
+
   @override
   FlintNode build() {
+    final installCmd = _getInstallCmd();
+    final currentSnippet = _snippets[_activeTab];
+
     return Container(
       dartStyle: DartStyle(
         position: Position.relative,
@@ -15,25 +58,32 @@ class HomeHero extends FlintComponent {
         light: DartStyle(
           background: Background.layers([
             Gradient.radialCircle(
-              at: const GradientPosition.percent(10, 0),
+              at: const GradientPosition.percent(15, 0),
               stops: const [
-                GradientStop(Color.rgba(52, 211, 153, 0.24), 0),
-                GradientStop(Colors.transparent, 42),
+                GradientStop(Color.rgba(52, 211, 153, 0.22), 0),
+                GradientStop(Colors.transparent, 45),
               ],
             ),
             Gradient.radialCircle(
-              at: const GradientPosition.percent(92, 6),
+              at: const GradientPosition.percent(85, 10),
               stops: const [
-                GradientStop(Color.rgba(56, 189, 248, 0.24), 0),
-                GradientStop(Colors.transparent, 44),
+                GradientStop(Color.rgba(56, 189, 248, 0.2), 0),
+                GradientStop(Colors.transparent, 45),
+              ],
+            ),
+            Gradient.radialCircle(
+              at: const GradientPosition.percent(50, 60),
+              stops: const [
+                GradientStop(Color.rgba(167, 139, 250, 0.12), 0),
+                GradientStop(Colors.transparent, 55),
               ],
             ),
             Gradient.linear(
-              160,
+              155,
               const [
-                GradientStop(Color('#f8fff9'), 0),
-                GradientStop(Color('#eefaf3'), 52),
-                GradientStop(Color('#e8f8fd'), 100),
+                GradientStop(Color('#f8fffb'), 0),
+                GradientStop(Color('#f0faf5'), 48),
+                GradientStop(Color('#eaf6fa'), 100),
               ],
             ),
           ]),
@@ -43,22 +93,29 @@ class HomeHero extends FlintComponent {
             Gradient.radialCircle(
               at: const GradientPosition.percent(12, 0),
               stops: const [
-                GradientStop(Color.rgba(52, 211, 153, 0.18), 0),
-                GradientStop(Colors.transparent, 38),
+                GradientStop(Color.rgba(16, 185, 129, 0.18), 0),
+                GradientStop(Colors.transparent, 42),
               ],
             ),
             Gradient.radialCircle(
-              at: const GradientPosition.percent(90, 8),
+              at: const GradientPosition.percent(88, 12),
               stops: const [
-                GradientStop(Color.rgba(56, 189, 248, 0.2), 0),
-                GradientStop(Colors.transparent, 42),
+                GradientStop(Color.rgba(14, 165, 233, 0.18), 0),
+                GradientStop(Colors.transparent, 44),
+              ],
+            ),
+            Gradient.radialCircle(
+              at: const GradientPosition.percent(50, 50),
+              stops: const [
+                GradientStop(Color.rgba(139, 92, 246, 0.1), 0),
+                GradientStop(Colors.transparent, 55),
               ],
             ),
             Gradient.linear(
               160,
               [
                 GradientStop(ThemeToken.color('bg'), 0),
-                GradientStop(ThemeToken.color('panel'), 58),
+                GradientStop(ThemeToken.color('panel'), 55),
                 GradientStop(ThemeToken.color('panelStrong'), 100),
               ],
             ),
@@ -66,60 +123,767 @@ class HomeHero extends FlintComponent {
         ),
       ),
       children: [
-        _meshOverlay(),
-        _ambientGlass(
+        _ambientGrid(),
+        _ambientGlowOrb(
+          top: '8%',
           left: '4%',
-          top: '16%',
-          width: 190,
-          height: 88,
-          delayMilliseconds: 0,
+          width: 320,
+          height: 320,
+          color: Color.rgba(52, 211, 153, 0.15),
         ),
-        _ambientGlass(
-          right: '7%',
-          bottom: '16%',
-          width: 240,
-          height: 108,
-          delayMilliseconds: 850,
+        _ambientGlowOrb(
+          bottom: '12%',
+          right: '5%',
+          width: 380,
+          height: 380,
+          color: Color.rgba(56, 189, 248, 0.14),
         ),
         Container(
           dartStyle: const DartStyle(
             position: Position.relative,
-            zIndex: 1,
+            zIndex: 2,
             width: SizeValue.percent(100),
-            maxWidth: 1152,
+            maxWidth: 1220,
             margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 42),
-            lg: DartStyle(padding: EdgeInsets.symmetric(vertical: 64)),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 36),
+            lg: DartStyle(padding: EdgeInsets.symmetric(vertical: 54)),
           ),
           children: [
-            _statusBar(),
+            _topAnnouncementPill(),
             Row(
               dartStyle: DartStyle(
                 display: Display.grid,
                 gridTemplateColumns: GridTemplateColumns.one,
-                gap: 36,
+                gap: 40,
                 alignItems: AlignItems.center,
                 lg: DartStyle(
                   gridTemplateColumns: GridTemplateColumns.tracks([
-                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.04)),
-                    GridTrack.minmax(430, GridTrack.oneFr),
+                    GridTrack.minmax(SizeValue.zero, SizeValue.fr(1.02)),
+                    GridTrack.minmax(480, GridTrack.oneFr),
                   ]),
-                  gap: 52,
+                  gap: 48,
                 ),
               ),
               children: [
-                _copy(),
-                _productPreview(),
+                _heroLeftColumn(installCmd),
+                _heroRightIdeWindow(currentSnippet),
               ],
             ),
-            _proofStrip(),
+            _ecosystemProofBanner(),
           ],
         ),
       ],
     );
   }
 
-  FlintNode _meshOverlay() {
+  // ---------------------------------------------------------------------------
+  // 1. TOP ANNOUNCEMENT PILL
+  // ---------------------------------------------------------------------------
+  FlintNode _topAnnouncementPill() {
+    return Row(
+      dartStyle: const DartStyle(
+        display: Display.flex,
+        justifyContent: JustifyContent.center,
+        margin: EdgeInsets.only(bottom: 28),
+      ),
+      children: [
+        Link(
+          href: '/whats-new',
+          dartStyle: DartStyle(
+            display: Display.inlineFlex,
+            alignItems: AlignItems.center,
+            gap: 10,
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+            radius: 999,
+            border: Border.all(color: Color.rgba(16, 185, 129, 0.3)),
+            background: ThemeToken.color('panel'),
+            shadow: Shadow(
+              y: 8,
+              blur: 24,
+              spread: -8,
+              color: Color.rgba(16, 185, 129, 0.25),
+            ),
+            light: const DartStyle(
+              background: Color.rgba(255, 255, 255, 0.85),
+            ),
+            dark: const DartStyle(
+              background: Color.rgba(15, 23, 42, 0.75),
+            ),
+            transition: StyleTransition.all(milliseconds: 180),
+            hover: DartStyle(
+              transform: StyleTransform.translateY(-1),
+              border: Border.all(color: Color.rgba(52, 211, 153, 0.6)),
+            ),
+          ),
+          children: [
+            Container(
+              dartStyle: DartStyle(
+                width: 8,
+                height: 8,
+                radius: 999,
+                background: Color('#10b981'),
+                shadow: const Shadow(
+                  y: 0,
+                  blur: 10,
+                  spread: 2,
+                  color: Color('#10b981'),
+                ),
+              ),
+            ),
+            Text.span(
+              'Flint ${ProductVersions.flintDartVersionLabel} Released',
+              dartStyle: DartStyle(
+                fontSize: 12,
+                fontWeight: 900,
+                color: ThemeToken.color('primary'),
+              ),
+            ),
+            Text.span(
+              '•',
+              dartStyle: DartStyle(
+                fontSize: 12,
+                color: ThemeToken.color('muted'),
+              ),
+            ),
+            Text.span(
+              'Explore Multi-Provider AI & Full-Stack Dart',
+              dartStyle: DartStyle(
+                fontSize: 12,
+                fontWeight: 700,
+                color: ThemeToken.color('text'),
+              ),
+            ),
+            Icon(Icons.chevronRight, size: 14, color: ThemeToken.color('primary')),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // 2. HERO LEFT COLUMN
+  // ---------------------------------------------------------------------------
+  FlintNode _heroLeftColumn(String installCmd) {
+    return Column(
+      dartStyle: const DartStyle(gap: 0, alignItems: AlignItems.start),
+      children: [
+        Container(
+          dartStyle: DartStyle(
+            display: Display.inlineFlex,
+            alignItems: AlignItems.center,
+            gap: 8,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            radius: 999,
+            background: Color.rgba(16, 185, 129, 0.12),
+            border: Border.all(color: Color.rgba(16, 185, 129, 0.28)),
+            color: Color('#10b981'),
+            fontSize: 12,
+            fontWeight: 900,
+            letterSpacing: 0.5,
+          ),
+          children: [
+            Icon(Icons.zap, size: 15, color: Color('#10b981')),
+            Text.span('THE UNIFIED DART ECOSYSTEM'),
+          ],
+        ),
+        Text.h1(
+          'Flint Ecosystem',
+          dartStyle: DartStyle(
+            margin: const EdgeInsets.only(top: 18, bottom: 0),
+            fontSize: const SizeValue('clamp(2.8rem, 5.8vw, 4.8rem)'),
+            lineHeight: 0.98,
+            fontWeight: 900,
+            color: Color('transparent'),
+            background: Gradient.linear(
+              110,
+              const [
+                GradientStop(Color('#10b981'), 0),
+                GradientStop(Color('#06b6d4'), 45),
+                GradientStop(Color('#8b5cf6'), 100),
+              ],
+            ),
+            backgroundClip: BackgroundClip.text,
+            webkitBackgroundClip: BackgroundClip.text,
+          ),
+        ),
+        Text.h2(
+          'One language across your entire stack: Full-Stack Web, Client SDK, Native AI, and Robotics.',
+          dartStyle: DartStyle(
+            margin: const EdgeInsets.only(top: 16, bottom: 0),
+            maxWidth: 620,
+            fontSize: 22,
+            lineHeight: 1.28,
+            fontWeight: 800,
+            color: ThemeToken.color('text'),
+          ),
+        ),
+        Text.p(
+          'Build end-to-end full-stack web applications with Flint Dart, universal cross-platform clients with Flint Client, autonomous AI agents with Flint AI, and connected hardware & robotics with Flint Hardware.',
+          dartStyle: DartStyle(
+            margin: const EdgeInsets.only(top: 16, bottom: 0),
+            maxWidth: 600,
+            fontSize: 16,
+            lineHeight: 1.7,
+            color: ThemeToken.color('muted'),
+          ),
+        ),
+        // Interactive Install Command Box
+        Container(
+          dartStyle: DartStyle(
+            width: SizeValue.percent(100),
+            maxWidth: 580,
+            margin: const EdgeInsets.only(top: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            radius: 8,
+            border: Border.all(
+              color: Color.rgba(56, 189, 248, 0.25),
+            ),
+            background: Color.rgba(3, 7, 18, 0.75),
+            color: Colors.white,
+            display: Display.flex,
+            alignItems: AlignItems.center,
+            justifyContent: JustifyContent.between,
+            gap: 12,
+            backdropFilter: StyleFilter.blur(14),
+          ),
+          children: [
+            Row(
+              dartStyle: const DartStyle(
+                display: Display.flex,
+                alignItems: AlignItems.center,
+                gap: 10,
+                minWidth: 0,
+                overflow: 'hidden',
+              ),
+              children: [
+                Text.span(
+                  '\$',
+                  dartStyle: const DartStyle(
+                    color: Color('#34d399'),
+                    fontWeight: 900,
+                    fontFamily: FontFamily.monospace,
+                    fontSize: 14,
+                  ),
+                ),
+                Text.span(
+                  installCmd,
+                  dartStyle: const DartStyle(
+                    fontFamily: FontFamily.monospace,
+                    fontSize: 12,
+                    color: Color('#e2e8f0'),
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  ),
+                ),
+              ],
+            ),
+            Button(
+              variant: ButtonVariant.ghost,
+              size: ComponentSize.sm,
+              onPressed: (_) => _copyInstallCommand(installCmd),
+              dartStyle: DartStyle(
+                display: Display.inlineFlex,
+                alignItems: AlignItems.center,
+                gap: 6,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                radius: 6,
+                background: _copiedInstall
+                    ? Color.rgba(16, 185, 129, 0.25)
+                    : Color.rgba(255, 255, 255, 0.1),
+                color: _copiedInstall ? Color('#34d399') : Colors.white,
+                fontSize: 12,
+                fontWeight: 800,
+                transition: StyleTransition.all(milliseconds: 150),
+              ),
+              children: [
+                Icon(
+                  _copiedInstall ? Icons.check : Icons.copy,
+                  size: 13,
+                  color: _copiedInstall ? Color('#34d399') : Colors.white,
+                ),
+                Text.span(_copiedInstall ? 'Copied' : 'Copy'),
+              ],
+            ),
+          ],
+        ),
+        // CTA Buttons
+        Wrap(
+          gap: 12,
+          dartStyle: const DartStyle(margin: EdgeInsets.only(top: 24)),
+          children: [
+            Link(
+              href: '/fullstack',
+              tone: Tone.primary,
+              dartStyle: DartStyle(
+                display: Display.inlineFlex,
+                alignItems: AlignItems.center,
+                gap: 8,
+                minHeight: 46,
+                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                radius: 8,
+                fontSize: 15,
+                fontWeight: 900,
+                shadow: Shadow(
+                  y: 12,
+                  blur: 32,
+                  spread: -10,
+                  color: Color.rgba(16, 185, 129, 0.5),
+                ),
+              ),
+              children: [
+                Text.span('Get Started Free'),
+                Icon(Icons.arrowRight, size: 18),
+              ],
+            ),
+            Link(
+              href: '/guides',
+              variant: ButtonVariant.outline,
+              tone: Tone.neutral,
+              dartStyle: const DartStyle(
+                display: Display.inlineFlex,
+                alignItems: AlignItems.center,
+                gap: 8,
+                minHeight: 46,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                radius: 8,
+                fontSize: 14,
+                fontWeight: 800,
+              ),
+              children: [
+                Icon(Icons.book, size: 16),
+                Text.span('Documentation'),
+              ],
+            ),
+            Link(
+              href: 'https://github.com/flint-dart',
+              variant: ButtonVariant.ghost,
+              tone: Tone.neutral,
+              dartStyle: const DartStyle(
+                display: Display.inlineFlex,
+                alignItems: AlignItems.center,
+                gap: 8,
+                minHeight: 46,
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                radius: 8,
+                fontSize: 14,
+                fontWeight: 800,
+              ),
+              children: [
+                Icon(Icons.code, size: 16),
+                Text.span('GitHub'),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // 3. HERO RIGHT IDE / ECOSYSTEM LIVE PREVIEW
+  // ---------------------------------------------------------------------------
+  FlintNode _heroRightIdeWindow(_Snippet snippet) {
+    return Container(
+      dartStyle: DartStyle(
+        position: Position.relative,
+        zIndex: 2,
+        radius: 12,
+        border: Border.all(
+          color: Color.rgba(56, 189, 248, 0.25),
+        ),
+        background: Color('#050b0a'),
+        color: Colors.white,
+        shadow: Shadow(
+          y: 28,
+          blur: 70,
+          spread: -28,
+          color: Color.rgba(0, 0, 0, 0.8),
+        ),
+        overflow: Overflow.hidden,
+      ),
+      children: [
+        // Editor Top Bar with macOS Window Controls & Tabs
+        Container(
+          dartStyle: DartStyle(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            borderBottom: Border(
+              color: Color.rgba(255, 255, 255, 0.1),
+              width: 1,
+            ),
+            background: Color.rgba(255, 255, 255, 0.03),
+            display: Display.flex,
+            alignItems: AlignItems.center,
+            justifyContent: JustifyContent.between,
+            gap: 12,
+          ),
+          children: [
+            Row(
+              dartStyle: const DartStyle(
+                display: Display.flex,
+                alignItems: AlignItems.center,
+                gap: 6,
+              ),
+              children: [
+                _macDot(const Color('#ef4444')),
+                _macDot(const Color('#f59e0b')),
+                _macDot(const Color('#10b981')),
+              ],
+            ),
+            Row(
+              dartStyle: const DartStyle(
+                display: Display.flex,
+                alignItems: AlignItems.center,
+                gap: 4,
+                overflow: 'auto',
+              ),
+              children: [
+                for (var i = 0; i < _snippets.length; i++)
+                  _ideTabButton(
+                    index: i,
+                    label: _snippets[i].tabLabel,
+                    icon: _snippets[i].icon,
+                    accent: _snippets[i].accentColor,
+                    active: _activeTab == i,
+                  ),
+              ],
+            ),
+            Button(
+              variant: ButtonVariant.ghost,
+              size: ComponentSize.sm,
+              onPressed: (_) => _copyCurrentCode(snippet.code),
+              dartStyle: DartStyle(
+                padding: const EdgeInsets.all(6),
+                height: 28,
+                width: 28,
+                radius: 6,
+                color: _copiedCode ? Color('#34d399') : Color('#94a3b8'),
+                background: Color.rgba(255, 255, 255, 0.05),
+              ),
+              children: [
+                Icon(
+                  _copiedCode ? Icons.check : Icons.copy,
+                  size: 13,
+                ),
+              ],
+            ),
+          ],
+        ),
+        // Pillar Meta Header
+        Container(
+          dartStyle: DartStyle(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            background: Color.rgba(255, 255, 255, 0.02),
+            borderBottom: Border(
+              color: Color.rgba(255, 255, 255, 0.06),
+              width: 1,
+            ),
+            display: Display.flex,
+            alignItems: AlignItems.center,
+            justifyContent: JustifyContent.between,
+          ),
+          children: [
+            Row(
+              dartStyle: const DartStyle(
+                display: Display.flex,
+                alignItems: AlignItems.center,
+                gap: 8,
+              ),
+              children: [
+                Icon(snippet.icon, size: 16, color: snippet.accentColor),
+                Text.strong(
+                  snippet.pillarTitle,
+                  dartStyle: const DartStyle(
+                    fontSize: 13,
+                    fontWeight: 900,
+                    color: Colors.white,
+                  ),
+                ),
+                Text.span(
+                  '• ${snippet.filename}',
+                  dartStyle: const DartStyle(
+                    fontSize: 12,
+                    color: Color('#94a3b8'),
+                    fontFamily: FontFamily.monospace,
+                  ),
+                ),
+              ],
+            ),
+            Link(
+              href: snippet.href,
+              dartStyle: DartStyle(
+                fontSize: 12,
+                fontWeight: 800,
+                color: snippet.accentColor,
+                display: Display.inlineFlex,
+                alignItems: AlignItems.center,
+                gap: 4,
+              ),
+              children: [
+                Text.span('Docs'),
+                Icon(Icons.chevronRight, size: 14),
+              ],
+            ),
+          ],
+        ),
+        // Code Display Window
+        Container(
+          dartStyle: const DartStyle(
+            padding: EdgeInsets.all(18),
+            maxHeight: 360,
+            overflow: 'auto',
+            fontFamily: FontFamily.monospace,
+            fontSize: 13,
+            lineHeight: 1.6,
+            background: Color('#040807'),
+          ),
+          children: [
+            _syntaxHighlightedBlock(snippet.lines),
+          ],
+        ),
+        // Bottom Terminal Status Strip
+        Container(
+          dartStyle: DartStyle(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            borderTop: Border(
+              color: Color.rgba(255, 255, 255, 0.08),
+              width: 1,
+            ),
+            background: Color.rgba(255, 255, 255, 0.03),
+            display: Display.flex,
+            alignItems: AlignItems.center,
+            justifyContent: JustifyContent.between,
+          ),
+          children: [
+            Row(
+              dartStyle: const DartStyle(
+                display: Display.flex,
+                alignItems: AlignItems.center,
+                gap: 8,
+              ),
+              children: [
+                Container(
+                  dartStyle: DartStyle(
+                    width: 6,
+                    height: 6,
+                    radius: 999,
+                    background: snippet.accentColor,
+                  ),
+                ),
+                Text.span(
+                  snippet.statusMessage,
+                  dartStyle: const DartStyle(
+                    fontSize: 11,
+                    color: Color('#94a3b8'),
+                    fontFamily: FontFamily.monospace,
+                  ),
+                ),
+              ],
+            ),
+            Text.span(
+              'Pure Dart • Zero Glue',
+              dartStyle: const DartStyle(
+                fontSize: 11,
+                fontWeight: 800,
+                color: Color('#64748b'),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  FlintNode _ideTabButton({
+    required int index,
+    required String label,
+    required IconData icon,
+    required Color accent,
+    required bool active,
+  }) {
+    return Button(
+      variant: ButtonVariant.ghost,
+      size: ComponentSize.sm,
+      onPressed: (_) => setState(() => _activeTab = index),
+      dartStyle: DartStyle(
+        display: Display.inlineFlex,
+        alignItems: AlignItems.center,
+        gap: 6,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        radius: 6,
+        fontSize: 12,
+        fontWeight: active ? 900 : 600,
+        color: active ? Colors.white : const Color('#94a3b8'),
+        background: active
+            ? Color.rgba(255, 255, 255, 0.1)
+            : Colors.transparent,
+        borderBottom: active
+            ? Border(color: accent, width: 2)
+            : Border.none,
+      ),
+      children: [
+        Icon(icon, size: 13, color: active ? accent : const Color('#64748b')),
+        Text.span(label),
+      ],
+    );
+  }
+
+  FlintNode _syntaxHighlightedBlock(List<_CodeLine> lines) {
+    return Column(
+      dartStyle: const DartStyle(gap: 2, alignItems: AlignItems.start),
+      children: [
+        for (var i = 0; i < lines.length; i++)
+          Row(
+            dartStyle: const DartStyle(
+              display: Display.flex,
+              gap: 14,
+              width: SizeValue.percent(100),
+            ),
+            children: [
+              Text.span(
+                '${i + 1}'.padLeft(2),
+                dartStyle: const DartStyle(
+                  color: Color('#475569'),
+                  fontSize: 12,
+                ),
+              ),
+              Row(
+                dartStyle: const DartStyle(
+                  display: Display.flex,
+                  flexWrap: FlexWrap.wrap,
+                  gap: 0,
+                ),
+                children: [
+                  for (final token in lines[i].tokens)
+                    Text.span(
+                      token.text,
+                      dartStyle: DartStyle(
+                        color: token.color,
+                        fontWeight: token.bold ? 800 : 400,
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // 4. ECOSYSTEM PROOF BANNER
+  // ---------------------------------------------------------------------------
+  FlintNode _ecosystemProofBanner() {
+    return Container(
+      dartStyle: DartStyle(
+        margin: const EdgeInsets.only(top: 48),
+        padding: const EdgeInsets.all(16),
+        radius: 10,
+        border: Border.all(color: ThemeToken.color('line')),
+        background: ThemeToken.color('panel'),
+        light: const DartStyle(
+          background: Color.rgba(255, 255, 255, 0.75),
+          shadow: Shadow(
+            y: 12,
+            blur: 32,
+            spread: -16,
+            color: Color.rgba(15, 23, 42, 0.15),
+          ),
+        ),
+        dark: DartStyle(
+          background: Color.rgba(15, 23, 42, 0.65),
+          shadow: ThemeToken.shadow('glow'),
+        ),
+        backdropFilter: StyleFilter.blur(16),
+      ),
+      children: [
+        Grid(
+          columns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: 14,
+          children: [
+            _proofPill(
+              Icons.server,
+              'Full-Stack Web (SSR & ORM)',
+              'Reactive Flint UI & API gateway',
+              Color('#10b981'),
+            ),
+            _proofPill(
+              Icons.globe,
+              'Universal Client SDK',
+              'Offline sync & typed channels',
+              Color('#06b6d4'),
+            ),
+            _proofPill(
+              Icons.sparkles,
+              'Autonomous AI Mesh',
+              'Multi-provider tool calling & LLMs',
+              Color('#a855f7'),
+            ),
+            _proofPill(
+              Icons.zap,
+              'Hardware & Robotics (R&D)',
+              'ESP32, RP2040 & IMU telemetry',
+              Color('#f97316'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  FlintNode _proofPill(
+    IconData icon,
+    String title,
+    String sub,
+    Color accent,
+  ) {
+    return Row(
+      dartStyle: const DartStyle(
+        display: Display.flex,
+        alignItems: AlignItems.center,
+        gap: 12,
+      ),
+      children: [
+        Container(
+          dartStyle: DartStyle(
+            width: 36,
+            height: 36,
+            display: Display.grid,
+            alignItems: AlignItems.center,
+            justifyContent: JustifyContent.center,
+            radius: 8,
+            background: Color.rgba(16, 185, 129, 0.14),
+            color: accent,
+          ),
+          child: Icon(icon, size: 18),
+        ),
+        Column(
+          dartStyle: const DartStyle(gap: 1),
+          children: [
+            Text.strong(
+              title,
+              dartStyle: DartStyle(
+                fontSize: 13,
+                color: ThemeToken.color('text'),
+              ),
+            ),
+            Text.span(
+              sub,
+              dartStyle: DartStyle(
+                fontSize: 11,
+                color: ThemeToken.color('muted'),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // BACKGROUND AMBIENT GRAPHICS
+  // ---------------------------------------------------------------------------
+  FlintNode _ambientGrid() {
     return Container(
       props: const {'aria-hidden': 'true'},
       dartStyle: DartStyle(
@@ -128,902 +892,53 @@ class HomeHero extends FlintComponent {
         right: 0,
         bottom: 0,
         left: 0,
-        opacity: 0.5,
+        opacity: 0.45,
         maskImage: Gradient.linearTo(GradientDirection.bottom, const [
           GradientStop(Colors.black, 0),
-          GradientStop(Colors.black, 72),
+          GradientStop(Colors.black, 65),
           GradientStop(Colors.transparent, 100),
         ]),
-        background: Gradient.linear(135, [
-          GradientStop(ThemeToken.color('line'), 0),
-          const GradientStop(Colors.transparent, 48),
-          const GradientStop(Color.rgba(16, 185, 129, 0.08), 100),
+        background: Background.layers([
+          const Color(
+            'linear-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 1px)',
+          ),
+          const Color(
+            'linear-gradient(90deg, rgba(16, 185, 129, 0.08) 1px, transparent 1px)',
+          ),
         ]),
       ),
+      style: const {'background-size': '44px 44px, 44px 44px'},
     );
   }
 
-  FlintNode _ambientGlass({
-    String? left,
-    String? right,
+  FlintNode _ambientGlowOrb({
     String? top,
     String? bottom,
+    String? left,
+    String? right,
     required double width,
     required double height,
-    required int delayMilliseconds,
-  }) {
-    return Container(
-      props: const {'aria-hidden': 'true'},
-      dartStyle: DartStyle(
-        position: Position.absolute,
-        left: left,
-        right: right,
-        top: top,
-        bottom: bottom,
-        width: width,
-        height: height,
-        radius: 8,
-        border: Border.all(color: ThemeToken.color('line')),
-        background: ThemeToken.color('panel'),
-        backdropFilter: StyleFilter.blur(16),
-        light: const DartStyle(
-          background: Color.rgba(255, 255, 255, 0.36),
-          shadow: Shadow(
-            y: 28,
-            blur: 70,
-            spread: -46,
-            color: Color.rgba(15, 23, 42, 0.28),
-          ),
-        ),
-        dark: DartStyle(
-          background: Color.rgba(15, 23, 42, 0.48),
-          shadow: ThemeToken.shadow('glow'),
-        ),
-        animation: StyleAnimation.named(
-          'flint-docs-float',
-          milliseconds: 7000,
-          timing: TransitionTiming.easeInOut,
-          delayMilliseconds: delayMilliseconds,
-          iteration: AnimationIteration.infinite,
-        ),
-      ),
-      children: [
-        Container(
-          dartStyle: DartStyle(
-            position: Position.absolute,
-            left: 18,
-            right: 18,
-            top: 18,
-            height: 9,
-            radius: 999,
-            background: Color.rgba(52, 211, 153, 0.28),
-          ),
-        ),
-        Container(
-          dartStyle: DartStyle(
-            position: Position.absolute,
-            left: 18,
-            right: 58,
-            bottom: 22,
-            height: 9,
-            radius: 999,
-            background: Color.rgba(56, 189, 248, 0.24),
-          ),
-        ),
-      ],
-    );
-  }
-
-  FlintNode _statusBar() {
-    return Row(
-      dartStyle: DartStyle(
-        display: Display.flex,
-        flexWrap: FlexWrap.wrap,
-        alignItems: AlignItems.center,
-        justifyContent: JustifyContent.between,
-        gap: 14,
-        margin: const EdgeInsets.only(bottom: 40),
-        padding: const EdgeInsets.all(10),
-        radius: 8,
-        border: Border.all(color: ThemeToken.color('line')),
-        background: ThemeToken.color('panel'),
-        backdropFilter: StyleFilter.blur(18),
-        light: const DartStyle(
-          background: Color.rgba(255, 255, 255, 0.74),
-          shadow: Shadow(
-            y: 18,
-            blur: 54,
-            spread: -42,
-            color: Color.rgba(15, 23, 42, 0.2),
-          ),
-        ),
-        dark: DartStyle(
-          background: Color.rgba(15, 23, 42, 0.72),
-          shadow: ThemeToken.shadow('glow'),
-        ),
-        animation: StyleAnimation.named(
-          'flint-docs-rise',
-          milliseconds: 620,
-          timing: TransitionTiming.easeOut,
-          fillMode: AnimationFillMode.both,
-        ),
-      ),
-      children: [
-        Row(
-          dartStyle: DartStyle(
-            display: Display.flex,
-            flexWrap: FlexWrap.wrap,
-            alignItems: AlignItems.center,
-            gap: 8,
-          ),
-          children: [
-            _badge(
-              Icons.sparkles,
-              'Flint Dart ${ProductVersions.flintDartVersionLabel}',
-              _mint,
-            ),
-            _badge(Icons.zap, 'Hot reload ready', _sky),
-            _badge(Icons.shield, 'Typed by default', _violet),
-          ],
-        ),
-        Row(
-          dartStyle: DartStyle(
-            display: Display.flex,
-            alignItems: AlignItems.center,
-            gap: 8,
-          ),
-          children: [
-            Icon(Icons.activity, size: 16, color: _mintStrong),
-            Text.span(
-              'Production docs, APIs, and UI in one Dart stack',
-              dartStyle: DartStyle(
-                color: ThemeToken.color('muted'),
-                fontSize: 12,
-                fontWeight: 800,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  FlintNode _copy() {
-    return Container(
-      dartStyle: DartStyle(display: Display.grid, gap: 0),
-      children: [
-        Container(
-          dartStyle: DartStyle(
-            display: Display.inlineFlex,
-            alignItems: AlignItems.center,
-            gap: 8,
-            width: SizeValue('fit-content'),
-            padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
-            radius: 999,
-            border: Border(color: Color.rgba(16, 185, 129, 0.2), width: 1),
-            background: ThemeToken.color('panel'),
-            light: const DartStyle(
-              background: Color.rgba(236, 253, 245, 0.82),
-            ),
-            dark: const DartStyle(
-              background: Color.rgba(52, 211, 153, 0.12),
-            ),
-            animation: StyleAnimation.named(
-              'flint-docs-rise',
-              milliseconds: 660,
-              timing: TransitionTiming.easeOut,
-              delayMilliseconds: 70,
-              fillMode: AnimationFillMode.both,
-            ),
-          ),
-          children: [
-            Icon(Icons.cloud, size: 15, color: _mintStrong),
-            Text.span(
-              'The Unified Dart Ecosystem',
-              dartStyle: DartStyle(
-                color: ThemeToken.color('primary'),
-                fontSize: 12,
-                fontWeight: 900,
-                textTransform: 'uppercase',
-                letterSpacing: 0,
-              ),
-            ),
-          ],
-        ),
-        Text.h1(
-          'Flint Ecosystem',
-          dartStyle: DartStyle(
-            margin: const EdgeInsets.only(top: 20, bottom: 0),
-            maxWidth: 760,
-            color: Color('transparent'),
-            fontSize: 56,
-            lineHeight: 0.92,
-            fontWeight: 900,
-            letterSpacing: 0,
-            background: Gradient.linear(
-              90,
-              [
-                GradientStop(ThemeToken.color('text'), 0),
-                GradientStop(ThemeToken.color('primary'), 48),
-                GradientStop(ThemeToken.color('accent'), 100),
-              ],
-            ),
-            backgroundClip: BackgroundClip.text,
-            webkitBackgroundClip: BackgroundClip.text,
-            animation: StyleAnimation.named(
-              'flint-docs-rise',
-              milliseconds: 700,
-              timing: TransitionTiming.easeOut,
-              delayMilliseconds: 130,
-              fillMode: AnimationFillMode.both,
-            ),
-            lg: DartStyle(fontSize: 92),
-          ),
-        ),
-        Text.h2(
-          'One language across your entire stack: Full-Stack Web, Client SDK, Native AI, and Robotics.',
-          dartStyle: DartStyle(
-            margin: const EdgeInsets.only(top: 18, bottom: 0),
-            maxWidth: 760,
-            color: ThemeToken.color('text'),
-            fontSize: 24,
-            lineHeight: 1.15,
-            fontWeight: 850,
-            letterSpacing: 0,
-            animation: StyleAnimation.named(
-              'flint-docs-rise',
-              milliseconds: 720,
-              timing: TransitionTiming.easeOut,
-              delayMilliseconds: 190,
-              fillMode: AnimationFillMode.both,
-            ),
-            lg: DartStyle(fontSize: 36),
-          ),
-        ),
-        Text.p(
-          'Build end-to-end full-stack web applications with Flint Dart, universal cross-platform clients with Flint Client, autonomous AI agents with Flint AI, and connected hardware & robotics with Flint Hardware.',
-          dartStyle: DartStyle(
-            margin: const EdgeInsets.only(top: 22, bottom: 0),
-            maxWidth: 690,
-            color: ThemeToken.color('muted'),
-            fontSize: 17,
-            lineHeight: 1.7,
-            animation: StyleAnimation.named(
-              'flint-docs-rise',
-              milliseconds: 760,
-              timing: TransitionTiming.easeOut,
-              delayMilliseconds: 250,
-              fillMode: AnimationFillMode.both,
-            ),
-          ),
-        ),
-        Row(
-          dartStyle: DartStyle(
-            display: Display.flex,
-            flexWrap: FlexWrap.wrap,
-            gap: 12,
-            margin: const EdgeInsets.only(top: 30),
-            animation: StyleAnimation.named(
-              'flint-docs-rise',
-              milliseconds: 780,
-              timing: TransitionTiming.easeOut,
-              delayMilliseconds: 310,
-              fillMode: AnimationFillMode.both,
-            ),
-          ),
-          children: [
-            Link(
-              href: '/fullstack',
-              tone: Tone.primary,
-              children: [
-                Icon(Icons.layers, size: 17),
-                Text.span('Full-Stack Web'),
-              ],
-            ),
-            Link(
-              href: '/client',
-              variant: ButtonVariant.outline,
-              tone: Tone.neutral,
-              children: [
-                Icon(Icons.globe, size: 17),
-                Text.span('Client SDK'),
-              ],
-            ),
-            Link(
-              href: '/ai',
-              variant: ButtonVariant.outline,
-              tone: Tone.neutral,
-              children: [
-                Icon(Icons.sparkles, size: 17),
-                Text.span('AI Engine'),
-              ],
-            ),
-            Link(
-              href: '/hardware',
-              variant: ButtonVariant.outline,
-              tone: Tone.neutral,
-              children: [
-                Icon(Icons.zap, size: 17),
-                Text.span('Hardware & Robotics'),
-              ],
-            ),
-          ],
-        ),
-        Row(
-          dartStyle: DartStyle(
-            display: Display.grid,
-            gridTemplateColumns: GridTemplateColumns.one,
-            gap: 12,
-            margin: const EdgeInsets.only(top: 34),
-            animation: StyleAnimation.named(
-              'flint-docs-rise',
-              milliseconds: 820,
-              timing: TransitionTiming.easeOut,
-              delayMilliseconds: 380,
-              fillMode: AnimationFillMode.both,
-            ),
-            sm: DartStyle(
-              gridTemplateColumns: GridTemplateColumns.repeat(
-                3,
-                GridTrack.fluid,
-              ),
-            ),
-          ),
-          children: [
-            _signal(Icons.server, 'Full-stack', 'unified backend & UI'),
-            _signal(Icons.database, 'Models', 'query fluently'),
-            _signal(Icons.rocket, 'Deployable', 'built to ship'),
-          ],
-        ),
-      ],
-    );
-  }
-
-  FlintNode _productPreview() {
-    return Container(
-      dartStyle: DartStyle(
-        position: Position.relative,
-        minHeight: 460,
-        display: Display.grid,
-        alignItems: AlignItems.center,
-        animation: StyleAnimation.named(
-          'flint-docs-rise',
-          milliseconds: 780,
-          timing: TransitionTiming.easeOut,
-          delayMilliseconds: 260,
-          fillMode: AnimationFillMode.both,
-        ),
-      ),
-      children: [
-        _orbitalVisual(),
-        Container(
-          dartStyle: DartStyle(
-            position: Position.relative,
-            zIndex: 2,
-            display: Display.grid,
-            gap: 14,
-            padding: const EdgeInsets.all(16),
-            radius: 16,
-            border: Border.all(color: ThemeToken.color('line')),
-            background: ThemeToken.color('panel'),
-            backdropFilter: StyleFilter.blur(18),
-            light: const DartStyle(
-              background: Color.rgba(255, 255, 255, 0.88),
-              shadow: Shadow(
-                y: 32,
-                blur: 92,
-                spread: -44,
-                color: Color.rgba(15, 23, 42, 0.28),
-              ),
-            ),
-            dark: DartStyle(
-              background: Color.rgba(15, 23, 42, 0.85),
-              shadow: ThemeToken.shadow('glow'),
-            ),
-            transition: StyleTransition.transform(milliseconds: 220),
-            hover: DartStyle(transform: StyleTransform.translateY(-6)),
-          ),
-          children: [
-            _previewHeader(),
-            Container(
-              dartStyle: DartStyle(
-                display: Display.grid,
-                gridTemplateColumns: GridTemplateColumns.one,
-                gap: 10,
-                sm: DartStyle(
-                  gridTemplateColumns:
-                      GridTemplateColumns.repeat(2, GridTrack.oneFr),
-                ),
-              ),
-              children: [
-                _ecosystemNodeCard(
-                  title: 'Full-Stack Web',
-                  subtitle: 'Server & SSR Engine',
-                  status: 'Online',
-                  statusColor: '#34d399',
-                  detail: 'HTTP Server, RLS Gateway, WebSockets',
-                  href: '/fullstack',
-                  icon: Icons.layers,
-                ),
-                _ecosystemNodeCard(
-                  title: 'Client SDK',
-                  subtitle: 'Cross-Platform App Layer',
-                  status: 'Synced',
-                  statusColor: '#38bdf8',
-                  detail: 'Offline Cache, Retry Sync, Channels',
-                  href: '/client',
-                  icon: Icons.globe,
-                ),
-                _ecosystemNodeCard(
-                  title: 'AI Engine',
-                  subtitle: 'Agent Mesh & Workflows',
-                  status: 'Active',
-                  statusColor: '#a78bfa',
-                  detail: 'Function Calling, Streaming Chat',
-                  href: '/ai',
-                  icon: Icons.sparkles,
-                ),
-                _ecosystemNodeCard(
-                  title: 'Hardware & Robotics',
-                  subtitle: 'Edge Telemetry & Sensors',
-                  status: 'Streaming',
-                  statusColor: '#f97316',
-                  detail: 'Sonar, IMU, Motor State Machines',
-                  href: '/hardware',
-                  icon: Icons.zap,
-                ),
-              ],
-            ),
-            _metricsBar(),
-          ],
-        ),
-      ],
-    );
-  }
-
-  FlintNode _ecosystemNodeCard({
-    required String title,
-    required String subtitle,
-    required String status,
-    required String statusColor,
-    required String detail,
-    required String href,
-    required IconData icon,
-  }) {
-    return Link(
-      href: href,
-      dartStyle: DartStyle(
-        display: Display.grid,
-        gap: 8,
-        padding: const EdgeInsets.all(14),
-        radius: 12,
-        border: Border(color: ThemeToken.color('line'), width: 1),
-        background: ThemeToken.color('panelStrong'),
-        transition: StyleTransition.all(milliseconds: 160),
-        hover: DartStyle(
-          border: Border(color: Color(statusColor), width: 1),
-          background: Color.rgba(15, 23, 42, 0.95),
-        ),
-      ),
-      children: [
-        Row(
-          dartStyle: DartStyle(
-            display: Display.flex,
-            alignItems: AlignItems.center,
-            justifyContent: JustifyContent.between,
-            gap: 8,
-          ),
-          children: [
-            Row(
-              dartStyle: DartStyle(
-                display: Display.flex,
-                alignItems: AlignItems.center,
-                gap: 8,
-              ),
-              children: [
-                Icon(icon, size: 16, color: Color(statusColor)),
-                Text.span(
-                  title,
-                  dartStyle: DartStyle(
-                    color: ThemeToken.color('text'),
-                    fontSize: 13,
-                    fontWeight: 800,
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              dartStyle: DartStyle(
-                display: Display.inlineFlex,
-                alignItems: AlignItems.center,
-                gap: 4,
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                radius: 999,
-                background: Color.rgba(52, 211, 153, 0.1),
-              ),
-              children: [
-                Container(
-                  dartStyle: DartStyle(
-                    width: 6,
-                    height: 6,
-                    radius: 999,
-                    background: Color(statusColor),
-                  ),
-                ),
-                Text.span(
-                  status,
-                  dartStyle: DartStyle(
-                    fontSize: 10,
-                    fontWeight: 700,
-                    color: Color(statusColor),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        Text.p(
-          detail,
-          dartStyle: DartStyle(
-            margin: const EdgeInsets.all(0),
-            color: ThemeToken.color('muted'),
-            fontSize: 11,
-            lineHeight: 1.4,
-          ),
-        ),
-      ],
-    );
-  }
-
-  FlintNode _orbitalVisual() {
-    return Container(
-      props: const {'aria-hidden': 'true'},
-      dartStyle: DartStyle(
-        position: Position.absolute,
-        top: 10,
-        right: 20,
-        bottom: 10,
-        left: 20,
-        zIndex: 1,
-      ),
-      children: [
-        Container(
-          dartStyle: DartStyle(
-            position: Position.absolute,
-            top: 42,
-            right: 52,
-            width: 300,
-            height: 300,
-            radius: 999,
-            border: Border(color: Color.rgba(16, 185, 129, 0.22), width: 1),
-            animation: StyleAnimation.infinite(
-              'flint-docs-orbit',
-              milliseconds: 18000,
-            ),
-          ),
-          children: [_orbitDot(top: 18, right: 42, color: _mintStrong)],
-        ),
-        Container(
-          dartStyle: DartStyle(
-            position: Position.absolute,
-            right: 0,
-            top: 88,
-            width: 220,
-            height: 220,
-            radius: 999,
-            border: Border(color: Color.rgba(14, 165, 233, 0.2), width: 1),
-            animation: StyleAnimation.named(
-              'flint-docs-orbit',
-              milliseconds: 12000,
-              timing: TransitionTiming.linear,
-              iteration: AnimationIteration.infinite,
-              direction: AnimationDirection.reverse,
-            ),
-          ),
-          children: [_orbitDot(bottom: 26, left: 26, color: _skyStrong)],
-        ),
-        Container(
-          dartStyle: DartStyle(
-            position: Position.absolute,
-            right: 86,
-            top: 134,
-            width: 132,
-            height: 132,
-            radius: 999,
-            background: Color.rgba(52, 211, 153, 0.28),
-            shadow: Shadow(
-              y: 18,
-              blur: 80,
-              spread: -24,
-              color: Color.rgba(20, 184, 166, 0.5),
-            ),
-            animation: StyleAnimation.named(
-              'flint-docs-pulse',
-              milliseconds: 4000,
-              timing: TransitionTiming.easeInOut,
-              iteration: AnimationIteration.infinite,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  FlintNode _orbitDot({
-    Object? top,
-    Object? right,
-    Object? bottom,
-    Object? left,
     required Color color,
   }) {
     return Container(
+      props: const {'aria-hidden': 'true'},
       dartStyle: DartStyle(
         position: Position.absolute,
         top: top,
-        right: right,
         bottom: bottom,
         left: left,
-        width: 12,
-        height: 12,
+        right: right,
+        width: width,
+        height: height,
         radius: 999,
         background: color,
-        shadow: Shadow(y: 0, blur: 28, spread: 3, color: color),
+        backdropFilter: StyleFilter.blur(70),
       ),
     );
   }
 
-  FlintNode _previewHeader() {
-    return Row(
-      dartStyle: DartStyle(
-        display: Display.flex,
-        flexWrap: FlexWrap.wrap,
-        alignItems: AlignItems.center,
-        justifyContent: JustifyContent.between,
-        gap: 14,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        radius: 8,
-        border: Border.all(color: ThemeToken.color('line')),
-        background: ThemeToken.color('panelStrong'),
-        light: const DartStyle(
-          background: Color.rgba(248, 250, 252, 0.86),
-        ),
-      ),
-      children: [
-        Row(
-          dartStyle: DartStyle(
-            display: Display.flex,
-            alignItems: AlignItems.center,
-            gap: 10,
-          ),
-          children: [
-            _trafficLights(),
-            Text.span(
-              'flint_workspace',
-              dartStyle: DartStyle(
-                color: ThemeToken.color('text'),
-                fontSize: 13,
-                fontWeight: 900,
-              ),
-            ),
-          ],
-        ),
-        _badge(Icons.cloud, 'Live build', _skyStrong),
-      ],
-    );
-  }
-
-  FlintNode _metricsBar() {
-    return Row(
-      dartStyle: DartStyle(
-        display: Display.grid,
-        gridTemplateColumns: GridTemplateColumns.one,
-        gap: 10,
-        sm: DartStyle(
-          gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.fluid),
-        ),
-      ),
-      children: [
-        _metric('4 Pillars', 'Full-Stack, Client, AI, Hardware'),
-        _metric('0 Glue', '100% pure Dart across layers'),
-        _metric('Unified', 'shared schemas and types'),
-      ],
-    );
-  }
-
-  FlintNode _proofStrip() {
-    return Row(
-      dartStyle: DartStyle(
-        display: Display.grid,
-        gridTemplateColumns: GridTemplateColumns.one,
-        gap: 12,
-        margin: const EdgeInsets.only(top: 36),
-        padding: const EdgeInsets.all(12),
-        radius: 8,
-        border: Border.all(color: ThemeToken.color('line')),
-        background: ThemeToken.color('panel'),
-        light: const DartStyle(
-          background: Color.rgba(255, 255, 255, 0.62),
-        ),
-        dark: const DartStyle(
-          background: Color.rgba(15, 23, 42, 0.62),
-        ),
-        backdropFilter: StyleFilter.blur(18),
-        animation: StyleAnimation.named(
-          'flint-docs-rise',
-          milliseconds: 840,
-          timing: TransitionTiming.easeOut,
-          delayMilliseconds: 430,
-          fillMode: AnimationFillMode.both,
-        ),
-        sm: DartStyle(
-          gridTemplateColumns: GridTemplateColumns.repeat(3, GridTrack.fluid),
-        ),
-      ),
-      children: [
-        _proof(Icons.layers, 'Server HTTP, SSR & Declarative UI'),
-        _proof(Icons.globe, 'Universal Client & Offline Sync'),
-        _proof(Icons.zap, 'AI Agent Mesh & Robotics Hardware'),
-      ],
-    );
-  }
-
-  FlintNode _badge(IconData icon, String label, Color color) {
+  FlintNode _macDot(Color color) {
     return Container(
-      dartStyle: DartStyle(
-        display: Display.inlineFlex,
-        alignItems: AlignItems.center,
-        gap: 7,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        radius: ThemeToken.radius('pill'),
-        border: Border.all(color: ThemeToken.color('line')),
-        background: ThemeToken.color('panelStrong'),
-        light: const DartStyle(
-          background: Color.rgba(255, 255, 255, 0.76),
-        ),
-      ),
-      children: [
-        Icon(icon, size: 14, color: color),
-        Text.span(
-          label,
-          dartStyle: DartStyle(
-            color: ThemeToken.color('text'),
-            fontSize: 12,
-            fontWeight: 800,
-            lineHeight: 1,
-          ),
-        ),
-      ],
-    );
-  }
-
-  FlintNode _signal(IconData icon, String title, String label) {
-    return Container(
-      dartStyle: DartStyle(
-        display: Display.flex,
-        alignItems: AlignItems.center,
-        gap: 12,
-        padding: const EdgeInsets.all(12),
-        radius: 8,
-        border: Border.all(color: ThemeToken.color('line')),
-        background: ThemeToken.color('panel'),
-        light: const DartStyle(
-          background: Color.rgba(255, 255, 255, 0.72),
-        ),
-        backdropFilter: StyleFilter.blur(12),
-        transition: StyleTransition.transform(milliseconds: 180),
-        hover: DartStyle(transform: StyleTransform.translateY(-4)),
-      ),
-      children: [
-        Icon(icon, size: 20, color: _skyStrong),
-        Container(
-          dartStyle: DartStyle(display: Display.grid, gap: 2),
-          children: [
-            Text.span(
-              title,
-              dartStyle: DartStyle(
-                color: ThemeToken.color('text'),
-                fontSize: 13,
-                fontWeight: 900,
-              ),
-            ),
-            Text.span(
-              label,
-              dartStyle:
-                  DartStyle(color: ThemeToken.color('muted'), fontSize: 12),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  FlintNode _metric(String value, String label) {
-    return Container(
-      dartStyle: DartStyle(
-        position: Position.relative,
-        overflow: Overflow.hidden,
-        padding: const EdgeInsets.all(12),
-        radius: 8,
-        border: Border.all(color: ThemeToken.color('line')),
-        background: ThemeToken.color('panelStrong'),
-        light: const DartStyle(
-          background: Color.rgba(248, 250, 252, 0.86),
-        ),
-      ),
-      children: [
-        Container(
-          props: const {'aria-hidden': 'true'},
-          dartStyle: DartStyle(
-            position: Position.absolute,
-            top: 0,
-            bottom: 0,
-            width: SizeValue('55%'),
-            background: Color.rgba(52, 211, 153, 0.14),
-            animation: StyleAnimation.named(
-              'flint-docs-scan',
-              milliseconds: 4200,
-              timing: TransitionTiming.easeInOut,
-              iteration: AnimationIteration.infinite,
-            ),
-          ),
-        ),
-        Text.span(
-          value,
-          dartStyle: DartStyle(
-            position: Position.relative,
-            color: ThemeToken.color('text'),
-            fontSize: 18,
-            fontWeight: 900,
-          ),
-        ),
-        Text.span(
-          label,
-          dartStyle: DartStyle(
-            position: Position.relative,
-            color: ThemeToken.color('muted'),
-            fontSize: 12,
-          ),
-        ),
-      ],
-    );
-  }
-
-  FlintNode _proof(IconData icon, String label) {
-    return Row(
-      dartStyle: DartStyle(
-        display: Display.flex,
-        alignItems: AlignItems.center,
-        gap: 10,
-        padding: EdgeInsets.all(8),
-      ),
-      children: [
-        Icon(icon, size: 18, color: _mintStrong),
-        Text.span(
-          label,
-          dartStyle: DartStyle(
-            color: ThemeToken.color('text'),
-            fontSize: 13,
-            fontWeight: 800,
-          ),
-        ),
-      ],
-    );
-  }
-
-  FlintNode _trafficLights() {
-    return Row(
-      dartStyle: DartStyle(display: Display.flex, gap: 6),
-      children: [
-        _dot(const Color('#fb7185')),
-        _dot(const Color('#fbbf24')),
-        _dot(_mint),
-      ],
-    );
-  }
-
-  FlintNode _dot(Color color) {
-    return Container(
-      props: const {'aria-hidden': 'true'},
       dartStyle: DartStyle(
         width: 10,
         height: 10,
@@ -1034,8 +949,342 @@ class HomeHero extends FlintComponent {
   }
 }
 
-const _mint = Color('#34d399');
-const _mintStrong = Color('#059669');
-const _skyStrong = Color('#0284c7');
-const _sky = Color('#38bdf8');
-const _violet = Color('#8b5cf6');
+// ---------------------------------------------------------------------------
+// DATA MODELS & PREVIEW SNIPPETS
+// ---------------------------------------------------------------------------
+class _Snippet {
+  final String tabLabel;
+  final String pillarTitle;
+  final String filename;
+  final String href;
+  final IconData icon;
+  final Color accentColor;
+  final String statusMessage;
+  final String code;
+  final List<_CodeLine> lines;
+
+  _Snippet({
+    required this.tabLabel,
+    required this.pillarTitle,
+    required this.filename,
+    required this.href,
+    required this.icon,
+    required this.accentColor,
+    required this.statusMessage,
+    required this.code,
+    required this.lines,
+  });
+}
+
+class _CodeLine {
+  final List<_Token> tokens;
+  _CodeLine(this.tokens);
+}
+
+class _Token {
+  final String text;
+  final Color color;
+  final bool bold;
+
+  _Token(this.text, this.color, {this.bold = false});
+}
+
+final _kw = Color('#f43f5e'); // Keyword (import, class, async)
+final _fn = Color('#38bdf8'); // Function / Method
+final _typ = Color('#34d399'); // Type / Class
+final _str = Color('#fbbf24'); // String literal
+final _txt = Color('#e2e8f0'); // Plain text
+
+final List<_Snippet> _snippets = [
+  _Snippet(
+    tabLabel: 'server.dart',
+    pillarTitle: 'Flint Dart Web Server',
+    filename: 'lib/routes/api.dart',
+    href: '/fullstack',
+    icon: Icons.server,
+    accentColor: Color('#10b981'),
+    statusMessage: 'HTTP 200 OK • 0.4ms latency • RLS Active',
+    code: '''import 'package:flint_dart/flint.dart';
+
+@Get('/api/projects')
+Future<Response> getProjects(Request req) async {
+  final user = await req.auth;
+  final projects = await Project()
+      .where('user_id', user.id)
+      .withRelation('deployments')
+      .get();
+
+  return Response.json({'status': true, 'data': projects});
+}''',
+    lines: [
+      _CodeLine([
+        _Token('import ', _kw, bold: true),
+        _Token("'package:flint_dart/flint.dart'", _str),
+        _Token(';', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('@Get', _fn, bold: true),
+        _Token("('", _txt),
+        _Token('/api/projects', _str),
+        _Token("')", _txt),
+      ]),
+      _CodeLine([
+        _Token('Future<', _typ),
+        _Token('Response', _typ, bold: true),
+        _Token('> ', _txt),
+        _Token('getProjects', _fn),
+        _Token('(', _txt),
+        _Token('Request', _typ),
+        _Token(' req) ', _txt),
+        _Token('async', _kw, bold: true),
+        _Token(' {', _txt),
+      ]),
+      _CodeLine([
+        _Token('  final ', _kw),
+        _Token('user = ', _txt),
+        _Token('await ', _kw),
+        _Token('req.', _txt),
+        _Token('auth', _fn),
+        _Token(';', _txt),
+      ]),
+      _CodeLine([
+        _Token('  final ', _kw),
+        _Token('projects = ', _txt),
+        _Token('await ', _kw),
+        _Token('Project', _typ, bold: true),
+        _Token('()', _txt),
+      ]),
+      _CodeLine([
+        _Token('      .', _txt),
+        _Token('where', _fn),
+        _Token("('user_id', user.id)", _txt),
+      ]),
+      _CodeLine([
+        _Token('      .', _txt),
+        _Token('withRelation', _fn),
+        _Token("('deployments')", _str),
+      ]),
+      _CodeLine([
+        _Token('      .', _txt),
+        _Token('get', _fn),
+        _Token('();', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('  return ', _kw, bold: true),
+        _Token('Response.', _typ),
+        _Token('json', _fn),
+        _Token("({'status': true, 'data': projects});", _txt),
+      ]),
+      _CodeLine([
+        _Token('}', _txt),
+      ]),
+    ],
+  ),
+  _Snippet(
+    tabLabel: 'client.dart',
+    pillarTitle: 'Flint Client SDK',
+    filename: 'lib/services/api_sync.dart',
+    href: '/client',
+    icon: Icons.globe,
+    accentColor: Color('#06b6d4'),
+    statusMessage: 'WebSocket Connected • Channel live • 0 packet drop',
+    code: '''import 'package:flint_client/flint_client.dart';
+
+final client = FlintClient(baseUrl: 'https://api.flintdart.dev');
+
+void subscribeToTelemetry() {
+  client.channel('cluster_nodes').on('metrics', (event) {
+    print('Node update: \${event.data}');
+  });
+}''',
+    lines: [
+      _CodeLine([
+        _Token('import ', _kw, bold: true),
+        _Token("'package:flint_client/flint_client.dart'", _str),
+        _Token(';', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('final ', _kw),
+        _Token('client = ', _txt),
+        _Token('FlintClient', _typ, bold: true),
+        _Token('(baseUrl: ', _txt),
+        _Token("'https://api.flintdart.dev'", _str),
+        _Token(');', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('void ', _typ),
+        _Token('subscribeToTelemetry', _fn),
+        _Token('() {', _txt),
+      ]),
+      _CodeLine([
+        _Token('  client.', _txt),
+        _Token('channel', _fn),
+        _Token("('cluster_nodes').", _txt),
+        _Token('on', _fn),
+        _Token("('metrics', (event) {", _txt),
+      ]),
+      _CodeLine([
+        _Token('    print(', _txt),
+        _Token("'Node update: \${event.data}'", _str),
+        _Token(');', _txt),
+      ]),
+      _CodeLine([
+        _Token('  });', _txt),
+      ]),
+      _CodeLine([
+        _Token('}', _txt),
+      ]),
+    ],
+  ),
+  _Snippet(
+    tabLabel: 'ai_agent.dart',
+    pillarTitle: 'Flint AI Engine',
+    filename: 'lib/agents/researcher.dart',
+    href: '/ai',
+    icon: Icons.sparkles,
+    accentColor: Color('#a855f7'),
+    statusMessage: 'Multi-Provider Mesh • Tool Calling • Streaming',
+    code: '''import 'package:flint_ai/flint_ai.dart';
+
+final agent = FlintAgent(
+  model: 'gpt-4o',
+  meshProviders: ['gemini-1.5-pro', 'claude-3-5-sonnet'],
+  tools: [WebSearchTool(), DatabaseQueryTool()],
+);
+
+final stream = agent.promptStream('Analyze real-time server telemetry');''',
+    lines: [
+      _CodeLine([
+        _Token('import ', _kw, bold: true),
+        _Token("'package:flint_ai/flint_ai.dart'", _str),
+        _Token(';', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('final ', _kw),
+        _Token('agent = ', _txt),
+        _Token('FlintAgent', _typ, bold: true),
+        _Token('(', _txt),
+      ]),
+      _CodeLine([
+        _Token('  model: ', _txt),
+        _Token("'gpt-4o'", _str),
+        _Token(',', _txt),
+      ]),
+      _CodeLine([
+        _Token('  meshProviders: [', _txt),
+        _Token("'gemini-1.5-pro'", _str),
+        _Token(', ', _txt),
+        _Token("'claude-3-5-sonnet'", _str),
+        _Token('],', _txt),
+      ]),
+      _CodeLine([
+        _Token('  tools: [', _txt),
+        _Token('WebSearchTool', _typ),
+        _Token('(), ', _txt),
+        _Token('DatabaseQueryTool', _typ),
+        _Token('()],', _txt),
+      ]),
+      _CodeLine([
+        _Token(');', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('final ', _kw),
+        _Token('stream = agent.', _txt),
+        _Token('promptStream', _fn),
+        _Token("('Analyze telemetry');", _str),
+      ]),
+    ],
+  ),
+  _Snippet(
+    tabLabel: 'robotics.dart',
+    pillarTitle: 'Flint Hardware & Robotics',
+    filename: 'firmware/main.dart',
+    href: '/hardware',
+    icon: Icons.zap,
+    accentColor: Color('#f97316'),
+    statusMessage: 'MCU Clock 240MHz • Native C++ Bridge • Telemetry Active',
+    code: '''import 'package:flint_hardware/robotics.dart';
+
+void main() async {
+  final sonar = HcSr04(trigger: Pin(4), echo: Pin(5));
+  final motor = DcPixDriver(left: Pin(12), right: Pin(13));
+
+  while (true) {
+    final dist = await sonar.readDistanceCm();
+    if (dist < 15) motor.reverse();
+    await delayMs(20);
+  }
+}''',
+    lines: [
+      _CodeLine([
+        _Token('import ', _kw, bold: true),
+        _Token("'package:flint_hardware/robotics.dart'", _str),
+        _Token(';', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('void ', _typ),
+        _Token('main', _fn),
+        _Token('() ', _txt),
+        _Token('async', _kw, bold: true),
+        _Token(' {', _txt),
+      ]),
+      _CodeLine([
+        _Token('  final ', _kw),
+        _Token('sonar = ', _txt),
+        _Token('HcSr04', _typ, bold: true),
+        _Token('(trigger: ', _txt),
+        _Token('Pin', _typ),
+        _Token('(4), echo: ', _txt),
+        _Token('Pin', _typ),
+        _Token('(5));', _txt),
+      ]),
+      _CodeLine([
+        _Token('  final ', _kw),
+        _Token('motor = ', _txt),
+        _Token('DcPixDriver', _typ, bold: true),
+        _Token('(left: ', _txt),
+        _Token('Pin', _typ),
+        _Token('(12), right: ', _txt),
+        _Token('Pin', _typ),
+        _Token('(13));', _txt),
+      ]),
+      _CodeLine([]),
+      _CodeLine([
+        _Token('  while', _kw, bold: true),
+        _Token(' (true) {', _txt),
+      ]),
+      _CodeLine([
+        _Token('    final ', _kw),
+        _Token('dist = ', _txt),
+        _Token('await ', _kw),
+        _Token('sonar.', _txt),
+        _Token('readDistanceCm', _fn),
+        _Token('();', _txt),
+      ]),
+      _CodeLine([
+        _Token('    if ', _kw, bold: true),
+        _Token('(dist < 15) motor.', _txt),
+        _Token('reverse', _fn),
+        _Token('();', _txt),
+      ]),
+      _CodeLine([
+        _Token('    await ', _kw),
+        _Token('delayMs', _fn),
+        _Token('(20);', _txt),
+      ]),
+      _CodeLine([
+        _Token('  }', _txt),
+      ]),
+      _CodeLine([
+        _Token('}', _txt),
+      ]),
+    ],
+  ),
+];
