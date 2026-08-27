@@ -58,19 +58,19 @@ class Footer extends Component {
                           'Ecosystem Pillars',
                           [
                             ('/fullstack', 'Fullstack Framework'),
-                            ('/fullstack/guides', 'Fullstack Guides'),
-                            ('/fullstack/api', 'Fullstack API'),
-                            ('/fullstack/examples', 'Examples & Tutorials'),
                             ('/client', 'Client SDK'),
                             ('/ai', 'AI Engine'),
                             ('/hardware', 'Hardware & Robotics'),
+                            ('/examples', 'Ecosystem Examples'),
+                            ('/fullstack/guides', 'Fullstack Guides'),
+                            ('/fullstack/api', 'Fullstack API'),
                           ],
                         ),
                         _linkColumn(
                           'Updates & Resources',
                           [
                             ('/fullstack/whats-new', "What's New"),
-                            ('/fullstack/changelog', 'Changelog'),
+                            ('/fullstack/changelog', 'Fullstack Changelog'),
                             ('/questions', 'Questions'),
                             ('/blog', 'Blog'),
                             ('/dart', 'Dart Lessons'),

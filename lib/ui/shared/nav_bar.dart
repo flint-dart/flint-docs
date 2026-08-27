@@ -90,12 +90,14 @@ class NavBar extends FlintComponent {
     final explicit = props['activePillar']?.toString();
     if (explicit != null && explicit.isNotEmpty) return explicit;
     final path = props['currentPath']?.toString() ?? '';
+    if (path == '/examples' || path.startsWith('/examples/')) {
+      return 'ecosystem';
+    }
     if (path.startsWith('/fullstack') ||
         path.startsWith('/guides') ||
         path.startsWith('/api') ||
         path.startsWith('/whats-new') ||
         path.startsWith('/changelog') ||
-        path.startsWith('/examples') ||
         path.startsWith('/ui')) {
       return 'fullstack';
     }
@@ -384,10 +386,10 @@ class NavBar extends FlintComponent {
         _navLink('/client', 'Client'),
         _navLink('/ai', 'AI'),
         _navLink('/hardware', 'Hardware'),
+        _navLink('/examples', 'Examples'),
         _navLink('/api', 'API'),
         _navLink('/blog', 'Blog'),
         _navLink('/questions', 'Questions'),
-        _navLink('/changelog', 'Changelog'),
       ];
     }
 
@@ -830,10 +832,10 @@ class NavBar extends FlintComponent {
                   _drawerLink('/client', 'Client'),
                   _drawerLink('/ai', 'AI'),
                   _drawerLink('/hardware', 'Hardware'),
+                  _drawerLink('/examples', 'Examples'),
                   _drawerLink('/api', 'API'),
                   _drawerLink('/blog', 'Blog'),
                   _drawerLink('/questions', 'Questions'),
-                  _drawerLink('/changelog', 'Changelog'),
                   if (_canWrite) _drawerLink('/blog/write', 'Write Blog Post'),
                 ],
               ],

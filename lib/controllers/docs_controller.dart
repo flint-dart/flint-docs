@@ -254,18 +254,26 @@ class DocsController extends Controller {
   }
 
   Future<Response> examples() async {
+    final exampleProjects = await docs.fetchExampleProjects();
+    final base = await docs.baseData(req);
+
     return res.page(
       'Examples',
-      title: 'Examples & Tutorials - Flint Dart',
+      title: 'Open Source Examples & Blueprints - Flint Dart',
       props: {
-        ...await docs.baseData(req),
-        'activePillar': 'fullstack',
+        ...base,
+        'examples': exampleProjects,
+        'activePillar': 'ecosystem',
+        'title': 'Open Source Examples & Blueprints - Flint Dart',
+        'description':
+            'Explore production-ready open source applications, templates, and full-stack blueprints built with the Flint ecosystem.',
+        'canonicalUrl': docs.absoluteUrl('/examples'),
       },
       meta: docs.pageMeta(
-        title: 'Examples & Tutorials - Flint Dart',
+        title: 'Open Source Examples & Blueprints - Flint Dart',
         description:
-            'Practical Flint Dart examples for blogs, Q&A workflows, auth, models, and routes.',
-        canonicalPath: '/fullstack/examples',
+            'Explore production-ready open source applications, templates, and full-stack blueprints built with the Flint ecosystem.',
+        canonicalPath: '/examples',
       ),
     );
   }
