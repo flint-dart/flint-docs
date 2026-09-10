@@ -1,349 +1,246 @@
-## Models & Tables
+# Models And Database
 
-Flint Dart does not rely on separate migration files. Your table schema lives inside the model using `Table` and `Column`. Only define your custom fields; the framework manages `id`, `created_at`, and `updated_at` for you.
+The database layer is split across `DB`, `QueryBuilder`, `Model`, schema definitions, migrations, and table registries.
 
-A **Table** describes the database table name. A **Column** describes one field (name, type, length, and options). If your model file feels too long, you can move the table definition into a separate file and reuse it in the model.
+## Connecting
+
+`DB.autoConnect()` reads environment values through `FlintEnv`:
+
+```text
+DB_CONNECTION=mysql|postgres
+DB_HOST
+DB_PORT
+DB_NAME
+DB_USER
+DB_PASSWORD
+DB_SECURE
+```
+
+`Flint(autoConnectDb: true)` enables lazy auto-connect and also attempts background connection after the server binds. If `autoConnectDb: false`, database calls throw unless you call `DB.connect(...)` or `DB.autoConnect()`.
 
 ```dart
-import 'package:flint_dart/model.dart';
-import 'package:flint_dart/schema.dart';
+await DB.connect(database: 'my_app');
+final rows = await DB.query(
+  'SELECT * FROM users WHERE email = :email',
+  namedParams: {'email': 'ada@example.com'},
+);
+```
 
-class User extends Model {
-  User() : super(() => User());
+`DB.normalizeQuery()` converts named or positional parameters for MySQL and PostgreSQL. PostgreSQL placeholders become `$1`, `$2`; MySQL uses `?`.
 
-  String get name => getAttribute("name");
-  String get email => getAttribute("email");
-  String get password => getAttribute("password");
-  String get profilePicUrl => getAttribute("profilePicUrl");
+## Defining Models
+
+Models extend `Model<T>` and provide a `Table`. The sample `example/lib/models/post_model.dart`:
+
+```dart
+class PostModel extends Model<PostModel> {
+  PostModel() : super(() => PostModel());
+
+  String? title;
+  String? subTitle;
+
+  @override
+  PostModel fromMap(Map<dynamic, dynamic> map) => PostModel()
+    ..title = map['title']?.toString()
+    ..subTitle = map['subTitle']?.toString();
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'subTitle': subTitle,
+    };
+  }
 
   @override
   Table get table => Table(
-        name: 'users',
+        name: 'post_models',
         columns: [
-          Column(name: 'name', type: ColumnType.string, length: 255),
-          Column(name: 'email', type: ColumnType.string, length: 255),
-          Column(
-            name: 'password',
-            type: ColumnType.string,
-          ),
-          Column(
-            name: 'profilePicUrl',
-            type: ColumnType.string,
-          ),
+          Column(name: 'title', type: ColumnType.string),
+          Column(name: 'subTitle', type: ColumnType.string, isNullable: true),
         ],
       );
 }
 ```
 
-You can also define the table in its own file and reference it:
+The generated model template uses attribute getters instead:
 
 ```dart
-// lib/models/user_table.dart
-import 'package:flint_dart/schema.dart';
+String? get name => getAttribute("name");
+```
 
-final userTable = Table(
+Both patterns exist in this repo. Prefer `getAttribute`/`setAttribute` for new code when you want built-in type coercion and concealed fields.
+
+## Schema
+
+`Table` and `Column` are defined in `lib/src/database/orm/schema.dart`.
+
+```dart
+Table(
   name: 'users',
   columns: [
-    Column(name: 'name', type: ColumnType.string, length: 255),
-    Column(name: 'email', type: ColumnType.string, length: 255),
-    Column(name: 'password', type: ColumnType.string),
-    Column(name: 'profilePicUrl', type: ColumnType.string),
+    Column(name: 'email', type: ColumnType.string, isUnique: true),
+    Column(name: 'settings', type: ColumnType.json, isNullable: true),
+  ],
+  indexes: [
+    Index(name: 'users_email_index', columns: ['email'], isUnique: true),
+  ],
+)
+```
+
+If a table has no primary key column, `Table` automatically inserts a string `id` primary key column.
+
+Supported column types are `integer`, `string`, `text`, `boolean`, `double`, `datetime`, `timestamp`, `enumeration`, and `json`.
+
+## CRUD And Queries
+
+`Model` and its extensions provide:
+
+```dart
+final post = await PostModel().create({
+  'title': 'Hello',
+  'subTitle': 'World',
+});
+
+final first = await PostModel()
+    .where('title', 'Hello')
+    .orderBy('created_at', desc: true)
+    .first();
+
+final page = await PostModel().paginate(1, 15);
+
+await PostModel().update(id: post?.id, data: {'title': 'Updated'});
+await PostModel().delete(post?.id);
+```
+
+`QueryBuilder.update()` and `QueryBuilder.delete()` require a where clause. `Model.update()` requires either a primary key or an existing query where clause.
+
+## Database API
+
+The model and query layers are the normal tools for backend workflows. Flint also
+has a secure Database API resource layer for exposing selected models through a
+bounded JSON protocol.
+
+Use the Database API when a client needs controlled CRUD/query access to model
+resources:
+
+```dart
+final api = FlintDatabaseApi(
+  config: FlintDatabaseApiConfig(
+    auth: const FlintDbAuth.enabled(defaultRole: 'user'),
+  ),
+  resources: [
+    Course.new.resource,
   ],
 );
 
-// lib/models/user_model.dart
-class User extends Model {
-  @override
-  Table get table => userTable;
+app.databaseApi(api);
+```
+
+A registered resource controls:
+
+- which model is exposed
+- which operations are allowed
+- which fields are readable
+- which fields are writable
+- which fields are hidden or concealed
+- which owner, parent, role, or read-filter policies apply
+
+Read `docs/database-api.md` before exposing a model through
+`FlintDatabaseApi`. Do not use the Database API for business workflows that need
+custom decisions, side effects, audit logic, or multi-step behavior; put those in
+controllers and action classes.
+
+## Migrations
+
+`DBMigrateCommand` loads table definitions from `lib/config/table_registry.dart` unless tables are passed directly. The sample registry:
+
+```dart
+void main(dynamic data, SendPort? sendPort) {
+  runTableRegistry([
+    ...flintAiTables,
+    User().table,
+    PostModel().table,
+  ], data, sendPort);
 }
 ```
 
-Use `getAttribute` to read values from the internal map, and `setAttribute` or `setAttributes` to assign values when creating or updating models.
+`flintAiTables` are the built-in AI persistence tables for runs, traces,
+artifacts, and thread memory. Read `docs/ai.md` before adding, removing, or
+depending on those tables.
 
-### ORM
+The migration command:
 
-The ORM is a friendly way to talk to your database without writing raw SQL. Think of a model like a "row helper" for a table. You call simple methods, and Flint builds the SQL for you.
+- ensures the database exists when requested
+- injects missing `created_at` and `updated_at`
+- injects auth provider columns for the configured auth table
+- creates missing tables
+- adds missing columns
+- supports explicit column renames through `Column(renamedFrom: ...)`
+- drops columns that are no longer declared, except protected timestamp/auth columns
+- syncs declared indexes
+- creates PostgreSQL `updated_at` triggers
 
-Each line below shows a real task: finding a user, getting a list, creating a record, updating, and deleting. These are the core CRUD actions every new developer should learn first.
+## Seeders
 
-```dart
-// READ: get a single user by ID
-final user = await User().find(1);
+Seeders are classes that extend `Seeder` and implement `Future<void> run()`.
+They are used to create or update predictable data such as roles, permissions,
+settings, admin users, lookup tables, demo records, and test fixtures.
 
-// READ: list users with a filter
-final users = await User()
-  .where('email', 'test@example.com')
-  .orderBy('created_at', desc: true)
-  .limit(10)
-  .get();
+Create a seeder with:
 
-// CREATE: add a new user
-final created = await User().create({
-  'name': 'Ada',
-  'email': 'ada@example.com',
-  'password': 'secret',
-});
-
-// UPDATE: change an existing user
-await User()
-  .where('id', 1)
-  .update(data: {'name': 'Ada Lovelace'});
-
-// DELETE: remove a user
-await User().delete(1);
+```bash
+dart run flint_dart:flint --make-seeder RoleSeeder
 ```
 
-- `find(id)` - fetch one record by primary key.
-
-- `where(...).get()` - build a query and return a list of models.
-
-- `create(data)` - insert a new record and return the created model.
-
-- `update(data: ...)` - update matching records (use `where()` first).
-
-- `delete(id)` - delete by primary key.
-
-Tip: chain methods in the order you read them. "Where email is X, order by date, limit 10, get." This makes the code easy to understand without knowing SQL.
-
-### More ORM Methods
-
-These helpers cover common patterns like "find or create" and "upsert".
+The generator creates `lib/seeders/role_seeder.dart`. If
+`lib/config/seeder_registry.dart` does not exist, it creates a modern registry:
 
 ```dart
-// Save current model (create or update based on id)
-final user = User()..setAttributes({'name': 'Ada', 'email': 'ada@example.com'});
-await user.save();
-
-// Find or create
-final existing = await User().firstOrCreate(
-  where: {'email': 'ada@example.com'},
-  data: {'name': 'Ada'},
-);
-
-// Upsert (update if exists, otherwise create)
-final upserted = await User().upsert(
-  where: {'email': 'ada@example.com'},
-  data: {'name': 'Ada Lovelace'},
-);
-
-// Upsert many
-final results = await User().upsertMany([
-  {'where': {'email': 'a@ex.com'}, 'data': {'name': 'A'}},
-  {'where': {'email': 'b@ex.com'}, 'data': {'name': 'B'}},
-]);
-```
-
-- `refresh(id?)` - reload the model from the database.
-
-- `save()` - create or update based on primary key.
-
-- `firstOrCreate(where, data)` - get first match or create it.
-
-- `upsert(where, data)` - update if found, else create.
-
-- `upsertMany(list)` - batch upsert using `where` + `data`.
-
-- `all()` - alias of `get()`. It returns all rows only when you have not already chained filters.
-
-- `whereSimple(field, value)` - simple where without chaining.
-
-- `whereInSimple(field, values)` - where in without chaining.
-
-- `countAll()` - total count.
-
-- `countWhere(field, value)` - count with filter.
-
-- `truncate()` - delete all records in the table.
-
-`orWhere(...)` now works consistently for model queries too. The grouped OR conditions are appended after the normal `where(...)` chain, so `where('status', 'active').orWhere('email', 'ada@example.com').orWhere('name', 'Ada')` behaves like `WHERE status = ? AND (email = ? OR name = ?)`.
-
-### ORM Query
-
-Chain query helpers step by step to build readable queries.
-
-```dart
-// 1) Start a query
-final query = User();
-
-// 2) Add filters
-query.where('status', 'active');
-
-// 3) Add ordering and limits
-query.orderBy('created_at', desc: true).limit(10);
-
-// 4) Execute
-final users = await query.get();
-```
-
-### ORM Relations
-
-Relations are how models connect to each other. A `User` can have many `Post` records, and each `Post` belongs to one `User`. Declare those links once in the model's `relations` getter, then use the relation name everywhere else.
-
-```dart
-import 'package:flint_dart/model.dart';
-import 'package:flint_dart/relations.dart';
-
-class User extends Model {
-  User() : super(() => User());
+class AppSeederRegistry extends SeederRegistry {
+  const AppSeederRegistry();
 
   @override
-  Map<String, RelationDefinition> get relations => {
-        'posts': Relations.hasMany<Post>(
-          'posts',
-          () => Post(),
-          foreignKey: 'user_id',
-        ),
-      };
+  Iterable<Seeder> get seeders => [
+        RoleSeeder(),
+      ];
 }
 
-class Post extends Model {
-  Post() : super(() => Post());
-
-  @override
-  Map<String, RelationDefinition> get relations => {
-        'author': Relations.belongsTo<User>(
-          'author',
-          () => User(),
-          foreignKey: 'user_id',
-        ),
-      };
-}
+Future<void> main() => const AppSeederRegistry().registerAll();
 ```
 
-The keys, such as `posts` and `author`, are the names you use when loading, counting, or querying relations.
+Run registered seeders with:
 
-```dart
-// Load relations when querying
-final posts = await Post()
-    .withRelation('author')
-    .get();
-
-// Load relations on a single model
-final user = await User().find(1);
-if (user != null) {
-  await user.load('posts');
-}
+```bash
+dart run flint_dart:flint seed
 ```
 
-Use `withRelations` when a page needs several relations at once:
+The `seed` command runs `lib/config/seeder_registry.dart` as a Dart script. The
+registry order is the seeding order, so put dependency records first. `RoleSeeder`
+should run before `AdminUserSeeder` if the admin user references a role.
+
+In an app process, configure seeders through `Flint`:
 
 ```dart
-final user = await User()
-    .withRelations(['posts', 'activities', 'invoices'])
-    .find(userId);
-```
-
-Use `loadMany` when you already have the model:
-
-```dart
-final invoice = await Invoice().find(invoiceId);
-if (invoice != null) {
-  await invoice.loadMany(['user', 'items']);
-}
-```
-
-#### Relation Queries
-
-Use `relationQuery` when you want to start from the relation metadata but still build a custom query.
-
-```dart
-final latestPosts = await user
-    .relationQuery(
-      'posts',
-      constrain: (query) => query
-          .where('status', '=', 'published')
-          .orderBy('created_at', desc: true)
-          .limit(5),
-    )
-    .get();
-```
-
-This keeps the foreign key and relation rules in the model. The page or service only describes the extra filter it needs.
-
-#### Relation Counts
-
-Use `countRelation` for one count:
-
-```dart
-final postCount = await user.countRelation('posts');
-```
-
-Use `hasRelated` when you only need a yes/no answer:
-
-```dart
-final hasPublishedPosts = await user.hasRelated(
-  'posts',
-  constrain: (query) => query.where('status', '=', 'published'),
+final app = Flint(
+  seederRegistry: const AppSeederRegistry(),
+  autoSeed: true,
+  closeSeederConnection: false,
 );
 ```
 
-Use `relationCounts` when you need several counts from the same relation. This is useful for sidebars, dashboards, and admin/customer summaries.
+`autoSeed` runs during startup after enabled migrations and before the HTTP
+server binds. It is disabled by default because seeders mutate application data.
+Only enable startup seeding for idempotent seeders.
 
-```dart
-final counts = await user.relationCounts('hostings', {
-  'total': null,
-  'shared': (query) => query.where('hostingType', '=', 'shared'),
-  'vps': (query) => query.where('hostingType', '=', 'vps'),
-  'vds': (query) => query.where('hostingType', '=', 'vds'),
-});
+Prefer `upsert`, `upsertMany`, or `firstOrCreate` inside seeders so running the
+same seeder twice updates stable rows instead of creating duplicates.
 
-final hasVps = (counts['vps'] ?? 0) > 0;
-```
+See `docs/seeders.md` for the full seeder guide.
 
-Use `loadRelationCount` when the count should live on the model payload:
+## Important Limits
 
-```dart
-await user.loadRelationCount('posts', as: 'postCount');
-
-return user.toMap(); // includes postCount
-```
-
-#### Relation-First Detail Pages
-
-For detail pages, prefer a small service or presenter that loads relations and shapes the payload. This keeps controllers thin and prevents the API response and Flint UI page from drifting apart.
-
-```dart
-class AdminInvoicePresenter {
-  const AdminInvoicePresenter();
-
-  Future<Map<String, dynamic>> detail(Invoice invoice) async {
-    await invoice.load('user');
-    await invoice.load('items');
-
-    final user = invoice.getRelation<User>('user');
-    final items = (invoice.getRelation<List>('items') ?? const [])
-        .whereType<InvoiceItem>()
-        .toList();
-
-    for (final item in items) {
-      await item.loadMany(['product', 'hosting', 'domain', 'requestedTld']);
-    }
-
-    return {
-      ...invoice.toMap(),
-      'user': user?.toMap(),
-      'items': [
-        for (final item in items)
-          {
-            ...item.toMap(),
-            'product': item.getRelation<Product>('product')?.toMap(),
-            'hosting': item.getRelation<Hosting>('hosting')?.toMap(),
-            'domain': item.getRelation<Domain>('domain')?.toMap(),
-          },
-      ],
-    };
-  }
-}
-```
-
-Then both API controllers and Flint page controllers can use the same payload:
-
-```dart
-final invoice = await Invoice().find(id);
-if (invoice == null) return res.status(404).json({'error': 'Not found'});
-
-final data = await const AdminInvoicePresenter().detail(invoice);
-return res.json({'success': true, 'data': data});
-```
-
-The rule of thumb is simple: put relation knowledge on the model, put detail payload composition in a service, and keep controllers focused on authentication, routing, and responses.
+- `belongsToMany` and `hasManyThrough` relation loaders currently set empty lists; they are not implemented.
+- The migration system can drop columns missing from schema definitions. Be careful when editing `Table` definitions.
+- `Table` auto-adds an `id` if no primary key exists, so generated SQL may include columns not listed in your model file.
+- `Model.create()` auto-generates a UUID for non-auto-increment string primary keys.

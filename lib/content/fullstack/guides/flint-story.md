@@ -170,7 +170,7 @@ Flint is already being used to build real projects, not only examples.
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0 24px;">
 <article style="display:grid;gap:10px;padding:18px;border:1px solid rgba(30,41,59,1);border-radius:14px;background:linear-gradient(180deg,rgba(15,23,42,0.92),rgba(3,7,18,0.78));box-shadow:0 18px 45px rgba(2,6,23,0.2);">
 <span style="width:max-content;padding:4px 8px;border-radius:999px;background:rgba(52,211,153,0.1);color:#a7f3d0;font-size:11px;font-weight:800;">Hosting</span>
-<strong style="display:block;color:#f8fafc;font-size:18px;">Eucloudhost</strong>
+<strong style="display:block;color:#f8fafc;font-size:18px;">Hosting Platform</strong>
 <p style="margin:0;color:#94a3b8;font-size:13px;line-height:1.65;">A hosting platform built with Flint for real product workflows and cloud services.</p>
 </article>
 <article style="display:grid;gap:10px;padding:18px;border:1px solid rgba(30,41,59,1);border-radius:14px;background:linear-gradient(180deg,rgba(15,23,42,0.92),rgba(3,7,18,0.78));box-shadow:0 18px 45px rgba(2,6,23,0.2);">

@@ -13,42 +13,59 @@ class DocsSupport {
   static const String siteName = 'Flint Dart Docs';
 
   static const List<String> guideTopics = [
-    'introduction',
     'flint-story',
+    'introduction',
+    'getting-started',
     'installation',
     'create-run',
     'cli',
+    'project-structure',
+    'building-a-feature',
+    'common-patterns',
+    'testing',
     'routing',
     'route-params',
     'query-params',
     'request-response',
     'request-body',
     'file-uploads',
+    'route-groups',
     'middleware',
     'validation',
     'authentication',
-    'security',
     'sessions',
-    'cache',
-    'storage',
-    'logging',
+    'sessions-and-cookies',
+    'security',
+    'security-and-utilities',
     'errors',
     'helpers',
-    'architecture',
-    'mail',
-    'ai',
-    'isolate',
-    'swagger-docs',
-    'database',
-    'websockets',
-    'route-groups',
-    'views',
-    'theme-mode',
     'models',
+    'models-and-database',
+    'database',
+    'database-api',
     'orm',
     'orm-query',
     'orm-relations',
     'table-sync',
+    'seeders',
+    'cache',
+    'storage',
+    'build-and-rendering',
+    'frontend-ui',
+    'ui-widgets',
+    'views',
+    'templates',
+    'theme-mode',
+    'websockets',
+    'jobs-and-workers',
+    'isolate',
+    'isolate-tasks',
+    'logging',
+    'architecture',
+    'mail',
+    'ai',
+    'swagger-docs',
+    'swagger-and-api-docs',
     'deployment',
   ];
 
@@ -124,7 +141,8 @@ class DocsSupport {
         'previousGuideUrl':
             hasPreviousGuide ? '/fullstack/guides/$previousTopicSlug' : null,
         'nextGuideTitle': hasNextGuide ? nextGuideTitle : null,
-        'nextGuideUrl': hasNextGuide ? '/fullstack/guides/$nextTopicSlug' : null,
+        'nextGuideUrl':
+            hasNextGuide ? '/fullstack/guides/$nextTopicSlug' : null,
       },
     );
   }
@@ -158,7 +176,8 @@ class DocsSupport {
       meta: pageMeta(
         title: '$heading API - Flint Dart',
         description: 'Reference for the $heading API in Flint Dart.',
-        canonicalPath: topic == 'flint-class' ? '/fullstack/api' : '/fullstack/api/$topic',
+        canonicalPath:
+            topic == 'flint-class' ? '/fullstack/api' : '/fullstack/api/$topic',
       ),
       props: {
         ...await baseData(req),
@@ -167,10 +186,12 @@ class DocsSupport {
         'initialSection': topic,
         'contentHtml': contentHtml,
         'previousApiTitle': previousApiTitle,
-        'previousApiUrl':
-            previousTopicSlug != null ? '/fullstack/api/$previousTopicSlug' : null,
+        'previousApiUrl': previousTopicSlug != null
+            ? '/fullstack/api/$previousTopicSlug'
+            : null,
         'nextApiTitle': nextApiTitle,
-        'nextApiUrl': nextTopicSlug != null ? '/fullstack/api/$nextTopicSlug' : null,
+        'nextApiUrl':
+            nextTopicSlug != null ? '/fullstack/api/$nextTopicSlug' : null,
       },
     );
   }
@@ -723,11 +744,16 @@ class DocsSupport {
       path,
       path.replaceFirst('lib/content/guides/', 'lib/content/fullstack/guides/'),
       path.replaceFirst('lib/content/api/', 'lib/content/fullstack/api/'),
-      path.replaceFirst('lib/content/pages/fullstack.md', 'lib/content/fullstack/overview.md'),
-      path.replaceFirst('lib/content/pages/hardware.md', 'lib/content/hardware/overview.md'),
-      path.replaceFirst('lib/content/pages/ai.md', 'lib/content/ai/overview.md'),
-      path.replaceFirst('lib/content/pages/client.md', 'lib/content/client/overview.md'),
-      path.replaceFirst('lib/content/pages/dart.md', 'lib/content/dart/overview.md'),
+      path.replaceFirst('lib/content/pages/fullstack.md',
+          'lib/content/fullstack/overview.md'),
+      path.replaceFirst(
+          'lib/content/pages/hardware.md', 'lib/content/hardware/overview.md'),
+      path.replaceFirst(
+          'lib/content/pages/ai.md', 'lib/content/ai/overview.md'),
+      path.replaceFirst(
+          'lib/content/pages/client.md', 'lib/content/client/overview.md'),
+      path.replaceFirst(
+          'lib/content/pages/dart.md', 'lib/content/dart/overview.md'),
     ];
 
     for (final candidate in candidates) {
@@ -1345,7 +1371,7 @@ Sitemap: $sitemapUrl
 
     for (final topic in guideTopics) {
       entries.add({
-        'loc': absoluteUrl('/guides/$topic'),
+        'loc': absoluteUrl('/fullstack/guides/$topic'),
         'changefreq': 'monthly',
         'priority': '0.6',
         'lastmod': nowIso,
@@ -1361,48 +1387,51 @@ Sitemap: $sitemapUrl
       });
     }
 
-    try {
-      final posts = await fetchBlogPosts();
-      for (final post in posts) {
-        final href = post['href']?.toString();
-        if (href == null || href.isEmpty) continue;
-        entries.add({
-          'loc': absoluteUrl(href),
-          'changefreq': 'monthly',
-          'priority': '0.7',
-          'lastmod': sitemapDate(post['published_at']?.toString()) ?? nowIso,
-        });
-      }
-    } catch (_) {}
+    if (DB.isConnected) {
+      try {
+        final posts = await fetchBlogPosts();
+        for (final post in posts) {
+          final href = post['href']?.toString();
+          if (href == null || href.isEmpty) continue;
+          entries.add({
+            'loc': absoluteUrl(href),
+            'changefreq': 'monthly',
+            'priority': '0.7',
+            'lastmod': sitemapDate(post['published_at']?.toString()) ?? nowIso,
+          });
+        }
+      } catch (_) {}
 
-    try {
-      final questions = await fetchQuestions();
-      for (final question in questions) {
-        final href = question['href']?.toString();
-        if (href == null || href.isEmpty) continue;
-        entries.add({
-          'loc': absoluteUrl(href),
-          'changefreq': 'monthly',
-          'priority': '0.6',
-          'lastmod':
-              sitemapDate(question['published_at']?.toString()) ?? nowIso,
-        });
-      }
-    } catch (_) {}
+      try {
+        final questions = await fetchQuestions();
+        for (final question in questions) {
+          final href = question['href']?.toString();
+          if (href == null || href.isEmpty) continue;
+          entries.add({
+            'loc': absoluteUrl(href),
+            'changefreq': 'monthly',
+            'priority': '0.6',
+            'lastmod':
+                sitemapDate(question['published_at']?.toString()) ?? nowIso,
+          });
+        }
+      } catch (_) {}
 
-    try {
-      final projects = await fetchShowcaseProjects();
-      for (final project in projects) {
-        final href = project['href']?.toString();
-        if (href == null || href.isEmpty) continue;
-        entries.add({
-          'loc': absoluteUrl(href),
-          'changefreq': 'monthly',
-          'priority': '0.7',
-          'lastmod': sitemapDate(project['published_at']?.toString()) ?? nowIso,
-        });
-      }
-    } catch (_) {}
+      try {
+        final projects = await fetchShowcaseProjects();
+        for (final project in projects) {
+          final href = project['href']?.toString();
+          if (href == null || href.isEmpty) continue;
+          entries.add({
+            'loc': absoluteUrl(href),
+            'changefreq': 'monthly',
+            'priority': '0.7',
+            'lastmod':
+                sitemapDate(project['published_at']?.toString()) ?? nowIso,
+          });
+        }
+      } catch (_) {}
+    }
 
     final seen = <String>{};
     return entries.where((e) => seen.add(e['loc']!)).toList();
@@ -1417,7 +1446,7 @@ Sitemap: $sitemapUrl
   Future<String> buildLlmsTxt() async {
     final site = absoluteUrl('/');
     final sitemap = absoluteUrl('/sitemap.xml');
-    final guides = absoluteUrl('/guides');
+    final guides = absoluteUrl('/fullstack/guides');
     final ui = absoluteUrl('/ui');
     final client = absoluteUrl('/client');
     final ai = absoluteUrl('/ai');
@@ -1428,13 +1457,17 @@ Sitemap: $sitemapUrl
     final showcase = absoluteUrl('/showcase');
 
     final posts = <Map<String, dynamic>>[];
-    try {
-      posts.addAll((await fetchBlogPosts()).take(12));
-    } catch (_) {}
+    if (DB.isConnected) {
+      try {
+        posts.addAll((await fetchBlogPosts()).take(12));
+      } catch (_) {}
+    }
     final projects = <Map<String, dynamic>>[];
-    try {
-      projects.addAll((await fetchShowcaseProjects()).take(12));
-    } catch (_) {}
+    if (DB.isConnected) {
+      try {
+        projects.addAll((await fetchShowcaseProjects()).take(12));
+      } catch (_) {}
+    }
 
     final lines = <String>[
       '# Flint Dart Docs',
@@ -1462,6 +1495,14 @@ Sitemap: $sitemapUrl
       '- Use questions for community troubleshooting examples.',
       '- Use Built with Flint to discover real apps and products shipped with the framework.',
     ];
+
+    lines.add('');
+    lines.add('## Fullstack Guides');
+    lines.add('');
+    for (final topic in guideTopics) {
+      lines.add(
+          '- ${absoluteUrl('/fullstack/guides/$topic')} | ${topicHeading(topic)}');
+    }
 
     if (posts.isNotEmpty) {
       lines.add('');
@@ -1579,7 +1620,8 @@ const defaultExampleProjects = <Map<String, dynamic>>[
     'category': 'Artificial Intelligence',
     'pillar': 'ai',
     'badge': 'AI & LLM Pipeline',
-    'github_url': 'https://github.com/flint-dart/flint/tree/main/examples/aiapp',
+    'github_url':
+        'https://github.com/flint-dart/flint/tree/main/examples/aiapp',
     'demo_url': 'https://flintdart.dev/examples#aiapp',
     'clone_command': 'flint create my_ai_app --template=aiapp',
     'features':
@@ -1602,7 +1644,8 @@ const defaultExampleProjects = <Map<String, dynamic>>[
     'category': 'UI & Creative Tools',
     'pillar': 'client',
     'badge': 'Interactive Canvas',
-    'github_url': 'https://github.com/flint-dart/flint/tree/main/examples/canva',
+    'github_url':
+        'https://github.com/flint-dart/flint/tree/main/examples/canva',
     'demo_url': 'https://flintdart.dev/examples#canva',
     'clone_command': 'flint create my_canva --template=canva',
     'features':
@@ -1625,7 +1668,8 @@ const defaultExampleProjects = <Map<String, dynamic>>[
     'category': 'Full-Stack Apps',
     'pillar': 'fullstack',
     'badge': 'Content Engine',
-    'github_url': 'https://github.com/flint-dart/flint/tree/main/examples/blogs',
+    'github_url':
+        'https://github.com/flint-dart/flint/tree/main/examples/blogs',
     'demo_url': 'https://flintdart.dev/examples#blogs',
     'clone_command': 'flint create my_blog --template=blog',
     'features':

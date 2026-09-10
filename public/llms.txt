@@ -1,0 +1,59 @@
+# Flint Dart Docs
+
+Official documentation for Flint Dart, the fullstack Dart framework for HTTP
+APIs, server-rendered pages, browser UI, WebSockets, database-backed apps,
+background jobs, mail, storage, validation, and AI runtime workflows.
+
+## Main URLs
+
+- Site: https://flintdart.dev/
+- Fullstack guides: https://flintdart.dev/fullstack/guides
+- API reference: https://flintdart.dev/fullstack/api
+- Flint UI: https://flintdart.dev/ui
+- Flint Client: https://flintdart.dev/client
+- Flint AI: https://flintdart.dev/ai
+- Sitemap: https://flintdart.dev/sitemap.xml
+
+## Fullstack Guide Index
+
+- https://flintdart.dev/fullstack/guides/introduction | Introduction
+- https://flintdart.dev/fullstack/guides/getting-started | Getting Started
+- https://flintdart.dev/fullstack/guides/installation | Installation
+- https://flintdart.dev/fullstack/guides/create-run | Create And Run
+- https://flintdart.dev/fullstack/guides/cli | CLI
+- https://flintdart.dev/fullstack/guides/project-structure | Project Structure
+- https://flintdart.dev/fullstack/guides/building-a-feature | Building A Feature
+- https://flintdart.dev/fullstack/guides/common-patterns | Common Patterns
+- https://flintdart.dev/fullstack/guides/testing | Testing
+- https://flintdart.dev/fullstack/guides/routing | Routing
+- https://flintdart.dev/fullstack/guides/route-groups | Route Groups
+- https://flintdart.dev/fullstack/guides/middleware | Middleware
+- https://flintdart.dev/fullstack/guides/validation | Validation
+- https://flintdart.dev/fullstack/guides/authentication | Authentication
+- https://flintdart.dev/fullstack/guides/sessions | Sessions And Cookies
+- https://flintdart.dev/fullstack/guides/security | Security
+- https://flintdart.dev/fullstack/guides/security-and-utilities | Security And Utilities
+- https://flintdart.dev/fullstack/guides/errors | Errors And Exceptions
+- https://flintdart.dev/fullstack/guides/helpers | Helpers And Utils
+- https://flintdart.dev/fullstack/guides/models | Models
+- https://flintdart.dev/fullstack/guides/models-and-database | Models And Database
+- https://flintdart.dev/fullstack/guides/database | Database
+- https://flintdart.dev/fullstack/guides/database-api | Database API
+- https://flintdart.dev/fullstack/guides/table-sync | Table Sync
+- https://flintdart.dev/fullstack/guides/seeders | Seeders
+- https://flintdart.dev/fullstack/guides/cache | Cache
+- https://flintdart.dev/fullstack/guides/storage | Storage
+- https://flintdart.dev/fullstack/guides/build-and-rendering | Build And Rendering
+- https://flintdart.dev/fullstack/guides/frontend-ui | Frontend UI
+- https://flintdart.dev/fullstack/guides/ui-widgets | UI Widgets And State
+- https://flintdart.dev/fullstack/guides/views | Views
+- https://flintdart.dev/fullstack/guides/templates | Template Engine
+- https://flintdart.dev/fullstack/guides/theme-mode | Theme Mode
+- https://flintdart.dev/fullstack/guides/websockets | WebSockets
+- https://flintdart.dev/fullstack/guides/jobs-and-workers | Jobs And Workers
+- https://flintdart.dev/fullstack/guides/isolate | Isolate Tasks
+- https://flintdart.dev/fullstack/guides/logging | Logging
+- https://flintdart.dev/fullstack/guides/mail | Mail
+- https://flintdart.dev/fullstack/guides/ai | AI Runtime
+- https://flintdart.dev/fullstack/guides/swagger-docs | Swagger Docs
+- https://flintdart.dev/fullstack/guides/deployment | Deployment

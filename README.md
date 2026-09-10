@@ -28,7 +28,7 @@ Open: `http://localhost:3000`
 ## Flint Package Versions
 
 Docs deployments resolve Flint packages from pub.dev. The current docs app
-targets `flint_dart: ^1.2.2` and `flint_ui: ^0.1.15`.
+targets `flint_dart: ^1.4.0` and `flint_ui: ^0.1.16`.
 
 ## Hosted Install Scripts
 

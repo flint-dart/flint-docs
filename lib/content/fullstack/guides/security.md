@@ -1,46 +1,124 @@
-## Security
+# Security
 
-Flint includes security basics out of the box: password hashing and JWT tokens. Always use HTTPS in production and store secrets in `.env`.
+Flint gives you direct security helpers for hashing, JWT work, suspicious path
+monitoring, and security-focused exceptions. Use the higher-level auth APIs for
+normal login, registration, OTP, password reset, and current-user flows.
 
-### JWT Tokens
+## Password Hashing
+
+Use `Hashing` for passwords:
 
 ```dart
-// Generate a JWT for a user
-final token = Auth.generateToken({'id': userId, 'email': userEmail});
+final hasher = Hashing(algorithm: HashingAlgorithm.bcrypt);
 
-// Verify an incoming token
-final payload = Auth.verifyToken(token);
-if (payload == null) {
-  return ctx.res?.status(401).json({'error': 'Invalid token'});
+final digest = hasher.hash('secret');
+final ok = hasher.verify('secret', digest);
+```
+
+`HashingAlgorithm.bcrypt` is the right default for user passwords. Bcrypt stores
+salt data inside the generated hash, so hashing the same password twice can
+produce different strings. Always verify with `hasher.verify(...)`.
+
+Do not compare raw passwords or hashes manually:
+
+```dart
+if (!Hashing().verify(password, user.password!)) {
+  throw AuthException(message: 'Invalid email or password');
 }
 ```
 
-### Password Hashing
+`HashingAlgorithm.sha256` is available for deterministic digests, but do not use
+plain SHA-256 for user password storage.
+
+## JWT Helpers
+
+Use `FlintJwt` when you need lower-level token work:
 
 ```dart
-// Hash a password before saving
-final hashed = Hashing().hash(password);
+final jwt = FlintJwt('app-secret');
 
-// Verify a password during login
-final ok = Hashing().verify(password, hashedPassword);
+final token = jwt.generateToken(
+  {'userId': user.id},
+  expiry: const Duration(hours: 2),
+);
+
+final payload = jwt.verifyToken(token);
+
+if (payload == null) {
+  throw AuthException(message: 'Invalid token');
+}
 ```
 
-### Security Utilities (Direct Use)
+`generateToken(...)` adds `iat` and `exp` values. `verifyToken(...)` returns the
+payload map when valid and `null` when verification fails.
 
-You can use the low-level helpers directly when you are not using `Auth`.
+For app login flows, prefer `Auth.login(...)`, `Auth.generateToken(...)`, and
+`Auth.verifyToken(...)` from the authentication guide.
+
+## Security Middleware
+
+`SecurityMiddleware` watches suspicious paths and repeated 404s:
 
 ```dart
-// Choose algorithm explicitly
-final hasher = Hashing(algorithm: HashingAlgorithm.bcrypt);
-final digest = hasher.hash('secret');
-final ok = hasher.verify('secret', digest);
-
-// Raw JWT helper (uses JWT_SECRET from .env)
-final jwt = FlintJwt(FlintEnv.get('JWT_SECRET'));
-final token = jwt.sign({'id': 1});
-final payload = jwt.verify(token);
+app.use(
+  SecurityMiddleware(
+    config: SecurityConfig.production(
+      maxNotFoundAttempts: 10,
+      notFoundWindow: const Duration(minutes: 1),
+      blockDuration: const Duration(hours: 1),
+      suspiciousPathPrefixes: const [
+        '/wp-admin',
+        '/.env',
+      ],
+    ),
+    onSecurityEvent: (event) {
+      Log.warning(event.toString());
+    },
+  ),
+);
 ```
 
-### Rate Limiting (Guidance)
+Useful config values:
 
-For public APIs, add rate limiting at the reverse proxy (Nginx/Cloudflare) or implement a middleware that tracks requests per IP. This prevents abuse and protects your Auth endpoints.
+- `blockNotFoundAbuse`
+- `maxNotFoundAttempts`
+- `notFoundWindow`
+- `blockDuration`
+- `suspiciousPathPrefixes`
+- `excludedPrefixes`
+
+Use `SecurityConfig.monitorOnly(...)` when you want events without automatic
+temporary IP blocking.
+
+## Rate Limiting
+
+Flint does not currently expose a built-in `RateLimitMiddleware` class. Build
+rate limiting as app middleware when an endpoint creates or verifies sensitive
+tokens.
+
+Protect these endpoints:
+
+- login
+- register
+- forgot password
+- reset password
+- send OTP
+- resend OTP
+- verify OTP
+- OAuth callback exchange
+- public contact forms
+- file uploads
+
+Return HTTP `429`, keep messages clear, and avoid revealing whether an email
+exists. Use shared storage for counters when the app runs on multiple server
+processes.
+
+## Review Checklist
+
+- Use bcrypt for user passwords.
+- Verify secrets with `Hashing.verify(...)`.
+- Use auth helpers for full auth workflows.
+- Rate-limit login, OTP, password reset, and uploads.
+- Keep tokens, OTPs, passwords, cookies, and authorization headers out of logs.
+- Validate uploads before storing them.
+- Use `AuthException`, `Unauthenticated`, and `ForbiddenException` intentionally.

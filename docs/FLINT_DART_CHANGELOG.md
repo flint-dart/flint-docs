@@ -2,6 +2,51 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.4.0] - 2026-09-08
+
+### Added
+- **Interactive `Terminal` Component**: Added a lifecycle-managed xterm.js
+  terminal with duplex WebSocket input/output, ANSI rendering, automatic
+  reconnect, responsive resize envelopes, controller commands, connection
+  status, copy, clear, and light/dark themes.
+- **`CodeEditor` Form Component**: Added a reusable, theme-aware plain-text
+  editor with synchronized line numbers, controller support, validation
+  messages, and keystroke handling that does not rebuild its parent.
+- **Native Document Canvas Engine**: Added full-fidelity, in-browser document viewers under `package:flint_dart/ui.dart`:
+  - `DocxViewer`: Client-side Microsoft Word (`.docx`) canvas renderer preserving vector drawings, shapes, tables, charts, typography, headers, footers, and page margins.
+  - `PdfViewer`: Multi-page `PDF.js` canvas studio with 2x Retina scaling, authentic paper elevation, drop shadows, and responsive page containers.
+  - Non-web stubs (`docx_viewer_stub.dart`, `pdf_viewer_stub.dart`, `doc_viewer_stub.dart`) ensuring seamless SSR and non-web compilation.
+- **`DocViewerController` & `DocTocItem`**:
+  - Programmatic navigation: `jumpToPage()`, `nextPage()`, `prevPage()`, `currentPage`, `totalPages`.
+  - Smooth zoom controls: `setZoom()`, `zoomIn()`, `zoomOut()`, `resetZoom()`.
+  - Full-text in-document search: `search()`, `nextMatch()`, `prevMatch()`, match counter, and real-time in-DOM `<mark>` highlighting with smooth centering auto-scroll.
+  - Automatic Table of Contents / Outline extraction from Word headings (`H1`, `H2`, `H3`) and PDF bookmarks with interactive sidebar navigation.
+- **`DocViewerToolbar` & Document Reading Modes**:
+  - Interactive sticky/floating topbar with page navigation, zoom display, live search box, and Table of Contents drawer.
+  - Tri-Mode Document Reading Engine:
+    - ☀️ **Paper Mode**: Authentic white paper with natural document styling.
+    - 🌙 **Dark Canvas Mode**: High-contrast slate background with light typography and clear table borders for comfortable night reading.
+    - 📜 **Sepia Mode**: Warm book paper for reduced eye strain.
+- **`Iframe` Native Primitive**:
+  - First-class typed `Iframe` component under `package:flint_dart/ui.dart`.
+
+### Fixed
+- **Template Hot Reload for Custom View Locations**: Fixed logical template resolution during hot-reload to support templates located outside `lib/views` (such as `lib/mail/views`).
+- **`DocViewerToolbar` Web Compilation**: Fixed event handlers in `DocViewerToolbar` for clean `dart2js` compilation without JS-interop typing conflicts.
+- **`IconButton` IconData Support**: Fixed `IconButton` to natively accept `IconData` (e.g. `Icons.minus`, `Icons.chevronLeft`) alongside `Icon` widgets without stringification (`Instance of 'IconData'`) artifacts.
+- **DOCX Virtual DOM Persistence**: Fixed DOM re-render wipe in `DocxViewer` and `PdfViewer` by decoupling the mount target from component re-renders.
+- **Form Help Text Sizing**: Fixed form help text sizing across inputs.
+- **CLI Dependency Constraint**: Fixed invalid version constraint for `watcher` in `pubspec.yaml` (`watcher: ^1.1.0`) which caused package resolution failure during CLI invocation.
+- **CLI Output Visibility**: Ensured `Log.minLevel` defaults to `LogLevel.debug` for CLI commands (`migrate`, `seed`, `version`, `build`, etc.) so command progress and database migrations output clearly to the console.
+
+## [1.3.3] - 2026-08-24
+
+### Fixed
+- **Controlled Select State**: Applied the selected value directly to `<select>` controls after their `<option>` elements mount, and kept the value synchronized after state-driven rerenders.
+- **Typed Select Values**: Compared option and selected values by their DOM string representation so numeric and string-backed values select consistently.
+- **Model Creation Hydration**: Hydrated the model instance that calls `create()` with the inserted database row, including generated IDs and converted attribute types, while preserving the populated returned model.
+- **Example Static Analysis**: Awaited the example user update response inside its `try` block so strict Linux CI analysis remains clean.
+
 ## [1.3.2] - 2026-08-22
 
 ### Fixed

@@ -1,41 +1,94 @@
-## Create & Run
+# Create And Run
 
-### Create a new project
+Use `flint create` for a new app and `flint run` for local development.
+
+## Create
 
 ```bash
-flint create my_app
-cd my_app
+flint create course_app
+cd course_app
+dart pub get
 ```
 
-### Run the server
+The command creates a fresh Flint project from the sample app, updates
+`pubspec.yaml`, rewrites package imports, and installs dependencies.
+
+You can also run the command through Dart:
+
+```bash
+dart run flint_dart:flint create course_app
+```
+
+## Run
+
+Start the development server:
 
 ```bash
 flint run
 ```
 
-`flint run` runs `lib/main.dart`.
-
-If you are using hot reload for Flint templates, set `PORT` in your `.env`. The framework will use this when `app.listen()` is called without a port:
+Choose a port:
 
 ```bash
-PORT=3001
+flint run --port=3000
+flint run --port 3000
+flint run 3000
 ```
 
-Dart-friendly workflow
+Port resolution order:
 
-Keep your project clean and fast with standard Dart tools. Run these anytime to format and catch issues early:
+1. `--port=3000`
+2. `--port 3000`
+3. a positional number such as `3000`
+4. `PORT` from `.env`
+5. default `8080`
+
+## Web Builds During Run
+
+By default, `flint run` may build Flint UI browser assets when the app has UI
+entrypoints. Skip that step when you only want the server:
 
 ```bash
-dart format .
-dart analyze
+flint run --no-web-build
 ```
 
-### Env Helper
+Use the build guide when working on browser UI, SSR, generated bundles, or page
+registry issues:
 
-Use the top-level `env()` helper anywhere to read values from `.env`. It will coerce types based on the default value you pass.
+- [Build And Rendering](/fullstack/guides/build-and-rendering)
+
+## First Route
 
 ```dart
-final port = env('PORT', 3001);      // int
-final debug = env('DEBUG', false);   // bool
-final name = env('APP_NAME', 'Flint');
+import 'package:flint_dart/flint_dart.dart';
+
+void main() {
+  final app = Flint(withDefaultMiddleware: true);
+
+  app.get('/health', (Context ctx) {
+    return ctx.res?.json({'ok': true});
+  });
+
+  app.listen(port: 3000);
+}
 ```
+
+Open:
+
+```text
+http://localhost:3000/health
+```
+
+## Useful Follow-Up Commands
+
+```bash
+flint migrate --no-interaction
+flint seed
+flint agent
+flint --make-controller Course
+flint --make-route Course
+flint --make-ui --page Courses
+```
+
+The older `make:*` aliases are legacy compatibility and are scheduled for
+removal in Flint Dart `1.5.0`.

@@ -1,53 +1,92 @@
-## Introduction
+# Introduction
 
-Flint Dart is a full-stack Dart framework for building web apps with one language from server to screen.
+Flint Dart is a fullstack Dart framework for building HTTP APIs,
+server-rendered pages, browser UI, WebSockets, database-backed apps, background
+jobs, mail, storage, validation, and AI workflows from one Dart codebase.
 
-Use Flint Dart for routing, controllers, middleware, validation, database models, views, and the app structure around them. Then use Flint UI when you want to build the frontend in Dart too, using components instead of writing separate JavaScript.
+Use Flint when you want the backend and frontend to share the same language and
+project shape:
 
-### Why Flint Dart
+```text
+lib/
+  main.dart
+  routes/
+  controllers/
+  models/
+  middlewares/
+  services/
+  mail/
+  ui/
+public/
+  assets/
+  uploads/
+```
 
-Flint is made for apps that should stay simple when they grow. Routes can point to controllers, controllers can call services, and models can describe the database shape close to the code that uses it.
+## Core Ideas
 
-The goal is not to hide Dart. The goal is to let Dart do more of the work.
+- Routes receive a unified `Context`.
+- HTTP code reads `ctx.req` and writes through `ctx.res`.
+- WebSocket code reads the same `Context` and uses `ctx.socket`.
+- Controllers extend `Controller` and are bound with `app.controller(...)`.
+- Models describe database tables and expose query helpers.
+- Flint UI source lives in `lib/ui`.
+- Generated browser bundles live under `public/assets/js/flint-ui`.
+- One class, component, page, section, middleware, job, or reusable helper should live in one file.
 
-### UI in Dart
-
-Flint UI lets you create frontend components with Dart classes. A component returns a view, and the internal renderer turns that view into browser UI.
+## Minimal App
 
 ```dart
-import 'package:flint_dart/ui.dart';
+import 'package:flint_dart/flint_dart.dart';
 
-class Counter extends Component {
-  int count = 0;
+void main() {
+  final app = Flint(
+    withDefaultMiddleware: true,
+    enableSwaggerDocs: true,
+  );
 
-  @override
-  View build() {
-    return Container(
-      dartStyle: const DartStyle(
-        display: Display.grid,
-        gap: 12,
-        padding: EdgeInsets.all(16),
-      ),
-      children: [
-        Text.h2('Count: $count'),
-        Button(
-          onPressed: (_) => setState(() => count++),
-          children: [Text.span('Add one')],
-        ),
-      ],
-    );
+  app.get('/', (Context ctx) {
+    return ctx.res?.json({'message': 'Hello Flint'});
+  });
+
+  app.listen(port: 3000);
+}
+```
+
+## Controller-Based App
+
+```dart
+class CourseController extends Controller {
+  Future<Response> index() async {
+    final courses = await Course().all();
+    return res.json({'data': courses});
   }
 }
 ```
 
-### How the pieces fit
+```dart
+class CourseRoutes extends RouteGroup {
+  @override
+  String get prefix => '/courses';
 
-Flint Dart handles the server side: requests, responses, routing, middleware, controllers, models, and deployment.
+  @override
+  void register(Flint app) {
+    final courses = app.controller(CourseController.new);
+    courses.get('/', (controller) => controller.index());
+  }
+}
+```
 
-Flint UI handles interactive pages: components, state, styling, layouts, and browser rendering.
+Register the route group:
 
-Together, they let you build a complete web app while staying in Dart.
+```dart
+app.routes(CourseRoutes());
+```
 
-### What to read next
+## What To Read Next
 
-Start with installation when you are ready to create a project. After that, read routing, controllers, views, and models to understand the core workflow.
+- [Installation](/fullstack/guides/installation)
+- [Getting Started](/fullstack/guides/getting-started)
+- [CLI](/fullstack/guides/cli)
+- [Routing](/fullstack/guides/routing)
+- [Project Structure](/fullstack/guides/project-structure)
+- [Building A Feature](/fullstack/guides/building-a-feature)

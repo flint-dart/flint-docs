@@ -40,6 +40,17 @@ class GuidesSidebar extends Component {
   }
 
   void _openGroupForSection(String section) {
+    const start = [
+      'introduction',
+      'getting-started',
+      'installation',
+      'create-run',
+      'cli',
+      'project-structure',
+      'building-a-feature',
+      'common-patterns',
+      'testing',
+    ];
     const routing = [
       'routing',
       'route-params',
@@ -50,13 +61,59 @@ class GuidesSidebar extends Component {
       'route-groups'
     ];
     const middleware = ['middleware', 'validation'];
-    const auth = ['authentication', 'security'];
-    const models = ['models', 'orm', 'orm-query', 'orm-relations'];
+    const auth = [
+      'authentication',
+      'sessions',
+      'sessions-and-cookies',
+      'security',
+      'security-and-utilities',
+      'errors',
+      'helpers',
+    ];
+    const data = [
+      'models',
+      'models-and-database',
+      'database',
+      'database-api',
+      'orm',
+      'orm-query',
+      'orm-relations',
+      'table-sync',
+      'seeders',
+      'cache',
+      'storage',
+    ];
+    const ui = [
+      'build-and-rendering',
+      'frontend-ui',
+      'ui-widgets',
+      'views',
+      'templates',
+      'theme-mode',
+    ];
+    const background = [
+      'websockets',
+      'jobs-and-workers',
+      'isolate',
+      'isolate-tasks',
+      'logging',
+    ];
+    const reference = [
+      'mail',
+      'ai',
+      'swagger-docs',
+      'swagger-and-api-docs',
+      'deployment',
+    ];
 
+    if (start.contains(section)) _open['start'] = true;
     if (routing.contains(section)) _open['routing'] = true;
     if (middleware.contains(section)) _open['middleware'] = true;
     if (auth.contains(section)) _open['auth'] = true;
-    if (models.contains(section)) _open['models'] = true;
+    if (data.contains(section)) _open['data'] = true;
+    if (ui.contains(section)) _open['ui'] = true;
+    if (background.contains(section)) _open['background'] = true;
+    if (reference.contains(section)) _open['reference'] = true;
   }
 
   View _sidebarItem((String, String, List<(String, String)>?) item) {
@@ -178,11 +235,22 @@ class GuidesSidebar extends Component {
 }
 
 const _sidebarItems = [
-  ('introduction', 'Introduction', null),
   ('flint-story', 'Flint Story', null),
-  ('installation', 'Install', null),
-  ('create-run', 'Create & Run', null),
-  ('cli', 'CLI', null),
+  (
+    'start',
+    'Start',
+    [
+      ('introduction', 'Introduction'),
+      ('getting-started', 'Getting Started'),
+      ('installation', 'Install'),
+      ('create-run', 'Create & Run'),
+      ('cli', 'CLI'),
+      ('project-structure', 'Project Structure'),
+      ('building-a-feature', 'Building A Feature'),
+      ('common-patterns', 'Common Patterns'),
+      ('testing', 'Testing'),
+    ]
+  ),
   (
     'routing',
     'Routing',
@@ -206,37 +274,67 @@ const _sidebarItems = [
   ),
   (
     'authentication',
-    'Authentication',
+    'Auth & Security',
     [
       ('authentication', 'Overview'),
+      ('sessions', 'Sessions & Cookies'),
+      ('sessions-and-cookies', 'Session Details'),
       ('security', 'Security'),
+      ('security-and-utilities', 'Security Utilities'),
+      ('errors', 'Errors & Exceptions'),
+      ('helpers', 'Helpers & Utils'),
     ]
   ),
-  ('sessions', 'Sessions & Cookies', null),
-  ('cache', 'Caching', null),
-  ('storage', 'Storage', null),
-  ('logging', 'Logging', null),
-  ('errors', 'Errors & Exceptions', null),
-  ('helpers', 'Helpers & Utils', null),
-  ('architecture', 'Controllers & Services', null),
-  ('mail', 'Mail', null),
-  ('ai', 'AI Runtime', null),
-  ('isolate', 'Isolate', null),
-  ('swagger-docs', 'Swagger Docs', null),
-  ('database', 'Database', null),
-  ('websockets', 'WebSockets', null),
-  ('views', 'Views', null),
-  ('theme-mode', 'Light & Dark Mode', null),
   (
-    'models',
-    'Models & Tables',
+    'data',
+    'Data',
     [
       ('models', 'Overview'),
+      ('models-and-database', 'Models And Database'),
+      ('database', 'Database'),
+      ('database-api', 'Database API'),
       ('orm', 'ORM'),
       ('orm-query', 'Query'),
       ('orm-relations', 'Relations'),
+      ('table-sync', 'Table Sync'),
+      ('seeders', 'Seeders'),
+      ('cache', 'Caching'),
+      ('storage', 'Storage'),
     ]
   ),
-  ('table-sync', 'Table Sync', null),
-  ('deployment', 'Deployment', null),
+  (
+    'ui',
+    'Web UI',
+    [
+      ('build-and-rendering', 'Build & Rendering'),
+      ('frontend-ui', 'Frontend UI'),
+      ('ui-widgets', 'UI Widgets & State'),
+      ('views', 'Views'),
+      ('templates', 'Template Engine'),
+      ('theme-mode', 'Light & Dark Mode'),
+    ]
+  ),
+  (
+    'background',
+    'Realtime & Workers',
+    [
+      ('websockets', 'WebSockets'),
+      ('jobs-and-workers', 'Jobs & Workers'),
+      ('isolate', 'Isolate Tasks'),
+      ('isolate-tasks', 'Isolate Details'),
+      ('logging', 'Logging'),
+    ]
+  ),
+  (
+    'reference',
+    'Reference',
+    [
+      ('architecture', 'Architecture'),
+      ('mail', 'Mail'),
+      ('ai', 'AI Runtime'),
+      ('swagger-docs', 'Swagger Docs'),
+      ('swagger-and-api-docs', 'Swagger Details'),
+      ('deployment', 'Deployment'),
+    ]
+  ),
 ];
