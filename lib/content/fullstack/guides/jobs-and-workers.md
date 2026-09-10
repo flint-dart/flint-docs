@@ -12,14 +12,14 @@ Before coding a job in an app, inspect these files:
 - `lib/main.dart`
 - `lib/jobs/`
 - `lib/config/jobs_registry.dart`
-- `lib/mail/` and `docs/mail.md` when the job sends email
-- `lib/models/` and `docs/models-and-database.md` when the job reads or writes data
+- `lib/mail/` and [Mail](/fullstack/guides/mail) when the job sends email
+- `lib/models/` and [Models And Database](/fullstack/guides/models-and-database) when the job reads or writes data
 - `bin/worker.dart` when the app already has a worker entrypoint
-- `docs/cli.md` for the `jobs-work` command
-- `docs/logging.md` before adding job progress logs, worker process logs, or
+- [CLI](/fullstack/guides/cli) for the `jobs-work` command
+- [Logging](/fullstack/guides/logging) before adding job progress logs, worker process logs, or
   error logs
 
-If the task is CPU-heavy, also inspect `docs/isolate-tasks.md`, `lib/isolate/`,
+If the task is CPU-heavy, also inspect [Isolate Tasks](/fullstack/guides/isolate-tasks), `lib/isolate/`,
 and the generated isolate tasks. Jobs and isolates solve different problems.
 
 ## The Names
@@ -227,7 +227,7 @@ try {
 
 Do not log OTP codes, passwords, tokens, cookies, mail bodies, provider secrets,
 or full webhook payloads in job metadata or worker logs. Store small identifiers
-and safe status details only. Read `docs/logging.md` for log levels and
+and safe status details only. Read [Logging](/fullstack/guides/logging) for log levels and
 production log settings.
 
 ## Registering Jobs
@@ -672,7 +672,7 @@ Test these behaviors when they matter:
 
 When reviewing a job feature:
 
-1. Read `docs/jobs-and-workers.md`.
+1. Read [Jobs And Workers](/fullstack/guides/jobs-and-workers).
 2. Confirm each job extends `QueueJob`, not deprecated `FlintJob`.
 3. Confirm each job class has its own file under `lib/jobs`.
 4. Confirm `JobsRegistry.jobs` returns every job class needed by dispatches.

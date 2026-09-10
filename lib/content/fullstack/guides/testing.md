@@ -25,19 +25,19 @@ Before writing tests, inspect the local app and the related docs:
 - `test/` for existing app testing style.
 - `test/helpers/` for fake requests, fake responses, uploaded files, database
   fakes, and reusable test builders.
-- `lib/routes/` and `docs/routing.md` before testing routes.
-- `lib/controllers/` and `docs/routing.md` before testing controllers.
-- `lib/middlewares/` and `docs/middleware.md` before testing middleware.
-- `docs/validation.md` before testing validators and `req.validate(...)`.
-- `docs/storage.md` before testing uploads or public files.
+- `lib/routes/` and [Routing](/fullstack/guides/routing) before testing routes.
+- `lib/controllers/` and [Routing](/fullstack/guides/routing) before testing controllers.
+- `lib/middlewares/` and [Middleware](/fullstack/guides/middleware) before testing middleware.
+- [Validation](/fullstack/guides/validation) before testing validators and `req.validate(...)`.
+- [Storage](/fullstack/guides/storage) before testing uploads or public files.
 - `lib/jobs/`, `lib/config/jobs_registry.dart`, and
-  `docs/jobs-and-workers.md` before testing jobs or workers.
-- `lib/seeders/`, `lib/config/seeder_registry.dart`, and `docs/seeders.md`
+  [Jobs And Workers](/fullstack/guides/jobs-and-workers) before testing jobs or workers.
+- `lib/seeders/`, `lib/config/seeder_registry.dart`, and [Seeders](/fullstack/guides/seeders)
   before testing seed data.
-- `lib/ui/`, `docs/frontend-ui.md`, `docs/ui-widgets.md`, and
-  `docs/build-and-rendering.md` before testing Flint UI components or SSR.
-- `docs/cache.md`, `docs/sessions-and-cookies.md`, `docs/database-api.md`,
-  `docs/ai.md`, or `docs/websockets.md` when the feature touches those areas.
+- `lib/ui/`, [Frontend UI](/fullstack/guides/frontend-ui), [UI Widgets](/fullstack/guides/ui-widgets), and
+  [Build And Rendering](/fullstack/guides/build-and-rendering) before testing Flint UI components or SSR.
+- [Cache](/fullstack/guides/cache), [Sessions And Cookies](/fullstack/guides/sessions-and-cookies), [Database API](/fullstack/guides/database-api),
+  [AI Runtime](/fullstack/guides/ai), or [WebSockets](/fullstack/guides/websockets) when the feature touches those areas.
 
 Do not guess framework behavior from another framework. Flint tests should use
 Flint's `Context`, `Request`, `Response`, `Controller`, `Middleware`,
@@ -798,7 +798,7 @@ Database tests should avoid production state. Use one of these approaches:
 Always use parameterized queries, `QueryBuilder`, or model methods. Never build
 SQL by interpolating request input in app code or tests.
 
-For the secure Database API, read `docs/database-api.md` and test:
+For the secure Database API, read [Database API](/fullstack/guides/database-api) and test:
 
 - exposed resource names
 - allowed operations

@@ -146,7 +146,7 @@ A registered resource controls:
 - which fields are hidden or concealed
 - which owner, parent, role, or read-filter policies apply
 
-Read `docs/database-api.md` before exposing a model through
+Read [Database API](/fullstack/guides/database-api) before exposing a model through
 `FlintDatabaseApi`. Do not use the Database API for business workflows that need
 custom decisions, side effects, audit logic, or multi-step behavior; put those in
 controllers and action classes.
@@ -166,7 +166,7 @@ void main(dynamic data, SendPort? sendPort) {
 ```
 
 `flintAiTables` are the built-in AI persistence tables for runs, traces,
-artifacts, and thread memory. Read `docs/ai.md` before adding, removing, or
+artifacts, and thread memory. Read [AI Runtime](/fullstack/guides/ai) before adding, removing, or
 depending on those tables.
 
 The migration command:
@@ -236,7 +236,7 @@ Only enable startup seeding for idempotent seeders.
 Prefer `upsert`, `upsertMany`, or `firstOrCreate` inside seeders so running the
 same seeder twice updates stable rows instead of creating duplicates.
 
-See `docs/seeders.md` for the full seeder guide.
+See [Seeders](/fullstack/guides/seeders) for the full seeder guide.
 
 ## Important Limits
 

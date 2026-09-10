@@ -14,8 +14,8 @@ Before changing validation code in an app, inspect:
 - `lib/middlewares/` for auth, tenant, upload, or validation middleware.
 - `lib/models/` before passing validated maps into `create(...)` or `update(...)`.
 - `lib/ui/` when frontend forms need to display server validation errors.
-- `docs/routing.md` for request input helpers.
-- `docs/swagger-and-api-docs.md` for documenting request bodies and `422` errors.
+- [Routing](/fullstack/guides/routing) for request input helpers.
+- [Swagger And API Docs](/fullstack/guides/swagger-and-api-docs) for documenting request bodies and `422` errors.
 
 Framework source to inspect when behavior is unclear:
 

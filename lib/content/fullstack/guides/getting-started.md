@@ -73,52 +73,52 @@ Runtime helpers:
 - `app.ai`: the app-level Flint AI service.
 - `app.isDatabaseConnected`: `true` after the database connection is established.
 
-See `docs/seeders.md` before enabling `autoSeed`; seeders should be registered
+See [Seeders](/fullstack/guides/seeders) before enabling `autoSeed`; seeders should be registered
 through `SeederRegistry` and should be safe to run more than once.
 
-See `docs/jobs-and-workers.md` before adding background jobs. New jobs should
+See [Jobs And Workers](/fullstack/guides/jobs-and-workers) before adding background jobs. New jobs should
 extend `QueueJob`; the old `FlintJob` base class is deprecated compatibility.
 
-See `docs/isolate-tasks.md` before moving work into Dart isolates. Isolate tasks
+See [Isolate Tasks](/fullstack/guides/isolate-tasks) before moving work into Dart isolates. Isolate tasks
 are for CPU-heavy or blocking work; they are not a durable job queue.
 
-See `docs/storage.md` before saving uploads with `Storage`, and see
-`docs/security-and-utilities.md` before hashing passwords, creating JWTs,
+See [Storage](/fullstack/guides/storage) before saving uploads with `Storage`, and see
+[Security And Utilities](/fullstack/guides/security-and-utilities) before hashing passwords, creating JWTs,
 adding rate limits, throwing framework exceptions, or using `Str` helpers.
 
-See `docs/sessions-and-cookies.md` before adding server sessions, login
+See [Sessions And Cookies](/fullstack/guides/sessions-and-cookies) before adding server sessions, login
 cookies, flash messages, or browser-side auth session storage.
 
-See `docs/templates.md` before changing server-rendered HTML templates,
+See [Templates](/fullstack/guides/templates) before changing server-rendered HTML templates,
 `{{ }}` syntax, includes, layouts, sections, control flow, assets, session
 helpers, or mail template syntax.
 
-See `docs/cache.md` before adding `CacheStore`, response cache headers, ETags,
+See [Cache](/fullstack/guides/cache) before adding `CacheStore`, response cache headers, ETags,
 or cached app data.
 
-See `docs/logging.md` before adding `LoggerMiddleware`, production log settings,
+See [Logging](/fullstack/guides/logging) before adding `LoggerMiddleware`, production log settings,
 job logs, error logs, or committed log calls.
 
-See `docs/testing.md` before adding route, controller, middleware, validator,
+See [Testing](/fullstack/guides/testing) before adding route, controller, middleware, validator,
 storage, job, seeder, or UI component tests.
 
-See `docs/ai.md` before configuring AI providers, agents, tools, workflows,
+See [AI Runtime](/fullstack/guides/ai) before configuring AI providers, agents, tools, workflows,
 memory stores, run, thread, trace, artifact persistence, AI table migrations,
 or production tool policy.
 
-See `docs/build-and-rendering.md` before changing `flint build`, `flint web`,
+See [Build And Rendering](/fullstack/guides/build-and-rendering) before changing `flint build`, `flint web`,
 browser entrypoints, generated UI bundles, page registry behavior, or Flint UI
 server rendering.
 
-See `docs/frontend-ui.md` and `docs/ui-widgets.md` before adding Flint UI
+See [Frontend UI](/fullstack/guides/frontend-ui) and [UI Widgets](/fullstack/guides/ui-widgets) before adding Flint UI
 pages, components, forms, buttons, layouts, overlays, tables, charts, browser
 storage, navigation, or `StateSignal` state.
 
-See `docs/deployment.md` before changing Docker files, production startup,
+See [Deployment](/fullstack/guides/deployment) before changing Docker files, production startup,
 environment variables, static file deploys, migration steps, or jobs worker
 processes.
 
-See `docs/database-api.md` before exposing models through `FlintDatabaseApi`.
+See [Database API](/fullstack/guides/database-api) before exposing models through `FlintDatabaseApi`.
 The normal model layer is for backend workflows; the Database API is for
 intentional, policy-protected resource access.
 

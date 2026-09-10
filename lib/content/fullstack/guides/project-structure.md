@@ -155,13 +155,13 @@ test/
 AI source should be organized by responsibility. Put `AiAgent` classes under
 `lib/ai/agents`, `AiTool` classes under `lib/ai/tools`, named `AiWorkflow`
 classes under `lib/ai/workflows`, and boot wiring in `lib/config/ai.dart`.
-Read `docs/ai.md` before changing AI providers, memory stores, run, thread,
+Read [AI Runtime](/fullstack/guides/ai) before changing AI providers, memory stores, run, thread,
 trace, or artifact persistence, DB-backed AI tables, or production tool policy.
 
 Flint UI source belongs under `lib/ui`. Treat `public/assets/js/flint-ui/`,
 `public/assets/css/flint-ui/`, and `public/flint-sw.js` as generated output.
-Read `docs/frontend-ui.md`, `docs/ui-widgets.md`, and
-`docs/build-and-rendering.md` before changing pages, components, forms, buttons,
+Read [Frontend UI](/fullstack/guides/frontend-ui), [UI Widgets](/fullstack/guides/ui-widgets), and
+[Build And Rendering](/fullstack/guides/build-and-rendering) before changing pages, components, forms, buttons,
 layouts, overlays, tables, charts, storage, navigation, browser entrypoints,
 generated bundles, page registry behavior, or SSR. Pages belong in
 `lib/ui/pages`, reusable components in `lib/ui/components`, larger page sections
@@ -169,12 +169,12 @@ in `lib/ui/sections`, view helper functions in `lib/ui/helpers`, shared styles
 in `lib/ui/styles`, and frontend state holders in `lib/ui/state`.
 
 App tests belong under `test/` and should follow the same one-class-per-file
-habit as app code. Read `docs/testing.md` before adding route, controller,
+habit as app code. Read [Testing](/fullstack/guides/testing) before adding route, controller,
 middleware, validator, storage, job, seeder, or UI component tests.
 
 Server-rendered HTML templates belong under `lib/views`. Mail templates belong
 under `lib/mail/views` and should be owned by `ViewMailable` classes under
-`lib/mail`. Read `docs/templates.md` before changing template syntax,
+`lib/mail`. Read [Templates](/fullstack/guides/templates) before changing template syntax,
 partials, layouts, assets, sessions, or mail HTML.
 
 ## Naming Conventions

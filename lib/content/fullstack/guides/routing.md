@@ -11,10 +11,10 @@ Before coding routes in a developer app, inspect:
 - `lib/controllers/` for controller actions.
 - `lib/middlewares/` for auth, role, tenant, CORS, or other route guards.
 - `lib/models/` when a route reads or writes database records.
-- `docs/authentication.md` before adding auth, login, session, token, send OTP, verify OTP, or resend OTP routes.
-- `docs/middleware.md` before adding route-specific or group middleware.
-- `docs/validation.md` before validating route input.
-- `docs/websockets.md` before adding WebSocket routes.
+- [Authentication](/fullstack/guides/authentication) before adding auth, login, session, token, send OTP, verify OTP, or resend OTP routes.
+- [Middleware](/fullstack/guides/middleware) before adding route-specific or group middleware.
+- [Validation](/fullstack/guides/validation) before validating route input.
+- [WebSockets](/fullstack/guides/websockets) before adding WebSocket routes.
 
 Framework source to inspect when behavior is unclear:
 
@@ -111,8 +111,8 @@ app.post('/auth/send-otp', (Context ctx) async {
 });
 ```
 
-`SendAuthOtpAction` is application code. See `docs/authentication.md` and
-`docs/mail.md` before wiring OTP routes.
+`SendAuthOtpAction` is application code. See [Authentication](/fullstack/guides/authentication) and
+[Mail](/fullstack/guides/mail) before wiring OTP routes.
 
 ### `put`
 
@@ -437,7 +437,7 @@ The important practical rule: `app.use(...)` is for global middleware.
 
 Middleware lists behave like a wrapper stack. The last middleware in a list runs
 first on the way in and finishes last on the way out. See
-`docs/middleware.md` before changing middleware order. See `docs/logging.md`
+[Middleware](/fullstack/guides/middleware) before changing middleware order. See [Logging](/fullstack/guides/logging)
 before changing request logging, log levels, or error log behavior.
 
 ## Controllers
@@ -683,7 +683,7 @@ await req.destroySession();
 Session helpers need access to the underlying HTTP response because they write
 cookies. In normal routes and controllers this is already available.
 
-Read `docs/sessions-and-cookies.md` for session drivers, cookie options, flash
+Read [Sessions And Cookies](/fullstack/guides/sessions-and-cookies) for session drivers, cookie options, flash
 messages, browser auth session storage, and logout guidance.
 
 ### Body Parsing

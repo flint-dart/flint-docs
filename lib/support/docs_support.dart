@@ -1124,7 +1124,7 @@ class DocsSupport {
     });
 
     html = html.replaceAllMapped(
-      RegExp(r'\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)'),
+      RegExp(r'\[([^\]]+)\]\(((?:https?:\/\/|\/|#)[^\s)]+)\)'),
       (m) {
         final label = m.group(1)!;
         final href = escapeHtmlAttribute(m.group(2)!);

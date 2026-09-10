@@ -10,9 +10,9 @@ Before coding middleware in an app, inspect:
 - `lib/main.dart` for global `app.use(...)` calls.
 - `lib/routes/` for route groups and `.useMiddleware(...)`.
 - `lib/middlewares/` for app-specific middleware.
-- `docs/authentication.md` when the middleware checks users, roles, tokens, OTP flows, or sessions.
-- `docs/routing.md` when the middleware is attached to `RouteGroup` or `app.controller(...)` routes.
-- `docs/websockets.md` when the middleware can run for WebSocket routes.
+- [Authentication](/fullstack/guides/authentication) when the middleware checks users, roles, tokens, OTP flows, or sessions.
+- [Routing](/fullstack/guides/routing) when the middleware is attached to `RouteGroup` or `app.controller(...)` routes.
+- [WebSockets](/fullstack/guides/websockets) when the middleware can run for WebSocket routes.
 
 Framework source to inspect when behavior is unclear:
 
@@ -321,7 +321,7 @@ The export file `lib/middlewares.dart` exposes:
 initialized for HTTP requests.
 
 `LoggerMiddleware` is not installed by default. Add it explicitly when the app
-needs request logs, and read `docs/logging.md` before changing what request
+needs request logs, and read [Logging](/fullstack/guides/logging) before changing what request
 data gets logged.
 
 ## Exception Middleware
@@ -363,7 +363,7 @@ It checks `ctx.res` first. WebSocket contexts pass through without cookie or
 session initialization, but the WebSocket handshake `Request` can still read
 headers, query parameters, and cookies that were present during upgrade.
 
-Read `docs/sessions-and-cookies.md` before changing session drivers, auth
+Read [Sessions And Cookies](/fullstack/guides/sessions-and-cookies) before changing session drivers, auth
 cookies, flash messages, `CookieService`, or `SessionService`.
 
 ## Static Files
@@ -414,7 +414,7 @@ tokens, or session IDs.
 
 Use `Log.debug(...)`, `Log.info(...)`, `Log.warning(...)`, `Log.error(...)`,
 and `Log.critical(...)` for custom middleware logs instead of `print(...)`.
-Read `docs/logging.md` for log levels, production settings, job logs, and error
+Read [Logging](/fullstack/guides/logging) for log levels, production settings, job logs, and error
 logging.
 
 ## Cache And ETag
@@ -437,7 +437,7 @@ app
     .useMiddleware(ETagMiddleware((ctx) => 'catalog-v1'));
 ```
 
-Read `docs/cache.md` before using `CacheMiddleware`, `ETagMiddleware`, response
+Read [Cache](/fullstack/guides/cache) before using `CacheMiddleware`, `ETagMiddleware`, response
 cache helpers, or app data cache stores.
 
 ## Security Middleware

@@ -14,9 +14,9 @@ Before documenting an app, inspect:
 - `lib/controllers/` for the real request behavior.
 - `lib/middlewares/` for auth, role, tenant, or rate-limit middleware that must be reflected with `@auth` or response codes.
 - `lib/models/` and resource/presenter classes for response shapes.
-- `docs/authentication.md` before documenting auth, password reset, send OTP, verify OTP, resend OTP, refresh token, or OAuth routes.
-- `docs/routing.md` before documenting route params, `QUERY`, WebSockets, route groups, or controller routes.
-- `docs/validation.md` before documenting request bodies and validation failures.
+- [Authentication](/fullstack/guides/authentication) before documenting auth, password reset, send OTP, verify OTP, resend OTP, refresh token, or OAuth routes.
+- [Routing](/fullstack/guides/routing) before documenting route params, `QUERY`, WebSockets, route groups, or controller routes.
+- [Validation](/fullstack/guides/validation) before documenting request bodies and validation failures.
 
 Framework source to inspect when behavior is unclear:
 
@@ -762,7 +762,7 @@ Swagger will see a `GET` operation with WebSocket extensions:
 }
 ```
 
-Document event names, payloads, and room behavior in `docs/websockets.md` or a
+Document event names, payloads, and room behavior in [WebSockets](/fullstack/guides/websockets) or a
 feature-specific markdown file. Swagger describes only the connection endpoint.
 
 ## File Upload Routes
@@ -880,7 +880,7 @@ annotation is present.
 - Do not split route registration through custom helper methods if the generator needs to see it.
 - Do not expect `app.route('OPTIONS', ...)` to be parsed until route-extractor support is added.
 - Do not treat `QUERY` as a standard OpenAPI method; Flint stores it in extension fields.
-- Do not expect Swagger to describe WebSocket event payloads; document those in `docs/websockets.md`.
+- Do not expect Swagger to describe WebSocket event payloads; document those in [WebSockets](/fullstack/guides/websockets).
 
 ## Review Checklist
 
@@ -894,6 +894,6 @@ Before running `--docs-generate`, check:
 6. Every query filter, pagination value, or search option has `@query`.
 7. Every JSON body has `@body`.
 8. Every protected route has `@auth`.
-9. Auth and OTP routes were checked against `docs/authentication.md`.
-10. WebSocket routes were checked against `docs/websockets.md`.
+9. Auth and OTP routes were checked against [Authentication](/fullstack/guides/authentication).
+10. WebSocket routes were checked against [WebSockets](/fullstack/guides/websockets).
 11. `docs/swagger.json` was regenerated after route comments changed.

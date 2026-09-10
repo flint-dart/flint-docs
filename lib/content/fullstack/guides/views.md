@@ -17,8 +17,8 @@ Use templates when:
 - simple loops and conditionals are enough for the page
 
 Use Flint UI in `lib/ui` when the page is a full frontend component experience.
-Read `docs/frontend-ui.md`, `docs/ui-widgets.md`, and
-`docs/build-and-rendering.md` before changing Flint UI pages.
+Read [Frontend UI](/fullstack/guides/frontend-ui), [UI Widgets](/fullstack/guides/ui-widgets), and
+[Build And Rendering](/fullstack/guides/build-and-rendering) before changing Flint UI pages.
 
 ## Files To Inspect First
 
@@ -31,10 +31,10 @@ Before changing templates, inspect:
 - `lib/mail/views/` for mail templates.
 - `lib/routes/` and `lib/controllers/` for the data passed to `res.view(...)`.
 - `lib/services/` or `lib/actions/` for data prepared before rendering.
-- `docs/sessions-and-cookies.md` before using flash messages or session
+- [Sessions And Cookies](/fullstack/guides/sessions-and-cookies) before using flash messages or session
   helpers.
-- `docs/mail.md` before changing transactional email templates.
-- `docs/testing.md` before adding template, view, or mail preview tests.
+- [Mail](/fullstack/guides/mail) before changing transactional email templates.
+- [Testing](/fullstack/guides/testing) before adding template, view, or mail preview tests.
 
 Framework source to inspect when behavior is unclear:
 
@@ -836,7 +836,7 @@ as a long-lived secret.
 
 ## Testing Templates
 
-Read `docs/testing.md` before adding tests. Useful template tests include:
+Read [Testing](/fullstack/guides/testing) before adding tests. Useful template tests include:
 
 - `res.view(...)` renders the expected response body
 - missing view paths return the expected status

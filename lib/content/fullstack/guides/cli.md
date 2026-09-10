@@ -143,10 +143,10 @@ Behavior:
   from `pubspec.yaml`.
 
 Use this command when an app should carry local framework docs such as
-`docs/authentication.md`, `docs/routing.md`, `docs/websockets.md`, and
-`docs/validation.md`. For test work, read `docs/testing.md` before changing
+[Authentication](/fullstack/guides/authentication), [Routing](/fullstack/guides/routing), [WebSockets](/fullstack/guides/websockets), and
+[Validation](/fullstack/guides/validation). For test work, read [Testing](/fullstack/guides/testing) before changing
 route, controller, middleware, validator, storage, job, seeder, or UI component
-tests. For server-rendered HTML or mail templates, read `docs/templates.md`.
+tests. For server-rendered HTML or mail templates, read [Templates](/fullstack/guides/templates).
 
 ## Run
 
@@ -211,7 +211,7 @@ Use this when a previous dev server kept a port busy.
 
 `jobs-work` runs a dedicated Flint jobs worker entrypoint.
 
-Read `docs/jobs-and-workers.md` before building job features. New background
+Read [Jobs And Workers](/fullstack/guides/jobs-and-workers) before building job features. New background
 jobs should extend `QueueJob`; the older `FlintJob` base class is deprecated
 compatibility for existing apps.
 
@@ -291,10 +291,10 @@ The generated Dockerfile in `build/` runs the prebuilt Linux executable through
 `start.sh`; it is different from the source-level Docker files created by
 `--make-docker`.
 
-Read `docs/deployment.md` before wiring build output into production servers,
+Read [Deployment](/fullstack/guides/deployment) before wiring build output into production servers,
 Docker images, migrations, static files, or worker processes.
 
-Read `docs/build-and-rendering.md` for the full relationship between
+Read [Build And Rendering](/fullstack/guides/build-and-rendering) for the full relationship between
 `flint build`, `flint web`, browser entrypoints, generated bundles, page
 registry lookup, and SSR.
 
@@ -361,7 +361,7 @@ asset names, compressed assets, and `flint-sw.js` service worker output.
 Set `FLINT_WEB_UI_VERBOSE=1`, `true`, or `yes` when you need verbose web build
 logs.
 
-Read `docs/build-and-rendering.md` before changing Flint UI build output,
+Read [Build And Rendering](/fullstack/guides/build-and-rendering) before changing Flint UI build output,
 bundle mode, `flint_ui.yaml`, generated assets, page response script
 resolution, or SSR.
 
@@ -413,7 +413,7 @@ Behavior:
 - Columns missing from the declared schema are dropped unless protected.
 
 Important: removing a column from a model `Table` can drop that column on the
-next migration. Check `docs/models-and-database.md` before changing table
+next migration. Check [Models And Database](/fullstack/guides/models-and-database) before changing table
 schemas.
 
 ## Seed
@@ -434,7 +434,7 @@ Behavior:
 - A non-zero seeder process exits the CLI with code `1`.
 
 Use `--make-seeder` to create the modern seeder file and registry.
-Read `docs/seeders.md` for `Seeder`, `SeederRegistry`, `autoSeed`, registry
+Read [Seeders](/fullstack/guides/seeders) for `Seeder`, `SeederRegistry`, `autoSeed`, registry
 ordering, and idempotent seed patterns.
 
 ## Database Admin
@@ -757,7 +757,7 @@ Behavior:
 - The generated class defines `subject`, `view`, `data`, and `to`.
 - The template uses Flint template expressions such as `{{ recipientName }}`.
 
-After generating, edit the mail class and template together. See `docs/mail.md`
+After generating, edit the mail class and template together. See [Mail](/fullstack/guides/mail)
 for mail configuration, OTP email patterns, previews, and template syntax.
 
 ## Seeder Generator
@@ -787,14 +787,14 @@ Run the seeders with:
 dart run flint_dart:flint seed
 ```
 
-Read `docs/seeders.md` for the full seeder lifecycle, including
+Read [Seeders](/fullstack/guides/seeders) for the full seeder lifecycle, including
 `SeederRegistry`, `app.seed(...)`, and `autoSeed`.
 
 ## Isolate Generator
 
 `--make-isolate` creates an isolate task.
 
-Read `docs/isolate-tasks.md` before using isolates. Isolate tasks are for
+Read [Isolate Tasks](/fullstack/guides/isolate-tasks) before using isolates. Isolate tasks are for
 CPU-heavy or blocking work that should not run on the main Dart server isolate.
 They are not durable job records; use `QueueJob` when the work needs retries,
 status, schedules, or a worker process.
@@ -864,7 +864,7 @@ The generated compose file:
 The generated `deploy.sh` expects Docker Compose, checks for `.env`, runs
 `docker-compose down`, builds, starts, waits briefly, and prints log commands.
 
-Read `docs/deployment.md` before using generated Docker files in production.
+Read [Deployment](/fullstack/guides/deployment) before using generated Docker files in production.
 
 ## Docs Generate
 
@@ -884,7 +884,7 @@ Behavior:
 - `docs/` is created when missing.
 
 The source of truth is the route file comments, not the generated
-`docs/swagger.json`. See `docs/swagger-and-api-docs.md` before documenting a
+`docs/swagger.json`. See [Swagger And API Docs](/fullstack/guides/swagger-and-api-docs) before documenting a
 public API.
 
 ## Update

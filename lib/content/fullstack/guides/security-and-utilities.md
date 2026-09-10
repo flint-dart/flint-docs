@@ -9,10 +9,10 @@ uploads, or needs simple string helpers.
 
 Before coding, inspect:
 
-- `docs/authentication.md` for auth workflows.
-- `docs/middleware.md` for middleware behavior.
-- `docs/validation.md` for validation errors.
-- `docs/storage.md` for upload safety.
+- [Authentication](/fullstack/guides/authentication) for auth workflows.
+- [Middleware](/fullstack/guides/middleware) for middleware behavior.
+- [Validation](/fullstack/guides/validation) for validation errors.
+- [Storage](/fullstack/guides/storage) for upload safety.
 - `lib/src/security/` when security helper behavior is unclear.
 - `lib/src/error/` and `lib/src/middleware/exception_middleware.dart` when
   exception behavior is unclear.
@@ -80,7 +80,7 @@ payload map when the token is valid and returns `null` when verification fails.
 
 For full login, registration, refresh token, password reset, send OTP, verify
 OTP, and current-user flows, prefer the higher-level `Auth` API described in
-`docs/authentication.md`.
+[Authentication](/fullstack/guides/authentication).
 
 ### Security Middleware
 
@@ -322,7 +322,7 @@ helpers, `Storage`, `Hashing`, `FlintJwt`, and the documented framework APIs.
 
 When reviewing security-sensitive code:
 
-1. Read `docs/security-and-utilities.md`.
+1. Read [Security And Utilities](/fullstack/guides/security-and-utilities).
 2. Use `HashingAlgorithm.bcrypt` for user passwords.
 3. Verify secrets with `Hashing.verify(...)`, not manual comparison.
 4. Use higher-level `Auth` helpers for auth workflows when available.

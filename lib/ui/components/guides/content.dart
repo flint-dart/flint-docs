@@ -51,6 +51,10 @@ class GuidesContent extends Component {
             id: 'guide-content',
             html: contentHtml ?? '',
             className: 'guide-md markdown-body',
+            dartStyle: const DartStyle(
+              fontSize: 17,
+              lineHeight: 1.8,
+            ),
             props: {
               'style': {
                 'min-width': '0',

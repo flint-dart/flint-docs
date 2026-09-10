@@ -11,11 +11,11 @@ Before coding an isolate task in an app, inspect these files:
 
 - `lib/isolate/`
 - `lib/isolate/tasks/`
-- `docs/jobs-and-workers.md` if the work also needs queueing, retries, or
+- [Jobs And Workers](/fullstack/guides/jobs-and-workers) if the work also needs queueing, retries, or
   schedule state
-- `docs/mail.md` if the task sends mail
-- `docs/models-and-database.md` if the task reads or writes database data
-- `docs/cli.md` for the `--make-isolate` generator
+- [Mail](/fullstack/guides/mail) if the task sends mail
+- [Models And Database](/fullstack/guides/models-and-database) if the task reads or writes database data
+- [CLI](/fullstack/guides/cli) for the `--make-isolate` generator
 
 ## What An Isolate Is
 
@@ -528,7 +528,7 @@ For task queues, test that all expected callbacks complete. Do not assume
 
 When reviewing isolate work:
 
-1. Read `docs/isolate-tasks.md`.
+1. Read [Isolate Tasks](/fullstack/guides/isolate-tasks).
 2. Confirm the work is CPU-heavy or blocking enough to need an isolate.
 3. Confirm the work does not need durable queue behavior; if it does, use
    `QueueJob` and call the isolate task inside the job.

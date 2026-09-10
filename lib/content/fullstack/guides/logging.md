@@ -16,9 +16,9 @@ Before changing logging behavior, inspect:
 - `lib/config/jobs_registry.dart` and `bin/worker.dart` for worker setup.
 - `.env`, `.env.example`, hosting secrets, or deployment environment settings
   for `LOG_*` values.
-- `docs/middleware.md` before changing request pipeline behavior.
-- `docs/jobs-and-workers.md` before changing job worker behavior.
-- `docs/deployment.md` before changing production log configuration.
+- [Middleware](/fullstack/guides/middleware) before changing request pipeline behavior.
+- [Jobs And Workers](/fullstack/guides/jobs-and-workers) before changing job worker behavior.
+- [Deployment](/fullstack/guides/deployment) before changing production log configuration.
 
 ## Imports
 
@@ -399,7 +399,7 @@ When queue jobs are deployed, check logs from both processes:
 - the HTTP server process for request and route failures
 - the jobs worker process for queue execution, retries, and worker errors
 
-Read `docs/deployment.md` before changing how logs are collected in production.
+Read [Deployment](/fullstack/guides/deployment) before changing how logs are collected in production.
 
 ## Common Mistakes
 

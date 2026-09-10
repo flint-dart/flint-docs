@@ -637,7 +637,7 @@ Platform resolution:
 
 Use `flint web --build-only` when you only need browser assets. Use
 `flint build` when you need the production server executable and copied static
-assets. Read `docs/deployment.md` before wiring the built output into Docker,
+assets. Read [Deployment](/fullstack/guides/deployment) before wiring the built output into Docker,
 process managers, migrations, static file hosting, or jobs workers.
 
 ## Development Flow

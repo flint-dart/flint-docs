@@ -25,10 +25,10 @@ Before changing UI widgets or state, inspect:
   design tokens.
 - `lib/ui/state/` for `StateSignal` objects, controllers, and browser-only state
   holders.
-- `docs/frontend-ui.md` for the app-level frontend structure.
-- `docs/build-and-rendering.md` before changing browser entrypoints, generated
+- [Frontend UI](/fullstack/guides/frontend-ui) for the app-level frontend structure.
+- [Build And Rendering](/fullstack/guides/build-and-rendering) before changing browser entrypoints, generated
   bundles, `PageRegistry`, or server rendering.
-- `docs/sessions-and-cookies.md` before changing browser auth session storage or
+- [Sessions And Cookies](/fullstack/guides/sessions-and-cookies) before changing browser auth session storage or
   JavaScript-visible cookies.
 
 ## Imports
@@ -920,7 +920,7 @@ authSession.clear();
 
 Security rule: JavaScript-visible browser storage can be read by JavaScript. Do
 not store secrets there when the app requires HTTP-only cookie protection. Read
-`docs/sessions-and-cookies.md` before deciding where auth state belongs.
+[Sessions And Cookies](/fullstack/guides/sessions-and-cookies) before deciding where auth state belongs.
 
 ## Overlays
 
@@ -1122,7 +1122,7 @@ Flint provides stubs for many browser APIs so shared code can compile in server
 or test environments, but app behavior that depends on DOM, history, or browser
 storage should still live in browser UI files under `lib/ui`.
 
-Read `docs/build-and-rendering.md` before changing `flint build`, `flint web`,
+Read [Build And Rendering](/fullstack/guides/build-and-rendering) before changing `flint build`, `flint web`,
 browser entrypoints, generated bundles, page-level bundles, `PageRegistry`, or
 SSR.
 
@@ -1149,8 +1149,8 @@ SSR.
 
 When reviewing a Flint UI change:
 
-1. Read `docs/frontend-ui.md`, `docs/ui-widgets.md`, and
-   `docs/build-and-rendering.md`.
+1. Read [Frontend UI](/fullstack/guides/frontend-ui), [UI Widgets](/fullstack/guides/ui-widgets), and
+   [Build And Rendering](/fullstack/guides/build-and-rendering).
 2. Confirm every reusable component, page, section, state holder, and UI helper
    has its own file.
 3. Confirm `build()` returns `View`.

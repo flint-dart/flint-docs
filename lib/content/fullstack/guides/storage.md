@@ -11,8 +11,8 @@ Before coding storage in an app, inspect:
 - `lib/controllers/` for upload endpoints.
 - `lib/models/` for columns that store file URLs or paths.
 - `public/` for existing stored public files.
-- `docs/routing.md` for request upload helpers.
-- `docs/security-and-utilities.md` for upload security checks.
+- [Routing](/fullstack/guides/routing) for request upload helpers.
+- [Security And Utilities](/fullstack/guides/security-and-utilities) for upload security checks.
 
 ## What Storage Does
 
@@ -329,7 +329,7 @@ serve or process it later.
 
 When reviewing file storage:
 
-1. Read `docs/storage.md`.
+1. Read [Storage](/fullstack/guides/storage).
 2. Confirm the upload field is required or optional intentionally.
 3. Confirm authorization happens before storage.
 4. Confirm file size and file type are checked.

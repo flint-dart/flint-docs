@@ -13,10 +13,10 @@ Before coding mail in an app, inspect these files:
 - `lib/controllers/*email*_controller.dart`
 - `lib/routes/*email*_routes.dart`
 
-For OTP and auth mail, also read `docs/authentication.md`.
+For OTP and auth mail, also read [Authentication](/fullstack/guides/authentication).
 For the complete `{{ }}` template language, includes, layouts, sections,
 control flow, assets, sessions, comments, and mail-template syntax, read
-`docs/templates.md`.
+[Templates](/fullstack/guides/templates).
 
 ## Framework Source References
 
@@ -57,7 +57,7 @@ The main APIs are:
 `Flint(autoConnectMail: true)` is the default. When the HTTP server starts, Flint calls `MailConfig.load()` and configures mail from `.env`. The jobs worker also loads mail when `autoConnectMail` is enabled.
 
 In background isolates or standalone tool scripts, call `MailConfig.load()` before sending because static mail configuration is isolate-local.
-Read `docs/isolate-tasks.md` before moving mail work into an `IsolateTask`;
+Read [Isolate Tasks](/fullstack/guides/isolate-tasks) before moving mail work into an `IsolateTask`;
 for durable mail delivery, prefer a `QueueJob`.
 
 ```dart
@@ -652,7 +652,7 @@ For auth flows:
 - Keep endpoint response messages generic enough that attackers cannot easily enumerate accounts.
 - Add rate limiting around register, login, forgot-password, resend, and verify routes.
 
-See `docs/authentication.md` for full auth controller and service examples.
+See [Authentication](/fullstack/guides/authentication) for full auth controller and service examples.
 
 ## Troubleshooting
 
@@ -669,7 +669,7 @@ See `docs/authentication.md` for full auth controller and service examples.
 
 When working on mail:
 
-1. Read `docs/mail.md`; for OTP/auth mail also read `docs/authentication.md`.
+1. Read [Mail](/fullstack/guides/mail); for OTP/auth mail also read [Authentication](/fullstack/guides/authentication).
 2. Inspect `lib/mail/`, `lib/mail/views/`, `lib/services/mail/`, and any job that sends the mail.
 3. Confirm SMTP env names and avoid exposing secrets.
 4. Use `ViewMailable` for reusable transactional email.

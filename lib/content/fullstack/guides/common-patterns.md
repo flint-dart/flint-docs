@@ -1,7 +1,7 @@
 # Common Patterns
 
 This guide collects the Flint patterns that appear across most applications.
-Use it after `docs/getting-started.md` and before editing app code when the task
+Use it after [Getting Started](/fullstack/guides/getting-started) and before editing app code when the task
 is not tied to one narrow topic.
 
 Before coding, inspect the local app:
@@ -15,23 +15,23 @@ Before coding, inspect the local app:
 - `lib/jobs/` and `lib/config/jobs_registry.dart` for queue jobs, workers, and schedules.
 - `lib/isolate/` for CPU-heavy or blocking isolate tasks.
 - `lib/middlewares/` for guards and request pipeline behavior.
-- `docs/logging.md` before adding request logs, job logs, error logs, or
+- [Logging](/fullstack/guides/logging) before adding request logs, job logs, error logs, or
   committed logging calls.
-- `docs/testing.md` before adding route, controller, middleware, validator,
+- [Testing](/fullstack/guides/testing) before adding route, controller, middleware, validator,
   storage, job, seeder, or UI component tests.
-- `lib/config/ai.dart`, `lib/ai/`, and `docs/ai.md` before changing AI
+- `lib/config/ai.dart`, `lib/ai/`, and [AI Runtime](/fullstack/guides/ai) before changing AI
   providers, agents, tools, workflows, memory, or persistence.
-- `docs/sessions-and-cookies.md` before changing sessions, cookies, flash messages, or browser auth session storage.
-- `public/` and `docs/storage.md` for public uploaded files.
+- [Sessions And Cookies](/fullstack/guides/sessions-and-cookies) before changing sessions, cookies, flash messages, or browser auth session storage.
+- `public/` and [Storage](/fullstack/guides/storage) for public uploaded files.
 - `lib/services/` or `lib/actions/` for business workflows.
-- `lib/mail/`, `lib/mail/views/`, `docs/mail.md`, and
-  `docs/templates.md` when the feature sends email or renders HTML templates.
-- `lib/ui/` and `docs/ui-widgets.md` for Flint fullstack frontend code,
+- `lib/mail/`, `lib/mail/views/`, [Mail](/fullstack/guides/mail), and
+  [Templates](/fullstack/guides/templates) when the feature sends email or renders HTML templates.
+- `lib/ui/` and [UI Widgets](/fullstack/guides/ui-widgets) for Flint fullstack frontend code,
   components, forms, buttons, layouts, overlays, tables, charts, storage,
   navigation, and state.
-- `docs/build-and-rendering.md` before changing `flint build`, `flint web`, browser entrypoints, generated bundles, page registry behavior, or SSR.
-- `docs/deployment.md` before changing Docker, production startup, environment variables, deploy scripts, or worker process setup.
-- `docs/routing.md`, `docs/middleware.md`, `docs/logging.md`, `docs/testing.md`, `docs/validation.md`, `docs/models-and-database.md`, `docs/database-api.md`, `docs/ai.md`, `docs/seeders.md`, `docs/jobs-and-workers.md`, `docs/isolate-tasks.md`, `docs/sessions-and-cookies.md`, `docs/templates.md`, `docs/cache.md`, `docs/storage.md`, `docs/security-and-utilities.md`, `docs/frontend-ui.md`, `docs/ui-widgets.md`, `docs/build-and-rendering.md`, and `docs/deployment.md` when the task touches those areas.
+- [Build And Rendering](/fullstack/guides/build-and-rendering) before changing `flint build`, `flint web`, browser entrypoints, generated bundles, page registry behavior, or SSR.
+- [Deployment](/fullstack/guides/deployment) before changing Docker, production startup, environment variables, deploy scripts, or worker process setup.
+- [Routing](/fullstack/guides/routing), [Middleware](/fullstack/guides/middleware), [Logging](/fullstack/guides/logging), [Testing](/fullstack/guides/testing), [Validation](/fullstack/guides/validation), [Models And Database](/fullstack/guides/models-and-database), [Database API](/fullstack/guides/database-api), [AI Runtime](/fullstack/guides/ai), [Seeders](/fullstack/guides/seeders), [Jobs And Workers](/fullstack/guides/jobs-and-workers), [Isolate Tasks](/fullstack/guides/isolate-tasks), [Sessions And Cookies](/fullstack/guides/sessions-and-cookies), [Templates](/fullstack/guides/templates), [Cache](/fullstack/guides/cache), [Storage](/fullstack/guides/storage), [Security And Utilities](/fullstack/guides/security-and-utilities), [Frontend UI](/fullstack/guides/frontend-ui), [UI Widgets](/fullstack/guides/ui-widgets), [Build And Rendering](/fullstack/guides/build-and-rendering), and [Deployment](/fullstack/guides/deployment) when the task touches those areas.
 
 ## One Reusable Thing Per File
 
@@ -531,7 +531,7 @@ app.databaseApi(api);
 ```
 
 Do not assume a model is public because it exists. Do not expose sensitive
-columns through generic CRUD. Read `docs/database-api.md` before adding or
+columns through generic CRUD. Read [Database API](/fullstack/guides/database-api) before adding or
 changing Database API resources.
 
 ## Context Extras
@@ -618,9 +618,9 @@ Important: `req.isAuthenticated` only checks whether `req.user` has already
 cached a user on the request. Call `await req.user` first, or let auth
 middleware do it.
 
-Read `docs/authentication.md` before adding login, register, current-user,
+Read [Authentication](/fullstack/guides/authentication) before adding login, register, current-user,
 refresh token, password reset, send OTP, verify OTP, or resend OTP behavior.
-Read `docs/sessions-and-cookies.md` before adding login cookies, server
+Read [Sessions And Cookies](/fullstack/guides/sessions-and-cookies) before adding login cookies, server
 sessions, flash messages, or browser auth session storage.
 
 ## File Uploads
@@ -644,7 +644,7 @@ final avatarUrl = await Storage.create(
 );
 ```
 
-Read `docs/storage.md` before adding public file storage.
+Read [Storage](/fullstack/guides/storage) before adding public file storage.
 
 Use `req.storeFile(...)` when a saved filesystem path is enough:
 
@@ -698,8 +698,8 @@ await SendAuthOtpAction().call(email: email, otp: otp);
 ```
 
 For password reset OTPs, use the password reset auth helpers described in
-`docs/authentication.md`. For email templates and `{{ ... }}` syntax, read
-`docs/mail.md` and `docs/templates.md`.
+[Authentication](/fullstack/guides/authentication). For email templates and `{{ ... }}` syntax, read
+[Mail](/fullstack/guides/mail) and [Templates](/fullstack/guides/templates).
 
 ## Middleware Pattern
 
@@ -731,7 +731,7 @@ class ApiKeyMiddleware extends Middleware {
 ```
 
 Global middleware can run for WebSocket contexts, so check `ctx.res` before
-using response methods. See `docs/middleware.md` for order and built-ins.
+using response methods. See [Middleware](/fullstack/guides/middleware) for order and built-ins.
 
 ## Logging Pattern
 
@@ -763,7 +763,7 @@ try {
 Use `await ctx.log(...)` inside `QueueJob` handlers for progress that belongs
 to that job record. Use `Log.*(...)` for worker process logs.
 
-Read `docs/logging.md` before adding log configuration, custom request logs, job
+Read [Logging](/fullstack/guides/logging) before adding log configuration, custom request logs, job
 logs, or error reporting. Do not log cookies, authorization headers, raw request
 bodies, passwords, OTP values, session IDs, or tokens.
 
@@ -836,7 +836,7 @@ Let `ExceptionMiddleware` handle common framework exceptions:
 - `BaseException`
 - format, timeout, argument, and database exceptions
 
-Read `docs/security-and-utilities.md` before adding hashing, JWT helpers,
+Read [Security And Utilities](/fullstack/guides/security-and-utilities) before adding hashing, JWT helpers,
 rate-limit middleware, custom exceptions, or `Str` helpers.
 
 Inside app code, prefer clear domain exceptions or response branches.

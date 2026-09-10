@@ -23,7 +23,7 @@ When behavior is unclear, inspect these files in the installed package:
 - `lib/src/ui/auth/auth_session.dart`
 - `lib/src/ui/storage/cookies.dart`
 
-Read `docs/templates.md` before changing `session(...)`, `hasSession(...)`,
+Read [Templates](/fullstack/guides/templates) before changing `session(...)`, `hasSession(...)`,
 flash rendering, or template syntax.
 
 ## Imports

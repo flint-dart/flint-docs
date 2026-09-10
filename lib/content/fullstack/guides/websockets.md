@@ -16,10 +16,10 @@ Before changing WebSocket code in an app, inspect:
 - `lib/middlewares/` for auth, tenant, role, and rate-limit checks.
 - `lib/models/` or `lib/services/` when events are persisted or trigger workflows.
 - `lib/ui/` when frontend code connects to WebSocket endpoints.
-- `docs/routing.md` for `Context`, route groups, and route params.
-- `docs/middleware.md` for middleware behavior with `ctx.res == null`.
-- `docs/authentication.md` before protecting sockets with JWT, cookies, sessions, or one-time socket tokens.
-- `docs/swagger-and-api-docs.md` for documenting the WebSocket handshake route.
+- [Routing](/fullstack/guides/routing) for `Context`, route groups, and route params.
+- [Middleware](/fullstack/guides/middleware) for middleware behavior with `ctx.res == null`.
+- [Authentication](/fullstack/guides/authentication) before protecting sockets with JWT, cookies, sessions, or one-time socket tokens.
+- [Swagger And API Docs](/fullstack/guides/swagger-and-api-docs) for documenting the WebSocket handshake route.
 
 Framework source to inspect when behavior is unclear:
 
@@ -894,7 +894,7 @@ extensions:
 }
 ```
 
-See `docs/swagger-and-api-docs.md` for the full generated shape.
+See [Swagger And API Docs](/fullstack/guides/swagger-and-api-docs) for the full generated shape.
 
 ## Testing
 
@@ -948,4 +948,4 @@ Before finishing a WebSocket feature:
 7. Room names, namespaces, and `includeSelf` behavior are intentional.
 8. Socket controllers, middleware, services, and frontend helpers each live in their own file.
 9. Swagger route comments document the handshake with `@response 101`.
-10. Event names and payloads are documented in `docs/websockets.md` or a feature-specific doc.
+10. Event names and payloads are documented in [WebSockets](/fullstack/guides/websockets) or a feature-specific doc.

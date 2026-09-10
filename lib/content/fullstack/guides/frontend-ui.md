@@ -19,11 +19,11 @@ Before changing frontend code, inspect:
 - `lib/ui/components/` for shared UI components.
 - `lib/ui/sections/` for larger page sections.
 - `lib/ui/styles/` or `lib/ui/theme/` if the app has local style helpers.
-- `docs/ui-widgets.md` before changing `FlintComponent`, `StatefulComponent`,
+- [UI Widgets](/fullstack/guides/ui-widgets) before changing `FlintComponent`, `StatefulComponent`,
   `StatelessComponent`, `FlintNode`, `View`, forms, buttons, state, overlays,
   tables, charts, browser storage, or navigation.
-- `docs/sessions-and-cookies.md` before changing browser auth session storage or JavaScript-visible cookies.
-- `docs/build-and-rendering.md` before changing browser entrypoints, `PageRegistry`, generated bundles, or SSR.
+- [Sessions And Cookies](/fullstack/guides/sessions-and-cookies) before changing browser auth session storage or JavaScript-visible cookies.
+- [Build And Rendering](/fullstack/guides/build-and-rendering) before changing browser entrypoints, `PageRegistry`, generated bundles, or SSR.
 - `public/assets/js/flint-ui/` only as generated output.
 
 ## One UI Thing Per File
@@ -86,7 +86,7 @@ class CoursesPage extends StatelessComponent {
 
 ## Components
 
-Read `docs/ui-widgets.md` for the full widget and state reference: core UI
+Read [UI Widgets](/fullstack/guides/ui-widgets) for the full widget and state reference: core UI
 types, `DartStyle`, layouts, forms, buttons, overlays, tables, charts, browser
 storage, and navigation.
 
@@ -147,7 +147,7 @@ final componentRegistry = PageRegistry({
 
 Keep each page class in `lib/ui/pages/<name>_page.dart`. Put shared pieces under
 `lib/ui/components/` or `lib/ui/sections/` and import them into the page.
-Read `docs/build-and-rendering.md` before changing the browser entrypoint,
+Read [Build And Rendering](/fullstack/guides/build-and-rendering) before changing the browser entrypoint,
 bundle mode, `flint_ui.yaml`, page response script resolution, or SSR.
 
 ## Browser Session State
@@ -168,7 +168,7 @@ final role = authSession.role;
 authSession.clear();
 ```
 
-Read `docs/sessions-and-cookies.md` before deciding whether auth state belongs
+Read [Sessions And Cookies](/fullstack/guides/sessions-and-cookies) before deciding whether auth state belongs
 in server sessions, HTTP-only cookies, `localStorage`, `sessionStorage`, or
 JavaScript-visible browser cookies.
 
@@ -191,7 +191,7 @@ The older `make:ui` alias is deprecated and will be removed in Flint Dart
 
 When working on frontend code:
 
-1. Read `docs/frontend-ui.md`, `docs/ui-widgets.md`, `docs/build-and-rendering.md`, `docs/project-structure.md`, and any local design notes.
+1. Read [Frontend UI](/fullstack/guides/frontend-ui), [UI Widgets](/fullstack/guides/ui-widgets), [Build And Rendering](/fullstack/guides/build-and-rendering), [Project Structure](/fullstack/guides/project-structure), and any local design notes.
 2. Inspect `lib/ui/main.dart` and `lib/ui/component_registry.dart`.
 3. Find the page in `lib/ui/pages/`.
 4. Move repeated UI into `lib/ui/components/`, `lib/ui/sections/`, or a focused helper file.
@@ -203,6 +203,6 @@ When working on frontend code:
 - `public/assets/js/flint-ui/` is generated output. Change source files under `lib/ui`.
 - Keep one component, one page, one section, or one reusable UI helper per file.
 - `build()` returns `View`; extracted helpers that also return `View`, `Node`, `FlintNode`, or `FlintComponent` should live in their own file.
-- Use `docs/ui-widgets.md` for `StateSignal`, `FormController`, buttons,
+- Use [UI Widgets](/fullstack/guides/ui-widgets) for `StateSignal`, `FormController`, buttons,
   layouts, overlays, tables, charts, storage, and navigation.
 - Use `package:flint_dart/ui.dart` for frontend code, not the server-only entrypoint.

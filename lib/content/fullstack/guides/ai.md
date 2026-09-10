@@ -24,11 +24,11 @@ Before changing AI behavior, inspect:
 - `lib/ai/tools/` for `AiTool` classes and tool capability names.
 - `lib/ai/workflows/` for `AiWorkflow` classes.
 - `lib/jobs/` when AI work runs in a background worker.
-- `lib/middlewares/` and `docs/authentication.md` before binding AI runs to a
+- `lib/middlewares/` and [Authentication](/fullstack/guides/authentication) before binding AI runs to a
   user, role, or tenant.
-- `docs/models-and-database.md` before changing AI tables or migrations.
-- `docs/jobs-and-workers.md` before moving AI work into durable background jobs.
-- `docs/logging.md` before logging AI run or provider failures.
+- [Models And Database](/fullstack/guides/models-and-database) before changing AI tables or migrations.
+- [Jobs And Workers](/fullstack/guides/jobs-and-workers) before moving AI work into durable background jobs.
+- [Logging](/fullstack/guides/logging) before logging AI run or provider failures.
 
 ## Import Rules
 
@@ -630,7 +630,7 @@ Important:
 - pass `userId`, `tenantId`, `threadId`, and metadata into the queued job
 - use `Log.*` instead of `print(...)`
 
-Read `docs/jobs-and-workers.md` before creating durable AI jobs.
+Read [Jobs And Workers](/fullstack/guides/jobs-and-workers) before creating durable AI jobs.
 
 ## Security And Privacy
 
@@ -662,8 +662,8 @@ Read `docs/jobs-and-workers.md` before creating durable AI jobs.
 
 When reviewing AI code:
 
-1. Read `docs/ai.md`, `docs/authentication.md`, `docs/models-and-database.md`,
-   `docs/jobs-and-workers.md`, and `docs/logging.md` as needed.
+1. Read [AI Runtime](/fullstack/guides/ai), [Authentication](/fullstack/guides/authentication), [Models And Database](/fullstack/guides/models-and-database),
+   [Jobs And Workers](/fullstack/guides/jobs-and-workers), and [Logging](/fullstack/guides/logging) as needed.
 2. Confirm the app configures `app.ai` once during boot.
 3. Confirm AI tables are registered and migrated when persistence matters.
 4. Confirm agents, tools, workflows, and routes each have their own file.
