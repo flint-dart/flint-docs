@@ -277,6 +277,10 @@ class DocsSupport {
   }
 
   String? extractVersion(String line) {
+    if (RegExp(r'^##+\s+Unreleased\s*$', caseSensitive: false).hasMatch(line)) {
+      return 'Unreleased';
+    }
+
     final bracketMatch =
         RegExp(r'\[(\d+\.\d+\.\d+(?:\+\d+)?)\]').firstMatch(line);
     if (bracketMatch != null) return bracketMatch.group(1);
@@ -294,6 +298,8 @@ class DocsSupport {
   }
 
   String extractHeaderDetails(String line, String version) {
+    if (version == 'Unreleased') return '';
+
     String cleaned = line;
     final escapedVersion = RegExp.escape(version);
     final bracketMatch = RegExp('\\[$escapedVersion\\]').firstMatch(cleaned);

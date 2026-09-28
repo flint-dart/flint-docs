@@ -109,10 +109,10 @@ packages:
     dependency: "direct main"
     description:
       name: flint_dart
-      sha256: "1d765c2230feab3ab123efe7c01022fa5f222237493bbf5c66d490fd31862085"
+      sha256: aa6fd8d317a5c6cfca6e9e0dc1d45307ee291b498e0ccca643384e3fbc0be04f
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.0"
+    version: "1.4.1"
   intl:
     dependency: transitive
     description:
@@ -209,6 +209,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.0"
+  redis:
+    dependency: transitive
+    description:
+      name: redis
+      sha256: d7c7f18a374936baa786baf5f0e747aa5510bb289aad44b30ec41e3b703233b4
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   stack_trace:
     dependency: transitive
     description:

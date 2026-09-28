@@ -29,6 +29,7 @@ class ChangelogPage extends FlintComponent {
   .changelog-hero { padding: 40px; border-radius: 24px; border: 1px solid rgba(52, 211, 153, 0.3); background: rgba(15, 23, 42, 0.7); }
   .changelog-card { margin-top: 24px; padding: 24px; border-radius: 16px; border: 1px solid rgba(30, 41, 59, 1); background: rgba(15, 23, 42, 0.6); }
   .changelog-card.latest { border-color: rgba(52, 211, 153, 0.35); background: rgba(52, 211, 153, 0.06); }
+  .changelog-card.pending { border-color: rgba(56, 189, 248, 0.35); background: rgba(56, 189, 248, 0.06); }
   .cl-md h2, .cl-md h3, .cl-md h4 { color: #fff; margin: 16px 0 8px; }
   .cl-md p { color: #94a3b8; line-height: 1.7; margin: 0 0 12px; }
   .cl-md ul { list-style: disc; padding-left: 20px; color: #cbd5e1; line-height: 1.7; }
@@ -58,15 +59,20 @@ class ChangelogPage extends FlintComponent {
   </div>
 ''');
     } else {
+      final latestPublishedIndex = _entries.indexWhere(
+        (entry) => entry['version']?.toString() != 'Unreleased',
+      );
       for (var i = 0; i < _entries.length; i++) {
         final entry = _entries[i];
-        final isLatest = i == 0;
         final version = entry['version']?.toString() ?? '';
+        final isUnreleased = version == 'Unreleased';
+        final isLatest = i == latestPublishedIndex;
         final contentHtml = entry['contentHtml']?.toString() ?? '';
         buffer.writeln('''
-  <div class="changelog-card ${isLatest ? 'latest' : ''}">
+  <div class="changelog-card ${isUnreleased ? 'pending' : (isLatest ? 'latest' : '')}">
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:14px;">
-      <h2 style="font-size:21px;font-weight:700;color:#fff;margin:0;">v$version</h2>
+      <h2 style="font-size:21px;font-weight:700;color:#fff;margin:0;">${isUnreleased ? version : 'v$version'}</h2>
+      ${isUnreleased ? '<span style="padding:3px 10px;border-radius:9999px;border:1px solid rgba(56,189,248,0.4);background:rgba(56,189,248,0.1);font-size:10px;font-weight:700;color:#38bdf8;">Pending</span>' : ''}
       ${isLatest ? '<span style="padding:3px 10px;border-radius:9999px;border:1px solid rgba(52,211,153,0.4);background:rgba(52,211,153,0.1);font-size:10px;font-weight:700;color:#34d399;">Latest</span>' : ''}
     </div>
     <div class="cl-md">
