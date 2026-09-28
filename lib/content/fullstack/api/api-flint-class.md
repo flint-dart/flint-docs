@@ -4,9 +4,25 @@ Application root that wires routes, middleware, static assets, WebSockets, and s
 
 A `Flint` instance is the entry point for your server. It registers HTTP routes, WebSocket endpoints, mounts route groups, and controls server startup with optional hot reload and auto-connect services.
 
-Flint({String rootPath = "lib", String? viewPath, bool autoConnectDb = true, bool autoConnectMail = true, bool withDefaultMiddleware = true, bool enableSwaggerDocs = false})
+```dart
+Flint({
+  String rootPath = 'lib',
+  String? viewPath,
+  bool autoConnectDb = true,
+  bool autoConnectRedis = false,
+  CacheDriver? cacheDriver,
+  String? cacheDirectory,
+  int? cacheMemoryMaxSize,
+  bool autoConnectMail = true,
+  bool withDefaultMiddleware = true,
+  bool enableSwaggerDocs = false,
+  // Migration, seeder, jobs, and rendering options omitted here.
+})
+```
 
-Create a new app instance with optional defaults for middleware, DB, mail, and Swagger docs.
+Create an app with optional defaults for middleware, DB, application cache,
+mail, jobs, rendering, and Swagger docs. `cacheDriver` overrides
+`CACHE_DRIVER`; the default is `CacheDriver.memory`.
 
 RouteBuilder get/post/put/delete/patch/query(String path, Object handler)
 
@@ -41,6 +57,52 @@ Register a WebSocket endpoint with Context handler support and optional route mi
 void static(String urlPrefix, String directoryPath)
 
 Serve static files from a directory under a URL prefix.
+
+### Application Cache
+
+```dart
+CacheDriver get cacheDriver
+CacheStore get cache
+```
+
+`cache` is the one application store shared with `ctx.cache` in routes and
+middleware and `Controller.cache` in controllers. Memory and file stores are
+available immediately. A selected Redis store is connected during startup.
+
+```dart
+bool get isRedisConnected
+```
+
+Reports whether this app currently owns a connected Redis cache.
+
+```dart
+Future<RedisCacheStore> connectRedis({
+  String? url,
+  String? host,
+  int port = 6379,
+  bool secure = false,
+  String? username,
+  String? password,
+  int? database,
+  String prefix = 'flint:cache:',
+})
+```
+
+Connect using an explicit URL or host settings. With no arguments, Flint reads
+`REDIS_URL`. Repeated and concurrent calls reuse the app's connection. Redis
+connection details belong here rather than in the `Flint(...)` constructor.
+
+```dart
+Future<void> closeRedis()
+```
+
+Close the app's Redis connection. When Redis is selected by `cacheDriver`,
+`CACHE_DRIVER`, or `autoConnectRedis`, Flint connects before serving HTTP
+requests or starting a dedicated jobs worker and closes the connection during
+normal framework shutdown.
+
+See the [Cache API](/fullstack/api/cache) and
+[Caching guide](/fullstack/guides/cache) for both URL and host/port examples.
 
 Future<void> listen({int? port, bool hotReload = true})
 
