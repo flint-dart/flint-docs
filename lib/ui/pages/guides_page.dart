@@ -5,6 +5,8 @@ import '../components/guides/sidebar.dart';
 import '../shared/page_shell.dart';
 
 const _sectionPartial = {
+  'flint-story': 'flint-story',
+  'flint-vs-jaspr': 'flint-vs-jaspr',
   'introduction': 'introduction',
   'getting-started': 'getting-started',
   'installation': 'installation',

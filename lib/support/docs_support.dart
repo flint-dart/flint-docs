@@ -14,6 +14,7 @@ class DocsSupport {
 
   static const List<String> guideTopics = [
     'flint-story',
+    'flint-vs-jaspr',
     'introduction',
     'getting-started',
     'installation',

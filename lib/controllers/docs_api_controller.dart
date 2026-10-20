@@ -123,6 +123,8 @@ class DocsApiController extends Controller {
   Future<Response> guideSection() async {
     final name = req.param('name') ?? '';
     const allowed = {
+      'flint-story',
+      'flint-vs-jaspr',
       'introduction',
       'getting-started',
       'installation',

@@ -237,6 +237,13 @@ class GuidesSidebar extends Component {
 const _sidebarItems = [
   ('flint-story', 'Flint Story', null),
   (
+    'comparisons',
+    'Comparisons',
+    [
+      ('flint-vs-jaspr', 'Flint vs Jaspr'),
+    ]
+  ),
+  (
     'start',
     'Start',
     [
