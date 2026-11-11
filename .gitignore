@@ -9,3 +9,4 @@
 # Common local artifacts
 .dart_tool/
 logs/
+build/
