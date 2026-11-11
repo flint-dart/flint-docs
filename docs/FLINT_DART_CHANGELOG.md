@@ -1,0 +1,1577 @@
+# Flint Dart Changelog
+
+All notable changes to this project are documented in this file.
+
+## [1.5.7] - 2026-11-11
+
+### Added & Improved
+- **Cross-Platform Production Compilation & Push (`flint build --linux --push`)**:
+  - Added support for compiling Linux AOT production binaries directly from developer machines (Windows, macOS, Linux) without compiling on memory-constrained VPS instances.
+  - Added `--push` flag to commit and push the isolated production build directly to the `build` branch on git remote (or custom branch via `--push-branch`).
+  - Added `--skip-web` and `--rebuild-web` flags to control client-side bundle compilation.
+  - Automatic `debian:bookworm-slim` minimal Dockerfile generation for high-performance containerized deployments.
+  - Generates cross-platform `start.sh` entrypoint scripts and sets proper execution permissions.
+  - Cleans temporary and local `.gitignore` rules inside `build/` before staging with `git add -A --force .`, ensuring compiled assets (`public/assets/js/flint-ui/`, `public/assets/css/flint-ui/`, etc.) are never skipped.
+- **Page-by-Page Web UI Compilation by Default**:
+  - Defaulted `WebUIBuilder` compilation to `compilePageBundles()`, splitting web UI code into lazy-loaded, route-level bundles (`manifest.json` and `pages/*.dart.js`).
+  - Added smart bundle caching: reuses existing pre-built page bundles when source files are unmodified, drastically cutting down rebuild times.
+  - Guaranteed automatic `manifest.json` generation for single-bundle applications via `_writeSingleBundleManifest()`, preventing runtime manifest 404s.
+- **Automatic Swagger UI Asset Bundling & Resolution**:
+  - Automatically copies Swagger UI assets and `swagger.json` specs into `build/public/swagger-ui` and `build/docs`.
+  - Added `public/swagger-ui` to `Flint._resolveSwaggerUiDir()` candidates and set `ENV FLINT_SWAGGER_UI_DIR=/app/public/swagger-ui` in generated Dockerfiles.
+- **Optimized Asset Precompression & Caching**:
+  - Cached Gzip availability and optimized Brotli detection to accelerate static asset precompression during builds.
+
+## [1.5.6] - 2026-11-06
+
+### Fixed & Improved
+- **MySQL 8+ `caching_sha2_password` Support (`allowPublicKeyRetrieval`)**:
+  - Added `allowPublicKeyRetrieval: true` by default to `MySqlConnectionWrapper.connect(...)` and `MySQLConnection.createConnection(...)`.
+  - Fixes `MySQLClientException: Auth plugin caching_sha2_password requires TLS, a pinned serverPublicKey, or allowPublicKeyRetrieval: true` when connecting to MySQL 8+ instances over standard TCP without TLS.
+  - Exposed `allowPublicKeyRetrieval` across `DB.connectNamed(...)`, `DB.connect(...)`, and `DB.autoConnect(...)` with configurable `.env` flag `DB_ALLOW_PUBLIC_KEY_RETRIEVAL`.
+
+## [1.5.5] - 2026-11-06
+
+### Added & Improved
+- **Multi-Database Connection Pooling & Tenant Registry (`DB.connectNamed(...)`)**:
+  - Added `DB.connectNamed(name, ...)` and `DB.connection(name)` to register, cache, and pool active database connections by name or tenant identifier.
+  - Automatically reuses established connections across requests without destroying or recreating TCP sockets and TLS handshakes on every HTTP cycle.
+  - Added `DB.closeNamed(name)` and `DB.closeAll()` for clean connection lifecycle management and graceful shutdowns.
+- **Asynchronous Zone Database Scoping (`DB.scope(...)`)**:
+  - Added `DB.scope(connection, () => action())` powered by Dart `Zone` execution context (`#flint_active_db`).
+  - Seamlessly routes all static database helpers (`DB.query`, `DB.execute`, `DB.instance`, `DB.driver`, `DB.tableExists`, `DB.columnExists`, `DB.transaction`), `QueryBuilder`, and Flint `Model` operations to the scoped database connection without mutating global state.
+  - Enables multiple concurrent requests targeting different tenant databases to execute in parallel without sequential queue bottlenecks or connection stomping.
+- **Passive Database Auto-Connect Resilience (`autoConnectDb: false`)**:
+  - When `autoConnectDb: false` is configured on `Flint()`, requests using a scoped connection (`DB.scope`) execute seamlessly without throwing eager `Database is not connected` exceptions.
+- **First-Class Context Database Property (`ctx.db`)**:
+  - Added `ctx.db` getter to `Context`, allowing middleware, controllers, and services to directly access the request's scoped database wrapper (with fallback to default active connection), alongside `ctx.ai` and `ctx.cache`.
+- **Database Wrapper Driver & ID Helpers**:
+  - Added `driver` and `getLastInsertId(...)` to `DBWrapper`, `MySqlConnectionWrapper`, and `PgConnectionWrapper`.
+- **Direct Mail Instance Connection (`Mail().connect(...)`)**:
+  - Added `mail.connect(...)` to bind an individual `Mail` instance directly to a specified SMTP provider, host, port, credentials, and sender address on demand before sending.
+  - Bypasses global static `Mail.setup(...)` and strictly disables automatic fallback/reconfiguration from `.env` (`_retryAfterReconfigure()`), guaranteeing that multi-tenant and multi-mailbox applications never send emails from the fallback environment credentials when an explicit account is specified.
+- **Custom SMTP TLS & Certificate Verification Resilience**:
+  - Added `allowInsecure: true` and `ignoreBadCertificate: true` support to `SmtpFactory.create` and `Mail.connect(...)`, preventing custom mail servers (e.g. self-signed or private SMTP domains) from failing SSL/TLS handshakes.
+- **Interactive Terminal Clipboard Integration (Copy & Paste)**:
+  - Added dedicated **Paste** button to `Terminal` toolbar with clipboard read and secure prompt fallback.
+  - Added `paste([String? text])` and `pasteFromClipboard()` to `Terminal` and `TerminalController`.
+  - Added custom key event handling (`attachCustomKeyEventHandler`) supporting `Ctrl+C` / `Cmd+C` / `Ctrl+Shift+C` copying when text is selected (preventing destructive SIGINT `\x03`), and `Ctrl+V` / `Cmd+V` / `Ctrl+Shift+V` pasting.
+  - Added DOM `paste` and `copy` event listeners on the terminal viewport.
+
+## [1.5.4] - 2026-11-04
+
+### Added & Improved
+- **Built-in 6,000+ HugeIcons in `Icons` (`package:flint_dart/ui.dart`)**:
+  - Upgraded `Icons` in `package:flint_dart/ui.dart` to include all 6,046+ HugeIcons stroke-rounded icons as tree-shakeable `const IconData` definitions, plus all standard Flint UI icon aliases (`Icons.moreVertical`, `Icons.stop`, `Icons.play`, `Icons.refresh`, `Icons.pause`, `Icons.power`, `Icons.externalLink`, etc.).
+
+## [1.5.3] - 2026-10-28
+
+### Added & Improved
+- **Native Multi-Flavor Application Support**:
+  - Added enterprise-grade native multi-flavor architecture across Flint Dart (`Flint(flavor: ...)`, `Flint(args: args)`, and `FlintEnv.flavor`).
+  - Added automatic environment resolution for `.env.<flavor>` with seamless fallback to base `.env`.
+  - Added CLI flag support: `--flavor=<name>` forwarded seamlessly through `flint run`, `hot_reload`, and server commands.
+  - Added `FlavoredPageRegistry` and multi-flavor Web UI bundling with flavor-aware manifest resolution and favicon auto-detection.
+- **Resilient Migrations & Safe Column Handling**:
+  - Added protection against accidental column dropping during migrations unless explicitly enabled via `FLINT_MIGRATION_DROP_COLUMNS=true`.
+- **Environment Parser Enhancements**:
+  - Fixed `.env` parsing when values contain quotes with internal `#` hash symbols.
+
+## [1.5.2] - 2026-10-27
+
+### Fixed & Improved
+- **Button Hover Ergonomics & Developer Style Precedence**:
+  - Completely eliminated unwanted automatic blue hover styles injected onto `Button`, `IconButton`, and `Link` at the framework level.
+  - Previously, `buttonComponentStyle` injected a default `hover: buttonHoverStyle(variant, tone)` (`#004eeb !important`), causing buttons with custom backgrounds (e.g. green, black, white, or brand themes) to flash or switch to bright blue on hover and blocking external CSS `:hover` rules.
+  - The framework no longer applies any default `:hover` pseudo-class styles unless explicitly specified by the developer.
+  - Enhanced `DartStyle.merge` to recursively merge state styles (`hover`, `focus`, `focusVisible`, `active`, `disabled`, etc.), ensuring developer-specified hover styles (`dartStyle: DartStyle(hover: DartStyle(...))`) merge cleanly and work directly with their custom styling.
+
+## [1.5.1+2] - 2026-10-27
+
+### Added
+- **Default Generic Typed Props on `StatefulComponent<TProps>` & `StatelessComponent<TProps>`**:
+  - Upgraded `StatefulComponent<TProps>` and `StatelessComponent<TProps>` to support optional strongly-typed `TProps` generics natively (`class MyPage extends StatefulComponent<MyPageProps>` and `class MyView extends StatelessComponent<MyViewProps>`), eliminating the need to import or extend separate `TypedStatefulComponent` / `TypedStatelessComponent` classes.
+  - Added optional positional `[TProps? props]` constructor parameter and `TProps get props` / `set props(covariant TProps value)` on `StatefulComponent<TProps>` (plus `TProps get props` on `StatelessComponent<TProps>`), automatically syncing `_props` across `updateFrom(...)` when component instances are preserved.
+  - Fully backwards-compatible with unparameterized components (`class Counter extends StatefulComponent` and `class Header extends StatelessComponent`), where `TProps` defaults to `dynamic` and no constructor arguments are required.
+  - Kept `TypedStatefulComponent<TProps>` and `TypedStatelessComponent<TProps>` as zero-cost `typedef` aliases to `StatefulComponent<TProps>` and `StatelessComponent<TProps>` so existing codebases continue to compile without changes.
+  - Updated `flint --make-page <Name>` CLI generator to scaffold `class <Name>Page extends StatefulComponent<<Name>PageProps>` by default.
+
+## [1.5.1+1] - 2026-10-27
+
+### Added
+- **Zero-Config Live Mail Preview (`ViewMailable.previewData` & `/mail/preview`)**:
+  - Added `Map<String, dynamic> get previewData` and `resolvePreviewData()` to `ViewMailable` so mailables can define mock template variables for browser design previews while keeping `required` constructor fields strictly typed for production email delivery.
+  - Added built-in development routes (`GET /mail/preview` and `GET /mail/preview/:name`) via `MailPreviewRegistry` and `Flint(enableMailPreview: ...)`, automatically discovering `.flint.html` templates in `lib/mail/views/` and `ViewMailable` classes in `lib/mail/`.
+  - Added `MailRegistry` and `app.previewMail(...)` for explicit mailable preview registration.
+  - Updated `Response.renderEmail(mailable, includePreview: true)` to resolve `previewData` automatically.
+  - Automatically disables `/mail/preview` routes in production (`APP_ENV=production` / `FLINT_MAIL_PREVIEW=false`) and ignores external query parameter injection to prevent reflected XSS or phishing link manipulation.
+  - Updated `flint --make-mail <name>` CLI scaffold to generate `previewData` out of the box and print the live preview URL.
+  - Enhanced `Router` matching to prioritize exact static routes over parameterized routes (`:param`) regardless of registration order.
+
+- **Smart Section & Sub-Component Incremental Build Resolution**:
+  - Enhanced `hot_reload.dart` and `flint web --watch` with smart 3-tier page resolution for changed files.
+  - Automatically matches sub-component/section files (e.g. `login_section.dart`, `register_section.dart`, `reset_password_section.dart`) directly to their parent page (`LoginPage`, `RegisterPage`, `ResetPasswordPage`) via suffix-stripping heuristics and direct page import inspection.
+  - Prevents the watcher from falling back to full project rebuilds (`Rebuilding all pages...`) on saving form sections or UI sub-components, rebuilding only that specific page bundle in seconds instead of recompiling all pages.
+
+- **Framework-Wide Elimination of Default Blue Focus Rings & Concentric Outlines**:
+  - Completely removed the hardcoded 3px outer blue `shadow` spread from default `inputComponentStyle` in `theme.dart`.
+  - Added first-class `outline` property to `DartStyle` (`outline: 'none'`).
+  - Configured `focus` and `focusVisible` in `inputComponentStyle` to use `outline: 'none'` and `shadow: Shadow.none`, preventing concentric double borders and allowing developer `inputDartStyle` to fully control focus styling without interference.
+  - Added `defaultStyle: const {'outline': 'none'}` to `TextField`, `TextArea`, `Select`, and `CodeEditor`.
+
+- **Flutter-Style `validator` on `TextField` & `FormController`**:
+  - Added Flutter-style `String? Function(String? value)? validator` parameter to `TextField`.
+  - Added `AutovalidateMode` enum (`disabled`, `always`, `onUserInteraction`) with default `onUserInteraction`.
+  - Added dynamic DOM-level validation in the browser (`onBlur` and subsequent `onInput`) that sets `aria-invalid`, displays the error message `<p id="{id}-error">`, and applies invalid border styling without triggering parent component `setState()` re-renders.
+  - Added `validator` property and `validate()` method to `TextEditingController`.
+  - Added `FormController.validate()` to run all registered field validators, update `FormErrors`, and automatically gate `FormController.submit()` from sending requests with invalid data.
+
+- **TextField Prefix, Suffix & Password Visibility Toggle**:
+  - Added `prefix` (leading icon/widget) and `suffix` (trailing/end icon/widget) support to `TextField`.
+  - Added `onPrefixTap`, `onSuffixTap`, `prefixDartStyle`, and `suffixDartStyle` for full interactive control over input adornments.
+  - Added `togglePassword: true` option for `type: 'password'` inputs with customizable `passwordShowIcon` and `passwordHideIcon` (supporting custom `FlintNode` widgets, SVGs, `Icon`, or text in addition to the default 👁️ / 🙈), toggling visibility directly in the DOM without forcing parent component re-renders.
+  - Automatically adjusts inner `<input>` padding (`paddingLeft: 38px`, `paddingRight: 38px`) when prefix or suffix elements are present so text never overlaps icons.
+
+- **Universal Development Server (`flint run`)**:
+  - Unified the development runner so `flint run` seamlessly orchestrates both backend server hot reload and the high-speed Web UI builder.
+  - Automatically runs the parallel `compileDefault` suite on initial boot if Web UI sources are present, compiling all page bundles across CPU cores in the background while starting the server.
+  - Integrated smart single-page incremental compilation into the watcher (`_compileChangedUiSource`), matching edited files via component registry targets and filename stems, so saving an individual page bundle recompiles ONLY that bundle in seconds without restarting the backend or compiling unaffected pages.
+
+- **Incremental `--watch` Mode for Web UI (`flint web --watch`)**:
+  - Added `--watch` flag to `flint web` command that listens to recursive file events in `lib/ui/`.
+  - Automatically correlates changed files with page targets in the component registry and triggers incremental single-page rebuilds (`onlyPage`) with 300ms save debouncing, rebuilding individual page bundles in seconds instead of re-compiling the entire UI bundle suite.
+
+### Performance & Build Ergonomics
+- **Concurrent Page Bundle Compilation (`Future.wait`)**:
+  - Extracted single-page compilation into `_compileOnePage` and refactored `FlintWebUiBuilder.compilePageBundles` to build all requested page targets in parallel using `Future.wait(...)`. Multi-page projects compile across all available CPU cores instead of running sequentially in a blocking loop, drastically cutting build duration.
+- **Concurrent Asset Family Compression**:
+  - Updated `_compressAssetFamily` to execute Gzip and Brotli compression across `.js`, `.js.map`, and `.js.deps` concurrently via `Future.wait(files.map(_compressAssetIfUseful))`.
+- **Single-Pass Read for JS Hashing and Source Map Rewriting**:
+  - Optimized `_hashDartJsAssetFamily` to read output JS files into memory once via `readAsBytesSync()`, computing the SHA-256 hash and decoding the buffer in-memory via `utf8.decode(bytes)`, eliminating redundant disk reads on 1–3 MB bundles.
+- **Intelligent Root Design CSS Re-Extraction Caching**:
+  - Added `_latestMtimeInDir` to compare target CSS timestamp against all `.dart` and `.yaml` files in the UI directory. If styling files have not changed, the cold Dart VM subprocess invocation is skipped during production builds.
+- **Instant Service Worker Prefetching**:
+  - Removed the hardcoded 12-second `setTimeout` delay in the generated `flint-sw.js` template so asset prefetching starts immediately upon receipt of `FLINT_PREFETCH`, preventing cache misses when users navigate between pages.
+
+### Runtime UI & DOM Optimizations
+- **Preserved DOM Tree Hydration on Root Rerender (`replaceChild`)**:
+  - Replaced the aggressive `host.textContent = ''` full-DOM wipe in `FlintRoot._paint()` with `host.replaceChild(nextDom, firstChild)` (or `host.appendChild` when unmounted). Prevents destruction of browser-managed state (scroll offsets, active selections, input composition) across sibling subtrees during root-level state updates.
+- **$O(1)$ Scoped Style Deduplication**:
+  - Replaced repetitive `document.querySelector('style[data-flint-style-id="..."]')` DOM attribute queries on every component render with an in-memory `Set<String>` in `FlintRoot`, completely eliminating DOM query overhead during layout and component rendering.
+- **Optimized Focus Restoration**:
+  - Refactored `_ActiveControl.restore()` to return a boolean indicating success. `_restoreActiveControl` now executes synchronous restoration and only defers to a microtask if immediate restore could not be satisfied, eliminating 3x redundant layout thrashing per render cycle.
+- **Immutable `StyleSheet.cssText` Memoization**:
+  - Cached compiled CSS rule strings per instance using Dart's `Expando<String>`, computing CSS text at most once per stylesheet while retaining `const StyleSheet` constructor support.
+
+## [1.5.0] - 2026-10-25
+
+### Added
+- **SSR Universal Lifecycle Guardrails (`initProps()` & `initState()`)**:
+  - Added universal `initProps()` and `initState()` lifecycle hooks to `Component`, `StatefulComponent`, `TypedStatefulComponent`, and `TypedStatelessComponent` that run synchronously prior to `build()` in both server-side rendering (SSR) and client browser hydration.
+  - Added `ensureInitialized()` lifecycle enforcement contract to guarantee initialization executes exactly once per component render cycle across both server and client renderers.
+  - Added `isServer` and `isBrowser` environment getters to `Component` and `StatefulComponent` so components can conditionally branch without checking platform strings or importing conditional dart libraries.
+  - Added diagnostic SSR exception handling in `server_renderer.dart` that intercepts `LateInitializationError` thrown during server `build()` and displays an actionable error banner identifying the component, explaining that client-only lifecycle hooks like `didMount()` do not execute during SSR, and instructing developers to initialize props in `initProps()` or constructor fields instead.
+  - Updated client `browser_renderer.dart` to trigger `initProps()` during component reconciliation when props change across page navigation.
+
+- **Type-Safe Props & Route Parameters (`FlintProps` & `FlintPageRoute`)**:
+  - Added strongly-typed `FlintProps` interface with required `Map<String, dynamic> toJson()` for compile-time verified page and widget properties across the server-to-client boundary.
+  - Added `TypedStatefulComponent<TProps extends FlintProps>` and `TypedStatelessComponent<TProps extends FlintProps>` base classes providing a strongly-typed `props` getter.
+  - Added `FlintPageRoute<TProps>` and `PageRegistry.registerTyped<TProps>()`, `registerRoute()`, and `registerRoutes()` to define type-safe route descriptors linking URL paths, component builders, and prop deserializers (`fromJson`).
+  - Added `res.pageRoute<TProps>(route, props)` on `Response` and updated `res.page(...)` to accept both strongly-typed `FlintProps` and backward-compatible `Map<String, dynamic>` maps.
+  - Added typed request parameter extraction methods on `Request`: `req.paramTyped<T>(name)`, `req.requireParam<T>(name)`, `req.paramInt(name)`, `req.paramBool(name)`, `req.queryParamTyped<T>(name)`, and `req.queryList(name)`.
+
+- **Direct ORM Query Ergonomics & Fluent `schema()` Builder**:
+  - Folded all query builder methods (`where`, `whereIn`, `orderBy`, `paginate`, `count`, `first`, `find`, `exists`, `pluck`, `cursorPaginate`, etc.) directly into `Model<T>`, eliminating the requirement to import `package:flint_dart/model_query.dart`.
+  - Folded all model persistence and CRUD methods (`create`, `update`, `upsert`, `delete`, `save`, `restore`, `forceDelete`) directly into `Model<T>`, eliminating the requirement to import `package:flint_dart/model_crud.dart`.
+  - Preserved `model_query.dart` and `model_crud.dart` as backward-compatible empty extensions with deprecation annotations so existing code continues to compile without breaking changes.
+  - Added fluent `void schema()` builder hook on `Model<T>` with column helpers (`string`, `text`, `textCol`, `integer`, `boolean`, `datetime`, `timestamp`, `jsonCol`, `jsonField`, `float`, `mediumText`, `longText`, `enumeration`, `column`) that automatically populates the model's `Table` definition at runtime without code generation (`build_runner`), manual array management, or boilerplate field descriptors.
+  - Added automatic `table` and `primaryKey` derivation on `Model<T>` when `tableName` and `schema()` are provided, eliminating the need to construct `Table(...)` manually.
+  - Added automatic table deduplication in `GlobalTableRegistry` (`TableRegistry.uniqueTables`) and `MigrationEngine` to prevent duplicate migrations or repeated `ALTER TABLE` queries when the same table schema is registered more than once.
+  - Updated CLI code generators (`make:model`, `make:page`) to generate the fluent `schema()`, `TypedStatefulComponent`, and `initProps` by default.
+
+### Problems Addressed
+- **SSR LateInitializationError on Unmounted Client Fields**:
+  - *Problem*: In Flint Dart SSR (`res.page`), `build()` executes on the server to generate HTML, but `didMount()` is strictly browser-only and runs after client hydration. Developers who initialized `late` variables inside `didMount()` experienced sudden `LateInitializationError` crashes during SSR. The original crash trace offered no hint that the issue was caused by server vs client lifecycle timing.
+  - *Resolution*: Universal `initProps()` and `initState()` run synchronously before `build()` on both server and client. If an uninitialized `late` field is still accessed during SSR `build()`, `server_renderer.dart` catches the `LateInitializationError` and outputs an actionable diagnostic message pinpointing the component and demonstrating the `initProps()` fix.
+
+- **Runtime Typing Footguns Across Server/Client Boundary**:
+  - *Problem*: Passing page props via untyped `Map<String, dynamic>` maps and parsing route parameters via `req.param('id')` was prone to silent typos, missing keys, and invalid runtime casts with zero compile-time feedback between server controllers and UI pages.
+  - *Resolution*: `FlintProps`, `TypedStatefulComponent<TProps>`, `FlintPageRoute<TProps>`, and `req.paramTyped<T>()` enforce end-to-end compile-time type safety across route handlers, controller serialization, and browser components.
+
+- **Fragmented ORM Imports & Duplicate Migration Passes**:
+  - *Problem*: Using query builder (`where`, `first`, `paginate`) or CRUD methods on `Model` required separate extension imports (`model_query.dart`, `model_crud.dart`), causing confusing missing method errors for developers. Additionally, registering multiple model instances or duplicate table references in `TableRegistry` caused duplicate migrations or SQL errors during table alters.
+  - *Resolution*: Query builder and CRUD methods are now directly part of `Model<T>`. `TableRegistry.uniqueTables` automatically deduplicates registered tables by table name and logs a diagnostic warning.
+
+- **Model Schema Boilerplate & Code-Gen Independence**:
+  - *Problem*: Defining database models previously required high ceremony: either repeating every column across verbose descriptors, or hand-constructing manual `Table(name: ..., columns: [...])` definitions. Other ecosystems solve this with heavy code generators (like `build_runner`), but code generation slows down compilation, breaks transparency, creates confusing `.g.dart` artifacts, and prevents developers from seeing what is actually happening behind the scenes.
+  - *Resolution*: Introduced the fluent `void schema()` builder hook directly on `Model<T>` (`string()`, `text()`, `textCol()`, `integer()`, `boolean()`, `datetime()`, `timestamp()`, `jsonCol()`, `float()`, `mediumText()`, `longText()`, `enumeration()`). Models simply declare their columns in a clean, declarative block. The table definition and primary keys are auto-constructed in pure Dart at runtime with zero code generation. Safe aliases like `jsonCol()` and `textCol()` ensure no collisions with model getters like `get json`.
+
+## [1.4.2] - 2026-10-08
+
+### Fixed
+- Persist included `null` values in model `save()` and `update()` so nullable
+  columns can be cleared; omitted attributes remain unchanged.
+- Preserve native MySQL `DateTime` parameters on model updates to avoid
+  timezone shifts when saving and reloading renewal dates.
+
+## [1.4.1] - 2026-09-28
+
+### Added
+- Added `RedisCacheStore` for Redis-backed application caching with TTL,
+  prefix-scoped cleanup, URL/auth support, and database selection.
+- Added opt-in `Flint(autoConnectRedis: true)` startup using `REDIS_URL` or
+  explicit `app.connectRedis(...)` host, port, TLS, credential, and database
+  settings.
+- Added an app-owned cache service available as `app.cache`, `ctx.cache`, and
+  `Controller.cache`, with automatic memory, file, or Redis selection through
+  `CACHE_DRIVER` and typed `CacheDriver` constructor options.
+- Added `QueueJob` and the `QueueJobContext` alias as the preferred public API
+  for durable background jobs.
+- Exported `UploadedFile` and `Storage` from the main framework entrypoint so
+  uploaded files can be handled without an additional storage import.
+- Added label styling overrides (`labelStyle` and `labelDartStyle`) to
+  `TextField`, `TextArea`, `Select`, and `CodeEditor`.
+- Added Canvas editor commands for select all, duplicate, keyboard undo/redo,
+  and redo through Ctrl/Cmd+Y or Ctrl/Cmd+Shift+Z.
+- Added built-in UI icons for bold, circle, close, image, layout, loader,
+  redo, smartphone, square, TV, type, undo, unlock, and video actions.
+- Added comprehensive framework-authored AI agent documentation and made
+  `flint agent` copy the package's complete Markdown documentation set into an
+  application, with `--force` overwrite support.
+
+### Changed
+- Improved Canvas interaction on responsive displays with CSS-to-canvas pointer
+  coordinate scaling, intersection-based marquee selection, font-aware text
+  bounds and hit testing, retained size constraints, and selection/change
+  notifications after undo and redo.
+- Updated controller, resource, route, and middleware generators to emit
+  request-scoped `Controller` subclasses, `Context` middleware, typed
+  `app.controller(...)` routes, relative imports, and fuller OpenAPI comments.
+- Updated request logging to report sanitized method, path, status, duration,
+  and client IP metadata without logging cookies or authentication state.
+- Updated the example app to use `SeederRegistry`, remove a redundant storage
+  import, and let HTTP-only auth middleware continue WebSocket requests.
+- Expanded generated project guidance for Flint UI, AI, storage, jobs,
+  templates, testing, deployment, logging, and security workflows.
+
+### Deprecated
+- Deprecated `FlintJob` in favor of `QueueJob`; existing `FlintJob`
+  implementations remain supported.
+- Deprecated the misspelled `ForbiddenErorr` alias in favor of
+  `ForbiddenError`.
+- Deprecated `make:*` CLI aliases in favor of `--make-*`; the old aliases are
+  scheduled for removal in `1.5.0` and now print a warning.
+- Deprecated the `deploy-globe` and `--deploy-globe` CLI commands; they remain
+  available for compatibility and are scheduled for removal in `1.5.0`.
+
+### Fixed
+- Corrected `AuthException`, `Unauthenticated`, `ForbiddenException`, and
+  `NotFoundException` defaults and made exception middleware preserve framework
+  HTTP status codes and `HttpException` response data.
+- Fixed browser renderer control restoration for input and textarea elements
+  after component rerenders.
+- Fixed Canvas text selection bounds, responsive pointer targeting, keyboard
+  shortcuts, and initial controller attachment behavior.
+- Fixed generated middleware so WebSocket contexts without an HTTP response
+  continue through the middleware pipeline.
+
+### Security
+- Hardened public file storage by sanitizing uploaded filenames and rejecting
+  absolute paths and `.`/`..` traversal segments during create, update, and
+  delete operations.
+- Removed cookies and authentication-state values from default request logs.
+
+## [1.4.0] - 2026-09-08
+
+### Added
+- **Interactive `Terminal` Component**: Added a lifecycle-managed xterm.js
+  terminal with duplex WebSocket input/output, ANSI rendering, automatic
+  reconnect, responsive resize envelopes, controller commands, connection
+  status, copy, clear, and light/dark themes.
+- **`CodeEditor` Form Component**: Added a reusable, theme-aware plain-text
+  editor with synchronized line numbers, controller support, validation
+  messages, and keystroke handling that does not rebuild its parent.
+- **Native Document Canvas Engine**: Added full-fidelity, in-browser document viewers under `package:flint_dart/ui.dart`:
+  - `DocxViewer`: Client-side Microsoft Word (`.docx`) canvas renderer preserving vector drawings, shapes, tables, charts, typography, headers, footers, and page margins.
+  - `PdfViewer`: Multi-page `PDF.js` canvas studio with 2x Retina scaling, authentic paper elevation, drop shadows, and responsive page containers.
+  - Non-web stubs (`docx_viewer_stub.dart`, `pdf_viewer_stub.dart`, `doc_viewer_stub.dart`) ensuring seamless SSR and non-web compilation.
+- **`DocViewerController` & `DocTocItem`**:
+  - Programmatic navigation: `jumpToPage()`, `nextPage()`, `prevPage()`, `currentPage`, `totalPages`.
+  - Smooth zoom controls: `setZoom()`, `zoomIn()`, `zoomOut()`, `resetZoom()`.
+  - Full-text in-document search: `search()`, `nextMatch()`, `prevMatch()`, match counter, and real-time in-DOM `<mark>` highlighting with smooth centering auto-scroll.
+  - Automatic Table of Contents / Outline extraction from Word headings (`H1`, `H2`, `H3`) and PDF bookmarks with interactive sidebar navigation.
+- **`DocViewerToolbar` & Document Reading Modes**:
+  - Interactive sticky/floating topbar with page navigation, zoom display, live search box, and Table of Contents drawer.
+  - Tri-Mode Document Reading Engine:
+    - ☀️ **Paper Mode**: Authentic white paper with natural document styling.
+    - 🌙 **Dark Canvas Mode**: High-contrast slate background with light typography and clear table borders for comfortable night reading.
+    - 📜 **Sepia Mode**: Warm book paper for reduced eye strain.
+- **`Iframe` Native Primitive**:
+  - First-class typed `Iframe` component under `package:flint_dart/ui.dart`.
+
+### Fixed
+- **Template Hot Reload for Custom View Locations**: Fixed logical template resolution during hot-reload to support templates located outside `lib/views` (such as `lib/mail/views`).
+- **`DocViewerToolbar` Web Compilation**: Fixed event handlers in `DocViewerToolbar` for clean `dart2js` compilation without JS-interop typing conflicts.
+- **`IconButton` IconData Support**: Fixed `IconButton` to natively accept `IconData` (e.g. `Icons.minus`, `Icons.chevronLeft`) alongside `Icon` widgets without stringification (`Instance of 'IconData'`) artifacts.
+- **DOCX Virtual DOM Persistence**: Fixed DOM re-render wipe in `DocxViewer` and `PdfViewer` by decoupling the mount target from component re-renders.
+- **Form Help Text Sizing**: Fixed form help text sizing across inputs.
+- **CLI Dependency Constraint**: Fixed invalid version constraint for `watcher` in `pubspec.yaml` (`watcher: ^1.1.0`) which caused package resolution failure during CLI invocation.
+- **CLI Output Visibility**: Ensured `Log.minLevel` defaults to `LogLevel.debug` for CLI commands (`migrate`, `seed`, `version`, `build`, etc.) so command progress and database migrations output clearly to the console.
+
+## [1.3.3] - 2026-08-24
+
+### Fixed
+- **Controlled Select State**: Applied the selected value directly to `<select>` controls after their `<option>` elements mount, and kept the value synchronized after state-driven rerenders.
+- **Typed Select Values**: Compared option and selected values by their DOM string representation so numeric and string-backed values select consistently.
+- **Model Creation Hydration**: Hydrated the model instance that calls `create()` with the inserted database row, including generated IDs and converted attribute types, while preserving the populated returned model.
+- **Example Static Analysis**: Awaited the example user update response inside its `try` block so strict Linux CI analysis remains clean.
+
+## [1.3.2] - 2026-08-22
+
+### Fixed
+- **Static Analysis & Pana Score**: Fixed unawaited `Future` returns inside `try` blocks in `getTableSchema` (`dialect.dart`) and JSON sanitization (`response.dart`) for 100% static analysis score (50/50).
+- **Documentation Reference**: Resolved unresolved doc reference in `Response.view` doc comment.
+- **Codebase Formatting**: Formatted all source files with `dart format`.
+
+## [1.3.1] - 2026-08-22
+
+### Fixed
+- **Static Analysis & Pana Score**: Resolved all unawaited Future returns across `port_utils.dart` and `flint_database_api.dart` for 100% clean static analysis.
+- **Unified Database Protocol**: Re-exported unified database protocol classes (`FlintDbQuery`, `FlintDbFilter`, `FlintDbResourceSchema`, etc.) from `flint_client` across `db_api.dart` and `db.dart` to prevent ambiguous type collisions.
+- **Dependency Compatibility**: Upgraded `flint_client` dependency constraint to support latest stable releases (`>=0.1.0 <1.0.0`).
+- **Code Health**: Modernized constructors with super parameters and initializing formals across UI primitives and style modules.
+
+## [1.3.0] - 2026-08-22
+
+### Added
+- **Fullstack Web UI Engine**: Merged Flint UI natively into `flint_dart` under `package:flint_dart/ui.dart`, giving developers declarative HTML/DOM components, Flutter-like widgets, 2D Canvas, 3D WebGL scenes, and reactive state signals with zero external packages.
+- **First-Class SEO & Server-Side Rendering (SSR)**: Instant HTML generation, meta tags, and OpenGraph crawlers with client-side hydration.
+- **Secure Database API Gateway**: Built-in Row-Level Security (`FlintDbPolicy`), Resource Registries (`FlintDbResource`), and Query Compilers under `package:flint_dart/db_api.dart`.
+- **Database Wire Protocol**: Integrated database query ASTs, mutations, results, and schema models directly into `flint_dart`.
+
+### Changed
+- Promoted `flint_dart` as the **First Official Full-Stack, Declarative, SEO-First Dart Web Framework**.
+- Modernized CLI templates (`make:page`, `make:ui`, `build`) to emit `package:flint_dart/ui.dart`.
+- Removed external `flint_ui` dependency constraint in favor of native built-in UI engine.
+
+## [1.2.3] - 2026-08-17
+
+### Changed
+- Confirmed Flint UI compatibility range includes the latest `0.1.16` release so new Flint projects can use the newest UI widgets and browser rendering improvements as pub.dev propagation completes.
+
+### Added
+- Documented compatibility with Flint UI `0.1.16`, including date pickers, responsive grid helpers, animation widgets, typed CSS units, Three.js scene support, multi-series charts, and safer input focus preservation.
+
+## [1.2.2] - 2026-07-20
+
+### Changed
+- Logged the server-ready message at info level so `flint run` clearly shows when the HTTP server is listening.
+
+## [1.2.1] - 2026-07-20
+
+### Added
+- Added Flint native jobs core, scheduler support, jobs registry contracts, and worker runtime commands.
+- Added app table and seeder registry contracts for framework-level bootstrapping.
+- Added Dart-style fullstack CLI aliases for jobs and seeders.
+
+### Fixed
+- Parsed aggregate query results returned as strings so database drivers can safely return values like `"4.0"`.
+- Fixed Flint UI build CSS extraction exit behavior.
+
+### Changed
+- Updated Flint UI dependency to `flint_ui: ^0.1.15`.
+- Updated Flint Client dependency to `flint_client: ^0.0.6`.
+
+## [1.2.0] - 2026-07-13
+
+### Added
+- Added first-class HTTP `QUERY` route registration with `app.query(...)` and controller route builder support.
+- Added QUERY support to route matching, middleware, automatic OPTIONS/Allow responses, CORS defaults, cache middleware, route discovery, and generated Swagger vendor extensions.
+- Preserved explicit `null` values in ORM update data maps so apps can intentionally clear nullable columns.
+
+### Changed
+- Updated Flint UI dependency to `flint_ui: ^0.1.14`.
+- Updated Flint Client dependency to `flint_client: ^0.0.5`.
+- Made ORM `where(...).orWhere(...)` chains compile in chain order, so `orWhere` now combines with the previous condition using `OR` instead of being grouped behind an `AND`.
+
+
+### Added
+- Added response cache helpers: `cachePublic`, `cachePrivate`, `revalidate`, `noStore`, `etag`, `lastModified`, and `header`.
+- Added `CacheMiddleware` for route-level browser/CDN cache headers and `ETagMiddleware` for simple conditional GET handling.
+
+## [1.1.19] - 2026-07-08
+
+### Changed
+- Made page-bundle production builds write `manifest.json` progressively after each successful page compile, so interrupted large builds keep a valid manifest and can fall back to the global bundle for unfinished pages.
+
+## [1.1.18] - 2026-07-08
+
+### Changed
+- Restored page-level Flint UI bundles as the default for `flint web` and production `flint build` web asset generation.
+- Kept the shared runtime available through `flint web --shared-runtime` for projects that prefer one deferred runtime bundle.
+- Made static asset caching production-aware: fingerprinted or query-versioned assets now use one-year immutable caching, while HTML, `manifest.json`, and service workers revalidate on every request.
+
+## [1.1.17] - 2026-07-08
+
+### Changed
+- Changed `flint web --build-only` and default `flint web` production-style builds to use the shared runtime bundle by default instead of compiling every registered page one by one.
+- Kept page-level bundle compilation available through `--page-bundles` and single-page compilation through `--page <name>`.
+- Updated `flint web --help` to make shared runtime the documented default and page bundles opt-in.
+
+## [1.1.16] - 2026-07-08
+
+### Added
+- Added `relationQuery()` so model relation metadata can be reused as the starting point for constrained relation queries.
+- Added `countRelation()` and `hasRelated()` for common relation count and existence checks.
+- Added `relationCounts()` for grouped counts from the same relation, useful for dashboards, sidebars, and product ownership checks.
+- Added `loadRelationCount()` to store a related record count directly on a model attribute.
+- Added ORM pagination metadata helpers for page/per-page list responses.
+
+### Changed
+- Updated the Flint UI dependency to `flint_ui: ^0.1.13` for media/device APIs, server-safe media stubs, and canvas editor primitives.
+
+## [1.1.15] - 2026-07-06
+
+### Added
+- Added framework-level startup migrations through `Flint(autoMigrate: true)` and the `FLINT_AUTO_MIGRATE` environment flag.
+- Added public `FlintMigrations.ensure()` helpers for apps that want explicit deployment-time migration control.
+- Added dev-only on-demand Flint UI page bundle builds when a requested page bundle is missing during hot reload.
+- Added automatic page registry discovery for `lib/ui/registry.dart` and `lib/ui/page_registry.dart` in addition to `lib/ui/component_registry.dart`.
+
+### Changed
+- Updated the Flint UI dependency to `flint_ui: ^0.1.12` for built-in light/dark theme provider support, global theme state, and theme-scoped styles.
+- Quieted default hot-reload startup logging so watcher paths, debounce details, endpoint URLs, and duplicate restart messages are only shown when verbose hot reload logging is enabled.
+- Made the Dart VM service for hot reload opt-in through `FLINT_DEBUG_VM_SERVICE=true` instead of enabling it by default.
+- Quieted Flint UI build output so normal builds show a single `Building Flint UI...` message and save-triggered hot reload shows `Rebuilding Flint UI...`; detailed asset/compiler logs are now opt-in with `FLINT_WEB_UI_VERBOSE=true`.
+- Added completion messages after successful Flint UI builds and rebuilds.
+- Serialized save-triggered Flint UI rebuilds so repeated file events queue one follow-up rebuild instead of launching overlapping compilers.
+- Changed the default console log level to `info` while keeping Flint UI build/rebuild start and completion messages visible.
+- Changed hot reload startup to silently compile only the main Flint UI bundle after the server starts; page bundles are rebuilt on page/source saves or by `flint web --build-only`.
+- Changed save-triggered Flint UI rebuilds to rebuild only the directly changed page bundle when the changed source maps to a page registry entry.
+
+## [1.1.14] - 2026-06-24
+
+### Added
+- Added `flint_ai: ^0.1.0` as the first-party AI runtime dependency for Flint Dart applications.
+- Added `package:flint_dart/ai.dart` as the public AI entrypoint, re-exporting the standalone `flint_ai` runtime plus Flint-specific adapters.
+- Added `app.ai` on `Flint` so every app has a shared AI runtime instance.
+- Added `ctx.ai` on request `Context` so controllers and route handlers can run agents, chat providers, workflows, tools, memory, and repository operations from the current request.
+- Added Flint-backed AI memory and repository adapters:
+  - `FlintDbAiMemoryStore`
+  - `FlintAutoAiMemoryStore`
+  - `FlintDbAiRunStore`
+  - `FlintDbAiThreadStore`
+  - `FlintDbAiTraceStore`
+  - `FlintDbAiArtifactStore`
+  - `FlintAutoAiRepository`
+- Added database fallback behavior for AI stores so development apps can keep running with in-memory storage when the database is not connected.
+- Added canonical AI table definitions through `flintAiTables`, covering AI runs, threads, traces, artifacts, run events, and thread messages.
+- Added `.env` provider setup helpers:
+  - `useOpenAiFromEnv()`
+  - `useGeminiFromEnv()`
+  - `useAnthropicFromEnv()`
+  - `useChatProvidersFromEnv()`
+- Added `.env` production policy setup through `useProductionToolPolicyFromEnv()`.
+- Added sample AI table registration in the example app.
+- Added AI example endpoints for support, reporting, and content-email workflows.
+- Added tests for environment provider setup, `app.ai`, `ctx.ai`, Flint AI persistence fallback, route execution, workflow metadata, and streaming HTTP client compatibility.
+
+### Changed
+- Changed `package:flint_dart/ai.dart` to delegate to the standalone `flint_ai` package instead of carrying a duplicated AI runtime inside `flint_dart`.
+- Changed the default `Flint` AI runtime to use Flint auto adapters for memory and repository persistence.
+- Updated the example Flint UI component registry to use `PageRegistry`.
+- Updated README guidance to show `.env` provider setup, production AI policy setup, Flint-backed AI persistence, and the sample AI endpoints.
+- Updated `.pubignore` and the example package ignore file so local `pubspec_overrides.yaml` files are not included in published packages.
+
+### Removed
+- Removed the duplicated internal `lib/src/ai/*` runtime implementation from `flint_dart`.
+- Removed internal Flint Dart copies of AI providers, tools, workflows, memory stores, repository stores, and the basic agent example because these now live in `flint_ai`.
+
+### Fixed
+- Fixed route parenthesis counting in Swagger route extraction so static analysis no longer reports unrelated int/string equality checks.
+
+## [1.1.13] - 2026-06-18
+
+### Added
+- Added `RichTextUpload` middleware to handle secure rich text image/media uploads, featuring strict file extension whitelisting (blocking executables/scripts) and double-extension bypass mitigation (sanitizing intermediate dots).
+- Added `onUploadSuccess` callback hook to `RichTextUpload` middleware to allow custom actions (like saving file metadata to a database) when uploads complete successfully.
+
+### Changed
+- Updated the Flint UI dependency to `flint_ui: ^0.1.11`.
+
+## [1.1.12] - 2026-06-16
+
+### Changed
+- Updated the Flint UI dependency to `flint_ui: ^0.1.10`.
+
+## [1.1.11] - 2026-06-12
+
+### Fixed
+- `flint run` now uses `PORT` from `.env` as its default port before falling back to `8080`, so the hot-reload launcher and app server agree without requiring `--port`.
+
+## [1.1.10] - 2026-06-12
+
+### Fixed
+- Hot reload now updates its watcher port when the worker announces a different listening port, preventing false restart failures such as checking port `8080` after the app starts on `3030`.
+- Hot reload worker processes now receive the selected port through the `PORT` environment variable as well as the positional CLI argument.
+
+## [1.1.9] - 2026-06-12
+
+### Fixed
+- Hot reload now serializes overlapping restarts so rapid save events cannot start multiple workers at the same time.
+- Hot reload now waits for the old worker to release the configured port before starting the next worker.
+- Hot reload now force-stops stale listeners on the configured port before startup, using `taskkill` on Windows and `lsof`, `ss`, or `netstat` plus process signals on Linux and macOS.
+- Restarted hot reload workers now inherit `FLINT_HOT=1`, keeping worker processes from launching nested hot-reload parents.
+- Browser reload notifications now recover by restarting the server when the internal hot-reload endpoint is unavailable.
+- `flint run` now accepts `--port=<port>` and `--port <port>` in addition to a positional port argument.
+
+### Changed
+- Flint Web UI builds are deferred to the hot-reload watcher during development so the server can start first.
+- Default Flint Web UI compilation now builds both the main bundle and page-level bundles when available.
+- Flint Web UI output cleanup now removes stale bundle, manifest, compressed, and deferred-part files more safely.
+- Updated the Flint UI dependency to `flint_ui: ^0.1.9`.
+
+## [1.1.7] - 2026-05-31
+
+### Added
+- Flint Web UI builds now generate `/flint-sw.js`, a service worker that caches the Flint UI manifest, fallback bundle, and page-level bundles in the browser.
+- `res.page(...)` now automatically registers the generated service worker during browser idle time when it exists and hot reload is disabled.
+
+### Fixed
+- Service worker files now bypass immutable static caching so clients can pick up updated background caching behavior promptly.
+
+## [1.1.6] - 2026-05-31
+
+### Fixed
+- `StaticFileMiddleware` now serves JavaScript, CSS, and source map assets with production cache headers unless hot reload is enabled.
+- `StaticFileMiddleware` now honors its gzip compression option for text-like assets when clients send `Accept-Encoding: gzip`.
+
+## [1.1.5] - 2026-05-31
+
+### Changed
+- `flint build` now builds Flint Web UI assets first, generates page-level bundles by default when a component registry is detected, copies resources into `build/`, and then compiles the server executable.
+- `flint web` now treats page-level bundles as the default build mode and adds `--no-page-bundles` for projects that only want a single global JavaScript bundle.
+
+## [1.1.4] - 2026-05-31
+
+### Added
+- Added manifest-aware Flint UI script selection for `res.page(...)` so pages can automatically use page-level JavaScript bundles when `public/assets/js/flint-ui/manifest.json` is present.
+- Added opt-in `flint web --page-bundles`, `--pages-config`, and `--page <name>` CLI support for generating page-level Flint UI bundles and a manifest.
+- Added automatic page bundle discovery from `lib/ui/component_registry.dart`, including direct imports for each registered page so generated page bundles do not import the full registry.
+
+## [1.1.3] - 2026-05-31
+
+### Release Status
+- Public patch build.
+
+### Fixed
+- Flint page props are now sanitized before being embedded in the `data-flint-page` payload.
+- `DateTime`, `Uri`, enum values, models, maps, iterables, and objects with `toJson()` or `toMap()` are converted into JSON-safe values for Flint UI pages.
+- Non-serializable prop values now fall back to strings instead of breaking page rendering.
+
+## [1.1.2] - 2026-05-26
+
+### Release Status
+- Public patch build.
+
+### Added
+- Added anti SQL injection middleware exports.
+- Added database administration CLI improvements.
+- Added request and response helpers for full-stack Flint UI apps.
+
+### Improved
+- Updated Flint UI build commands and generators for app-owned `lib/ui` entrypoints.
+- Improved static asset discovery for compiled Flint UI bundles.
+- Updated examples and README guidance for deploying FlintDart as a full-stack app host.
+
+### Tests
+- Expanded coverage for app middleware behavior, response page rendering, request helpers, UI generation, and web UI bundle building.
+
+## [1.1.1] - 2026-05-14
+
+### Release Status
+- Public patch build.
+
+### Fixed
+- Flint Web UI auto build now discovers app-owned `lib/ui/main.dart` entrypoints.
+- App-owned UI builds now default to `public/assets/js/flint-ui/main.dart.js` so deployed public assets stay organized.
+- `flintPage()` now loads app-owned Flint UI bundles from `/assets/js/flint-ui/main.dart.js` when present.
+- UI generators now prefer `lib/ui` for app-owned Flint UI source.
+- Flint's default middleware stack now serves `public` static assets automatically.
+- Development servers now bind exclusively to their port so stale workers cannot intercept hot-reload WebSocket traffic.
+- The browser hot-reload client now backs off and avoids repeated console errors while the dev server restarts.
+
+## [1.1.0] - 2026-05-14
+
+### Release Status
+- Public minor release.
+
+### Added
+- Added first-class Flint UI package support through the standalone `flint_ui` dependency.
+- Added public bridge exports for `package:flint_dart/flint_ui.dart` and the deprecated `package:flint_dart/flint_web_ui.dart` compatibility entrypoint.
+- Added Flint Web UI CLI workflows for creating and building browser UI entrypoints.
+- Added hot-reload rebuild support for Flint UI browser bundles.
+
+### Changed
+- Moved Flint UI usage onto the external `flint_ui: ^0.1.3` package instead of the old in-framework UI implementation.
+- Updated the example app to use the standalone Flint UI package during local development.
+
+## [1.0.4] - 2026-04-30
+
+### Release Status
+- Public patch build.
+
+### Added
+- Added `Column.comment`, `Column.after`, and `Column.renamedFrom` schema metadata.
+- Added safe column rename handling during migrations so `renamedFrom` preserves existing data instead of dropping and re-adding columns.
+- Added helpful migration detection for case-only column renames, with guidance to use `renamedFrom`.
+- Added `app.controller(...)` and `ControllerRouteBuilder` for concise, request-scoped controller route registration.
+- Added shorter `controller(...)` and `controllerVoid(...)` helpers while keeping `useController(...)` and `useControllerVoid(...)` compatible.
+- Added regression coverage for controller route groups, controller binding/unbinding, migration comments, MySQL `after`, and rename handling.
+
+### Changed
+- MySQL migrations can place newly added columns with `AFTER` and persist column comments.
+- PostgreSQL migrations can apply column comments with `COMMENT ON COLUMN`.
+- Updated the grouped controller route example to use the new `app.controller(...)` API.
+- Pointed the in-repo example app to the local package path for development against unreleased framework APIs.
+
+### Fixed
+- Prevented case-only column renames such as `Nickname` to `nickname` from silently becoming unsafe drop/add migrations.
+- Ensured `renamedFrom` behaves as a one-time migration hint and is harmless on later reruns once the target column exists.
+
+## [1.0.3] - 2026-04-26
+
+### Release Status
+- Public patch build.
+
+### Added
+- Added `Auth.verifyPasswordResetCode(...)` to validate password reset codes without changing the user's password.
+- Added the `AuthVerification.verifyPasswordResetCode(...)` extension wrapper for backward-compatible verification flows.
+- Added regression coverage for `ExceptionMiddleware` handling awaited async `AuthException` failures.
+
+### Changed
+- Reused the password reset code verification helper inside `resetPasswordWithCode(...)` so standalone checks and password resets share the same validation logic.
+
+## [1.0.2] - 2026-04-18
+
+### Release Status
+- Public patch build.
+
+### Added
+- Added `Request.rawBody()` for exact undecoded request payload access alongside higher-level request parsers.
+- Added normalized request helpers `Request.input(...)` and `Request.allInput()` for query, JSON, form, multipart, file, and route-param access through one API.
+- Added websocket payload normalization so `emit(...)` and `sendJson(...)` can safely serialize values like `DateTime`, nested collections, exceptions, and objects with `toMap()` or `toJson()`.
+- Added Swagger/OpenAPI websocket documentation support with `101 Switching Protocols`, `x-websocket`, `x-flint-transport`, and a top-level `x-websockets` extension block.
+- Added regression tests covering unified request input/validation, raw body access, websocket namespace behavior, websocket payload normalization, and websocket Swagger docs generation.
+
+### Changed
+- Unified `Request.validate(...)` so it auto-detects JSON, urlencoded form, and multipart request input instead of only validating JSON bodies.
+- `Request.form()` now remains focused on text form fields while files stay available through file helpers and normalized input access.
+- WebSocket rooms are now namespace-scoped by path by default, with explicit cross-namespace helpers `emitToRoomIn(...)` and `emitToNamespace(...)`.
+- Swagger docs generation now discovers `app.websocket(...)` routes and documents their handshake path in a Swagger-friendly way.
+
+### Fixed
+- Fixed `orWhere` handling so grouped OR clauses are compiled consistently across select, update, delete, `first()`, and `all()` query paths.
+- Fixed `all()` on models so chained query builder filters are respected instead of returning every row.
+- Fixed MySQL where-based update parameter ordering when `orWhere` filters are present.
+- Fixed websocket event encoding crashes when emitting non-primitive Dart objects such as `DateTime`.
+
+## [1.0.1+1] - 2026-04-15
+
+### Release Status
+- Public patch build.
+
+### Added
+- Added focused `upsert` regression tests covering `excludeUpdatedData`, `createData`, and `updateData`.
+
+### Changed
+- Expanded `upsert` to support explicit `createData` and `updateData` payloads alongside the legacy shared `data` payload.
+- Restricted `excludeUpdatedData` to legacy `data` mode and improved `uniqueBy` resolution when explicit payloads are used.
+
+### Fixed
+- Prevented `upsert` from creating rows when only update payload data is available.
+- Ensured `DB.overrideConnection(...)` sets the active driver so database-backed tests can run against fake connections.
+
+## [1.0.1] - 2026-04-15
+
+### Release Status
+- Public stable patch release.
+
+### Fixed
+- Fixed `flint migrate` so migration failures propagate instead of returning a successful process exit.
+- Fixed MySQL schema comparison to decode metadata reliably and avoid false column updates on clean reruns.
+- Fixed migration type parsing so column types like `DOUBLE NOT NULL` and `BOOLEAN NOT NULL` are parsed correctly.
+- Fixed default comparison normalization for boolean, numeric, and timestamp defaults during schema sync.
+- Fixed MySQL `updated_at` handling by correctly recognizing `ON UPDATE CURRENT_TIMESTAMP`.
+
+### Added
+- Added migration support for syncing declared indexes from `Table.indexes`, including composite indexes.
+- Added regression tests for schema comparison, default normalization, inline unique columns, and desired index generation.
+
+### Changed
+- `runTableRegistry` now provides canonical table definitions to the migrator instead of precomputed diffs.
+- Restored `ai.dart` to the top-level `package:flint_dart/flint_dart.dart` export surface for backward compatibility.
+
+## [1.0.0+33] - 2026-03-16
+
+### Release Status
+- Public release build.
+
+### Changed
+- Bumped package version to `1.0.0+33`.
+
+## [1.0.0+32] - 2026-03-06
+
+### Release Status
+- Public release build.
+
+### Fixed
+- Fixed framework exception handling so `AuthException` and validation failures are caught reliably by `ExceptionMiddleware`.
+- Unified validation exception behavior and aligned validation responses with HTTP `422`.
+- Fixed validator edge cases for optional `email` fields and `list:<type>` rules.
+
+### Changed
+- Simplified the exported exception surface by removing unused exception wrappers and standardizing exception naming.
+
+## [1.0.0+31] - 2026-03-01
+
+### Release Status
+- Public release build.
+
+### Fixed
+- Fixed stale database connection failures after idle periods in long-running apps (for example, MySQL `Can not prepare stmt: connection closed`).
+- Added automatic reconnect for both MySQL and PostgreSQL when a closed/stale connection is detected.
+- Added one automatic retry for DB query/execute operations after reconnect on connection-loss errors.
+- Enabled default DB keepalive heartbeats to reduce idle disconnects without requiring extra framework configuration.
+
+## [1.0.0+30] - 2026-02-27
+
+### Release Status
+- Public release build.
+
+### Fixed
+- Fixed `Response.view(...)` to avoid wrapping full HTML documents in `#main-content`, preserving valid `<head>` metadata structure for SEO and favicon tags.
+- Improved full-document detection in `Response.view(...)` (`<!doctype html` and `<html>/<head>/<body>` checks) to prevent false wrapping.
+- Fixed dev hot-reload script to use the current browser host/protocol (`ws://` or `wss://`) instead of hardcoded `ws://localhost:3000/flint_reload`.
+
+## [1.0.0+29] - 2026-02-25
+
+### Release Status
+- Public release build.
+
+### Added
+- Added request-scoped `Controller` base with `bind(Context)` and internal context storage.
+- Added controller getters: `req`, `res`, `socket`, plus `isHttp` / `isWebSocket`.
+- Added meaningful controller context errors when `res` is used in WebSocket routes or `socket` is used in HTTP routes.
+- Added `controllerAction(...)` helper for binding controller instances per HTTP/WebSocket route invocation.
+- Added `useController(...)` and `useControllerVoid(...)` extension helpers for shorter route group controller registration.
+- Added extensible `Context.extras` storage and typed `read<T>()` / `write<T>()` helpers for future session/user injection.
+
+### Changed
+- Added controller-based HTTP and WebSocket route examples to the example app and docs.
+- Updated route-group examples to use controller actions without `Context` method parameters inside controllers.
+
+## [1.0.0+28] - 2026-02-18
+
+### Release Status
+- Public release build.
+
+### Changed
+- Bumped package version to `1.0.0+28`.
+
+## [1.0.0+27] - 2026-02-11
+
+### Release Status
+- Public stable release `1.0.1` is planned for a later date.
+
+### Added
+- Added new documentation screens in `flint_docs`: `What's New` and `Changelog`.
+- Added automatic loading of framework release notes from `flint_dart/CHANGELOG.md` in the changelog page.
+
+### Changed
+- Updated documentation to a context-first handler style using `(Context ctx)` examples.
+- Refined WebSocket route examples to emphasize route-level middleware usage.
+
+### Improved
+- Improved changelog UI readability with one card per version.
+- Clarified route handler return behavior for serializable values.
+
+### Fixed
+- Fixed response lifecycle handling to avoid duplicate header-write crashes in error paths.
+- Simplified WebSocket route flow by relying on route-level middleware execution.
+
+## [1.0.0+26] - 2025-12-20
+
+### Fixed
+- Fixed hot reload behavior on Linux.
+
+## [1.0.0+25] - 2025-12-20
+
+### Notes
+- Maintenance release.
+
+## [1.0.0+24] - 2025-12-20
+
+### Added
+- Live hot reload for `.flint.html` templates without restarting the server.
+- WebSocket-based reload listener for development mode.
+- Automatic WebSocket reconnection for hot reload when the connection drops.
+
+### Improved
+- Developer experience when editing view templates.
+- Faster iteration on UI changes with instant browser refresh.
+
+### Fixed
+- Hot reload disconnect issues when the server restarts.
+
+## [1.0.0+23] - 2025-12-17
+### Added
+- **WebSocketManager helpers**: `emitToRoom`, `emitToClient`, `emitToAll` for room-scoped and global event emission.
+- **Global room system** using `Set<FlintWebSocket>` to prevent duplicate clients in rooms.
+- **IsolateTask** class for running heavy or long-running tasks in isolates with optional completion and error callbacks.
+- **ViewMailable** class to send and queue emails from `.flint.html` templates, replacing the old `FlintUI` mail system.
+- Support for **task progress broadcasting** over WebSockets in background tasks.
+- OOP-based **RouteGroup system**, enabling modular and nested route registration with middleware inheritance.
+
+### Changed
+- Refactored `AppRoutes` and other route groups to OOP style, replacing procedural callbacks.
+- `FlintWebSocket` now fully cleans up event listeners and rooms on disconnect.
+- Improved middleware inheritance across nested route groups.
+- `Flint` framework now supports emitting events safely from background isolates.
+
+### Fixed
+- Prevented potential memory leaks on WebSocket disconnect.
+- Minor JSON decoding fixes in `FlintWebSocket._handleIncomingMessage`.
+- Fixed edge cases in queued mail sending.
+
+### Notes
+- Internal build increment only (`+23`) — no breaking changes.
+- All APIs are backward-compatible; some procedural route registration can be migrated to `RouteGroup` classes.
+
+All notable changes to Flint Dart will be documented in this file.
+## [1.0.0+22]
+
+---
+
+## [1.0.0+21] — 2025-12-02
+### 🆕 New Features
+* **Full QueryBuilder Dartdoc:** Added complete documentation for all QueryBuilder methods.
+* **Enhanced LIKE Helpers:** `whereContains`, `whereStartsWith`, `whereEndsWith`, and their OR counterparts now fully documented.
+* **Date and Range Filtering:** `whereDate`, `whereBetween`, `whereNotBetween` fully documented with examples.
+* **Aggregate Functions:** `count`, `max`, `min`, `avg`, `sum` updated with usage examples.
+
+---
+
+## [1.0.0+20] — 2025-11-28
+### 🆕 New Features
+* **UUID Primary Key Support:** Automatically generates UUIDs for string-based primary keys when no value is provided.
+* **Database-Aware Inserts:** Insert logic now checks column types and auto-increment settings for both MySQL and PostgreSQL.
+* **Column Info Caching:** Reduces repeated queries to `information_schema` by caching column metadata per table.
+* **Seamless Auto-Increment Handling:** Integer primary keys without values are left to DB auto-increment; no manual intervention needed.
+* **PostgreSQL & MySQL Compatible:** Insert logic and ID handling work consistently across both supported databases.
+
+---
+
+## [1.0.0+19] — 2025-11-25
+### 🆕 New Features
+* **QueryBuilder `orWhereLike` and `orWhereNotLike`:** Adds OR-based LIKE conditions for more flexible queries.
+* **Eager-Loaded Relations Support:** `withRelations()` method added for automatic relation fetching.
+* **Pagination Improvements:** `paginate()` method now restores original limits/offsets after fetching.
+
+---
+
+## [1.0.0+18] — 2025-11-22
+### 🆕 New Features
+* **Helper Methods for LIKE:** Added `whereContains`, `whereStartsWith`, `whereEndsWith` helpers for clean queries.
+* **OR Helper Methods:** `orWhereContains`, `orWhereStartsWith`, `orWhereEndsWith` for OR-based matching.
+* **Case Sensitivity Toggle:** All LIKE helpers support `caseSensitive` parameter.
+* **Escape Special Characters:** LIKE patterns automatically escape `%` and `_` with `_escapeLike()` helper.
+
+* **Aggregate Functions:** Added `count`, `max`, `min`, `avg`, and `sum` for QueryBuilder.
+* **Group & Order:** `groupBy()` and `orderBy()` methods enhanced to support multiple fields.
+* **LIMIT & OFFSET:** Fluent interface for pagination and query control.
+# 🚀 Flint Dart — Version 1.0.0+17
+### 🆕 New Features
+
+* **UUID Primary Key Support:** Automatically generates UUIDs for string-based primary keys when no value is provided.
+* **Database-Aware Inserts:** Insert logic now checks column types and auto-increment settings for both MySQL and PostgreSQL.
+* **Column Info Caching:** Reduces repeated queries to `information_schema` by caching column metadata per table.
+* **Seamless Auto-Increment Handling:** Integer primary keys without values are left to DB auto-increment; no manual intervention needed.
+* **PostgreSQL & MySQL Compatible:** Insert logic and ID handling work consistently across both supported databases.
+
+### 🛠 Improvements
+
+* Enhanced debug logging for column info and UUID generation.
+* Optimized fallback for missing column info.
+* Refactored `_loadIdColumnInfo` for reliable type detection across DB drivers.
+* Improved safety when inserting rows without IDs.
+
+### ✅ Fixes
+
+* Resolved issues with inserting into tables with integer primary keys without breaking auto-increment.
+* Fixed type conversion issues in MySQL when fetching column data.
+
+---
+
+# 🚀 **Flint Dart — Version 1.0.0+16**
+### ✨ New Features
+
+* **Automatic Model Response Handling**
+  Flint Dart can now automatically respond with a `Model`, a `List<Model>`, or even a `Future<Model>` / `Future<List<Model>>` — no manual conversion required.
+
+* **`.toMap()` / `.toJson()` Object Support**
+  Any object implementing a `.toMap()` or `.toJson()` method will automatically be serialized into JSON when passed to `res.respond()` or `res.json()`.
+
+* **`.asMaps()` Added for `List<Model>`**
+  You can now easily convert a list of models into a list of maps for flexible use in responses or logic.
+
+  ```dart
+  var allUsers = await User().all();
+  var users = allUsers.asMaps(); // ✅ Converts to List<Map<String, dynamic>>
+  return res.json(users);
+  ```
+
+### ⚙️ Improvements
+
+* Enhanced **JSON serialization** to handle:
+
+  * `Future<Model>` and `Future<List<Model>>`
+  * Nested `Future`s within lists or maps
+  * Custom classes exposing `toMap()` or `toJson()`
+* Fully **async-safe** response system:
+  `respond()` automatically awaits pending data before sending the response.
+* Smarter **RespondType inference** — now correctly detects:
+
+  * Flint widgets (`RespondType.flint`)
+  * JSON data (maps, lists, models, or futures)
+  * HTML strings (`<html>` / `<!DOCTYPE html>`)
+  * Plain text fallbacks
+
+### 🧠 Example Usage
+
+```dart
+// Single Model
+return res.respond(user);
+
+// List of Models
+return res.respond(users);
+
+// Future<List<Model>>
+return res.respond(User().all());
+
+// Object with toMap() or toJson()
+return res.respond(customObject);
+
+// Manual list-to-map conversion
+var allUsers = await User().all();
+return res.json(allUsers.asMaps());
+```
+
+### 🧩 Summary
+
+This update makes Flint Dart’s response system:
+
+* **Smarter** — understands models, lists, and async responses automatically
+* **Safer** — cleans and serializes all nested data properly
+* **Simpler** — no need for manual `.toMap()` calls in most cases
+
+
+# 🚀 Flint Dart — Version 1.0.0+15
+# 🚀 Flint Dart — Version 1.0.0+14
+# 🚀 Flint Dart — Version 1.0.0+13
+# 🚀 Flint Dart — Version 1.0.0+12
+# 🚀 Flint Dart — Version 1.0.0+11
+
+## 🧩 Updates & Improvements
+- 🛠️ **Bug Fixes:** Resolved several minor issues across the framework for improved stability.
+- ⚙️ **Patch Enhancements:** Applied multiple patches to improve reliability and developer experience.
+- 🧰 **CLI Upgrade:** The CLI has been **updated and upgraded** with new commands and performance improvements.
+- 🔄 **Update System Added:** Introduced support for automatic update checks and smoother upgrade handling.
+
+Flint Dart continues to evolve toward a more seamless, developer-friendly backend framework for Dart.
+
+# 🚀 Flint Dart — Version 1.0.0+10
+
+Flint Dart continues to evolve into a complete **backend + UI ecosystem for Dart**, combining powerful server-side tools with a new rendering engine — **Flint UI**.
+
+
+## 🎨 Flint UI — Cross-Platform Rendering System
+
+Flint UI introduces a **Flutter-like declarative UI engine** for generating **HTML, email layouts, and console output** directly from Dart — no React or HTML strings required.
+
+### ✨ Core Concept
+
+Flint UI widgets are **class-based**, **composable**, and **type-safe**, similar to Flutter widgets — but designed for rendering to multiple formats (HTML, text, JSON).
+
+```dart
+final button = FlintButton(
+  text: "Click Me",
+  onClick: () => Log.debug("Button clicked!"),
+  style: ButtonStyle(color: "#0066FF"),
+);
+````
+
+This can render to:
+
+```html
+<button style="background-color:#0066FF;">Click Me</button>
+```
+
+### 🧱 Widget Architecture
+
+Every Flint UI element extends `FlintWidget`, which defines multi-output rendering:
+
+```dart
+abstract class FlintWidget {
+  String toHtml();
+  String toText();
+  Map<String, dynamic> toJson();
+}
+```
+
+Flint UI currently includes:
+
+| Widget                     | Purpose                                      |
+| -------------------------- | -------------------------------------------- |
+| `FlintText`                | Render styled text                           |
+| `FlintButton`              | Interactive button element                   |
+| `FlintImage`               | Display images with `ImageStyle`             |
+| `FlintContainer`           | Layout box with padding, border, and shadows |
+| `FlintRow` / `FlintColumn` | Flexbox-style layout widgets                 |
+| `FlintCard`                | For email-style components                   |
+| `FlintSpacer`              | Adds layout spacing between elements         |
+
+---
+
+### 🎨 Styling System
+
+Flint UI introduces **style classes** for full layout and visual control, mirroring Flutter's intuitive APIs.
+
+#### 🖼️ ImageStyle
+
+```dart
+const ImageStyle(
+  opacity: 0.9,
+  fit: ObjectFit.cover,
+  filter: "grayscale(100%)",
+  title: "Profile Picture",
+);
+```
+
+➡️ Converts to:
+
+```css
+opacity: 0.9;
+object-fit: cover;
+filter: grayscale(100%);
+```
+
+#### 📦 BoxStyle
+
+Includes `BoxBorder`, `BorderRadius`, `BoxShadow`, and `BoxConstraints`.
+
+```dart
+FlintContainer(
+  style: BoxDecoration(
+    gradient: Gradient.linear(
+      stops: [
+        ColorStop("#FF5733", 0.0),
+        ColorStop("#FFC300", 1.0),
+      ],
+    ),
+  ),
+);
+```
+
+➡️ Generates:
+
+```css
+background: linear-gradient(to bottom, #FF5733 0%, #FFC300 100%);
+```
+
+---
+
+### 📄 Output Formats
+
+| Format      | Method                                           | Description |
+| ----------- | ------------------------------------------------ | ----------- |
+| `.toHtml()` | Returns HTML markup for emails and web           |             |
+| `.toText()` | Returns text-only layout (for CLI or plain mail) |             |
+| `.toJson()` | Returns serializable structure (for API UI sync) |             |
+
+---
+
+### 💡 Use Case Examples
+
+#### Email Templates
+
+```dart
+final email = FlintContainer(
+  child: FlintColumn(children: [
+    FlintText("Welcome to Flint!", style: TextStyle(fontSize: 24)),
+    FlintButton(text: "Get Started", onClick: () {}),
+  ]),
+);
+
+Log.debug(email.toHtml());
+```
+
+#### Server-Side Rendering (SSR)
+
+Use Flint UI widgets to **generate HTML views** for your backend routes.
+
+```dart
+app.get('/welcome', (req, res) {
+  final ui = FlintText("Welcome to Flint Server!");
+  return res.html(ui.toHtml());
+});
+```
+
+---
+
+## 🧩 Database Enhancements
+
+Flint Dart’s ORM and schema engine continue to mature with smarter migration logic and framework-level introspection.
+
+### 🕓 Auto–Managed Timestamp Columns
+
+Flint automatically injects `created_at` and `updated_at` columns into every table migration (if missing).
+
+```sql
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+✅ Supported on **MySQL** and **PostgreSQL**.
+
+---
+
+### 🔐 Auth Table Enhancements
+
+When the table matches your `.env` `AUTH_TABLE` (e.g. `users`), Flint automatically adds:
+
+| Column        | Type         | Purpose                               |
+| ------------- | ------------ | ------------------------------------- |
+| `provider`    | VARCHAR(100) | Login provider (Google, GitHub, etc.) |
+| `provider_id` | VARCHAR(255) | Provider user ID                      |
+
+Example `.env`:
+
+```
+AUTH_TABLE=users
+AUTH_PROVIDER_COLUMN=provider
+AUTH_PROVIDER_ID_COLUMN=provider_id
+```
+
+💡 Non-auth tables skip these fields automatically.
+
+---
+
+## 📫 Mail System Upgrade
+
+### 🧠 Smarter Configuration via `.env`
+
+Flint’s Mail system now reads all SMTP credentials directly from `.env`.
+
+```env
+MAIL_PROVIDER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=youremail@gmail.com
+MAIL_PASSWORD=yourpassword
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=youremail@gmail.com
+MAIL_FROM_NAME=Eulogia Technologies
+```
+
+### ⚙️ Automatic Setup
+
+Initialize with:
+
+```dart
+await MailConfig.load();
+```
+
+✅ Auto-detects provider
+✅ Applies SSL/TLS
+✅ Logs configuration status
+
+Example output:
+
+```
+📧 Mail configured for provider: gmail (youremail@gmail.com)
+```
+
+---
+
+### 🧰 Mail API Enhancements
+
+* `.from()` → Custom sender via `.env`
+* `.queue()` → Background mail sending with isolates
+* `.sendMail()` → Automatic plain-text fallback
+* Unified configuration for all SMTP providers
+
+Example:
+
+```dart
+await Mail()
+  .to("user@example.com")
+  .subject("Welcome to Flint Dart!")
+  .html("<h1>Hello!</h1>")
+  .sendMail();
+```
+
+---
+
+## 🪶 Internal Framework Improvements
+
+* Fixed MySQL syntax for index creation (`CREATE INDEX IF NOT EXISTS`).
+* Improved migration resilience for missing columns.
+* Added consistent JSON serializers for all UI classes.
+* Flint CLI updates for better hot reload and DB sync logging.
+* Framework-level integration between **Flint UI** and **Mail API** for generating email bodies via widgets.
+
+---
+
+## 📚 Documentation Updates
+
+* Added **Flint UI Developer Guide**
+* Added **Flint Mail Setup & .env Reference**
+* Added **Database Schema Enhancements** section
+* Added **UI JSON Output** specification for external integrations
+* Updated **Framework Change Log** and migration system examples
+
+---
+
+> Built with ❤️ by **Eulogia Technologies**
+> Empowering Dart developers to build **modern full-stack systems** — backend + UI — all in Dart.
+
+```
+
+
+# 🚀 Flint Dart — Version 1.0.0+7
+
+Flint Dart continues to evolve into a complete backend framework for Dart  modern tooling, and now a powerful real-time WebSocket system.
+````markdown
+# 🚀 Flint Dart — Version 1.0.0+6
+
+Flint Dart continues to evolve into a complete backend framework for Dart developers — with Laravel-style syntax, modern tooling, and now a powerful real-time WebSocket system.
+
+
+
+
+---
+
+## 🧩 WebSocket System (Major Upgrade)
+
+### 🔁 Socket.IO–like API
+Flint now ships with an easy-to-use WebSocket engine with event-based communication:
+
+```dart
+app.ws('/chat', (socket, params) {
+  socket.on('message', (data) {
+    Log.debug('💬 ${socket.id} says: $data');
+    socket.broadcastToRoom('chat', {'event': 'message', 'data': data});
+  });
+});
+````
+
+Client-side:
+
+```dart
+final ws = FlintWebSocketClient("wss://api.example.com/chat");
+ws.on('message', (data) => Log.debug("📩 $data"));
+ws.emit('message', {'text': 'Hello World'});
+```
+
+---
+
+### 💬 Core Features
+
+* **`.emit(event, data)`** → Send named events easily
+* **`.on(event, callback)`** → Listen for specific events
+* **`.onMessage()`** and **`.onJsonMessage()`** remain supported for backward compatibility
+* **`.join(room)`** and **`.leave(room)`** for group messaging
+* **`.broadcast()`** and **`.broadcastToRoom()`** for real-time updates
+* **Auto Reconnect** on the client when connection drops
+* **JWT Support** using the same middleware chain as HTTP routes
+* **Auth Middleware** can now protect both HTTP and WebSocket connections
+
+---
+
+## 🧠 Middleware Enhancements
+
+Middleware can now be used directly on WebSocket routes with the same `.useMiddleware()` API.
+
+### Example
+
+```dart
+app.ws('/notifications', (socket, params) {
+  socket.on('ping', (_) => socket.emit('pong', 'ok'));
+}).useMiddleware(AuthMiddleware());
+```
+
+### WebSocket Auth Example
+
+```dart
+class AuthMiddleware extends Middleware {
+  @override
+  Handler handle(Handler next) {
+    return (Request req, Response res) async {
+      final token = req.bearerToken;
+      if (token == null || token != "expected_token") {
+        return res.status(401).send("Unauthorized");
+      }
+      return await next(req, res);
+    };
+  }
+}
+```
+
+---
+
+## 📫 Mail Integration
+
+WebSocket events can now trigger Flint's Mail API, enabling instant notification workflows (e.g., send an email when a user joins a chat).
+
+```dart
+socket.on('userJoined', (data) async {
+  await Mail.to(data['email']).subject("Welcome!").send("Welcome to the chat!");
+});
+```
+
+---
+
+## 🧩 Developer Experience
+
+* Unified `.emit()` and `.on()` API across both **server and client**
+* Auto-room management for group messages
+* Cleaner connection logs:
+
+  ```
+  ✅ Client connected: <uuid>
+  ❌ Client disconnected: <uuid>
+  ```
+* Consistent `app.ws()` route definition similar to `app.get()` and `app.post()`
+
+---
+
+## 🧰 CLI & Internal
+
+* Stability improvements for CLI and WebSocket debugging
+* Hot reload-safe connections for development
+* No new CLI commands introduced in this version
+
+---
+
+## 📚 Documentation
+
+* Added **WebSocket Usage Guide**:
+
+  * Connecting with JWT
+  * Using `.emit()` and `.on()`
+  * Broadcasting
+  * Room system
+* Added **Middleware for WebSockets** section.
+* Added example for mail integration within socket events.
+* Updated Swagger documentation to include WebSocket annotations *(experimental)*
+
+> Built with ❤️ by **Eulogia Technologies**
+> Empowering Dart developers to build modern, scalable backends.
+
+```
+
+---
+
+
+```
+
+## 1.0.0+5
+
+### Middleware
+- Added `.useMiddleware()` API for attaching middleware directly to routes, making route-level middleware usage cleaner and more expressive.  
+  Example:  
+  ```dart
+  app.get('/profile', controller.show).useMiddleware(AuthMiddleware());
+Fixed bugs in middleware chaining to ensure multiple middlewares execute in the correct order.
+
+Database
+Minor internal bug fixes in query builder (stability improvements).
+
+Response API
+No changes.
+
+Static Files
+No changes.
+
+Error Handling
+Stability improvements when using custom middlewares with ExceptionMiddleware.
+
+📄 Swagger Documentation
+Flint Dart ships with best-in-class API documentation out of the box. Using Swagger-style annotations, you can describe your routes directly in code and automatically generate OpenAPI specifications with an interactive Swagger UI.
+
+Annotating Routes
+Add /// comments above each route to document summary, request body, responses, and security requirements.
+
+dart
+Copy code
+import 'package:flint_dart/flint_dart.dart';
+import 'package:sample/src/middlewares/auth_middleware.dart';
+import '../controllers/user_controller.dart';
+
+void registerUserRoutes(Flint app) {
+  final controller = UserController();
+
+  /// @summary List all users
+  /// @server http://localhost:3000
+  /// @server https://api.mydomain.com
+  /// @prefix /users
+  app.get("/", controller.index);
+
+  /// @summary Get a user by ID
+  /// @prefix /users
+  app.get("/:id", controller.show);
+
+  /// @prefix /users
+  /// @summary Create a new user
+  /// @response 200 User registered successfully
+  /// @response 404 User not found
+  /// @body {"email": "string", "password": "string"}
+  app.post('/', controller.create);
+
+  /// @prefix /users
+  app.put('/:id', AuthMiddleware().handle(controller.update));
+
+  /// @prefix /users
+  /// @auth basicAuth
+  app.delete('/:id', AuthMiddleware().handle(controller.delete));
+}
+Supported Annotations
+@summary → Short description of the endpoint.
+
+@server → Define server base URLs.
+
+@prefix → Path prefix for grouped routes.
+
+@response [code] [description] → Document response codes.
+
+@body {} → Example request body JSON.
+
+@auth [scheme] → Specify authentication (e.g., basicAuth, bearerAuth).
+
+Generating Swagger UI
+Flint Dart parses these annotations and serves Swagger docs at /docs or /swagger.
+Developers can explore and test endpoints directly from the browser.
+
+
+void main() {
+  // Enable swagger docs
+  final app = Flint(enableSwaggerDocs: true);
+
+  // Register routes
+  app.mount("/users", registerUserRoutes);
+
+  app.listen(3000);
+}
+CLI Commands
+Flint Dart also includes CLI tools to manage and export your API documentation.
+This keeps docs in sync with your routes and is useful for CI/CD pipelines.
+
+# Generate Swagger JSON from your routes
+flint docs:generate
+Example Swagger UI
+After running your app, visit:
+👉 http://localhost:3000/docs
+to view the interactive API documentation generated from your annotations.
+
+Docs
+Updated middleware documentation with new .useMiddleware usage examples.
+
+Added notes on bug fixes for route-level middleware chaining.
+
+Added new section for Swagger docs integration with setup guide and usage examples.
+
+
+## 1.0.0+4
+### Database
+- Added `whereIn` query builder method for filtering by a list of values.  
+  Example:  
+  ```dart
+  await User.query().whereIn('id', [1, 2, 3]);
+Added as alias support in query builder.
+Example:
+
+dart
+Copy code
+await User.query().select(['id', 'name.as(username)']).get();
+PostgreSQL integration fully verified:
+
+Auto-increment (primary key sequences) working correctly.
+
+Migrations and schema syncing stable.
+
+Middleware
+ExceptionMiddleware now handles a wider range of errors globally:
+
+FormatException
+
+TimeoutException
+
+ArgumentError
+
+PgException
+
+MySQLClientException
+
+MySQLException
+
+ForbiddenError
+
+Generic Exception
+
+Response API
+No changes (see +3 for chaining improvements).
+
+Static Files
+No changes.
+
+Error Handling
+No changes (ExceptionMiddleware improvements listed above).
+
+Docs
+Added usage examples for whereIn and as in query builder section.
+
+Updated middleware docs to reflect new exception handling coverage.
+
+
+## 1.0.0+3
+- Database: Added autoConnectDb flag to allow disabling automatic DB connection (app.listen(port, autoConnectDb: false)).
+# Middleware:
+- Added default ExceptionMiddleware (handles ValidationException and unexpected errors globally).
+- Added withDefaultMiddleware flag to let users disable auto-injected middlewares.
+# Response API: 
+- All Response helpers (json, send, status, etc.) now return Response for consistent chaining.
+- Handler typedef: Updated to FutureOr<Response?> Function(Request, Response) for better type safety and chaining.
+# Static Files: 
+- Fixed static file serving to always return a Response.
+# Error Handling:
+- Default 404 Not Found handler now returns a proper response.
+
+# Docs: 
+- Improved docstrings for autoConnectDb, withDefaultMiddleware, and middleware behavior.
+
+## 1.0.0+2
+- Initial public release of Flint Dart.
+- Added Websocket.
+
+## 1.0.0+1
+- Initial public release of Flint Dart.
+- Added CLI commands: `create`, `start`, `migrate`, `make:model`.
+- Added MySQL and PostgreSQL ORM support.
+
+## 1.0.0
+- Bug fixes in migration system.
