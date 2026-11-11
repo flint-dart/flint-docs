@@ -1,4 +1,4 @@
-const String flintDartProductVersion = '1.4.1';
+const String flintDartProductVersion = '1.5.7';
 const String flintUiProductVersion = '0.1.16';
 const String flintClientProductVersion = '0.1.0';
 const String flintAiProductVersion = '0.1.0';

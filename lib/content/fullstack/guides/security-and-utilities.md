@@ -1,11 +1,21 @@
 # Security And Utilities
 
-This guide covers direct-use security helpers, rate-limiting guidance, framework
-exceptions, and stable utility helpers.
+Flint is engineered with **Secure-by-Default** principles to ensure that apps built with it are safe from common vulnerabilities without requiring complex, custom security setups. This guide covers the secure-by-default architecture, SQL anti-injection protections, direct-use security helpers, rate-limiting guidance, framework exceptions, and stable utility helpers.
 
 Use this guide when a feature hashes passwords, verifies secrets, creates JWTs,
 adds auth-sensitive endpoints, handles framework exceptions, stores public
 uploads, or needs simple string helpers.
+
+## Secure-by-Default Architecture
+
+Flint ships with safe baseline defaults that protect against the OWASP Top 10 risks:
+
+- **SQL Injection Prevention**: `DB.query(...)` and Flint ORM bind parameters safely (`positionalParams` or named params) instead of interpolating strings into SQL queries.
+- **Context-Aware Output Escaping**: Flint UI and SSR templates escape dynamic values by default, mitigating Cross-Site Scripting (XSS).
+- **Strong Password Hashing**: Passwords use salted Bcrypt (`HashingAlgorithm.bcrypt`) by default, rather than unsalted or fast hashing routines.
+- **Type-Safe Validation**: `Validator.validate(...)` enforces input structure, bounds, and sanitization before handling requests, backed by Dart's sound null-safety.
+- **Cookie & Session Hardening**: Default cookies include `HttpOnly`, `SameSite`, and `Secure` to protect against token leakage and CSRF.
+- **Automated Threat Detection**: `SecurityMiddleware` watches for known malicious bot probes (e.g., `/.env`, `/wp-admin`) and blocks repeat 404 scanning.
 
 Before coding, inspect:
 
@@ -16,6 +26,99 @@ Before coding, inspect:
 - `lib/src/security/` when security helper behavior is unclear.
 - `lib/src/error/` and `lib/src/middleware/exception_middleware.dart` when
   exception behavior is unclear.
+
+## SQL Anti-Injection (SQL Injection Prevention)
+
+Flint protects your database operations from SQL Injection by strictly separating executable SQL code from user-provided data.
+
+### Safe Queries with `positionalParams`
+
+Always supply dynamic arguments via `positionalParams`:
+
+```dart
+// ✅ SAFE Parameterized binding prevents SQL injection
+final email = req.input('email');
+
+final rows = await DB.query(
+  'SELECT id, email, role FROM users WHERE email = ? AND deleted_at IS NULL LIMIT 1',
+  positionalParams: [email],
+);
+```
+
+```dart
+// ❌ UNSAFE String concatenation invites SQL injection
+final email = req.input('email');
+
+final rows = await DB.query(
+  "SELECT id, email, role FROM users WHERE email = '$email' AND deleted_at IS NULL LIMIT 1",
+);
+```
+
+### Parameterized Writes (INSERT / UPDATE)
+
+```dart
+// ✅ SAFE Bound values with positional placeholders (?)
+await DB.query(
+  '''
+  UPDATE products 
+  SET title = ?, price = ?, stock = ?, updated_at = ? 
+  WHERE id = ? AND company_id = ?
+  ''',
+  positionalParams: [
+    title,
+    price,
+    stock,
+    DateTime.now().toIso8601String(),
+    productId,
+    companyId,
+  ],
+);
+```
+
+### Model Query Builders
+
+When using Flint Model query builders, parameters are bound automatically:
+
+```dart
+// ✅ SAFE Query builder handles parameter binding
+final user = await User.query()
+  .where('email', email)
+  .whereNull('deleted_at')
+  .first();
+```
+
+### Identifier Whitelisting
+
+Parameters (`?`) cannot be used for column or table identifiers. When allowing dynamic sort columns or directions, validate against a strict whitelist:
+
+```dart
+const allowedSorts = {'created_at', 'price', 'name'};
+final sortCol = allowedSorts.contains(req.input('sort')) 
+    ? req.input('sort') 
+    : 'created_at';
+
+final sortDir = req.input('dir')?.toUpperCase() == 'DESC' ? 'DESC' : 'ASC';
+
+final items = await DB.query(
+  'SELECT * FROM products WHERE company_id = ? ORDER BY $sortCol $sortDir',
+  positionalParams: [companyId],
+);
+```
+
+### AntiSqlInjectionMiddleware (Defense-in-Depth Tripwire)
+
+Flint includes `AntiSqlInjectionMiddleware` in `package:flint_dart/middlewares.dart`.
+
+> [!NOTE]
+> `AntiSqlInjectionMiddleware` is **not enabled by default** so that it doesn't cause false positives on endpoints accepting rich markdown or code. Developers enable it intentionally:
+
+```dart
+app.use(AntiSqlInjectionMiddleware(
+  scanBody: true,
+  scanHeaders: false,
+  ignoredPathPrefixes: ['/admin/cms', '/api/docs'],
+));
+```
 
 ## Security Utilities
 
@@ -323,7 +426,10 @@ helpers, `Storage`, `Hashing`, `FlintJwt`, and the documented framework APIs.
 When reviewing security-sensitive code:
 
 1. Read [Security And Utilities](/fullstack/guides/security-and-utilities).
-2. Use `HashingAlgorithm.bcrypt` for user passwords.
+2. Never interpolate user input into raw SQL queries; always use `positionalParams` or Model query builders.
+3. Whitelist dynamic table or column identifiers instead of accepting unvalidated strings.
+4. Use `AntiSqlInjectionMiddleware` for defense-in-depth on public APIs.
+5. Use `HashingAlgorithm.bcrypt` for user passwords.
 3. Verify secrets with `Hashing.verify(...)`, not manual comparison.
 4. Use higher-level `Auth` helpers for auth workflows when available.
 5. Rate-limit login, OTP, password reset, and upload endpoints.

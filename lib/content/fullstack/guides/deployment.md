@@ -273,12 +273,18 @@ PORT=3000 FLINT_HOT=0 dart run lib/main.dart
 For a production executable, use `flint build`:
 
 ```bash
-dart run flint_dart:flint build --linux
+# Build Linux AOT executable and push directly to Dokploy/VPS deploy branch
+flint build --linux --push
 ```
 
-This creates output under `build/`, compiles the server entrypoint with
-`dart compile exe`, copies resources, precompresses public assets, writes
-`start.sh`, and writes a Dockerfile when a Linux executable exists.
+This creates an optimized output under `build/`:
+- Compiles the server entrypoint with `dart compile exe --target-os linux`.
+- Packages page-by-page Web UI bundles and manifests (`compilePageBundles`).
+- Copies mail templates, static assets, Swagger spec (`swagger.json`), and framework Swagger UI assets (`public/swagger-ui`).
+- Precompresses public assets with Gzip and Brotli.
+- Writes a POSIX-compliant `start.sh` with flavor-manifest switching.
+- Writes a slim `Dockerfile` using `FROM debian:bookworm-slim`.
+- Automatically force-pushes `build/` to the `build` branch on all configured remotes (`--push`), keeping `main` clean while allowing Dokploy to pull and build in seconds without RAM spikes.
 
 Run the built output:
 
