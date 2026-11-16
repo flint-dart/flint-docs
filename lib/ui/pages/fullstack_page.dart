@@ -1315,7 +1315,7 @@ class FullstackPage extends StatefulComponent {
                 fontSize: 18,
                 fontWeight: 900,
                 color:
-                    isHero ? const Color('#10b981') : ThemeToken.color('text'),
+                    isHero ? const Color('#059669') : ThemeToken.color('text'),
               ),
             ),
             Container(
@@ -1323,9 +1323,9 @@ class FullstackPage extends StatefulComponent {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 radius: 4,
                 background: isHero
-                    ? Color.rgba(16, 185, 129, 0.2)
-                    : Color.rgba(255, 255, 255, 0.08),
-                color: isHero ? Color('#34d399') : ThemeToken.color('muted'),
+                    ? Color.rgba(16, 185, 129, 0.16)
+                    : Color.rgba(148, 163, 184, 0.15),
+                color: isHero ? const Color('#059669') : ThemeToken.color('muted'),
                 fontSize: 11,
                 fontWeight: 800,
               ),
@@ -1354,7 +1354,7 @@ class FullstackPage extends StatefulComponent {
           dartStyle: DartStyle(
             fontSize: 11,
             fontWeight: 700,
-            color: ThemeToken.color('muted'),
+            color: isHero ? const Color('#059669') : ThemeToken.color('muted'),
           ),
         ),
         Text.span(
@@ -1362,7 +1362,7 @@ class FullstackPage extends StatefulComponent {
           dartStyle: DartStyle(
             fontSize: 13,
             fontWeight: isHero ? 800 : 500,
-            color: isHero ? Colors.white : ThemeToken.color('text'),
+            color: ThemeToken.color('text'),
           ),
         ),
       ],

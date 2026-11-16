@@ -1,4 +1,4 @@
-const FLINT_CACHE = 'flint-ui-1787821625257';
+const FLINT_CACHE = 'flint-ui-1794854577676';
 const FLINT_MANIFEST_URL = '/assets/js/flint-ui/manifest.json';
 
 async function flintCacheUrls(urls) {
@@ -58,7 +58,6 @@ self.addEventListener('activate', event => {
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'FLINT_PREFETCH') {
     event.waitUntil((async () => {
-      await new Promise(resolve => setTimeout(resolve, 12000));
       await flintCacheUrls(await flintManifestAssets());
     })());
   }
