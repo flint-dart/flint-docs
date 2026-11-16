@@ -8,138 +8,76 @@ class Footer extends Component {
   View build() {
     return Container(
       dartStyle: DartStyle(
-        borderTop: Border(color: Color.rgba(30, 41, 59, 0.72), width: 1),
-        background: Background.layers([
-          Gradient.linear(
-            135,
-            [
-              GradientStop(Color.rgba(8, 47, 73, 0.2), 0),
-              GradientStop(Color.rgba(5, 7, 13, 0.98), 48),
-              GradientStop(Color.rgba(20, 83, 45, 0.16), 100),
-            ],
-          ),
-          Color.rgba(5, 7, 13, 0.98),
-        ]),
-        padding: EdgeInsets.only(top: 48, bottom: 0),
+        width: SizeValue.percent(100),
+        borderTop: Border(color: ThemeToken.color('line'), width: 1),
+        background: ThemeToken.color('panel'),
+        padding: const EdgeInsets.only(top: 48, bottom: 0),
       ),
       children: [
         Container(
           dartStyle: DartStyle(
             width: SizeValue.percent(100),
-            padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+            maxWidth: 1152,
+            margin: const EdgeInsets.symmetric(horizontal: SizeValue.auto),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            display: Display.flex,
+            flexDirection: FlexDirection.column,
+            gap: 36,
           ),
           children: [
-            Container(
-              dartStyle: DartStyle(
-                display: Display.grid,
-                gap: 28,
-                padding: EdgeInsets.all(22),
-                border: Border(color: Color.rgba(56, 189, 248, 0.16), width: 1),
-                background: ThemeToken.color('panelStrong'),
+            Row(
+              dartStyle: const DartStyle(
+                display: Display.flex,
+                flexWrap: FlexWrap.wrap,
+                justifyContent: JustifyContent.between,
+                gap: 36,
               ),
               children: [
-                Container(
-                  dartStyle: DartStyle(
-                    width: SizeValue.percent(100),
-                    maxWidth: 1152,
-                    margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
-                  ),
-                  children: [
-                    Row(
-                      dartStyle: DartStyle(
-                        display: Display.flex,
-                        flexWrap: FlexWrap.wrap,
-                        justifyContent: JustifyContent.between,
-                        gap: 34,
-                      ),
-                      children: [
-                        _brand(),
-                        _linkColumn(
-                          'Ecosystem Pillars',
-                          [
-                            ('/fullstack', 'Fullstack Framework'),
-                            ('/client', 'Client SDK'),
-                            ('/ai', 'AI Engine'),
-                            ('/hardware', 'Hardware & Robotics'),
-                            ('/examples', 'Ecosystem Examples'),
-                            ('/fullstack/guides', 'Fullstack Guides'),
-                            ('/fullstack/api', 'Fullstack API'),
-                          ],
-                        ),
-                        _linkColumn(
-                          'Updates & Resources',
-                          [
-                            ('/fullstack/whats-new', "What's New"),
-                            ('/fullstack/changelog', 'Fullstack Changelog'),
-                            ('/questions', 'Questions'),
-                            ('/blog', 'Blog'),
-                            ('/dart', 'Dart Lessons'),
-                          ],
-                        ),
-                        _linkColumn(
-                          'Community',
-                          [
-                            ('/showcase', 'Built with Flint'),
-                            ('/showcase/submit', 'Submit a build'),
-                            (
-                              'https://github.com/flint-dart/flint_dart/issues',
-                              'Issues'
-                            ),
-                            (
-                              'https://github.com/flint-dart/flint_dart/discussions',
-                              'Discussions'
-                            ),
-                            (
-                              'https://github.com/flint-dart/flint_dart/pulls',
-                              'Pull requests'
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                _brand(),
+                _linkColumn(
+                  'Ecosystem Pillars',
+                  [
+                    ('/fullstack', 'Fullstack Framework'),
+                    ('/client', 'Client SDK'),
+                    ('/ai', 'AI Engine'),
+                    ('/hardware', 'Hardware & Robotics'),
+                    ('/examples', 'Ecosystem Examples'),
+                    ('/fullstack/guides', 'Fullstack Guides'),
+                    ('/fullstack/api', 'Fullstack API'),
                   ],
                 ),
-                Row(
-                  dartStyle: DartStyle(
-                    width: SizeValue.percent(100),
-                    maxWidth: 1152,
-                    margin: EdgeInsets.symmetric(horizontal: SizeValue.auto),
-                    display: Display.flex,
-                    flexWrap: FlexWrap.wrap,
-                    alignItems: AlignItems.center,
-                    justifyContent: JustifyContent.between,
-                    gap: 12,
-                    padding: EdgeInsets.only(top: 22),
-                    border: Border(
-                      color: Color.rgba(30, 41, 59, 0.72),
-                      width: 1,
+                _linkColumn(
+                  'Updates & Resources',
+                  [
+                    ('/fullstack/whats-new', "What's New"),
+                    ('/fullstack/changelog', 'Fullstack Changelog'),
+                    ('/questions', 'Questions'),
+                    ('/blog', 'Blog'),
+                    ('/dart', 'Dart Lessons'),
+                  ],
+                ),
+                _linkColumn(
+                  'Community',
+                  [
+                    ('/showcase', 'Built with Flint'),
+                    ('/showcase/submit', 'Submit a build'),
+                    (
+                      'https://github.com/flint-dart/flint_dart/issues',
+                      'Issues'
                     ),
-                  ),
-                  children: [
-                    Text.span(
-                      'Copyright 2026 Flint Dart. Maintained by Eulogia Technologies.',
-                      dartStyle: DartStyle(
-                        fontSize: 11,
-                        color: ThemeToken.color('muted'),
-                      ),
+                    (
+                      'https://github.com/flint-dart/flint_dart/discussions',
+                      'Discussions'
                     ),
-                    Row(
-                      dartStyle: DartStyle(
-                        display: Display.flex,
-                        flexWrap: FlexWrap.wrap,
-                        alignItems: AlignItems.center,
-                        gap: 8,
-                      ),
-                      children: [
-                        _pill('v ${ProductVersions.flintDartVersion}'),
-                        _pill('MIT License'),
-                        _pill('Built with Dart'),
-                      ],
+                    (
+                      'https://github.com/flint-dart/flint_dart/pulls',
+                      'Pull requests'
                     ),
                   ],
                 ),
               ],
             ),
+            _bottomBar(),
           ],
         ),
       ],
@@ -148,14 +86,15 @@ class Footer extends Component {
 
   View _brand() {
     return Container(
-      dartStyle: DartStyle(
+      dartStyle: const DartStyle(
         display: Display.grid,
         gap: 14,
-        minWidth: 280,
+        minWidth: 260,
+        maxWidth: 380,
       ),
       children: [
         Row(
-          dartStyle: DartStyle(
+          dartStyle: const DartStyle(
             display: Display.flex,
             alignItems: AlignItems.center,
             gap: 12,
@@ -169,24 +108,14 @@ class Footer extends Component {
                 width: 38,
                 height: 38,
                 radius: 8,
-                border: Border(color: Color.rgba(56, 189, 248, 0.34), width: 1),
-                background: Background.layers([
-                  Gradient.linear(
-                    135,
-                    [
-                      GradientStop(Color.rgba(56, 189, 248, 0.24), 0),
-                      GradientStop(Color.rgba(52, 211, 153, 0.18), 100),
-                    ],
-                  ),
-                  Color.rgba(15, 23, 42, 0.86),
-                ]),
+                background: Color.rgba(16, 185, 129, 0.12),
               ),
               children: [
-                brandLogoMark(size: 30),
+                brandLogoMark(size: 26),
               ],
             ),
             Container(
-              dartStyle: DartStyle(display: Display.grid, gap: 2),
+              dartStyle: const DartStyle(display: Display.grid, gap: 2),
               children: [
                 Text.span(
                   'Flint Ecosystem',
@@ -211,25 +140,12 @@ class Footer extends Component {
         Text.p(
           'One language powering Full-Stack Web, Cross-Platform Clients, Native AI, and Connected Robotics.',
           dartStyle: DartStyle(
-            maxWidth: 390,
-            margin: EdgeInsets.all(0),
+            maxWidth: 380,
+            margin: const EdgeInsets.all(0),
             fontSize: 13,
             lineHeight: 1.6,
             color: ThemeToken.color('muted'),
           ),
-        ),
-        Row(
-          dartStyle: DartStyle(
-            display: Display.flex,
-            flexWrap: FlexWrap.wrap,
-            gap: 8,
-          ),
-          children: [
-            _pill('Fullstack'),
-            _pill('Client SDK'),
-            _pill('AI Engine'),
-            _pill('Hardware'),
-          ],
         ),
       ],
     );
@@ -237,9 +153,9 @@ class Footer extends Component {
 
   View _linkColumn(String title, List<(String, String)> links) {
     return Container(
-      dartStyle: DartStyle(
+      dartStyle: const DartStyle(
         display: Display.grid,
-        gap: 9,
+        gap: 10,
         minWidth: 150,
       ),
       children: [
@@ -247,10 +163,10 @@ class Footer extends Component {
           title,
           dartStyle: DartStyle(
             display: Display.block,
-            margin: EdgeInsets.only(bottom: 3),
-            fontSize: 11,
-            fontWeight: 900,
-            color: Color('#67e8f9'),
+            margin: const EdgeInsets.only(bottom: 4),
+            fontSize: 12,
+            fontWeight: 800,
+            color: ThemeToken.color('text'),
           ),
         ),
         for (final (href, label) in links)
@@ -260,31 +176,73 @@ class Footer extends Component {
             dartStyle: DartStyle(
               display: Display.block,
               fontSize: 13,
-              color: Color('#a8b3c5'),
+              color: ThemeToken.color('muted'),
             ),
           ),
       ],
     );
   }
 
-  View _pill(String label) {
+  View _bottomBar() {
     return Container(
       dartStyle: DartStyle(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        radius: 9999,
-        border: Border(color: Color.rgba(51, 65, 85, 0.76), width: 1),
-        background: ThemeToken.color('panel'),
+        width: SizeValue.percent(100),
+        display: Display.flex,
+        flexWrap: FlexWrap.wrap,
+        alignItems: AlignItems.center,
+        justifyContent: JustifyContent.between,
+        gap: 14,
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        borderTop: Border(
+          color: ThemeToken.color('line'),
+          width: 1,
+        ),
       ),
       children: [
         Text.span(
-          label,
+          'Copyright 2026 Flint Dart. Maintained by Eulogia Technologies.',
           dartStyle: DartStyle(
-            fontSize: 11,
-            fontWeight: 700,
+            fontSize: 12,
             color: ThemeToken.color('muted'),
           ),
         ),
+        Row(
+          dartStyle: const DartStyle(
+            display: Display.flex,
+            flexWrap: FlexWrap.wrap,
+            alignItems: AlignItems.center,
+            gap: 12,
+          ),
+          children: [
+            _metaText('v${ProductVersions.flintDartVersion}'),
+            _metaDot(),
+            _metaText('MIT License'),
+            _metaDot(),
+            _metaText('Built with Dart'),
+          ],
+        ),
       ],
+    );
+  }
+
+  View _metaText(String text) {
+    return Text.span(
+      text,
+      dartStyle: DartStyle(
+        fontSize: 12,
+        fontWeight: 600,
+        color: ThemeToken.color('muted'),
+      ),
+    );
+  }
+
+  View _metaDot() {
+    return Text.span(
+      '•',
+      dartStyle: DartStyle(
+        fontSize: 10,
+        color: ThemeToken.color('muted'),
+      ),
     );
   }
 }
