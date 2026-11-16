@@ -4,6 +4,14 @@
 
 ---
 
+## The Philosophy: Precision & Velocity
+
+Flint Dart unites two core ideals:
+- **The Precision of a Dart**: Type-safe schemas, compiler-verified routes, and sound null safety so every request hits the target with zero runtime drift.
+- **The Ignition of Flint**: Instant sub-millisecond startup, AOT machine code compilation, and rapid full-stack iteration without switching languages.
+
+---
+
 ## 1. Architecture Overview
 
 Flint Dart eliminates context switching between backend servers and frontend frameworks. With Flint Dart, your models, schemas, validators, business logic, and UI components are all written in pure Dart.

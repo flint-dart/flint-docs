@@ -51,6 +51,31 @@ That philosophy extends across the entire stack:
 
 That balance between clarity and capability is what defines Flint.
 
+### The Identity: Dart's Precision, Flint's Spark
+
+The Flint Dart identity was born from a clear visual and engineering metaphor:
+
+<div style="display: flex; align-items: center; gap: 18px; margin: 24px 0; padding: 20px; border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(3, 105, 161, 0.15));">
+  <img src="/logo-icon.png" alt="Flint Dart Logo" width="64" height="64" style="flex-shrink: 0;" />
+  <div>
+    <h4 style="margin: 0 0 6px; font-size: 16px; color: #f8fafc;">The Supersonic Delta Dart</h4>
+    <p style="margin: 0; color: #94a3b8; font-size: 13.5px; line-height: 1.6;">
+      Evolved directly from the geometric heritage of Google Dart, our delta arrowhead embodies aerodynamic lift, sound null safety, and compiler-verified accuracy.
+    </p>
+  </div>
+</div>
+
+1. **The Precision of a Dart**:
+   A dart has a singular purpose: fly directly to the target with zero drift. In software, that means **type safety, null safety, and architectural predictability**. Models, schemas, request validators, and UI components all speak the exact same language. There is no guessing, no runtime type drift, and no friction between client and server.
+
+2. **The Ignition of Flint**:
+   Flint is the stone that strikes sparks and ignites fire. Where a dart brings trajectory, Flint brings **ignition and velocity**:
+   - Sub-millisecond response times.
+   - Lightning-fast Ahead-Of-Time (AOT) native compilation directly to machine code.
+   - Snappy developer iteration with zero context switching.
+
+> **Flint + Dart**: The precision to hit your target cleanly, powered by the spark that gets you there faster.
+
 ### What that means in practice
 
 Routes should be clear. A route should show what URL is being handled and what response is returned.
