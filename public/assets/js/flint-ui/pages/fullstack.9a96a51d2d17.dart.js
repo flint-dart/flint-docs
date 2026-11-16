@@ -10289,7 +10289,7 @@
       A.scheduleMicrotask(new A.FlintRoot__scheduleRender_closure(this));
     },
     _paint$0() {
-      var t1, activeControl, previousSlots, nextSlots, nextDom, firstChild, entry, _this = this,
+      var t1, activeControl, previousSlots, nextSlots, nextDom, firstChild, last, entry, _this = this,
         node = _this._node;
       if (node == null)
         return;
@@ -10299,9 +10299,16 @@
       nextSlots = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$._ComponentMount);
       nextDom = _this._createDom$4(node, "0", previousSlots, nextSlots);
       firstChild = A._asInt(A._asJSObject(t1.childNodes).length) > 0 ? A._asJSObjectQ(A._asJSObject(t1.childNodes).item(0)) : null;
-      if (firstChild != null)
+      if (firstChild != null) {
         A._asJSObject(t1.replaceChild(nextDom, firstChild));
-      else
+        while (A._asInt(A._asJSObject(t1.childNodes).length) > 1) {
+          last = A._asJSObjectQ(A._asJSObject(t1.childNodes).item(A._asInt(A._asJSObject(t1.childNodes).length) - 1));
+          if (last != null)
+            A._asJSObject(t1.removeChild(last));
+          else
+            break;
+        }
+      } else
         A._asJSObject(t1.appendChild(nextDom));
       _this._restoreActiveControl$2(activeControl, t1);
       for (t1 = new A.LinkedHashMapEntriesIterable(previousSlots, A._instanceType(previousSlots)._eval$1("LinkedHashMapEntriesIterable<1,2>")).get$iterator(0); t1.moveNext$0();) {
@@ -14312,4 +14319,4 @@
   });
 })();
 
-//# sourceMappingURL=fullstack.98a679b31ca3.dart.js.map
+//# sourceMappingURL=fullstack.9a96a51d2d17.dart.js.map

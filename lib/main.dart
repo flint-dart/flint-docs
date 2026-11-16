@@ -6,11 +6,12 @@ import 'package:flint_docs/routes/app_routes.dart';
 void main() {
   const serverRenderer = FlintServerRenderer();
   String? renderFlintPage(String component, Map<String, dynamic> props) {
-    return serverRenderer.renderPage(
+    final rendered = serverRenderer.renderPage(
       componentRegistry,
       component,
       props: props,
     );
+    return '<div id="flint-ssr-root" style="display: contents;">$rendered</div>';
   }
 
   final app = Flint(
