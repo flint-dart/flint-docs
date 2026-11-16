@@ -47,6 +47,10 @@ class DocsController extends Controller {
     return docs.renderGettingStartedTopic(req, res, 'introduction');
   }
 
+  Future<Response> renderPleskDirect() {
+    return docs.renderGettingStartedTopic(req, res, 'plesk');
+  }
+
   Future<Response> guidesTopic() {
     final topic = req.param('topic') ?? 'introduction';
     return docs.renderGettingStartedTopic(req, res, topic);

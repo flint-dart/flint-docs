@@ -68,6 +68,7 @@ class DocsSupport {
     'swagger-docs',
     'swagger-and-api-docs',
     'deployment',
+    'plesk',
   ];
 
   static const List<String> apiTopics = [

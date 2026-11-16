@@ -9,6 +9,8 @@ process.
 Use Docker, `flint build`, or the deployment platform's normal Dart/server
 process model.
 
+> **Hosting on Plesk Obsidian?** See our dedicated [Plesk Deployment Guide](/docs/plesk) for zero-config Nginx reverse proxying, multi-version Dart SDK management, automated systemd daemons, and Git push-to-deploy.
+
 ## Files To Inspect First
 
 Before changing deployment behavior, inspect:

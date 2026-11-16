@@ -35,7 +35,11 @@ class DocsRoutes extends RouteGroup {
     docs.get('/dart', (c) => c.dartLessons());
     docs.get('/dart/guides', (c) => c.dartLessons());
 
-    // Backwards-compatible aliases
+    // Backwards-compatible aliases & direct doc routes
+    docs.get('/docs/plesk', (c) => c.renderPleskDirect());
+    docs.get('/docs', (c) => c.guidesIndex());
+    docs.get('/docs/:topic', (c) => c.guidesTopic());
+    docs.get('/plesk', (c) => c.renderPleskDirect());
     docs.get('/guides', (c) => c.guidesIndex());
     docs.get('/guides/:topic', (c) => c.guidesTopic());
     docs.get('/ui', (c) => c.fullstack());
